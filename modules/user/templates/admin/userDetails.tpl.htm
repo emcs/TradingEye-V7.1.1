@@ -1,0 +1,100 @@
+<div class="historyWidgetContainer">
+	<a href="adminindex.php?flag=dashboard&amp;flag=dashboard">Home</a> <strong>&raquo;</strong> 
+	<a href="../order/adminindex.php?action=orders.home&amp;flag=orders">Orders</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=user.home&amp;flag=orders">Customers</a> <strong>&raquo;</strong> 
+	<a href='#'>Customer Details</a>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">{LANG_VAR_CUSTOMERDETAILS}</title>
+	<div class="WidgetContent">
+		<table class="whiteTable2 Orders OneColum" cellspacing="0">
+			<thead>
+				<tr>
+					<th colspan="2"><span>{LANG_VAR_SIGNUPDATE}:</span> {TPL_VAR_SIGNUPDATE}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="first short"><strong>{LANG_VAR_FIRSTNAME}</td>	
+					<td>{TPL_VAR_FNAME}</td>
+				</tr>
+				<tr>
+					<td><strong>{LANG_VAR_LASTNAME}</strong></td>	
+					<td>{TPL_VAR_LNAME}</td>
+				</tr>
+				<tr>
+					<td><strong>{LANG_VAR_EMAIL}</strong></td>	
+					<td><a class="linkEmail" href="mailto:{TPL_VAR_EMAIL}">{TPL_VAR_EMAIL}</a></td>
+				<tr>
+					<td><strong>{LANG_VAR_ADDRESS1}</strong></td>	
+					<td>{TPL_VAR_ADDRESS1}</td>
+				</tr>
+				<tr>
+					<td><strong>{LANG_VAR_ADDRESS2}</strong></td>	
+					<td>{TPL_VAR_ADDRESS2}</td>
+				</tr>
+				<tr>
+					<td><strong>{LANG_VAR_CITY}</strong></td>	
+					<td>{TPL_VAR_CITY}</td>
+				</tr>
+				<tr>
+					<td><strong>{LANG_VAR_STATE}</strong></td>	
+					<td>{TPL_VAR_STATE}</td>
+				</tr>
+				<tr>
+					<td><strong>{LANG_VAR_COUNTRY}</strong></td>	
+					<td>{TPL_VAR_COUNTRY}</td>
+				</tr>
+				<tr>
+					<td><strong>{LANG_VAR_POSTCODE}</strong></td>	
+					<td>{TPL_VAR_ZIP}</td>
+				</tr>
+				<tr>
+					<td><strong>{LANG_VAR_TELEPHONE}</strong></td>	
+					<td>{TPL_VAR_PHONE}</td>
+				</tr>
+				<tr>
+					<td><strong>{LANG_VAR_WEBSITE}</strong></td>	
+					<td><a href="{TPL_VAR_HOMEPAGE}" target="_blank">{TPL_VAR_HOMEPAGE}</a></td>
+				</tr>
+				<tr>
+					<td><strong>{LANG_VAR_NEWSLETTER}</strong></td>	
+					<td>{TPL_VAR_NEWSLETTER}</td>
+				</tr>
+				<tr>
+					<td><strong>{LANG_VAR_MEMPOINTS}</strong></td>	
+					<td>{TPL_VAR_MPOINTS}</td>
+				</tr>
+				<tr>
+					<td><strong>{LANG_VAR_LBLCUSTOMERTYPE}</strong></td>	
+					<td>{TPL_VAR_CUSTOMERTYPE}</td>
+				</tr>
+			</tbody>
+		</table>
+		<p class="buttonWrapper">
+			<button class="formButton" onclick="history.go(-1)"><img src="../graphics/i_cross.gif" alt="Cancel" /> <div>Cancel</div></button>
+			<button class="formButton" onclick="window.location='/user/adminindex.php?action=user.dspForm&id={TPL_VAR_USERID}'"><img src="../graphics/i_tick.gif" alt="Edit Customer Details" /> <div>Edit Customer Details</div></button>
+		</p>
+		<!-- BEGIN TPL_MAINORDER_BLK -->
+		<table class="whiteTable2 Builder" cellspacing="0">
+			<thead>
+				<tr>
+					<th>{LANG_VAR_INVOICE}</th>
+					<th>{LANG_VAR_ORDERDATE}</th>
+					<th>{LANG_VAR_DETAILS}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- BEGIN TPL_ORDERS_BLK -->
+				<tr> 
+					<td>{TPL_VAR_INVOICE}</td>
+					<td>{TPL_VAR_ORDERDATE}</td>
+					<td><a href="/order/adminindex.php?action=orders.dspDetails&orderid={TPL_VAR_INVOICE}" class="linkPreview">{LANG_VAR_DETAILS}</a></td>
+				</tr>
+				<!-- END TPL_ORDERS_BLK -->
+			</tbody>
+		</table>
+		<!-- END TPL_MAINORDER_BLK -->
+	</div>
+</div>

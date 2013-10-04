@@ -1,0 +1,245 @@
+<script language="JavaScript" type="text/javascript">
+<!-- Begin
+	function filterNum(str) {
+	re = /^\?|,/g;
+	// remove "?" and ","
+	return str.replace(re, "");
+	}
+//  End -->
+</script>
+
+
+<script language="JavaScript" type="text/javascript">
+	function validateForm()
+	{
+		var frm = document.ThisForm;
+		if(isNull(frm.txtcartDefaultShipping.value)){
+			alert("You must enter Postage title");
+			frm.txtcartDefaultShipping.value = '';
+			frm.txtcartDefaultShipping.focus();
+			return false;
+		}
+		return true;
+	}
+
+	function marginCalculator(marginstatus)
+	{
+		if(marginstatus=='original')
+		{
+		document.getElementById('marginpercent').value=0;
+		}else{
+		document.getElementById('marginpercent').value = document.getElementById('originalmargin').value;
+		}
+	}
+</script>
+<div class="historyWidgetContainer"><a href="../adminindex.php?flag=dashboard">Home</a> <strong>&raquo;</strong> <a href="adminindex.php?action=settings.companyHome&flag=settings">Settings</a> <strong>&raquo;</strong> <a href="adminindex.php?action=settings.global">Global Settings</a> <strong>&raquo;</strong><a href='#'>Order Settings</a></div>
+    <div class="fullWidgetContainer">
+      <div class="WidgetTitle">Order Settings<!-- BEGIN TPL_DSPMSG_BLK --><small>{TPL_VAR_MSG}</small><!-- END TPL_DSPMSG_BLK --></div>
+      <div class="WidgetContent">
+<form name="ThisForm" id="ThisForm" action="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.updateOrder" method="post" onsubmit="return validateForm();">
+      	<div class="LeftBox">
+		<table class="whiteTable2" cellspacing="0">
+			<thead>
+				<tr>
+					<th colspan="2">Order Settings</th>
+				</tr>
+			</thead>
+				<tbody>
+					<tr>
+						<td class="first"><label for="del_address">Enable Alternative Delivery Address</label></td>
+						<td><input type="checkbox" class="checkbox" id="del_address" name="cartAlternateShipping" value="1" {TPL_VAR_ENABLEADDRESS} /></td>
+					</tr>
+					<tr>
+						<td><label for="order_email">Order Email Address</label> </td>
+						<td><input type="text" class="formField" id="order_email" name="txtcartOrderEmail" value="{TPL_VAR_ORDERMAIL}" /></td>
+					</tr>
+					<tr>
+						<td><label for="info_email">Contact Email Address</label> </td>
+						<td><input type="text" class="formField" id="info_email" name="txtcartInfoEmail" value="{TPL_VAR_INFOMAIL}" /></td>
+					</tr>
+					<tr>
+						<td><label for="info_email">Wireless Email Address</label> </td>
+						<td><input type="text" class="formField" id="wireless_email" name="txtcartWirelessEmail" value="{TPL_VAR_WIRELESS}" /></td>
+					</tr>
+				</tbody>
+			</table>
+			<table class="whiteTable2" cellspacing="0">
+				<thead>
+					<tr>
+						<th colspan="2">Text Settings</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="first"><label for="post_title">Postage Title <span>*</span></label></td>
+						<td><input type="text" class="formField" id="post_title" name="txtcartDefaultShipping" value="{TPL_VAR_POSTAGE}" /></td>
+					</tr>
+					<tr>
+						<td><label for="rrptext">R.R.P. Text</label></td>
+						<td><input type="text" class="formField" id="rrptext" name="rrptext" value="{TPL_VAR_RRPTEXT}" maxlength="30" /></td>
+					</tr>
+				</tbody>
+			</table>
+			<table class="whiteTable2" cellspacing="0">
+				<thead>
+					<tr>
+						<th colspan="2">Order Total</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="first"><label for="MinOrder">Minimum order total</label></td>
+						<td><input type="text" id="minordertotal" name="minordertotal" value="{TPL_VAR_MINORDER}" class="formField" /></td>
+					</tr>
+					<tr> 
+						<td><label for="eft">Enable Wholesale/Retail Pricing</label></td>
+						<td><input type="checkbox" class="checkbox" id="wholesale" name="wholesale" value="1"  {ENABLE_WHOLESALE} /></td>
+					</tr>
+				</tbody>
+			</table>
+
+			<table class="whiteTable2" cellspacing="0">
+				<thead>
+					<tr>
+						<th colspan="3">Margin Calculator</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="first"><label for="MinOrder">Recalculate by percent</label></td>
+						<td><input type="text" id="marginpercent" name="marginpercent" value="{TPL_VAR_PERCENT}" class="formField" /></td>
+						<td>
+						<input type="radio" name="txtmarginstatus" value="original" onClick="marginCalculator(this.value);" {ORIGINAL_CHECKED} /> Original <br />
+						<input type="radio" name="txtmarginstatus" value="increase" onClick="marginCalculator(this.value);" {INCREASE_CHECKED} /> Increase <br />
+						<input type="radio" name="txtmarginstatus" value="decrease" onClick="marginCalculator(this.value);" {DECREASE_CHECKED} /> Decrease	
+						<input type="hidden" id="originalmargin" name="originalmargin" value="{TPL_VAR_PERCENT}" />
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<table class="whiteTable2" cellspacing="0">
+				<thead>
+					<tr>
+						<th colspan="2">VAT Settings</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr> 
+						<td class="first"><label for="vat_number">VAT/Tax Name</label></td>
+						<td><input type="text" id="vTaxName" name="vTaxName" value="{TPL_VAR_TAXNAME}" class="formField" /></td>
+					</tr>
+					<tr>
+						<td><label for="vatbaserate">VAT/Tax Base Rate</label></td>
+						<td><input type="text" class="formField short" id="vatbaserate" name="vatbaserate" value="{TPL_VAR_VATBASERATE}" /> %</td>
+					</tr>
+					<tr>
+						<td><label for="incvat">Prices to include VAT/Tax</label></td>
+						<td><input type="checkbox" class="checkbox" id="incvat" name="incvat" value="1" {TPL_VAR_INCVAT} /></td>
+					</tr>
+					<tr>
+						<td><label for="incvat">Display Inc. Vat/Tax In Price</label></td>
+						<td><input type="checkbox" class="checkbox" id="incvattextcheck" name="incvattextcheck" value="1" {TPL_VAR_INCVATTEXTCHECK} /></td>
+					</tr>
+					<tr>
+						<td><label for="hidenovat">Hide No VAT Text</label></td>
+						<td><input type="checkbox" class="checkbox" id="hidenovat" name="hidenovat" value="1" {TPL_VAR_HIDENOVAT} /></td>
+					</tr>
+					<tr>
+						<td><label for="netgross">Enter price NET/GROSS</label></td>
+						<td><input type="checkbox" class="checkbox" id="netgross" name="netgross" value="1" {TPL_VAR_NETGROSS} /></td>
+					</tr>
+					<tr>
+						<td><label for="postageVAT">Add VAT/Tax on Postage</label></td>
+						<td><input type="checkbox" class="checkbox" id="postageVAT" name="postageVAT" value="1" {TPL_VAR_POSTAGEVATOPTION} /></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="RightBox">
+			<table class="whiteTable2" cellspacing="0">
+				<thead>
+					<tr>
+						<th colspan="2">Payment types</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr> 
+						<td class="first"><label for="cc">Credit Cards</label></td>
+						<td><input type="checkbox" class="checkbox" id="cc" name="cartPayCC" value="1" {ENABLE_CREDIT} /></td>
+					</tr>
+					<tr> 
+						<td><label for="ccp">Credit Cards over the Phone</label></td>
+						<td><input type="checkbox" class="checkbox" id="ccp" name="cartPayCCp" value="1" {ENABLE_CREDIT_PHONE} /></td>
+					</tr>
+					<tr> 
+						<td><label for="eft">Electronic Funds Transfer</label></td>
+						<td><input type="checkbox" class="checkbox" id="eft" name="cartPayEFT" value="1" {ENABLE_ELECTRONIC_FUNDS} /></td>
+					</tr>
+					<tr> 
+						<td><label for="mail">Cheque</label></td>
+						<td><input type="checkbox" class="checkbox" id="mail" name="cartPayMail" value="1" {ENABLE_CREDITPHONE} /></td>
+					</tr>
+					<tr> 
+						<td><label for="cash">Cash on Delivery Charge</label></td>
+						<td><input type="text" class="formField short" id="cash" name="txtcartPayCOD" value="{COD}" /></td>
+					</tr>
+				</tbody>
+			</table>
+			<table class="whiteTable2" cellspacing="0">
+				<thead>
+					<tr>
+						<th colspan="2">Accepted credit/debit cards</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr> 
+						<td class="first"><label for="visa">Visa</label></td>
+						<td><input type="checkbox" class="checkbox" id="visa" name="cartCCTypeVisa" value="1" {ENABLE_VISA} /></td>
+					</tr>
+					<tr> 
+						<td><label for="visaDlt">Visa Delta</label></td>
+						<td><input type="checkbox" class="checkbox" id="visaDlt" name="cartCCTypeVisaDelta"  value="1" {ENABLE_VISADELTA}  /></td>
+					</tr>
+					<tr> 
+						<td><label for="visaElt">Visa Electron</label></td>
+						<td><input type="checkbox" class="checkbox" id="visaElt" name="cartCCTypeVisaElectron"  value="1" {ENABLE_VISAELECTRON}  /></td>
+					</tr>
+					<tr> 
+						<td><label for="mastercard">MasterCard</label></td>
+						<td><input type="checkbox" class="checkbox" id="mastercard" name="cartCCTypeMC"  value="1" {ENABLE_MASTERCARD}  /></td>
+					</tr>
+					<tr> 
+						<td><label for="amex">American Express</label></td>
+						<td><input type="checkbox" class="checkbox" id="amex" name="cartCCTypeAmex"  value="1" {ENABLE_AMEX}  /></td>
+					</tr>
+					<tr> 
+						<td><label for="dinners">Diners Club</label></td>
+						<td><input type="checkbox" class="checkbox" id="dinners" name="cartCCTypeDiners"  value="1" {ENABLE_DINNER}  /></td>
+					</tr>
+					<tr> 
+						<td><label for="solo">Solo</label></td>
+						<td><input type="checkbox" class="checkbox" id="solo" name="cartCCTypeSolo"  value="1" {ENABLE_SOLO}  /></td>
+					</tr>
+					<tr> 
+						<td><label for="switch">Switch</label></td>
+						<td><input type="checkbox" class="checkbox" id="switch" name="cartCCTypeSwitch"  value="1" {ENABLE_SWITCH}  /></td>
+					</tr>
+					<tr> 
+						<td><label for="maestro">Maestro</label></td>
+						<td><input type="checkbox" class="checkbox" id="maestro" name="cartCCTypeMaestro" value="1" {ENABLE_MASTERO} /></td>
+					</tr>
+					<tr> 
+						<td><label for="maestro">Discover</label></td>
+						<td><input type="checkbox" class="checkbox" id="discover" name="cartCCTypeDiscover"   value="1" {ENABLE_DISCOVER} /></td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="formButtonWrapper">
+				<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="Update Settings" /> Update Settings</button>
+			</p>
+		</form>
+	</div>
+	<div class="placeHolder"></div>
+</div>
+</div>

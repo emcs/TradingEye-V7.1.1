@@ -1,0 +1,74 @@
+<script language="JavaScript">
+
+	function validate(){
+		if(document.frm.seofriendly.checked==false){
+			alert("Please confirm that SEO-friendly URLs are are working by checking the checkbox.")
+			return false;
+		}
+	}
+	
+	function openPopup(){
+	    var file = "{SITE_URL}test/";
+		window.open(file,'popup','scrollbars=1, left=100,top=100,width=600,height=300,resizable=yes');
+ 	}//openPopup()
+
+	function openPopupHTACCESS(){
+	  var file = "{SITE_URL}/installs/htaccessnote.htm";
+		window.open(file,'popup','scrollbars=1, left=100,top=100,width=600,height=400,resizable=yes');
+ 	}//openPopup()
+
+</script>
+<form name="frm" action="index.php?mode=begin" method="post" >
+<div id="installer">
+<!-- BEGIN ERROR_TPL_BLK -->
+<!-- BEGIN TPL_DSPMSG_BLK -->
+<div class="popWarning">
+	<p>{TPL_VAR_MSG}</p>
+</div>
+<!-- END TPL_DSPMSG_BLK -->
+<h4>Welcome to the TradingEye {TPL_VAR_UPGRADE}installer</h4>
+<p>These are the minimum requirements needed for TradingEye to install and run correctly. You should only continue past this point once the points listed match the minimum requirements.</p>
+<p>Refresh this page after making any changes.</p>
+	<input type="hidden" name="flag_begin" value="{TPL_FLAG_BEGIN}" />
+	<input type="hidden" name="proceed" value="Proceed" />
+	<div class="block">
+		<p>PHP version >= {MINIMUM_PHP_VERSION_NEEDED}<br />
+		<span class="{PHPVERSION_CLASS}">{PHPVERSION}</span></p>
+		<p>ionCube Loader Version >= {MINIMUM_IONCUBE_LOADER_VERSION_NEEDED}<br />
+		<span class="{IONCUBE_CLASS}">{IONCUBEVERSION}</span></p>
+		<p>Curl Version >= {MINIMUM_CURL_VERSION_NEEDED}<br />
+		<span class="{CURL_CLASS}">{CURLVERSION}</span></p>
+		<p>GD Library Version >= {MINIMUM_GD_VERSION_NEEDED}<br />
+		<span class="{GD_CLASS}">{GDVERSION}</span></p>
+		<p>{CONF_NAME}<br />
+		<span class="{CONF_CLASS}">{CONF}</span></p>
+		<p>{USERFILES_NAME}<br />
+		<span class="{USERFILES_CLASS}">{USERFILES_VALUE}</span></p>
+		<p>{IMAGES_NAME}<br />
+		<span class="{IMAGES_CLASS}">{IMAGES_VALUE}</span></p>
+		<p>{GRAPHICS_NAME}<br />
+		<span class="{GRAPHICS_CLASS}">{GRAPHICS_VALUE}</span></p>
+		<p>{RSS_NAME}<br />
+		<span class="{RSS_CLASS}">{RSS_VALUE}</span></p>
+	</div>
+	<p><strong>Note:</strong> To enable SEO friendly URLs, an <strong>.htaccess</strong> file is required. <a href='{SITE_URL}test/'>Check now</a> to see if your .htaccess file is working. A <strong>Not Found</strong> page will be displayed if the .htaccess file is not configured properly. Check the <a href="{SITE_URL}installs/htaccessnote.htm">.htaccess File Notes</a> for more information.</p>
+
+<!-- END ERROR_TPL_BLK -->
+<!-- BEGIN START_TPL_BLK -->
+<h2>TradingEye Installation Wizard</h2>
+<p>Welcome to the TradingEye Instalation Wizard, which will take you through the setup process. Please make sure you read the <a href="readme.txt">readme.txt</a> situated in the /installs/ directory before continuing.</td>
+<h3>&raquo; <a href="./index.php?mode=begin&seofriendly={SEOFRIENDLY}">Begin Installation</a></h3>
+<p>Your IP address is: {TPL_VAR_IPADDRESS}</p>
+<!-- END START_TPL_BLK -->
+</div>
+<div id="steps">
+	<ul>
+		<li class="current">1) Install Requirements</li>
+		<li>2) Terms &amp; Conditions</li>
+		{TPL_VAR_STEP3}
+	</ul>
+</div>
+	<p class="formButtonWrapper" style="text-align:right;">
+		<button class="formButton" type="submit"><img src="../graphics/i_tick.gif" alt="Proceed" /> Proceed</button>
+	</p>
+</form>

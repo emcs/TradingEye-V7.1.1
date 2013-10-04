@@ -1,0 +1,35 @@
+<div class="historyWidgetContainer"><a href="adminindex.php?flag=dashboard">Home</a> <strong>&raquo;</strong> <a href="adminindex.php?action=ec_show.home&amp;flag=builder">Builder</a> <strong>&raquo;</strong> <a href="adminindex.php?action=ec_menu.show">Menu Builder</a> </div>
+<div class="builderBlock fullWidgetContainer">
+	<div class="WidgetTitle">Menu Builder</div>
+	<div class="WidgetContent">
+		<form action="{TPL_VAR_FORMURL}" method="post" name="ThisForm" id="ThisForm" enctype="multipart/form-data" onsubmit="return valMenuBuilder('withimage');">
+		<input type="hidden" name="mode" value="{TPL_VAR_MODE}">
+		<input type="hidden" name="headerid" value="{TPL_VAR_HEADERID}">
+		<table class="whiteTable2" cellspacing="0" cellpadding="0">
+			<thead>
+				<tr>
+					<th align='center'>{LANG_VAR_ONOFF}</th>
+					<th align='center'>{LANG_VAR_MENUTITLE}</th>
+					<th colspan='2' align='center'>{LANG_VAR_MENUTITLEIMAGE}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><input id="header_state" type="checkbox" name="state" value="1" size="20" {TPL_VAR_SELECTED} /></td>
+					<td><input type="text" id="menu_title" name="header" value="{TPL_VAR_MENUTITLE}" maxlength="30" /></td>
+					<td><!-- BEGIN TPL_IMAGE_BLK -->
+					<input id="header_image" type="file" name="image" size="20" />
+					<!-- END TPL_IMAGE_BLK --></td>
+					<td><!-- BEGIN TPL_LINK_BLK -->	
+					<a href="adminindex.php?action=ec_menu.uploadForm&id={TPL_VAR_HEADERID}&type=menuhead" onClick="PopWindow()" target="windowname">{LANG_VAR_EDITIMAGE}</a>
+					<!-- END TPL_LINK_BLK --></td>
+				</tr>
+			</tbody>
+		</table>
+		<p class="formButtonWrapper">
+			<button type="button" onClick="history.go(-1)" class="formButton"><img src="../graphics/i_cross.gif" alt="Cancel" /> <div>Cancel</div></button>
+			<button type="submit" name="submitbutton" class="formButton"><img src="../graphics/i_tick.gif" alt="{TPL_VAR_BTNMESSAGE}" /> <div>{TPL_VAR_BTNMESSAGE}</div></button></p>
+		</form>
+	</div>
+
+</div>

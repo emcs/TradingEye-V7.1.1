@@ -1,0 +1,122 @@
+/*
+
+Tradingeye Inline Editor (screen) style sheet
+===============================================
+
+Copyright:		TradingEye.com
+Last edit:		10/02/2011
+
+*/
+
+#inline_editor {
+	background: #31363e;
+	border: 2px solid #26282f;
+	border-top: none;
+	border-left: none;
+	font: bold 11px Lucida Grande, Arial, Helvetica, sans-serif;
+	left: 0;
+	margin: 0;
+	padding: 0 10px 1em 10px;
+	position: absolute;
+	text-align: left;
+	top: 0;
+	width: 170px;
+	z-index: 100000000;
+	}
+#inline_editor_hidden {
+	background: #31363e;
+	border: 2px solid #26282f;
+	border-top: none;
+	border-left: none;
+	left: 0;
+	margin: 0;
+	padding: 1px 10px;
+	position: absolute;
+	text-align: left;
+	top: 0;
+	width: 170px;
+	z-index: 100000000;
+	}
+#inline_editor dl,
+#inline_editor dl dt,
+#inline_editor dl dd {
+	margin: 0;
+	padding: 0;
+	}
+#inline_editor dl dt {
+	background: #212121;
+	color: #fff;
+	padding: 5px 10px;
+	text-align: left;
+	text-transform: uppercase;
+	width: 150px;
+	}
+#inline_editor dl dd a {
+	background: #31363e;
+	border-bottom: 1px solid #26282f;
+	color: #aaa;
+	display: block;
+	padding: 5px 10px;
+	vertical-align: bottom;
+	}
+#inline_editor dl dd a:hover {
+	background: #26282f;
+	color: #fff;
+	}
+#inline_editor p a {
+	background: #31363e;
+	border-top: 1px solid #26282f;
+	border-bottom: 1px solid #26282f;
+	color: #aaa;
+	display: block;
+	padding: 5px 10px;
+	vertical-align: bottom;
+	}
+#inline_editor p.hideMenu a {
+	color: #aaa;
+	background: #31363e url(../graphics/petrol/hideMenu.gif) no-repeat 5px 50%;
+	text-indent: 15px;
+	}
+#inline_editor p.hideMenu:hover a {
+	color: #fff;
+	background: #26282f url(../graphics/petrol/hideMenu.gif) no-repeat 5px 50%;
+	text-indent: 15px;
+	}
+#show_menu {
+	display: none;
+	}
+#inline_editor_hidden .inline_menu,
+#inline_editor_hidden .hideMenu {
+	display: none;
+	}
+#inline_editor_hidden {
+	width: 25px;
+	}
+#inline_editor_hidden #show_menu {
+	display: block;
+	}
+#inline_editor_hidden #show_menu span {
+	background: #31363e url(../graphics/petrol/showMenu.gif) no-repeat 5px 50%;
+	border-top: 1px solid #26282f;
+	border-bottom: 1px solid #26282f;
+	cursor: pointer;
+	display: block;
+	overflow: hidden;
+	margin: 0;
+	text-indent: -99999px;
+	padding: 3px 10px;
+	}
+#inline_editor_hidden #show_menu span:hover {
+	background: #26282f url(../graphics/petrol/showMenu.gif) no-repeat 5px 50%;
+	color: #fff;
+	}
+#show_menu {
+	display: none;
+	}
+#inline_editor_hidden .inline_menu {
+	display: none;
+	}
+#inline_editor_hidden #show_menu {
+	display: block;
+	margin-bottom: 1em;
+	}

@@ -1,0 +1,106 @@
+<script language="JavaScript" type="text/javascript">
+	<!--
+	function ValidateForm(){
+		var frm = document.ThisForm;
+		if(isNull(frm.choice_title.value)){
+			alert("You must enter a field name");
+			frm.choice_title.value = '';
+			frm.choice_title.focus();
+			return false;
+		}
+		fillValue(frm.choice_title.value, frm.choice_title);
+
+		if(frm.mode.value!="edit")
+		{
+			if(fileUploadExt(frm.image, '.jpg, .jpeg, .gif, pjpeg'))
+			{ 
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}			
+		return true;
+	}
+	//-->
+</script>
+<div class="historyWidgetContainer">
+	<a href="adminindex.php?flag=dashboard">Home</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=ec_show.home&amp;flag=builder">Builder</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=ec_option.home&amp;flag=builder">Product Options &amp; Attributes</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=ec_option.dspCustomOpt&amp;flag=builder">Custom Options</a> <strong>&raquo;</strong>
+	<a href='#'>Custom Option Builder</a>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">{LANG_VAR_CUSTOMOPTTXT}<small class="Right">{TPL_VAR_MSG}</small></div>
+	<div class="WidgetContent">
+		<table class="whiteTable Orders OneColum" cellpadding="0" cellspacing="2">
+			<thead>
+				<tr> 
+					<th colspan="2">Custom Option Details</th>
+				</tr>
+			</thead>
+			<tbody>
+				<form action="{TPL_VAR_FORMURL}" name="ThisForm" method="post" enctype="multipart/form-data" onsubmit="return ValidateForm();">
+					<input type="hidden" name="mode" value="{TPL_VAR_MODE}"/>
+					<input type="hidden" name="choiceid" value="{TPL_VAR_CHOICEID}"/>
+					<tr> 
+						<td class="first"><label>{LANG_VAR_FIELDNAME} <span>*</span></label></td>
+						<td><input type="text" class="formField long" id="choice_title" name="cname" value="{TPL_VAR_TITLE}"  maxlength="30" /></td>
+					</tr>
+					<tr>
+						<td class="first"><label>{LANG_VAR_DESCRIPTION}</label></td>
+						<td><input type="text" class="formField long" id="description" name="description" value="{TPL_VAR_DESC}"  maxlength="50" /></td>
+					</tr>
+					<tr>
+						<td class="first"><label>Type of form field</label></td>
+						<td><div class="selectContainer"><select class="formSelect" id="select_form" name="type">
+							<option value="qty" {TPL_VAR_SEL1}>{LANG_VAR_QUANTITYBOX}</option>
+							<option value="input" {TPL_VAR_SEL2}>{LANG_VAR_INPUTBOX}</option>
+							<option value="checkbox" {TPL_VAR_SEL3}>{LANG_VAR_CHECKBOX}</option>
+							<option value="textarea" {TPL_VAR_SEL4}>{LANG_VAR_TEXTAREA}</option>
+							</select></div></td>
+						</tr>
+						<tr>
+							<td class="first"><label>{LANG_VAR_USESTOCK}</label></td>
+							<td><input type="checkbox" class="checkbox" id="use_stock" name="use_inventory" value="1" {TPL_VAR_SELECTED1} /></td>
+						</tr>
+						<tr>
+							<td class="first"><label>{LANG_VAR_ALLOWBACK}</label></td>
+							<td><input type="checkbox" class="checkbox" id="allow_backorders" name="backorder" value="1" {TPL_VAR_SELECTED2} /></td>
+						</tr>
+						<tr>
+							<td class="first"><label>{LANG_VAR_STOCKLVL}</label></td>
+							<td><input type="text" class="formField short" id="stock_levels" name="inventory" value="{TPL_VAR_INVENTORY}" size="5" maxlength="3" /></td>
+						</tr>
+						<tr>
+							<td class="first"><label>{LANG_VAR_ADDTLPRICE}</label></td>
+							<td><input type="text" class="formField short" id="add_price" name="price" value="{TPL_VAR_PRICE}" size="5" maxlength="20" /></td>
+						</tr>
+						<tr>
+							<td class="first"><label>{LANG_VAR_ONOFF}</label></td>
+							<td><input type="checkbox" class="checkbox" id="active" name="state" value="1" {TPL_VAR_SELECTED3} /></td>
+						</tr>
+						<!-- BEGIN IMG_BLK	-->
+						<tr>
+							<td class="first"><label>{LANG_VAR_OPTIMAGE}</label></td>
+							<td><input id="img_browse_a" type="file" name="image" size="30" /></td>
+						</tr>
+						<!-- END IMG_BLK -->
+						<!-- BEGIN LINK_BLK	-->
+						<tr>
+							<td class="first"><label for="img_browse_a">{LANG_VAR_OPTIMAGE}</label></td>
+							<td><a href="adminindex.php?action=ec_option.uploadForm&id={TPL_VAR_CHOICEID}&type=choice" class="linkAddImage" onClick="PopWindow()" target="windowname">{TPL_VAR_IMGLBL}</a></td>
+						</tr>
+						<!-- END LINK_BLK -->
+					</tbody>
+				</table>
+				<p class="formButtonWrapper">
+					<button class="formButton" onclick="history.go(-1); return false;"><img src="../graphics/i_cross.gif" alt="Cancel" /> <div>Cancel</div></button>
+					<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="Create New Custom Option" /> <div>Create New Custom Option</div></button>
+				</p>
+		</form>
+	</div>
+</div>

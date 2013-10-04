@@ -1,0 +1,83 @@
+<script language="Javascript" type="text/javascript">
+	function checkAll(selValue){
+		//alert(selValue);
+		var frm = document.frmContact;
+		for(i=1;i<frm.txtChkbox.length;i++){
+			frm.txtChkbox[i].checked = frm.txtChkbox[0].checked;
+		}
+	}
+	function validateForm(){
+		var frm = document.frmContact;
+		for(i=1;i<frm.txtChkbox.length;i++){
+			if(frm.txtChkbox[i].checked == true){
+				if(confirm("Do you really wish to delete selected items?")){
+					return true;
+				}else{
+					return false;
+				}
+			}
+		}
+		alert("Please select atleast one contact to delete");
+		return false;
+	}
+	function checkMain(frm){
+		var j = 1;
+		for(i=1; i < frm.txtChkbox.length; i++){
+			if(frm.txtChkbox[i].checked){
+				j = j + 1;	
+			}
+		}
+		if(frm.txtChkbox.length != j){
+			frm.txtChkbox[0].checked = false;
+		}else{
+			frm.txtChkbox[0].checked = true;
+		}
+	}
+</script>
+<div class="historyWidgetContainer">
+	<a href="adminindex.php?flag=dashboard&amp;flag=dashboard">Home</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=orders.home&amp;flag=orders">Orders</a> <strong>&raquo;</strong> 
+	<a href='#'>{LANG_VAR_ENQUIRIES}</a>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">{LANG_VAR_ENQUIRIES}</div>
+	<div class="WidgetContent">
+		<!-- BEGIN TPL_MSG_BLK -->
+			<p>{TPL_VAR_MSG}</p>
+		<!-- END TPL_MSG_BLK -->
+		<form name="frmContact" action="{TPL_USERURL}adminindex.php?action=enquiry.deleteEnq" method="post" onsubmit="return validateForm();">
+			<table class="whiteTable2 Builder" cellspacing="0">
+				<!-- BEGIN TPL_MAIN_BLK -->
+					<thead>
+						<tr>
+							<th class="headerSelectAll"><input type="checkbox" class="checkbox" name="txtChkbox" id="txtChkbox" onclick="checkAll(this.checked);"  /></th>
+							<th>{LANG_VAR_NAME}</th>
+							<th>{LANG_VAR_EMAIL}</th>
+							<th>Date</th>
+							<th>{LANG_VAR_COUNTRY}</th>
+							<th class="headerPreview">View</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- BEGIN TPL_ENQUIRY_BLK --> 
+							<tr>
+								<td><input type="checkbox" class="checkbox" name="txtChkbox[]" id="txtChkbox" value="{TPL_VAR_ID}" onclick="checkMain(this.form)"  /></td>
+								<td>{TPL_VAR_NAME}</td>
+								<td><a href="mailto:{TPL_VAR_EMAIL}" class="linkEmail">{TPL_VAR_EMAIL}</a></td>
+								<td>{TPL_VAR_DATE}</td>
+								<td>{TPL_VAR_COUNTRY}</td>
+								<td><a href="{TPL_USERURL}adminindex.php?action=enquiry.details&id={TPL_VAR_ID}" class="linkPreview">View</a></td>
+							</tr>	
+						<!-- END TPL_ENQUIRY_BLK  -->
+			            <tr>
+							<td colspan="6"><p class="formButtonWrapper">
+								<button class="formButton" type="submit" name="delContact" id="delContact"><img src="../graphics/i_delete.gif" alt="{LANG_VAR_DELETECONTACT}" /> {LANG_VAR_DELETECONTACT}</button>				
+							</p></td>
+						</tr>
+					</tbody>
+				<!-- END TPL_MAIN_BLK -->	
+			</table>
+		</form>
+	</div>
+</div>

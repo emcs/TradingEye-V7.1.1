@@ -1,0 +1,193 @@
+<script language="JavaScript">
+	function validate()
+	{
+		if(isNull(document.frm.name.value))
+		{
+			alert("Please enter the name of the country.");
+			document.frm.name.focus();
+			return false;
+		}
+		if(isNull(document.frm.short_name.value))
+		{
+			alert("Please enter the short name of the country.");
+			document.frm.short_name.focus();
+			return false;
+		}	
+		return true;
+	}
+</script>
+
+<style type="text/css">
+	.selectContainerSmall { width: 200px; }
+	.selectContainerSmall select { width: 235px; }
+</style>
+
+
+    <div class="historyWidgetContainer"><a href="../adminindex.php?flag=dashboard">Home</a> <strong>&raquo;</strong> <a href="adminindex.php?action=settings.companyHome&flag=settings">Settings</a> <strong>&raquo;</strong> <a href="#"> VAT &amp; Tax Settings</a></div>
+    <div class="fullWidgetContainer">
+      <div class="WidgetTitle">VAT &amp; Tax Settings</div>
+      <div class="WidgetContent">
+	<p style="clear: both;">The entries in this section will appear in the Billing / Shipping Info</p>
+	<!-- BEGIN TPL_ERROR_BLK -->{TPL_VAR_ERROR}<!-- END TPL_ERROR_BLK -->
+	<div class="LeftBox">
+		<table class="whiteTable2 Builder" cellspacing="0">
+			<thead>
+				<tr> 
+					<th colspan="2">Manage Countries</th>
+				</tr>
+			</thead>
+			<tbody>
+				<form action="{TPL_VAR_SITEURL}admin/adminindex.php?action=country.update" method="post" name="frm" onsubmit="return validate()">
+					<input type="hidden" name="mode" value="{TPL_VAR_MODE}">
+					<input type="hidden" name="cid" value="{TPL_VAR_CID}">
+					<tr>
+						<td class="first"><label>Name <span>*</span></label></td>
+						<td><input type="text" class="formField" name="name" value="{TPL_VAR_NAME}"></td>
+					</tr>
+					<tr>
+						<td><label>Short Name <span>*</span></label></td>
+						<td><input type="text" class="formField short" name="short_name" value="{TPL_VAR_SHORTNAME}"></td>
+					</tr>
+					<tr>
+						<td><label>Enabled In Checkout</label></td>
+						<td><select name="status"><option value="1">Enabled</option><option value="0">Disabled</option></select></td>
+					</tr>
+					<tr>
+						<td><label>Tax Code Area (Sage)</label></td>
+						<td><input type="text" class="formField short" name="sage_code" value="{TPL_VAR_TAX_CODE_AREA_SAGE}"></td>
+					</tr>
+					<tr>
+						<td><label>VAT</label></td>
+						<td><input type="text" class="formField short" name="tax" value="{TPL_VAR_TAX}" style="width:389px;"> %</td>
+					</tr>
+					<tr>
+						<td><label>Shipping Charge:</label></td>
+						<td><input type="text" class="formField short" name="shipCharge" value="{TPL_VAR_SHIP}"></td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="formButtonWrapper">
+				<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="Submit" /> Submit</button>
+			</p>
+		</form>	
+	</div>
+	<script LANGUAGE="JavaScript" TYPE="text/javascript">
+		function selectAllCheckbox(frm)
+		{
+			for(i=0;i<frm.elements.length;i++)
+				if(frm.elements[i].type == "checkbox")
+					frm.elements[i].checked = frm.selectAll.checked;
+		}
+		
+		function validateForm(frm)
+		{
+			flag =false;
+			for(i=0;i<frm.elements.length;i++)
+			{
+				if(frm.elements[i].type=="checkbox" && frm.elements[i].name=="selection[]" && true == frm.elements[i].checked)
+				{
+					flag = true;
+					break;
+				}
+			}
+				if(false == flag)
+				{
+					alert("Please check at least one checkbox to proceed");
+					return false;
+				}
+				return confirm("You are about to delete records.");
+				//return ConfirmDeletion(frm);
+				return true;
+		}
+
+
+		function ConfirmDeletion(frm)
+		{   
+			if(true == frm.selectAll.checked){
+				return confirm("You are about to delete all records.");
+			}
+			flag =false;
+			for(i=0;i<frm.elements.length;i++)
+			{
+				if(frm.elements[i].type=="checkbox" && frm.elements[i].name=="selection[]" && true == frm.elements[i].checked)
+				{
+					flag = true;
+					break;
+				}
+			}
+			if(true == flag){
+				return confirm("You are about to delete selected records.");
+			}
+			return false;
+		}
+	</script>
+	<div class="RightBox">
+		<table class="whiteTable2" cellspacing="0">
+			<thead>
+				<tr>
+					<th colspan="2">Quick Select</th>
+				</tr>
+			</thead>
+			<tbody>
+				<form action="{TPL_VAR_SITEURL}admin/adminindex.php?action=country.home" method="get" name="go">
+					<input type="hidden" name="action" value="country.home">
+					<tr>
+						<td class="first"><label>Select Region</label></td>
+						<td>
+							<div class="selectContainerSmall"><select name='cid' class="formSelect">
+															<!-- BEGIN TPL_SELECTCOUNTRY_BLK --> 
+															<option value="{TPL_VAR_CID}" {TPL_VAR_SELECTED}>{TPL_VAR_CNAME}</option> 
+															<!-- END TPL_SELECTCOUNTRY_BLK -->  
+														</select></div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="formButtonWrapper">
+				<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="Go" /> Go</button>
+			</span>
+		</form>
+		</table>
+	</div>
+	<div class="placeHolder"></div>
+</div>
+</div>
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">Manage Countries <!-- BEGIN TPL_MSG_BLK --><small>{TPL_VAR_MESSAGE}</small><!-- END TPL_MSG_BLK --></div>
+<div class="WidgetContent">
+		<!-- BEGIN TPL_MAINCOUNTRY_BLK -->	
+ 		<table class="whiteTable2" cellspacing="0">
+ 			<thead>
+				<tr> 
+					<th class="headerSelectAll"><input type="Checkbox" name="selectAll" value="1" onclick="selectAllCheckbox(this.form)"></th>
+					<th class="headerTaxID">ID</th>
+					<th>Name</th>
+					<th class="headerShortName">Short Name</th>
+					<th class="headerManage">Manage States &amp; VAT</th>
+				</tr>
+			</thead>
+			<tbody>
+				<form action="{TPL_VAR_SITEURL}admin/adminindex.php?action=country.delete{EXTRASTRING}" method="post" onsubmit="return validateForm(this)">
+					<!-- BEGIN TPL_COUNTRY_BLK --> 
+					<tr>
+						<td><input type="checkbox" name="selection[]" value="{TPL_VAR_CID}"></td>
+						<td>{TPL_VAR_COUNT}</td>
+						<td><a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=country.home&cid={TPL_VAR_CID}">{TPL_VAR_CNAME}</a></td>
+						<td>{TPL_VAR_CSHORTNAME}</td>
+						<td><a class="linkEdit" href="{TPL_VAR_SITEURL}admin/adminindex.php?action=state.home&cid={TPL_VAR_CID}">Manage States &amp; VAT</a></td>
+					</tr>
+					<!-- END TPL_COUNTRY_BLK -->
+				</tbody>
+			</table>
+			<p class="formButtonWrapper">
+				<button type="submit" class="formButton"><img src="../graphics/i_cross.gif" alt="Delete Selected" /> Delete Selected</button>
+			</p><br style='clear:both;'/>
+		</form>
+		<div><!-- BEGIN TPL_PAGING2_BLK -->
+				{PagerBlock2}
+		<!-- END TPL_PAGING2_BLK -->
+		</div>
+		<!-- END TPL_MAINCOUNTRY_BLK -->
+		<div class="placeHolder"></div>
+	</div>
+</div>

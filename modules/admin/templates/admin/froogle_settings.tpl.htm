@@ -1,0 +1,61 @@
+<SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
+function validateForm()
+{
+	var frm = document.ThisForm;
+	if(isNull(frm.server.value)){
+		alert("You must enter company name");
+		frm.server.value = '';
+		frm.server.focus();
+		return false;
+	}
+	if(isNull(frm.username.value)){
+		alert("You must enter address");
+		frm.username.value = '';
+		frm.username.focus();
+		return false;
+	}
+	if(isNull(frm.password.value)){
+		alert("You must enter city");
+		frm.password.value = '';
+		frm.password.focus();
+		return false;
+	}
+	return true;
+}
+</script>
+	
+	
+	<table id="gen-table" width="300">
+      <tr class="white-a"> 
+        <th class="prod-builder headline" colspan="2"><a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=help.company" onClick="helpWindow()" target="windowname"><img src="{GRAPHICSMAINPATH}admin/icons/question-mrk-16.gif" alt="Help" /></a> 
+        <a href="javascript:history.go(-1)"><img src="{GRAPHICSMAINPATH}admin/blue/go_back.gif" alt="Go back" /></a>Froogle FTP settings</th>
+      </tr>
+	  <form action="{TPL_VAR_SITEURL}sales/adminindex.php?action=updatefroogle" method="post" name="ThisForm" id="ThisForm" onsubmit="return validateForm();">
+	  <!-- BEGIN TPL_MSG_BLK -->
+      <tr class="gray"> 
+        <td colspan="2" class="message">{TPL_VAR_MSG}</td>
+      </tr>
+	  <!-- END TPL_MSG_BLK -->
+	  <tr> 
+        <td><label for="server">Server<span>*</span></label></td>
+        <td>
+			<input type="text" id="server" name="server" value="{TPL_VAR_SERVER}" class="txt-field" maxlength="100" />
+		</td>
+      </tr>
+
+	  <tr class="red-a"> 
+        <td class="txt-top"><label for="username">Username <span>*</span></label> 
+        </td>
+           <td><input type="text" id="username" name="username" value="{TPL_VAR_USERNAME}" class="txt-field" maxlength="50" /></td>
+      </tr>
+	  
+	  <tr> 
+        <td><label for="password">Password <span>*</span></label></td>
+        <td><input type="password" id="password" name="password" value="{TPL_VAR_PASSWORD}" class="txt-field" maxlength="50" /></td>
+      </tr>
+	  
+      <tr> 
+        <td class="txt-right" id="save-change" colspan="2"><input type="submit" value="Update" /></td>
+      </tr>
+	  </form>
+    </table>	

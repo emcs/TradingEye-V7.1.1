@@ -1,0 +1,33 @@
+<div class="historyWidgetContainer">
+	<a href='adminindex.php'>Home</a> <strong>&raquo;</strong> 
+	<a href='/sales/adminindex.php?action=email.home&amp;flag=marketing'>Marketing</a> <strong>&raquo;</strong>
+	<a href='/sales/adminindex.php?action=report.home&amp;flag=marketing'>Reports</a> <strong>&raquo;</strong>  
+	<a href="#">New Orders</a>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">New Orders</div>
+	<div class="WidgetContent">
+		<p class="buttonWrapper">
+			<button onclick="window.location='{TPL_VAR_SITEURL}adminindex.php'" class="formButton"><img src="{TPL_VAR_SITEURL}graphics/i_back.gif" alt="Back" /> <div>Return to Dashboard</div></button>
+		</p>
+		<table class="whiteTable2 Orders" cellspacing="0">
+			<thead>
+				<tr>
+					<th>Invoice Number</th>
+					<th class="title">Customer Name</th>
+					<th>Order Total</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- BEGIN TPL_NEWORDER_BLK -->
+				<tr>
+					<td><a href="{TPL_VAR_ORDERURL}">{TPL_VAR_NEWORDERNUMBER}</a></td>
+					<td>{TPL_VAR_CUSTURL}{TPL_VAR_NEWORDERCUSTOMER}{TPL_VAR_CLOSETAG}</td>
+					<td>{TPL_VAR_ORDERTOTAL}</td>
+				</tr>
+				<!-- END TPL_NEWORDER_BLK -->
+			</tbody>
+		</table>
+	</div>
+</div>

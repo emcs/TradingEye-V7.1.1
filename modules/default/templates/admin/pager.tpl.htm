@@ -1,0 +1,34 @@
+<script language="JavaScript">
+	function sub{TPL_VAR_FORMNO}(ext)
+	{
+	document.location.href = 'adminindex.php?page='+document.frm{TPL_VAR_FORMNO}.pagenum.options[document.frm{TPL_VAR_FORMNO}.pagenum.selectedIndex].value+ext;
+	}
+</script>
+<form method="post" action="#" name="frm{TPL_VAR_FORMNO}">
+	<div class="pagination"> 
+        <div class="showing">
+        	<p>Showing {itemfrom}-{itemto} of {itemtotal}</p>
+        </div>
+		<div class="pager">
+			<p>
+				<!--{TPL_VAR_VIEWALL}&nbsp;-->
+				<!-- Page <strong>{pageNo}</strong> of <strong>{totalPages}</strong> |  -->
+				<strong>{FirstLink}
+				<!-- BEGIN prev -->
+					| <a href="{prevLink}">Previous</a> 
+				<!-- END prev -->
+				</strong>
+				( Page <select name="pagenum" onchange="sub{TPL_VAR_FORMNO}('{Extra}')" class="formSelect pagination">
+				<!-- BEGIN pagelist -->
+					<option value="{dspPage}" {sel}>{dspPage}</option>
+				<!-- END pagelist -->
+				</select> of {totalPages} )<strong>
+				<!-- BEGIN next --> 
+					<a href="{nextLink}">Next</a> |
+				<!-- END next -->
+				{LastLink}</strong>
+			</p>
+		</div>
+	</div>
+</form>
+

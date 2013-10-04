@@ -1,0 +1,43 @@
+<div class="historyWidgetContainer">
+	<a href="adminindex.php?flag=dashboard">Home</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=ec_show.home&amp;flag=builder">Builder</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=ec_option.home">Product Options &amp; Attributes</a> <strong>&raquo;</strong> 
+	<a href='#'>Custom Options</a>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">Custom Options <small>{TPL_TOTAL_RECORDS1} records found</small></div>
+	<div class="WidgetContent">
+		<p class="buttonWrapper">
+			<button onclick="window.location='{TPL_SHOPURL}adminindex.php?action=ec_option.ctmOptForm'" class="formButton"><img src="../graphics/i_add.gif" alt="Add New Custom Option" /> <div>Add New Custom Option</div></button>
+		</p>
+	<!-- BEGIN TPL_MAINOPTIONS_BLK -->	
+		<table class="whiteTable2 Builder" cellpadding="0" cellspacing="0">
+			<thead>
+				<tr> 
+					<th class="headerOptionTitle">Option Title</th>
+					<th>Form Type</th>
+					<th>Use Stock</th>
+					<th>Additional Price</th>
+					<th class="headerImage">Image</th>
+					<th class="headerEdit">Edit</th>
+					<th class="headerDelete">Delete</th>
+				</tr>
+			</thead>
+			<!-- BEGIN TPL_CTMOPTIONS_BLK -->
+			<tbody>
+				<tr>
+					<td>{TPL_VAR_CTITLE}</td>
+					<td>{TPL_VAR_TYPE}</td>
+					<td>{TPL_VAR_USTOCK}</td>
+					<td>{TPL_VAR_CURRENCY} {TPL_VAR_PRICE}</td>
+					<td><a href="adminindex.php?action=ec_option.uploadForm&id={TPL_VAR_CHOICEID}&type=choice" target="windowname" class="linkImage lightwindow" params="lightwindow_width=500,lightwindow_height=455,lightwindow_type=external">{TPL_VAR_IMGLBL}</a></td>
+					<td><a href="adminindex.php?action=ec_option.editChoice&choiceid={TPL_VAR_CHOICEID}" class="linkEdit">Edit</a></td>
+					<td><a href="adminindex.php?action=ec_option.deleteChoice&choiceid={TPL_VAR_CHOICEID}&amp;auth={TPL_VAR_AUTH_TOKEN}" onclick="if(confirm('Are you sure you want to delete {TPL_VAR_CTITLE}?')){return true}else{return false}" class="linkDelete">Delete</a></td>
+				</tr>
+			</tbody>
+			<!-- END TPL_CTMOPTIONS_BLK -->
+		</table>
+	<!-- END TPL_MAINOPTIONS_BLK -->		
+	</div>
+</div>

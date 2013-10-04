@@ -1,0 +1,293 @@
+/*
+=======================================================================================
+Copyright: Electronic and Mobile Commerce Software Ltd
+Product: TradingEye
+Version: 7.0.5
+=======================================================================================
+*/
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+	}
+body {
+	background: #333;
+	color: #111;
+	font: 62.5%/1.6em "Lucida Grande", Verdana, Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	}
+li {
+	color: #111;
+	font: 1em "Lucida Grande", Verdana, Arial, sans-serif;
+	}
+
+
+/* =CONTAINER
+----------------------------------------------- */
+
+#container {
+	background: #fff;
+	border: 5px solid #222;
+	border-top: 0;
+	color: #333;
+	font-size: 1.1em;
+	margin: 20px auto 2em auto;
+	padding: 0 25px;
+	position: relative;
+	text-align: left;
+	width: 600px;
+	}
+#container h1 {
+	background: #222;
+	color: #fff;
+	font-size: 1.5em;
+	margin: 0 -25px;
+	padding: 1em 0;
+	text-align: center;
+	}
+.formField {
+	background: #fff;
+	border: 1px solid #d9d9d9;
+	margin: .2em 0 .5em 0;
+	padding: 4px;
+	width: 325px;
+	}
+.formField.secure {
+	width: 270px
+	}
+.formSelect {
+	background: #fff;
+	border: 1px solid #d9d9d9;
+	margin: .5em 0;
+	padding: 3px 4px;
+	width: 170px;
+	}
+.checkbox {
+	top: .15em;
+	position: relative;
+	}
+#container #footer {
+	background: #eee;
+	clear: both;
+	margin: 2em -25px 0 -25px;
+	padding: .5em 25px .8em 25px;
+	position: relative;
+	text-align: left;
+	}
+#container #footer p {
+	margin: .5em 0;
+	}
+
+
+/* =LINKS
+----------------------------------------------- */
+
+a:link,
+a:visited,
+a:active {
+	color: #63a6d9;
+	text-decoration: none;
+	}
+a:hover {
+	color: #111;
+	text-decoration: none;
+	}
+
+/* active / inactive links */
+
+a.statusActive {
+	background: url(../graphics/statusActive.png) no-repeat 0 50%;
+	padding: 2px 0 2px 22px;
+	}
+a.statusInactive {
+	background: url(../graphics/statusInactive.png) no-repeat 0 50%;
+	padding: 2px 0 2px 22px;
+	}
+
+
+/* =TYPOGRAPHY
+----------------------------------------------- */
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	line-height: 1.6em;
+	margin: 1em 0;
+	}
+h2 {
+	background: none;
+	color: #111;
+	font-size: 1.6em;
+	font-weight: normal;
+	margin: 1em 0 .5em 0;
+	}
+h3 {
+	clear: both;
+	color: #111;
+	font-size: 1.2em;
+	font-weight: bold;
+	margin: .5em 0;
+	text-transform: uppercase;
+	}
+
+/* installation checklist */
+
+.block {
+	background: #f9f9f9;
+	border: 1px solid #e5e5e5;
+	display: block;
+	margin: 1.5em 0;
+	padding: .1em 15px;
+	}
+.block p {
+	font-size: 1.182em;
+	line-height: 1.8em;
+	}
+.block p span {
+	color: #999;
+	font: italic 1em Georgia, Times, serif;
+	letter-spacing: .025em;
+	}
+.block p .green {
+	color: #0a0;
+	}
+.block p .red {
+	color: #c00;
+	}
+
+/* messages */
+
+.popWarning {
+	background: #fff8db url(../graphics/popWarning.png) no-repeat 10px 50%;
+	border: 1px solid #eeda88;
+	margin: 1em 0 0 0;
+	padding: 0 10px 0 32px;
+	}
+
+/* lists */
+
+ol,
+ul,
+ol li,
+ul li {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	}
+ol,
+ul {
+	margin: 2em 2em;
+	}
+ol li {
+	line-height: 1.6em;
+	list-style: decimal;
+	margin: 1em 0;
+	}
+ul li {
+	line-height: 1.6em;
+	list-style: circle;
+	margin: 1em 0;
+	}
+
+/* buttons */
+
+.formButtonWrapper {
+	float: left;
+	height: 30px;
+	overflow: hidden;
+	width: 49%;
+	}
+.formButtonWrapper button {
+	background-color: #333;
+	border: 1px solid #333;
+	color: #ddd;
+	cursor: pointer;
+	display: block;
+	float: left;
+	font-family: "Lucida Grande", Verdana, Arial, sans-serif;
+	font-size: 1em;
+	font-weight: bold;
+	line-height: 1.3em;
+	margin: 0 7px 0 0;
+	padding: 5px 10px 6px 10px;
+	text-decoration: none;
+	}
+.formButtonWrapper.alt button {
+	float: right;
+	margin-right: 1px;
+	margin-left: 7px;
+	}
+.formButtonWrapper button:hover,
+.formButtonWrapper.alt button:hover {
+	background: #222;
+	color: #fff;
+	}
+.formButtonWrapper button {
+	overflow: visible;
+	padding: 4px 10px 3px 10px; /* IE6 */
+	width: auto;
+	}
+.formButtonWrapper button[type] {
+	line-height: 17px; /* Safari */
+	padding: 5px 10px 5px 10px; /* Firefox */
+	}
+*:first-child+html button[type] {
+	padding: 4px 10px 3px 10px; /* IE7 */
+	}
+.formButtonWrapper button img {
+	border: none;
+	height: 16px;
+	margin: 0 2px -4px -4px !important;
+	padding: 0;
+	width: 16px;
+	}
+
+
+/* =CLEARFIX
+----------------------------------------------- */
+
+#container:after,
+p.formButtonWrapper:after,
+p.formButtonWrapper button:after,
+dl:after,
+dl dt:after,
+dl dd:after {
+	clear: both;
+	content: ".";
+	display: block;
+	height: 0;
+	visibility: hidden;
+	}
+#container,
+p.formButtonWrapper,
+p.formButtonWrapper button,
+dl,
+dl dt,
+dl dd {
+	display: block;
+	}
+/*  \*/
+#container,
+p.formButtonWrapper,
+p.formButtonWrapper button,
+dl,
+dl dt,
+dl dd {
+	min-height: 1%;
+	}
+* html #container,
+* html p.formButtonWrapper,
+* html p.formButtonWrapper button,
+* html dl,
+* html dl dt,
+* html dl dd {
+	height: 1%;
+	}
+/*  */

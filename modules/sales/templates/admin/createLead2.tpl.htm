@@ -1,0 +1,72 @@
+<script language="JavaScript" type="text/javascript">
+ function validate()
+	{
+		frm=document.myFrm;
+		if(compareDates(frm.start_date.value,frm.end_date.value)>=0)
+		{
+			alert("Invalid dates\nStart date should be less than End date");
+			frm.start_date.focus();
+			return false;
+		}
+		return true;
+	}
+</script>
+<div class="historyWidgetContainer"><a href='adminindex.php'>Home </a><strong> &raquo; </strong><a href='adminindex.php?action=email.home'>Marketing</a><strong> &raquo; </strong><a href='adminindex.php?action=email.home'>Email Campaigns</a><strong> &raquo; </strong><a href='#'>Create New Lead List</a></div>
+<div class="fullWidgetContainer">
+      <div class="WidgetTitle">Lead Builder</div>
+      <div class="WidgetContent">
+	<p>Select a date range of orders. Customers who have purchased the select products within the specified date range will be added to the lead builder.</p>
+	<table>
+    	<thead>
+	    	<tr> 
+    	    	<th>Create Lead List Date Range</th>
+			</tr>
+		</thead>
+		<tbody>
+			<form action="{TPL_VAR_SITEURL}sales/adminindex.php?action=email.updateLead1" method="post" name="myFrm" onSubmit="return validate();">
+				<input type="hidden" name="leadid" value="{TPL_VAR_LEADID}">
+		 		<tr> 
+					<td class="first"><label for="start_date">Order From (dd/mm/yyyy)</label></td>
+					<td>
+						<input type="text" id="start_date" name="start_date" value="{TPL_VAR_FROMDATE}" size="7" class="formField" />
+						<span class="calImage"><a href="javascript:cal2.popup();"><img src="{TPL_VAR_SITEURL}graphics/admin/blue/cal.gif" width="16" height="16" border="0" alt="Click Here to Pick up the date" title="Click Here to Pick up the date"></a></span>
+						<script language="JavaScript">
+							var cal2 = new calendar2(document.forms[0].elements['start_date']);
+							cal2.year_scroll = true;
+							cal2.time_comp = false;
+						</script>
+					</td>
+				</tr>
+				<tr> 
+					<td><label for="end_date">Order To (dd/mm/yyyy)</label></td>
+					<td>
+						<input type="text" id="end_date" name="end_date" value="{TPL_VAR_TODATE}" size="7" class="formField" maxlength="20" />
+						<span  class="calImage"><a href="javascript:cal3.popup();"><img src="{TPL_VAR_SITEURL}graphics/admin/blue/cal.gif" width="16" height="16" border="0" alt="Click Here to Pick up the date" title="Click Here to Pick up the date"></a></span>
+						<script language="JavaScript">
+							var cal3 = new calendar2(document.forms[0].elements['end_date']);
+							cal3.year_scroll = true;
+							cal3.time_comp = false;
+						</script>
+					</td>
+				</tr>
+				<tr>
+					<td>Choose List Name</td>
+					<td><input type="text" name="txtName" value="" size="15" class="formField" /></td>
+				</tr>
+			</tbody>
+		</table>
+		<p class="formButtonWrapper">
+			<button type="submit" value="formButton"><img src="../graphics/i_tick.gif" alt="Update List" /> Update list</button>
+		</p>
+		<!-- BEGIN TPL_MSG_BLK -->
+		<br />
+		<h3>Lead Update</h3>
+		<p>No users were selected with the current date/products. Please select a new range to try again.</p>
+		<p class"buttonWrapper">
+			<a href="{TPL_VAR_SITEURL}sales/adminindex.php?action=email.leadHome"><span><img src="../graphics/i_back.gif" alt="Back to Lead Builder" /> Back to Lead Builder</span></a>
+			<a href="{TPL_VAR_SITEURL}sales/adminindex.php?action=email.home"><img src="../graphics/i_back.gif" alt="Back to Mailroom" /> Back to Mailroom</a>
+		</p>
+		<!-- END TPL_MSG_BLK -->
+	</form>
+</div>
+</div>

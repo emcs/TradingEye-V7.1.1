@@ -1,0 +1,32 @@
+<div class="historyWidgetContainer"><a href='adminindex.php'>Home </a><strong> &raquo; </strong><a href='adminindex.php?action=email.home'>Marketing</a><strong> &raquo; </strong><a href='adminindex.php?action=promotions.home'>Promotions</a><strong> &raquo; </strong><a href='#'>Gift Certificates</a></div>
+<div class="fullWidgetContainer">
+      <div class="WidgetTitle">Gift Certificates <small><!-- BEGIN TPL_MSG_BLK1 -->{TPL_VAR_MSG}<!-- END TPL_MSG_BLK1 --></small></div>
+      <div class="WidgetContent">
+	<!-- BEGIN TPL_MESSAGE_BLK --><p>{TPL_VAR_MESSAGE}</p><!-- END TPL_MESSAGE_BLK --><!-- BEGIN TPL_MSG_BLK2 --><!-- END TPL_MSG_BLK2 -->
+		<button onclick="window.location='{TPL_VAR_SALESURL}adminindex.php?action=promotions.giftcert.dspForm'" class="formButton"><img src="../graphics/i_add.gif" alt="Add Gift Certificate" /> <div>Add Gift Certificate</div></button>
+	<table class="whiteTable2 Orders" cellspacing="0">
+		<thead>
+			<tr>
+				<th>Certificate code</th>
+				<th>Amount</th>
+				<th>Balance</th>
+				<th>Build date</th>
+				<th class="headerEdit">Edit</th>
+				<th class="headerDelete">Delete</th>
+			</tr>
+		</thead>
+		<tbody>
+			<!-- BEGIN TPL_GIFTCERT_BLK -->
+			<tr>
+				<td class="first">{TPL_VAR_CODE}</td>
+				<td>{TPL_VAR_CURRENCY}{TPL_VAR_AMOUNT}</td>
+				<td>{TPL_VAR_CURRENCY}{TPL_VAR_REMAINING}</td>
+				<td>{TPL_VAR_BUILDDATE}</td>
+				<td><a class="linkEdit" href="{TPL_VAR_SALESURL}adminindex.php?action=promotions.giftcert.dspForm&id={TPL_VAR_ID}">Edit</a></td>
+				<td><a class="linkDelete" href="{TPL_VAR_SALESURL}adminindex.php?action=promotions.giftcert.delete&id={TPL_VAR_ID}&amp;auth={TPL_VAR_AUTH_TOKEN}" onclick="if(confirm('Are you sure you want to delete {TPL_VAR_CODE1}?')){return true}else{return false}">Delete</a></td>
+			</tr>
+			<!-- END TPL_GIFTCERT_BLK -->
+		</tbody>
+	</table>
+	
+</div></div>

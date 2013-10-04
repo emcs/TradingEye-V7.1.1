@@ -1,0 +1,98 @@
+<script language="JavaScript" type="text/javascript">
+function validateForm()
+{
+	var frm = document.ThisForm;
+	if(isNull(frm.txtName.value))
+	{
+		alert("You must enter the Application name.");
+		frm.txtName.value = '';
+		frm.txtName.focus();
+		return false;
+	}
+	if(isNull(frm.txtTemplate.value))
+	{
+		alert("You must enter the Template name.");
+		frm.txtTemplate.value = '';
+		frm.txtTemplate.focus();
+		return false;
+	}
+	if(isNull(frm.txtVersion.value))
+	{
+		alert("You must enter the Version.");
+		frm.txtVersion.value = '';
+		frm.txtVersion.focus();
+		return false;
+	}
+	return true;
+}
+</script>
+<div class="historyWidgetContainer">
+	<a href="../adminindex.php?flag=dashboard">Home</a> <strong>&raquo;</strong> 
+	<a href="../user/adminindex.php?action=security.home&flag=admin">Admin</a> <strong>&raquo;</strong> 
+	<a href='#'>Plugin Modules</a>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">Plugin Modules</div>
+	<div class="WidgetContent">
+		<!-- BEGIN TPL_MSG_BLK1 -->
+			<p>{TPL_VAR_MSG}</p>
+		<!-- END TPL_MSG_BLK1 -->
+	<div class="LeftBox">
+		<table class='whiteTable'>
+				<thead>
+					<tr>
+						<th>Plugins</th>
+						<th>Version</th>
+						<th class="headerStatus">Status</th>
+						<th class="headerStatus">Mod</th>
+						<th class="headerEdit">Activate</th>
+						<th class="headerDelete">Delete</th>
+					</tr>
+				</thead>
+				<tbody>  
+					<!-- BEGIN TPL_PLUGIN_OFF_BLK -->
+					<tr>
+						<td><span style="color:#000;text-decoration:underline;">{TPL_VAR_OFF_NAME}</span><br />
+						{TPL_VAR_OFF_DESCRIPTION}</td>
+						<td>{TPL_VAR_OFF_VERSION}</td>
+						<td>{TPL_VAR_OFF_ONOFF}</td>
+						<td>{TPL_VAR_OFF_ONOFFMOD}</td>
+						<td><a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=plugin.activate&amp;auth={TPL_VAR_AUTH_TOKEN}&id={TPL_VAR_OFF_DIRECTORY}" class="linkEdit">Activate</a></td>
+						<td><a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=plugin.delete&amp;auth={TPL_VAR_AUTH_TOKEN}&id={TPL_VAR_OFF_DIRECTORY}" onclick="if(confirm('Are you sure you want to delete this plugin?')){return true}else{return false}" class="linkDelete">Delete</a></td>
+					</tr>
+					<!-- END TPL_PLUGIN_OFF_BLK -->
+				</tbody>
+			</table>
+		</div>
+		<div class="RightBox">
+			<table class='whiteTable'>
+				<thead>
+					<tr>
+						<th>Activated Plugins</th>
+						<th>Version</th>
+						<th class="headerStatus">Status</th>
+						<th class="headerStatus">Mod</th>
+						<th class="headerEdit">Deactivate</th>
+						<!--<th class="headerDelete">Delete</th>-->
+					</tr>
+				</thead>
+				<tbody>
+					<!-- BEGIN TPL_PLUGIN_BLK -->
+					<tr>  
+						<td><a href="{TPL_VAR_PLUGINPATH}">{TPL_VAR_NAME}</a><br />
+						{TPL_VAR_DESCRIPTION}</td>
+						<td>{TPL_VAR_VERSION}</td>
+						<td>{TPL_VAR_ONOFF}</td>
+						<td>{TPL_VAR_ONOFFMOD}</td>
+						<td><a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=plugin.deactivate&id={TPL_VAR_DIRECTORY}&amp;auth={TPL_VAR_AUTH_TOKEN}" class="linkEdit">Deactivate</a></td>
+						<!--<td><a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=plugin.delete&id={TPL_VAR_DIRECTORY}&amp;auth={TPL_VAR_AUTH_TOKEN}" onclick="if(confirm('Are you sure you want to delete this plugin's files?')){return true}else{return false}" class="linkDelete">Delete</a></td>-->
+					</tr>
+					<!-- END TPL_PLUGIN_BLK -->
+				</tbody>
+			</table>
+			
+		</div>
+		<div class="placeHolder"></div>
+	</div>
+</div>

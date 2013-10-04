@@ -1,0 +1,41 @@
+<script type="text/javascript" src="{TPL_VAR_SITEURL}jscript/markitup/jquery.markitup.js"></script>
+<script type="text/javascript" src="{TPL_VAR_SITEURL}jscript/markitup/sets/css/set.js"></script>
+<link rel="stylesheet" type="text/css" href="{TPL_VAR_SITEURL}jscript/markitup/skins/markitup/style.css" />
+<link rel="stylesheet" type="text/css" href="{TPL_VAR_SITEURL}jscript/markitup/sets/css/style.css" />
+<div class="historyWidgetContainer">
+	<a href="adminindex.php">Home</a> <strong>&raquo;</strong>
+	<a href="adminindex.php?action=security.home&amp;flag=admin">Admin</a> <strong>&raquo;</strong>
+	<a href='#'>File Manager</a>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">File Manager</div>
+	<div class="WidgetContent">
+	<script type="text/javascript">
+		function openKCFinder_singleFile() {
+			window.KCFinder = {};
+			window.KCFinder.callBack = function(url) {
+				// Actions with url parameter here
+				window.KCFinder = null;
+				jQuery("#filetoedit").val(url);
+				jQuery("#openfileform").submit();
+			};
+			window.open('{TPL_VAR_SITEURL}kcfinder/browse.php', 'Choose a File.');
+		}
+	</script>
+	Click <a href="javascript:openKCFinder_singleFile();">here</a> to browse for a file to edit.
+			{TPL_VAR_ERROR}
+		<!-- BEGIN TPL_FILE_BLK -->
+			<h3>Editing: {TPL_VAR_FILEPATH}</h3>
+			<form action="{TPL_VAR_ACTION}" method="post">
+				<textarea style="width:1170px;height:300px;" name="filecontent" id="filecontent">{TPL_VAR_CONTENT}</textarea>
+				{TPL_VAR_CKEDITOR}
+			<button type="submit" class="formButton Right"><img src="../graphics/i_add.gif" alt="i_add" />Save</button>
+			<br style="clear:both;"/>
+			</form>
+		<!-- END TPL_FILE_BLK -->
+		<form id="openfileform" method="post" action="{TPL_VAR_OPENACTION}">
+			<input type="hidden" id="filetoedit" name="filetoedit"/>
+		</form>
+	</div>
+</div>

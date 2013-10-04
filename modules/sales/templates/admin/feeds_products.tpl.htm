@@ -1,0 +1,27 @@
+<div class="historyWidgetContainer"><a href='adminindex.php'>Home </a><strong> &raquo; </strong><a href='adminindex.php?action=email.home'>Marketing</a><strong> &raquo; </strong><a href='adminindex.php?action=feeds.home'>Feeds</a><strong> &raquo; </strong><a href='#'>RSS Product Feed</a></div>
+
+<div class="fullWidgetContainer">
+      <div class="WidgetTitle">RSS Product Feeds</div>
+      <div class="WidgetContent">
+	<table class="whiteTable2" cellspacing="0">
+		<thead>
+			<tr>
+				<th colspan="2">RSS Product Feed Settings</th>
+			</tr>
+		</thead>
+		<tbody>
+			<form action="{TPL_VAR_SITEURL}sales/adminindex.php?action=feeds.prodUpdate" method="post" name="ThisForm" id="ThisForm" onsubmit="return validateForm();">
+				<tr> 
+					<td class="first"><label for="products">Number of products to list</label></td>
+					<td>
+						<input type="text" id="rssproducts" name="rssproducts" value="{TPL_VAR_PRODUCTS}" class="formField" />
+					</td>
+				</tr>
+			</tbody>
+    	</table>
+		<p class="formButtonWrapper">
+			<button type="submit" class="formButton"><img src="../graphics/i_cross.gif" alt="Cancel" /> Cancel</button>
+			<button type="submit" class="formButton"><img src="../graphics/i_refresh.gif" alt="Update" /> Update RRS Feed Settings</button>
+		</p>
+	</form>
+</div>

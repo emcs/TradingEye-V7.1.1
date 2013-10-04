@@ -1,0 +1,56 @@
+<div class="historyWidgetContainer"><a href="adminindex.php?flag=dashboard">Home</a> <strong>&raquo;</strong> <a href="adminindex.php?action=ec_show.home&amp;flag=builder">Builder</a> <strong>&raquo;</strong> <a href="adminindex.php?action=ec_menu.show">{LANG_VAR_SUBMENUBUILDER}</a> </div>
+<div class="builderBlock fullWidgetContainer">
+	<div class="WidgetTitle">Build Sub Menu Items <small>{TPL_VAR_MSG}</small></div>
+	<div class="WidgetContent">
+		<table class="whiteTable Orders OneColum" cellpadding="0" cellspacing="0">
+			<tbody>
+				<form action="{TPL_VAR_FORMURL}" name="ThisForm" id="ThisForm"  method="post" enctype="multipart/form-data" onsubmit="return valMenuBuilderNewItem('withimage')">
+					<input type="hidden" name="itemid" value="{TPL_VAR_ITEMID}" />
+					<input type="hidden" name="mode" value="{TPL_VAR_MODE}" />
+					<tr>
+						<td class="first"><label>{LANG_VAR_ITEMTITLE}</label></td>
+						<td><input type="text" class="formField" id="item_title" name="item_title"  value="{TPL_VAR_ITEMTITLE}"  maxlength="30" /></td>
+					</tr>
+					<tr>
+						<td><label>{LANG_VAR_ITEMLINK}</label></td>
+						<td><input type="text" class="formField" id="item_link" name="link" value="{TPL_VAR_ITEMLINK}"/></td>
+					</tr>
+					<tr>
+						<td rowspan="2"><label>{LANG_VAR_HREFATTRIBUTES}</label></td>
+						<td>
+							<input type="text" class="formField" id="href" name="href_attributes" value="{TPL_VAR_ITEMHREF}"  maxlength="60" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div class="selectContainer">
+														<select class="formSelect" name="method">
+															<option value="0" {TPL_VAR_SAMESELECTED}>_parent - same window</option>
+															<option value="1" {TPL_VAR_BLANKSELECTED}>_blank - new window / tab</option>
+														</select></div>
+						</td>
+					</tr>
+					<tr>
+						<td><label>{LANG_VAR_ITEMIMAGE}</label></td>
+						<td>
+							<!-- BEGIN TPL_IMAGE_BLK -->
+							<input id="img_browse_a" type="file" name="image" size="30" />
+							<!-- END TPL_IMAGE_BLK -->
+							<!-- BEGIN TPL_LINK_BLK -->	
+							<a href="adminindex.php?action=ec_menu.uploadForm&id={TPL_VAR_ITEMID}&type=menu" onClick="PopWindow()" target="windowname">{LANG_VAR_EDITIMAGE}</a>
+							<!-- END TPL_LINK_BLK -->
+						</td>
+					</tr>
+					<tr>
+						<td><label>{LANG_VAR_ONOFF}</label></td>
+						<td><input id="header_state" type="checkbox" class="checkbox" name="state" value="1" {TPL_VAR_SELECTED}/></td>
+					</tr>
+				</tbody>
+			</table>
+			<p>
+				<button type="button" onClick="history.go(-1)" class="formButton"><img src="../graphics/i_cross.gif" alt="Cancel" /> <div>Cancel</div></button>
+				<button type="submit" class="formButton" name="submitbutton"><img src="../graphics/i_tick.gif" alt="{TPL_VAR_BTNMESSAGE}"> <div>{TPL_VAR_BTNMESSAGE}</div></button>
+			</p>
+		</form>
+	</div>
+</div>

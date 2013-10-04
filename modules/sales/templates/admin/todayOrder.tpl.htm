@@ -1,0 +1,60 @@
+<div class="historyWidgetContainer"><a href='adminindex.php'>Home </a><strong> &raquo; </strong><a href='adminindex.php?action=email.home'>Marketing</a><strong> &raquo; </strong><a href='adminindex.php?action=report.home'>Order Reports</a><strong> &raquo; </strong><a href='#'>Today's Orders</a></div>
+<div class="fullWidgetContainer">
+      <div class="WidgetTitle">Today's Orders <small>- {TPL_VAR_COUNT} Orders</small></div>
+      <div class="WidgetContent">
+	<div class="column first">
+		<table class='whiteTable2'>
+			<thead>
+				<tr>
+					<th colspan="2">Complete Orders</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="first"><strong>Total Orders</strong></td>
+					<td>{TPL_VAR_COUNT}</td>
+				</tr>
+				<tr>
+					<td><strong>Total Sales</strong></td>
+					<td>{TPL_VAR_CURRENCY}{TPL_VAR_COMPLETE_TOTAL}</td>
+				</tr>
+				<tr>
+					<td><strong>Average Order</strong></td>
+					<td>{TPL_VAR_CURRENCY}{TPL_VAR_COMPLETE_AVGTOTAL}</td>
+				</tr>
+				<tr>
+					<td><strong>Largest Order</strong></td>
+					<td>{TPL_VAR_CURRENCY}{TPL_VAR_COMPLETE_MAXTOTAL}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="column">
+		<table class='whiteTable2'>
+			<thead>
+				<tr>
+					<th colspan="2">Incomplete Orders</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="first"><strong>Total Orders</strong></td>
+					<td>{TPL_VAR_INCOMPLETE_COUNT}</td>
+				</tr>
+				<tr>
+					<td><strong>Total Sales</strong></td>
+					<td>{TPL_VAR_CURRENCY}{TPL_VAR_INCOMPLETE_TOTAL}</td>
+				</tr>
+				<tr>
+					<td><strong>Average Order</strong></td>
+					<td>{TPL_VAR_CURRENCY}{TPL_VAR_INCOMPLETE_AVGTOTAL}</td>
+				</tr>
+				<tr>
+					<td><strong>Largest Order</strong></td>
+					<td>{TPL_VAR_CURRENCY}{TPL_VAR_INCOMPLETE_MAXTOTAL}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<br style='clear:both;'/>
+</div></div>

@@ -1,0 +1,57 @@
+<h2>Orders <span>&raquo;</span> Invoices <span>&raquo;</span> View Invoice {TPL_VAR_INVOICE} <span>&raquo;</span> Tracking</h2>
+<div class="builderBlock">
+	<h3>dsvlbjvskjbsv</h3>
+	<p>If you wish to provide your customer with a tracking number from one of the major companies, select the sender and then place the tracking number in the space provided. A confirmation email will be sent to the customer with their tracking number. Otherwise, <a href="{TPL_VAR_SITEURL}order/adminindex.php" class="adminLink">return</a> to the invoice.</p>
+	<span>{TPL_VAR_MSG}</span>
+	<table>
+		<thead>
+			<tr>
+				<th colspan="2">Tracking Information</th>
+			</tr>
+		</thead>
+		<tbody>
+			<form action="{TPL_VAR_SITEURL}order/adminindex.php?action=orders.updatetrack" method="post">
+				<input type="hidden" name="mode" value="{TPL_VAR_MODE}">
+				<input type="hidden" name="invoice" value="{TPL_VAR_INVOICE}">
+				<input type="hidden" name="orderid" value="{TPL_VAR_ORDERID}">
+				<input type="hidden" name="custid" value="{TPL_VAR_CUSTID}">
+				<tr>
+					<td class="first">Method</td>
+					<td>
+						<select name="shipper" class="formSelect">
+							<option value=""> --- Select method --- </option>
+							<option value="Royal Mail" {TPL_VAR_SEL1}>Royal Mail</option>
+							<option value="Parcelforce" {TPL_VAR_SEL2}>Parcelforce</option>
+							<option value="DHL" {TPL_VAR_SEL3}>DHL</option>
+							<option value="Yorkshire Parcels" {TPL_VAR_SEL4}>Yorkshire Parcels</option>
+							<option value="UPS" {TPL_VAR_SEL5}>UPS</option>
+							<option value="FedEx" {TPL_VAR_SEL6}>FedEx</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>Other</td>
+					<td>
+						<input type="text" name="shipper2" class="formField" value="{TPL_VAR_SHIPPER}" maxlength="20" />
+					</td>
+				</tr>
+				<tr>
+					<td>Date Posted</td>
+					<td><input type="text" name="ship_date" class="formField date" value="{TPL_VAR_DATEPOST}" maxlength="20" /></td>
+				</tr>
+				<tr>
+					<td>Tracking Number</td>
+					<td><input type="text" name="tracking" value="{TPL_VAR_TRACKNUM}" class="formField" maxlength="20" /></td>
+				</tr>
+				<tr>
+					<td>Notification</td>
+					<td><input type="checkbox" class="checkbox" name="notify" value="1" {TPL_VAR_CHECKED} /> Notify customer by email?</td>
+				</tr>
+			</tbody>
+		</table>
+		<p class="formButtonWrapper">
+			<button type="submit" onClick="javascript:history.go(-1)" class="formButton"><img src="../graphics/i_cross.gif" alt="Cancel" /> Cancel</button>
+			<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="Process" /> Process</button>
+		</p>
+	</form>
+</div>

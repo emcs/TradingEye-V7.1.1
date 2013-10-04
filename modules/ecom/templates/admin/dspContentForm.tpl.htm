@@ -1,0 +1,198 @@
+<script language="JavaScript" type="text/javascript">
+	function changevalue()
+	{
+		if(document.ThisForm.mode.value!="edit")
+		{
+			fillValue(document.ThisForm.title.value, document.ThisForm.seo_title);
+		}
+	}
+	function ValidateForm(){
+		if(!isNull(document.ThisForm.title.value))
+			{
+				if(isNull(document.ThisForm.seo_title.value)){
+					alert("You must enter a file name (URL)");
+					document.ThisForm.seo_title.focus();
+					return false;
+				}
+				if(document.ThisForm.layout.selectedIndex>-1)
+					{
+						if(document.ThisForm.template.selectedIndex>-1)
+							{
+								return true
+							}
+						else 
+							{
+								alert("You must select a template");
+								document.ThisForm.template.focus();
+								return false;
+							}
+					}
+				 else
+				 	 {
+						alert("You must select a layout");
+						document.ThisForm.layout.focus();
+						return false;
+					}							
+			}
+		else 
+			{
+				alert("You must enter a title");
+				document.ThisForm.title.focus();
+				return false;
+			}
+		}
+	//-->
+</script>
+
+<div class="historyWidgetContainer">
+	<a href="adminindex.php?flag=dashboard">Home</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=ec_show.home&amp;flag=builder">Builder</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=ec_show.home">Shop Builder</a>  <strong>&raquo;</strong> 
+	<a href='#'>{TPL_VAR_BUILDACT}</a>
+	<div id="builderCrumbs">
+		{TPL_VAR_BREDCRUMBTEXT}: <span>{TPL_VAR_BREDCRUMBS}</span>
+	</div>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">
+		Article Builder
+		<!-- BEGIN DSPMSG_BLK -->
+			<small>{TPL_VAR_MSG}</small>
+		<!-- END DSPMSG_BLK -->
+	</div>
+	<div class="WidgetContent">
+		<form action="{FORM}" method="POST" name="ThisForm" onsubmit="return ValidateForm()" enctype="multipart/form-data">
+					<input type="hidden" id="mode" name="mode" value="{TPL_VAR_MODE}" class="txt-field"/>
+					<input type="hidden" id="contentId" name="contentId" value="{TPL_VAR_DEPTID}"/>
+					<input type="hidden" id="type" name="type" value="{TPL_VAR_TYPE}"/>
+		<button type="submit" class="formButton Right"><img src="../graphics/i_add.gif" alt="i_add" /> {TPL_VAR_BTNMESSAGE}</button>
+		<h3 style='display:inline-block;'>Basic Article Settings</h3>
+		<br style='clear:both;'/>
+		<table class="whiteTable2" cellspacing="0" cellpadding="0">
+			<thead>
+				<tr>
+					<th>{LANG_VAR_PAGETITLE}</th>
+					<th>{LANG_VAR_SELECTLAYOUT}</th>
+					<th>{LANG_VAR_SELECTTEMPLATE}</th>
+						<th>{LANG_VAR_FILENAME} (URL)</th>
+						<th>{LANG_VAR_METATITLE} {LANG_VAR_LEAVEBLANKMETATITLE}</th>
+					<th>{LANG_VAR_ONOFF}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr> 
+					<td><input type="text" class="formField long" id="department_title" name="title" value="{TPL_VAR_TITLE}" onBlur="changevalue();"  maxlength="255" /></td>
+					<td>
+							<div class="selectContainerSmall">
+								<select class="formSelect" id="select_layout" name="layout">
+								<!-- BEGIN TPL_LAYOUT_BLK -->
+									<option value="{TPL_VAR_LAYOUT}"  {SELLAYOUT}>{TPL_VAR_LAYOUT}</option>
+								<!-- END TPL_LAYOUT_BLK -->
+								</select>
+							</div>
+						</td>
+						<td>
+							<div class="selectContainerSmall">
+								<select class="formSelect" id="select_template" name="template">
+								<!-- BEGIN TPL_TEMPLATE_BLK -->
+									<option value="{TPL_VAR_TEMPLATENAME}" {SELTEMPLATE}>{TPL_VAR_TEMPLATENAME}</option>
+								<!-- END TPL_TEMPLATE_BLK -->
+								</select>
+							</div>
+						</td>
+						<td><input type="text" class="formField long" id="department_seo_title" name="seo_title" value="{TPL_VAR_SEOTITLE}"  maxlength="255"  /></td>
+						<td><input type="text" style="width:85%;" class="formField long" id="meta_title" name="meta_title" value="{TPL_VAR_METATITLE}" /></td>
+						<td><input type="checkbox" id="active" name="state" value="1" {TPL_VAR_STATE} class="checkbox" /></td>
+				</tr>
+			</tbody>
+		</table>
+		<table class="whiteTable2">
+				<thead>
+					<tr>
+						<th>{LANG_VAR_SHORTDESC}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><textarea rows="4" cols="150" class="formField" name="short_description">{TPL_VAR_SHORTDESC}</textarea></td>
+					</tr>
+				</tbody>
+			</table>
+			<table class="whiteTable2">
+				<thead>
+					<tr>
+						<th>{LANG_VAR_LONGDESC}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>{cmsEditor}</td>
+					</tr>
+				</tbody>
+			</table>
+		<table class="whiteTable2">
+				
+					
+					
+					<!-- BEGIN DSPIMAGEBOX_BLK -->
+				<thead>
+					<tr>
+						<th>{LANG_VAR_IMAGEARTICLE} <span>(Article Link)</span></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							<input id="img_browse_a" type="file" name="image1" size="30" class="img-submit-btn" />
+							<br /><input type="checkbox" name="resample1" value="true" checked="checked" />{LANG_VAR_RESIZETXT} {imgWidth1} x {imgHeight1} - ({resampleList} {LANG_VAR_ONLYTXT})
+						</td>
+					</tr>
+				</tbody>
+					<!-- END DSPIMAGEBOX_BLK -->
+				
+					<!-- BEGIN DSPIMAGELINK_BLK -->
+					<thead>
+					<tr>
+						<th colspan='3'><label for="img_browse_a">{LANG_VAR_IMAGEARTICLE}</label></th>
+					</tr>
+				</thead>
+				<tbody>
+				
+				
+					<tr> 
+						<td colspan="2">{LANG_VAR_AUTORESIZETXT}</td>
+						<td>
+							<a href="{TPL_VAR_POPUPURL}&image=image1&type=content" onClick="PopWindow()" target="windowname">{TPL_VAR_IMGLABEL1}</a>
+						</td>
+					</tr>
+				</tbody>
+					<!-- END DSPIMAGELINK_BLK -->
+			</table>
+			
+			
+			
+			
+			<table class="whiteTable2">
+				<thead>
+					<tr>
+						<th>{LANG_VAR_METADESCRIPTION} <span>{LANG_VAR_LEAVEBLANKGLOBAL}</span></th>
+						<th>{LANG_VAR_METAKEYWORDS} <span>{LANG_VAR_LEAVEBLANKGLOBALKEY}</span></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><textarea rows="2" cols="70" id="meta_description" name="meta_description" class="formField">{TPL_VAR_METADESC}</textarea></td>
+						<td><textarea rows="2" cols="70" id="meta_keywords" name="keywords" class="formField">{TPL_VAR_KEYWORDS}</textarea></td>
+					</tr>
+				</tbody>
+		</table>
+			<p class="formButtonWrapper"><button type="submit" class="formButton Right"><img src="../graphics/i_add.gif" alt="i_add" /> {TPL_VAR_BTNMESSAGE}</button></p>
+		<br style='clear:both;'/>
+		</form>
+	</div>
+</div>
+
+			<script>
+				function PopWindow()	{window.open("","windowname","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=380,height=425,top=50,left=50");}
+			</script>

@@ -1,0 +1,77 @@
+<!-- BEGIN TPL_ZONECOSTSETUP_BLK -->
+    <div class="historyWidgetContainer">Home <strong>&raquo;</strong>
+	<a href="adminindex.php?action=settings.companyHome&amp;flag=settings">Settings</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=settings.postageHome&amp;flag=settings">Postage</a> &amp; Package <strong>&raquo;</strong> 
+	<a href="javascript:history.go(-1);">Editing Postage Settings</a> <strong>&raquo;</strong> 
+	International Postage Costs</div>
+	
+    <div class="fullWidgetContainer">
+      <div class="WidgetTitle">International Postage Costs <small>{TPL_VAR_ZONENAME} ({TPL_VAR_COUNTRIES})</small></div>
+      <div class="WidgetContent">
+	<p>{TPL_VAR_ERRORMSG}</p>
+	<table class="whiteTable2" cellspacing="0">
+		<!-- BEGIN TPL_MAINSETUP_BLK -->
+		<form name="special" id="special" action="{TPL_VAR_ACTIONURL}" method="post" onsubmit="return validateSpecialForm();">
+			<thead>
+				<tr>
+					<th>Min weight</th>
+					<th>Max weight</th>
+					<th>Cost</th>
+					<th>Special delivery cost</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><input type="text" name="minweight" value="{TPL_VAR_AUTOMINWEIGHT}" class="formField short" /></td>
+					<td><input type="text" name="maxweight" value="{TPL_VAR_MAXWEIGHTEDIT}" class="formField short" /></td>
+					<td><span class="formSymbol">{TPL_VAR_CURRENCY}</span><input type="text" name="cost" value="{TPL_VAR_COSTEDIT}" class="formField short" /></td>
+                    <td><span class="formSymbol">{TPL_VAR_CURRENCY}</span><input type="text" name="specialdelivery" value="{TPL_VAR_SPECIALDELIVERYCOSTEDIT}" class="formField short" /></td>
+				</tr>
+			</tbody>
+		</table>
+		<p class="formButtonWrapper">
+			<button type="submit" class="formButton"><img src="../graphics/i_add.gif" alt="{TPL_VAR_BUTTON}" /> {TPL_VAR_BUTTON}</button>
+			<input type="hidden" name="zoneid" value="{TPL_VAR_ZONEID}" />
+		</p>
+	</div>
+	</div>
+	<div class="fullWidgetContainer">
+		<div class="WidgetTitle">Current Range List for {TPL_VAR_ZONENAME} ({TPL_VAR_COUNTRIES})</div>
+		<div class="WidgetContent">
+		<table class="whiteTable2" cellspacing="0">
+			<thead>
+				<tr>
+					<th>Min weight</th>
+					<th>Max weight</th>
+					<th>Cost</th>
+					<th>Special delivery cost</th>
+					<th class="headerEdit">Edit</th>
+					<th class="headerDelete">Delete</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- BEGIN TPL_RANGELIST_BLK -->
+				<tr>
+					<td>{TPL_VAR_MINWEIGHT}</td>
+					<td>{TPL_VAR_MAXWEIGHT}</td>
+					<td>{TPL_VAR_CURRENCY}{TPL_VAR_COST}</td>
+					<td>{TPL_VAR_CURRENCY}{TPL_VAR_SPECIALDELIVERYCOST}</td>
+					<td><a class="linkEdit" href="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.setupcost&edit=1&id={TPL_VAR_ZONEID}&rangeid={TPL_VAR_RANGEID}">Edit</a></td>
+					<td>
+						<!-- BEGIN TPL_DELETELINK_BLK -->
+						<a class="linkDelete" href="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.deleterange&zoneid={TPL_VAR_ZONEID}&id={TPL_VAR_RANGEID}&amp;auth={TPL_VAR_AUTH_TOKEN}">Delete</a>
+						<!-- END TPL_DELETELINK_BLK -->
+					</td>
+				</tr>
+			</tbody>
+			<!-- END TPL_RANGELIST_BLK -->
+			<!-- END TPL_MAINSETUP_BLK -->
+		</table>
+		<p class="formButtonWrapper">
+			<button type="submit" onClick="javascript:history.go(-1)" class="formButton"><img src="../graphics/i_cross.gif" alt="Cancel" /> Cancel</button>
+			<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="Save Changes" /> Save Changes</button>
+		</p>
+	</form>
+</div>
+</div>
+<!-- END TPL_ZONECOSTSETUP_BLK -->

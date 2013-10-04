@@ -1,0 +1,48 @@
+<div class="historyWidgetContainer">
+	<a href="adminindex.php?flag=dashboard&amp;flag=dashboard">Home</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=orders.home&amp;flag=orders">Orders</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=orders.home&amp;flag=orders">Invoices</a> <strong>&raquo;</strong> 
+	<a href='#'>Add Product</a>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">Add Product</div>
+	<div class="WidgetContent">
+	<form action="{TPL_VAR_SITEURL}order/adminindex.php?action=orders.addproduct" method="post">
+		<input type="hidden" name="productid" value="{TPL_VAR_PRODUCTID}" />
+		<input type="hidden" name="orderid" value="{TPL_VAR_ORDERID}" />
+		<input type="hidden" name="iskit" value="{TPL_VAR_ISKIT}" />
+		<table>
+			<body>
+				<tr>
+					<td class="first">Product: {TPL_VAR_TITLE}</td>
+					<td>
+						<label for="qty">Quantity:</label> <input type="text" class="formField short" id="qty" name="qty" value="1" />
+					</td>
+					<td>Product code: {TPL_VAR_SKU}</td>
+					<td>Product price: {TPL_VAR_CURRENCY}{TPL_VAR_PRICE}</td>
+				</tr>
+				<!-- BEGIN TPL_KIT_BLK -->
+				<!-- BEGIN TPL_KITELEMENT_BLK -->
+				<tr> 
+					<td>Items in kit ({TPL_VAR_COUNT})</td>
+					<td>Product: <a href="{TPL_VAR_KITELEMENT_URL}">{TPL_VAR_KITELEMENT}</a></td>
+					<td>Quantity: {TPL_VAR_QTY}</td>
+					<td>Product code: {TPL_VAR_KITSKU}</td>
+					<td>{TPL_VAR_OPTIONS}</td>
+				</tr>
+				<!-- END TPL_KITELEMENT_BLK -->
+				<!-- END TPL_KIT_BLK -->	
+				<tr>
+					<td>{TPL_VAR_MAINOPTIONS}</td>
+				</tr>
+				<tr>
+					<td>{TPL_VAR_MAINCHOICES}</td>
+				</tr>
+			</tbody>
+		</table>
+		<p class="formButtonWrapper">
+			<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="Add to Order" /> Add to Order</button>
+		</p>
+	</form>
+</div></div>

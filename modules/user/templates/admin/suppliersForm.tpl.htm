@@ -1,0 +1,265 @@
+<SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
+<!--
+	function loadvalues()
+	{
+		stateName =  Array();
+		stateVal = Array();
+		stateName[-1] = Array();
+		stateVal[-1] = Array();
+		stateName[0] = Array();
+		stateVal[0] = Array();
+		<!-- BEGIN countryblk -->
+		stateName[{k}] = Array();
+		stateVal[{k}] = Array();
+		stateName[{k}][-1] = "Select below";
+		stateVal[{k}][-1] = "-1";
+		stateName[{k}][-1] = "Select below";
+		stateName[{k}][0] = "Others";
+		stateVal[{k}][0] = "0";
+		<!-- END countryblk -->
+		stateName[0][0] = "Others";
+		stateVal[0][0] = "0";
+		<!-- BEGIN stateblk -->
+		stateName[{i}][{j}] = "{stateName}"
+		stateVal[{i}][{j}] = "{stateVal}"
+		<!-- END stateblk -->
+	}
+	function setbillstate(index,fstatus)
+	{
+		loadvalues();
+		document.ThisForm.bill_state_id.length=1;
+		if(index>-1)
+		{
+		for(i=-1;i<stateName[index].length;i++)
+		{
+			document.ThisForm.bill_state_id.options[i+1]=new Option(stateName[index][i],stateVal[index][i]);
+		}		
+		if(stateName[index].length==1)
+		{
+			document.ThisForm.bill_state_id.options[1].selected=true;
+		}
+		if(stateName[index].length>1)
+		{
+			document.getElementById("bill_state").style.background="#E8E8E8";
+			document.ThisForm.bill_state.value="";
+			document.ThisForm.bill_state.disabled=true;
+			document.getElementById("bill_state_id").style.background="#FFFFFF";
+			document.ThisForm.bill_state_id.disabled=false;
+			if(fstatus==2)
+			{
+				document.ThisForm.bill_state_id.focus();
+			}
+		}
+		else
+		{
+			document.getElementById("bill_state").style.background="#FFFFFF";
+			document.ThisForm.bill_state.disabled=false;
+			document.getElementById("bill_state_id").style.background="#E8E8E8";
+			document.ThisForm.bill_state_id.disabled=true;
+			if(fstatus==2)
+			{
+				document.ThisForm.bill_state.focus();
+			}
+		}
+		}
+
+	}
+		function PopWindow()
+		{
+window.open("","windowname","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=625,height=425,top=50,left=50");
+		}
+	<!--
+		function changeState(c){
+			if((c!="United States")&&(c!="Canada")){
+				document.ThisForm.state.options[1].selected = true;
+				disableField(document.ThisForm.state,true);
+			} else {
+				disableField(document.ThisForm.state,false);
+				document.ThisForm.state.options[0].selected = true;
+			}
+		}
+		function disableField(field,stat) {
+			field.disabled = stat;
+		}		
+		function isEmail(s){
+			var i = 1;
+			var sLength = s.length;
+			while ((i < sLength) && (s.charAt(i) != "@")){ i++ }
+			if ((i >= sLength) || (s.charAt(i) != "@")) return false;
+				else i += 2;
+			while ((i < sLength) && (s.charAt(i) != ".")){ i++ }
+			if ((i >= sLength - 1) || (s.charAt(i) != ".")) return false;
+				else return true;
+		}
+		function validateForm(form){
+			if(isNull(form.company.value)){
+				alert("Please enter a company name");
+				form.company.value='';
+				form.company.focus();
+				return false;
+			}
+			if(isNull(form.address1.value)){
+				alert("Please enter an address");
+				form.address1.value='';
+				form.address1.focus();
+				return false;
+			}
+			if(isNull(form.city.value)){
+				alert("Please enter a city");
+				form.city.value='';
+				form.city.focus();
+				return false;
+			}
+			if(isNull(form.zip.value)){
+				alert("Please enter a postcode/zip");
+				form.zip.value='';
+				form.zip.focus();
+				return false;
+			}
+			if(isNull(form.phone.value)){
+				alert("Please enter a phone number");
+				form.phone.value = '';
+				form.phone.focus();
+				return false;
+			}
+			if(form.mode.value=='Add')
+			{
+				if(fileUploadExt(form.image, '.jpg, .jpeg, .gif, pjpeg'))
+				{ 
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+			return true;
+		}
+	//-->
+</script>
+<div class="historyWidgetContainer">
+	<a href="adminindex.php?flag=dashboard&amp;flag=dashboard">Home</a> <strong>&raquo;</strong> 
+	<a href="../order/adminindex.php?action=orders.home&amp;flag=orders">Orders</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=supplier.home&amp;flag=orders">Suppliers</a> <strong>&raquo;</strong> 
+	<a href='#'>Supplier Editor</a>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">Supplier Details <small class="Right"><!-- BEGIN TPL_MSG_BLK -->{TPL_VAR_BUILDDATE}<!-- END TPL_MSG_BLK --></small></div>
+	<div class="WidgetContent">
+		<!-- BEGIN DSPMSG_BLK -->
+			{TPL_VAR_MSG}
+		<!-- END DSPMSG_BLK -->
+		<form action="{FORM_URL}" method="POST" name="ThisForm" enctype="multipart/form-data" onsubmit="return validateForm(this);">
+			<table class="whiteTable2 Orders OneColum">
+				<tbody>
+					<input type="hidden" name="mode" value="{TPL_VAR_MODE}">
+					<input type="hidden" name="id" value="{TPL_VAR_ID}">
+					<tr>
+						<td class="first"><label>{LANG_VAR_COMPANYNAME} <span>*</span></label></td>
+						<td><input type="text" class="formField" id="company_name" name="company" value="{TPL_VAR_COMPANY}" maxlength="80" /></td>
+					<tr>
+						<td><label>{LANG_VAR_SUPPLIERLOGO}</label></td>
+						<td>
+							<!-- BEGIN TPL_IMAGELINK_BLK -->
+							 	<a href="/user/adminindex.php?action=supplier.uploadForm&id={TPL_VAR_ID}" onClick="PopWindow()" target="windowname">{TPL_LBL_IMAGE}</a>
+	  		 				<!-- END TPL_IMAGELINK_BLK -->
+							<!-- BEGIN TPL_IMAGEBOX_BLK -->
+				   				<input id="img_browse_a" type="file" name="image" size="30" />
+							<!-- END TPL_IMAGEBOX_BLK --></td>
+						</td>
+					</tr>
+					</tr>
+					<tr>
+						<td><label>{LANG_VAR_ADDRESS1}<span>*</span></label></td>
+						<td><input type="text" class="formField" id="company_address" name="address1" value="{TPL_VAR_ADDRESS1}" maxlength="100" /></td>
+					</tr>
+					<tr>
+						<td><label>{LANG_VAR_ADDRESS2}</label></td>
+						<td><input type="text" class="formField" id="address_two" name="address2" value="{TPL_VAR_ADDRESS2}" maxlength="100" /></td>
+					</tr>
+					<tr>
+						<td><label>{LANG_VAR_CITY} <span>*</span></label></td>
+						<td><input type="text" class="formField" id="company_city" name="city" value="{TPL_VAR_CITY}" maxlength="50" /></td>
+					</tr>
+					<tr>
+						<td><label>{LANG_VAR_COUNTRY}</label></td>
+						<td>				
+							<div class="selectContainer"><select class="formSelect" id="country" name="bill_country_id" onchange="javascript:setbillstate(this.options[this.selectedIndex].value,2)">>
+															<!-- BEGIN BillCountry -->
+															   <option value="{TPL_COUNTRY_VALUE}" {BILL_COUNTRY_SELECT}>{TPL_COUNTRY_NAME}</option>
+															 <!-- END BillCountry -->
+														</select></div>
+						</td>
+					</tr>
+					<tr>
+						<td><label>{LANG_VAR_COUNTY}</label></td>
+						<td>
+							<div class="selectContainer"><select class="formSelect" id="bill_state_id" name="bill_state_id">
+															<option ></option>
+														</select></div>
+						</td>
+					</tr>
+					<tr>
+						<td><label>{LANG_VAR_COUNTYOTHER}</label></td>
+						<td><input type="text" class="formField" type="text" name="bill_state" value="{BILL_STATE}" maxlength="50" size="12" id="bill_state" /></td>
+					</tr>
+					<tr>
+						<td><label>{LANG_VAR_POSTCODE} <span>*</span></label></td>
+						<td><input type="text" class="formField" id="postcode" name="zip" value="{TPL_VAR_ZIP}" maxlength="20" /></td>
+					</tr>
+					<tr>
+						<td><label>{LANG_VAR_TELEPHONE} <span>*</span></label></td>
+						<td><input type="text" class="formField" id="phone_one" name="phone" value="{TPL_VAR_PHONE}" maxlength="20" /></td>
+					</tr>
+					<tr>
+						<td><label>{LANG_VAR_TELEPHONE2}</label></td>
+						<td><input type="text" class="formField" id="phone_two" name="phone1" value="{TPL_VAR_PHONE1}" maxlength="20" /></td>
+					</tr>
+					<tr>
+						<td><label>{LANG_VAR_CONTACTNAME}</label></td>
+						<td><input type="text" class="formField" id="contact_name" name="contact" value="{TPL_VAR_CONTACT}" maxlength="50"  /></td>
+					</tr>
+					<tr>
+						<td><label>{LANG_VAR_CONTACTEMAIL}</label></td>
+						<td><input type="text" class="formField" id="contact_email" name="email" value="{TPL_VAR_EMAIL}" maxlength="60" /></td>
+					</tr>
+					<tr>
+						<td><label>{LANG_VAR_WEBSITE} URL</label></td>
+						<td><input type="text" class="formField" id="website" name="website" value="{TPL_VAR_HOMEPAGE}" maxlength="200"  /></td>
+					</tr>
+					<tr>
+						<td><label>{LANG_VAR_COMMENTS}</label></td>
+						<td><textarea rows="5" cols="1" class="formField long" id="comments" name="comments">{TPL_VAR_COMMENTS}</textarea></td>
+					</tr>
+					<tr>
+						<td><label>{LANG_VAR_STATUS}</label></td>
+						<td>
+							<input type="checkbox" id="membership_status" name="status" value="1" class="checkbox" size="8" {TPL_VAR_STATUS} />
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="formButtonWrapper">
+				<button onclick="history.go(-1); return false;" class="formButton"><img src="../graphics/i_cross.gif" alt="Cancel" /> Cancel</button>
+				<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="{TPL_VAR_BTNLBL}" /> {TPL_VAR_BTNLBL}</p>
+			</p>
+		</form>
+	</div>
+</div>
+<script>
+	if(document.ThisForm.bill_country_id.value=="" || document.ThisForm.bill_country_id.value<=0)
+		{
+		setbillstate({selbillcountid},2);
+		}
+		else
+		{
+		setbillstate(document.ThisForm.bill_country_id.value,2);
+		}
+		
+		for(var i=0;i<document.ThisForm.bill_state_id.options.length;i++)
+		{
+		if(document.ThisForm.bill_state_id.options[i].value == '{selbillstateid}')
+		document.ThisForm.bill_state_id.options[i].selected = true;
+		}
+</script>	

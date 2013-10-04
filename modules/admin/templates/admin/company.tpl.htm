@@ -1,0 +1,202 @@
+<SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
+function loadvalues()
+{
+	stateName =  Array();
+	stateVal = Array();
+	stateName[-1] = Array();
+	stateVal[-1] = Array();
+	stateName[0] = Array();
+	stateVal[0] = Array();
+<!-- BEGIN countryblk -->
+	stateName[{k}] = Array();
+	stateVal[{k}] = Array();
+	stateName[{k}][-1] = "Select below";
+	stateVal[{k}][-1] = "-1";
+	stateName[{k}][-1] = "Select below";
+	stateName[{k}][0] = "Others";
+	stateVal[{k}][0] = "0";
+<!-- END countryblk -->
+	stateName[0][0] = "Others";
+	stateVal[0][0] = "0";
+<!-- BEGIN stateblk -->
+	stateName[{i}][{j}] = "{stateName}"
+	stateVal[{i}][{j}] = "{stateVal}"
+<!-- END stateblk -->
+}
+function setbillstate(index,fstatus)
+{
+	loadvalues();
+	document.ThisForm.bill_state_id.length=1;
+	if(index>-1)
+	{
+	for(i=-1;i<stateName[index].length;i++)
+	{
+		document.ThisForm.bill_state_id.options[i+1]=new Option(stateName[index][i],stateVal[index][i]);
+	}		
+	if(stateName[index].length==1)
+	{
+		document.ThisForm.bill_state_id.options[1].selected=true;
+	}
+	if(stateName[index].length>1)
+	{
+		document.getElementById("bill_state").style.background="#E8E8E8";
+		document.ThisForm.bill_state.value="";
+		document.ThisForm.bill_state.disabled=true;
+		$('#bill_state').css('display','none');
+		document.getElementById("bill_state_id").style.background="#FFFFFF";
+		document.ThisForm.bill_state_id.disabled=false;
+		$('#bill_state_id').css('display','inline');
+		$('#bill_state_contain').css('display','inline-block');
+		if(fstatus==2)
+		{
+			document.ThisForm.bill_state_id.focus();
+		}
+	}
+	else
+	{
+		document.getElementById("bill_state").style.background="#FFFFFF";
+		document.ThisForm.bill_state.disabled=false;
+		$('#bill_state').css('display','inline');
+		document.getElementById("bill_state_id").style.background="#E8E8E8";
+		document.ThisForm.bill_state_id.disabled=true;
+		$('#bill_state_id').css('display','none');
+		$('#bill_state_contain').css('display','none');
+		if(fstatus==2)
+		{
+			document.ThisForm.bill_state.focus();
+		}
+	}
+	}
+
+}
+	function validateForm()
+	{
+		var frm = document.ThisForm;
+		if(isNull(frm.storeName.value)){
+			alert("You must enter company name");
+			frm.storeName.value = '';
+			frm.storeName.focus();
+			return false;
+		}
+		if(isNull(frm.storeAddress.value)){
+			alert("You must enter address");
+			frm.storeAddress.value = '';
+			frm.storeAddress.focus();
+			return false;
+		}
+		if(isNull(frm.storeCity.value)){
+			alert("You must enter city");
+			frm.storeCity.value = '';
+			frm.storeCity.focus();
+			return false;
+		}
+
+		if(isNull(frm.storeZip.value)){
+			alert("You must enter postcode");
+			frm.storeZip.value = '';
+			frm.storeZip.focus();
+			return false;
+		}
+		if(isNull(frm.storePhone.value)){
+			alert("You must enter phone");
+			frm.storePhone.value = '';
+			frm.storePhone.focus();
+			return false;
+		}
+		return true;
+	}
+</script>
+
+<style type="text/css">
+	.selectContainerSmall { width: 200px; }
+	
+	.selectContainerSmall select { width: 235px; }
+</style>
+
+   <div class="historyWidgetContainer"><a href="../adminindex.php?flag=dashboard">Home</a> <strong>&raquo;</strong> <a href="adminindex.php?action=settings.companyHome&flag=settings">Settings</a> <strong>&raquo;</strong> <a href="adminindex.php?action=settings.companyHome&flag=settings">Company Information</a> <strong>&raquo;</strong> <a href="#">Edit</a></div>
+    <div class="fullWidgetContainer">
+      <div class="WidgetTitle ">Company Information</div>
+      <div class="WidgetContent">
+		<!-- BEGIN TPL_MSG_BLK -->
+			{TPL_VAR_MSG}
+		<!-- END TPL_MSG_BLK -->
+			
+
+		<form action="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.updateCompInfo" method="post" name="ThisForm" id="ThisForm" onsubmit="return validateForm();" enctype="multipart/form-data">
+			<table class='whiteTable2'cellspacing="0" cellpadding="0">
+				<thead>
+					<tr>
+						<th>Company Name</th>
+						<th>Company Slogan</th>
+						<th>Address</th>
+						<th>City</th>
+						<th>Country</th>
+						<th>County/State</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td valign='top' style='width:192px;'><input type="text" id="company_name" name="storeName" value="{TPL_VAR_COMPANY}" class="formField" maxlength="100" /></td>
+						<td valign='top' style='width:192px;'><input type="text" id="company_slogan" name="companySlogan" value="{TPL_VAR_SLOGAN}" class="formField" maxlength="200" /></td>
+						<td valign='top' style='width:297px;'><textarea id="address" class="formField" name="storeAddress" rows="1" cols="31">{TPL_VAR_ADDRESS}</textarea></td>
+						<td valign='top' style='width:164px;'><input type="text" id="company_city" name="storeCity" value="{TPL_VAR_CITY}" class="formField" maxlength="50" /></td>
+						<td valign='top' style='width:199px;'>
+							<div class="selectContainerSmall"><select class="formSelect" id="country" name="bill_country_id" onchange="javascript:setbillstate(this.options[this.selectedIndex].value,2)">>
+															<!-- BEGIN BillCountry -->
+															<option value="{TPL_COUNTRY_VALUE}" {BILL_COUNTRY_SELECT}>{TPL_COUNTRY_NAME}</option>
+															<!-- END BillCountry -->
+														</select></div></td>
+						<td valign='top' style='width:239px;'><div class="selectContainerSmall" id="bill_state_contain"><select class="formSelect" id="bill_state_id" name="bill_state_id">
+														<option></option>
+													</select></div><input class="formField" type="text" name="bill_state" value="{BILL_STATE}" maxlength="50" size="12" id="bill_state" style='width:145px;'></td>
+					</tr>
+				</tbody>
+			</table>
+			<table class='whiteTable2'cellspacing="0" cellpadding="0">
+				<thead>
+					<tr>
+						<th>Postal Code</th>
+						<th>Phone</th>
+						<th>Fax</th>
+						<th>Freephone</th>
+						<th>VAT Reg. No.</th>
+						<th>Company Reg. No.</th>
+						<th>Company Logo</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td valign='top' style='width:166px;'><input type="text" id="postcode" name="storeZip" value="{TPL_VAR_ZIP}" class="formField" maxlength="10" /></td>
+						<td valign='top' style='width:166px;'><input type="text" id="phone_one" name="storePhone" value="{TPL_VAR_PHONE}" class="formField" maxlength="20" /></td>
+						<td valign='top' style='width:166px;'><input type="text" id="fax" name="storeFax" value="{TPL_VAR_FAX}" class="formField" maxlength="20" /></td>
+						<td valign='top' style='width:166px;'><input type="text" id="free_phone" name="storeTollFree" value="{TPL_VAR_FREEPHONE}" class="formField" maxlength="20" /></td>
+						<td valign='top' style='width:166px;'><input type="text" id="vat_number" name="vatNumber" value="{TPL_VAR_VATNUMBER}" class="formField" maxlength="20" /></td>
+						<td valign='top' style='width:166px;'><input type="text" id="company_number" name="companyNumber" value="{TPL_VAR_RNUMBER}" class="formField" maxlength="20" /></td>
+						<td valign='top' style='width:243px;'><input type="file" name="image1"/></td>
+					</tr>
+				</tbody>
+			</table>
+			
+		<button class="formButton" type='submit'><img src="../graphics/i_tick.gif" alt="Save Changes" /><div>Save Changes</div></button>
+		<button class="formButton" type='reset'><img src="../graphics/i_cross.gif" alt="Clear Changes" /><div>Clear Changes</div></button>
+			</form>
+		</div>
+		
+</div>
+<script>
+if(document.ThisForm.bill_country_id.value=="" || document.ThisForm.bill_country_id.value<=0)
+{
+setbillstate({selbillcountid},2);
+}
+else
+{
+setbillstate(document.ThisForm.bill_country_id.value,2);
+}
+
+for(var i=0;i<document.ThisForm.bill_state_id.options.length;i++)
+{
+if(document.ThisForm.bill_state_id.options[i].value == '{selbillstateid}')
+document.ThisForm.bill_state_id.options[i].selected = true;
+}
+		document.ThisForm.company_name.focus();
+</script>

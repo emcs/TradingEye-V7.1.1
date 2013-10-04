@@ -1,0 +1,33 @@
+<div class="historyWidgetContainer">
+	<a href='adminindex.php'>Home</a> <strong>&raquo;</strong> 
+	<a href='/sales/adminindex.php?action=email.home&amp;flag=marketing'>Marketing</a> <strong>&raquo;</strong>
+	<a href='/sales/adminindex.php?action=report.home&amp;flag=marketing'>Reports</a> <strong>&raquo;</strong>  
+	<a href='#'>Best Sellers</a>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">Best Sellers</div>
+	<div class="WidgetContent">
+		<p class="buttonWrapper">
+			<button onclick="window.location='{TPL_VAR_SITEURL}adminindex.php'" class="formButton"><img src="{TPL_VAR_SITEURL}graphics/i_back.gif" alt="Back" /> <div>Return to Dashboard</div></button>
+		</p>
+		<table class="whiteTable2">
+			<thead>
+				<tr>
+					<th>Product Name</th>
+					<th>Amount Sold</th>
+					<th>Price</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- BEGIN TPL_BESTSELLERS_BLK -->
+					<tr>
+						<td><a href="{TPL_VAR_TOPTENPRODUCTURL}">{TPL_VAR_TOPSELLERTITLE}</a></td>
+						<td>{TPL_VAR_TOPSELLERCOUNT}</td>
+						<td>{TPL_VAR_CURRENCY}{TPL_VAR_TOPSELLERPRICE}</td>
+					</tr>
+				<!-- END TPL_BESTSELLERS_BLK -->
+			</tbody>
+		</table>
+	</div>
+</div>

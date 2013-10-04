@@ -1,0 +1,210 @@
+<script  type="text/javascript">
+	function validate()
+	{
+		frm=document.myFrm;
+		if(isNull(frm.start_date.value))
+		{
+			alert("Please Enter From date");
+			frm.start_date.focus();
+			return false;
+		}
+		if(isNull(frm.end_date.value))
+		{
+			alert("Please Enter To date");	
+			frm.end_date.focus();
+			return false;
+		}
+		if(compareDates(frm.start_date.value,frm.end_date.value)>=0)
+		{
+			alert("Invalid dates\nFrom date should be less than To date");
+			frm.start_date.focus();
+			return false;
+		}
+		return true;
+	}
+</script>
+<div class="historyWidgetContainer"><a href='adminindex.php'>Home </a><strong> &raquo; </strong><a href='adminindex.php?action=email.home'>Marketing</a><strong> &raquo; </strong><a href='#'>Order Reports</a></div>
+<div class="fullWidgetContainer">
+      <div class="WidgetTitle">Report Generators</div>
+      <div class="WidgetContent">
+	<p>{TPL_VAR_MSG}</p>
+	<table class="whiteTable2 Orders OneColum" cellspacing="0">
+		<thead>
+			<tr>
+				<th colspan="2">Order Report</th>
+			</tr>
+		</thead>
+		<tbody>
+			<form action="{TPL_VAR_SALESURL}adminindex.php?action=report.order" method="post" name="myFrm" onSubmit="return validate();">
+			<tr>
+				<td><label>Orders Status</label></td>
+				<td>
+					<div class="selectContainer"><select name="status" class="formSelect">
+											<option value="All">All</option> 
+											<option value="New" {TPL_VAR_SELSTATUS1}>New</option> 
+											<option value="Received" {TPL_VAR_SELSTATUS2}>Received</option> 
+											<option value="Backorder" {TPL_VAR_SELSTATUS3}>Backordered</option> 
+											<option value="Dispatched" {TPL_VAR_SELSTATUS4}>Dispatched</option> 
+											<option value="Void" {TPL_VAR_SELSTATUS5}>Void</option>
+										</select></div>
+				</td>
+			</tr>
+			<tr>
+				<td><label>Order From (dd/mm/yyyy)<a href="javascript:cal2.popup();" class="linkCalendar"></a></label></td>
+				<td>
+					<input type="text" id="start_date" name="start_date" value="{TPL_VAR_FROMDATE}" size="7" class="formField date" maxlength="20" />
+					
+					<script  type="text/javascript">
+						var cal2 = new calendar2(document.forms[0].elements['start_date']);
+						cal2.year_scroll = true;
+						cal2.time_comp = false;
+					</script>
+				</td>
+			</tr>
+			<tr>
+				<td><label>Order To (dd/mm/yyyy)<a href="javascript:cal3.popup();" class="linkCalendar"></a></label></td>
+				<td>
+					<input type="text" id="end_date" name="end_date" value="{TPL_VAR_TODATE}" size="7" class="formField date" maxlength="20" />
+					
+					<script  type="text/javascript">
+						var cal3 = new calendar2(document.forms[0].elements['end_date']);
+						cal3.year_scroll = true;
+						cal3.time_comp = false;
+					</script>
+				</td>
+			</tr>
+			<tr>
+				<td><label>Show Records</label></td>
+				<td>
+					<div class="selectContainer"><select class="formSelect" name="radReport" >
+											<option value="Orders" {TPL_VAR_REPOTYTYPE1}>Orders by Date</option>
+											<option value="Products" {TPL_VAR_REPOTYTYPE2}>Products by Date</option>
+										</select></div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<script type="text/javascript">
+		function ChangeStatus(which)
+		{
+			var div1 = document.getElementById("div1");
+			var div2 = document.getElementById("div2");
+			if(which == "Orders")
+			{
+				div1.style.display = 'block';
+				div2.style.display = 'none';
+			}
+			else if(which == "Products"){
+				div1.style.display = 'none';
+				div2.style.display = 'block';
+			}
+		}
+		if(document.myFrm.radReport[1].checked)
+		{
+			ChangeStatus("Products");
+		}
+		else
+		{
+			ChangeStatus("Orders");
+		}
+	</script>
+	<p class="formButtonWrapper">
+		<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="Generate Report" /> <div>Generate Report</div></button>
+	</p>
+	</form>
+</div></div>
+	
+<!-- BEGIN TPL_ORDER_BLK -->
+<div class="fullWidgetContainer">
+      <div class="WidgetTitle">Orders By Date</div>
+      <div class="WidgetContent">
+	<span colspan="4">{TPL_VAR_COUNT} between {TPL_VAR_FROMDATE} and {TPL_VAR_TODATE}</span>
+    <table>
+			<thead>
+                <tr>
+                    <th colspan="2">Complete Orders</th>
+                </tr>
+            </thead>
+			<tbody>
+            <tr>
+				<td class="first"><strong>Total Orders</strong></td>
+				<td>{TPL_VAR_COMPLETE_COUNT}</td>
+			</tr>
+			<tr>
+				<td><strong>Total Sales</strong></td>
+				<td>{TPL_VAR_CURRENCY}{TPL_VAR_COMPLETE_TOTAL}</td>
+			</tr>
+			<tr>
+				<td><strong>Average Order</strong></td>
+				<td>{TPL_VAR_CURRENCY}{TPL_VAR_COMPLETE_AVGTOTAL}</td>
+			</tr>
+			<tr>
+				<td><strong>Largest Order</strong></td>
+				<td>{TPL_VAR_CURRENCY}{TPL_VAR_COMPLETE_MAXTOTAL}</td>
+			</tr>
+            </tbody>
+	</table>
+    <table>
+            <thead>
+            <tr>
+				<th colspan="2">Incomplete Orders</th>
+			</tr>
+            </thead>
+			<tbody>
+            <tr>
+				<td class="first"><strong>Total Orders</strong></td>
+				<td>{TPL_VAR_INCOMPLETE_COUNT}</td>
+			</tr>
+			<tr>
+				<td><strong>Total Sales</strong></td>
+				<td>{TPL_VAR_CURRENCY}{TPL_VAR_INCOMPLETE_TOTAL}</td>
+			</tr>
+			<tr>
+				<td><strong>Average Order</strong></td>
+				<td>{TPL_VAR_CURRENCY}{TPL_VAR_INCOMPLETE_AVGTOTAL}</td>
+			</tr>
+			<tr>
+				<td><strong>Largest Order</strong></td>
+				<td>{TPL_VAR_CURRENCY}{TPL_VAR_INCOMPLETE_MAXTOTAL}</td>
+			</tr>
+            </tbody>
+	</table>
+</div></div>
+<!-- END TPL_ORDER_BLK -->
+ 
+
+		
+<!-- BEGIN TPL_PRODUCT_BLK -->	
+<div class="fullWidgetContainer">
+      <div class="WidgetTitle">Products By Date</div>
+      <div class="WidgetContent">
+    <table>
+                <thead>
+                    <tr>	
+                        <th>Qty</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Ext Price</th>
+                        <th>Status</th>
+                    </tr>   
+				</thead>
+				<tbody>
+					<!-- BEGIN TPL_PRODUCTINNER_BLK -->	
+					<tr>
+						<td>{TPL_VAR_QTY}</td>
+						<td>{TPL_VAR_DESC}</td>
+						<td>{TPL_VAR_CURRENCY}{TPL_VAR_PRICE}</td>
+						<td>{TPL_VAR_CURRENCY}{TPL_VAR_EXTPRICE}</td>
+						<td>{TPL_VAR_STATUS}</td>
+					</tr>
+                    <!-- END TPL_PRODUCTINNER_BLK -->	
+					<tr>
+                        <td>
+                            <a href="##" onclick="window.print();return false">Print report</a>
+                        </td>
+                    </tr>
+               </body> 
+	</table>
+</div></div>
+
+<!-- END TPL_PRODUCT_BLK -->

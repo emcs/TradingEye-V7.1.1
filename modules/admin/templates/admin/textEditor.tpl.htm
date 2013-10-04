@@ -1,0 +1,52 @@
+    <div class="historyWidgetContainer"><a href="../adminindex.php?flag=dashboard">Home</a> <strong>&raquo;</strong> <a href="adminindex.php?action=settings.companyHome&flag=settings">Settings</a> <strong>&raquo;</strong> <a href="adminindex.php?action=settings.textareas">Text Areas</a> <strong>&raquo;</strong> <a href='#'> Edit:{TPL_VAR_HEADING}</a></div>
+    <div class="fullWidgetContainer">
+      <div class="WidgetTitle">{TPL_VAR_HEADING}</div>
+      <div class="WidgetContent">
+<form action="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.textarea_update" method="post" name="TheForm" id="TheForm">
+	 <input type="hidden" name="datatype" value="{TPL_VAR_TYPE}">
+	<div class="builderBlock">
+		<!-- BEGIN TPL_DSPMSG_BLK -->{TPL_VAR_MSG}<!-- END TPL_DSPMSG_BLK -->
+		<table>
+			<thead>
+				<tr>
+					<th>{TPL_VAR_HEADING} Content</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+						{cmsEditor}
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<br />
+	<!-- BEGIN TPL_GLOBALSEO_BLK -->	
+		<h3>Global SEO</h3>
+		<table>
+			<thead>
+				<tr>
+					<th colspan="2">Global Meta Data</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr> 
+					<td class="first"><label>Global Meta Title</label><br /><span></span></td>
+					<td><input type="text" name="metatitle" class="formField long" value="{TPL_VAR_METATITLE}"/></td>
+				</tr>
+				<tr> 
+					<td><label>Global Meta Description</label><br /><span></span></td>
+					<td><textarea class="formField long" name="metadescription">{TPL_VAR_METADESC}</textarea></td>
+				</tr>
+				<tr> 
+					<td><label>Global Meta Keywords</label><br /><span></span></td>	
+					<td><textarea class="formField long"  name="metakeyword">{TPL_VAR_METAKEY}</textarea></td>
+				</tr>
+			</tbody>
+		</table>
+	<!-- END TPL_GLOBALSEO_BLK -->	
+		<p class="formButtonWrapper">
+			<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="Update Homepage Content" /> Update {TPL_VAR_HEADING} Content</button>
+		</p>
+	</div><br style='clear:both;'/>
+</div></div><br style='clear:both;'/>

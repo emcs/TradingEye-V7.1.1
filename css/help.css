@@ -1,0 +1,172 @@
+/*
+
+Tradingeye Admin Help (screen) style sheet
+-------------------------------------
+
+Copyright:		TradingEye.com
+Last edit:		10/02/2011
+
+*/
+
+
+/* =BASE
+----------------------------------------------- */
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+	}
+body {
+	background: #fff;
+	color: #111;
+	font: 62.5%/1.8em "Lucida Grande", Verdana, Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	}
+
+
+/* =CONTAINER
+----------------------------------------------- */
+
+#container {
+	background: #fff;
+	padding: 0 20px;
+	text-align: left;
+	position: relative;
+	z-index: 1;
+	}
+
+
+/* =TYPOGRAPHY
+----------------------------------------------- */
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	margin: 1em 0;
+	}
+h1 {
+	background: #e5e5e5;
+	color: #888;
+	font-size: 1em;
+	font-weight: bold;
+	letter-spacing: .2em;
+	margin: 0 -20px 1em -20px;
+	padding: .5em 20px .7em 20px;
+	text-transform: uppercase;
+	}
+h2 {
+	border-bottom: 2px solid #f2f2f2;
+	color: #111;
+	font-size: 2em;
+	font-weight: normal;
+	line-height: 1.5em;
+	margin: 1em 0 1em 0;
+	}
+h3 {
+	color: #111;
+	font-size: 1.6em;
+	font-weight: normal;
+	margin: 1em 0;
+	}
+h4 {
+	clear: both;
+	color: #666;
+	font-size: 1.1em;
+	font-weight: bold;
+	margin: .5em 0 -.5em 0;
+	text-transform: uppercase;
+	}
+p {
+	font-size: 1.1em;
+	}
+p.intro {
+	color: #999;
+	font-family: Georgia, Times, serif;
+	font-size: 1.6em;
+	font-style: italic;
+	margin: 1.5em 0;
+	}
+
+
+/* =LISTS
+----------------------------------------------- */
+
+ul,
+ul li,
+ol,
+ol li {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	}
+ul,
+ol {
+	margin: 1em 0 2em 0;
+	}
+ul li {
+	color: #111;
+	font: 1.1em "Lucida Grande", Verdana, Arial, sans-serif;
+	list-style-type: disc;
+	margin: .5em 0 .5em 3em;
+	}
+ol li {
+	color: #111;
+	font: 1.1em "Lucida Grande", Verdana, Arial, sans-serif;
+	list-style-type: decimal;
+	margin: .5em 0 .5em 3em;
+	}
+
+
+/* =LINKS
+----------------------------------------------- */
+
+a:link,
+a:visited,
+a:active {
+	color: #63a6d9;
+	text-decoration: none;
+	}
+a:hover {
+	color: #111;
+	text-decoration: none;
+	}
+
+
+/* =IMAGES
+----------------------------------------------- */
+
+img {
+	background: #e5e5e5;
+	border: 3px solid #f2f2f2;
+	padding: 5px;
+	}
+
+
+/* =CLEARFIX
+----------------------------------------------- */
+
+#none {
+	clear: both;
+	content: ".";
+	display: block;
+	height: 0;
+	visibility: hidden;
+	}
+#none {
+	display: block;
+	}
+/*  \*/
+#none {
+	min-height: 1%;
+	}
+* html #none {
+	height: 1%;
+	}
+/*  */

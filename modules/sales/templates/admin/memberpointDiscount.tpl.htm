@@ -1,0 +1,68 @@
+<div class="historyWidgetContainer"><a href='adminindex.php'>Home </a><strong> &raquo; </strong><a href='adminindex.php?action=email.home'>Marketing</a><strong> &raquo; </strong><a href='#'>Promotions</a><strong> &raquo; </strong><a href='#'>Member Point Discount</a></div>
+
+<div class="fullWidgetContainer">
+
+      <div class="WidgetTitle">Member Point Discount</div>
+
+      <div class="WidgetContent">
+      <strong>Member Points</strong> Member points give the user the opportunity to purchase items from your store and build up points. The points have a currency value set by the administrator, so the more points built up the more credit the customer has available to spend.</p>
+        <p><strong>Member Point Value</strong> Calculation to give a point value. If a customer has 2,000 points, and the point value is set to .03, the customer then has £60.00 worth of points. (2000 X .03 = 60).<br />
+      <br />
+        <strong>Member Point Calculation</strong> Calculating value for each unit (£1) purchased. If it is set to 5, then for every £1.00 spent, the customer recieves 5 points (£1.00 = 5 Points).</p>
+        <br />
+
+		<form action="{TPL_VAR_SITEURL}sales/adminindex.php?action=promotions.updatememberpoint" method="post" name="ThisForm" id="ThisForm">
+
+				<input type="hidden" name="mode" value="{TPL_VAR_MODE}">
+
+	<table class="whiteTable2" cellspacing="0">
+
+		<thead>
+
+			<tr> 
+
+				<th colspan="2">Member Point Discount Settings</th>
+
+			</tr>
+
+		</thead>
+
+		<tbody>
+
+				<tr>
+
+					<td class="first"><label for="member_points">Offer Member Points</label></td>
+
+					<td><input type="checkbox" class="formField" id="member_points" name="membership" value="1" {TPL_VAR_ENABLEMEMBERSHIP} /></td>
+
+				</tr>
+
+				<tr>
+
+					<td><label for="points_value">Member Points Value</label></td>
+
+					<td><input type="text" class="formField short" id="points_value" name="memberPointValue" value="{TPL_VAR_POINTSVALUE}" size="5" maxlength="10" /></td>
+
+				</tr>
+
+				<tr>
+
+					<td><label for="points_cal">Member Points Calculation</label> </td>
+
+					<td><input type="text" class="formField short" id="points_cal" name="memberPointCalculation" value="{TPL_VAR_POINTSCALC}" size="5" maxlength="10" /></td>
+
+				</tr>
+
+			</tbody>
+
+		</table>
+
+		<p class="formButtonWrapper">
+
+			<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="Set Member Point Discount" /> <div>Set Member Point Discount</div></button>
+
+		</p>
+
+	</form>
+
+</div></div>

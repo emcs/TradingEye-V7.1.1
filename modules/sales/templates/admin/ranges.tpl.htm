@@ -1,0 +1,130 @@
+<script language="JavaScript" type="text/javascript">
+	function validateForm()
+	{
+		var len=document.codes.elements.length;
+		var frm = document.codes;
+		for(var i=0; i<len; i++)
+		{
+			if(document.codes.elements[i].name == 'description[]')
+			{
+				if(document.codes.elements[i].value=="")
+				{
+				alert("Please enter short description");
+				document.codes.elements[i].focus();
+				return false;
+				}
+			}
+		}
+		for(var i=0; i<len; i++)
+		{
+			if(document.codes.elements[i].name == 'total[]')
+			{
+				if(document.codes.elements[i].value=="")
+				{
+				alert("Please enter Order Total");
+				document.codes.elements[i].focus();
+				return false;
+				}
+			}
+		}
+		for(var i=0; i<len; i++)
+		{
+			if(document.codes.elements[i].name == 'discount[]')
+			{
+				if(document.codes.elements[i].value=="")
+				{
+				alert("Please enter discount value");
+				document.codes.elements[i].focus();
+				return false;
+				}
+			}
+		}
+	frm=document.codes;
+	if(compareDates(frm.start_date.value,frm.end_date.value)>=0)
+	{
+		alert("Invalid dates\nStart date should be less than End date");
+		frm.start_date.focus();
+		return false;
+	}
+	return true;
+}
+</script>
+<div class="historyWidgetContainer"><a href='adminindex.php'>Home </a><strong> &raquo; </strong><a href='adminindex.php?action=email.home'>Marketing</a><strong> &raquo; </strong><a href='adminindex.php?action=promotions.home'>Promotions</a><strong> &raquo; </strong><a href='#'>Discount Ranges</a></div>
+<div class="fullWidgetContainer">
+      <div class="WidgetTitle">Discount Ranges</div>
+      <div class="WidgetContent">
+      	<form action="{TPL_VAR_SITEURL}sales/adminindex.php?action=promotions.updaterange" method="POST" name="codes" id="codes" onsubmit="return validateForm();">
+	<table class="whiteTable2">
+		<thead>
+			<tr>
+				<th colspan="4">Date Range</th>
+			</tr>
+		</thead>
+	
+		<tbody>
+			<tr>
+				<td class="first"><label for="start_date">Start date (dd/mm/yyyy)</label></td>
+				<td colspan="3">
+					<input type="text" id="start_date" name="start_date" value="{TPL_VAR_STARTDATE}" class="formField date" maxlength="20" />
+					<a class="linkCalendar" href="javascript:cal2.popup()">Choose a date</a>
+					<script language="JavaScript">
+						var cal2 = new calendar2(document.forms[0].elements['start_date']);
+						cal2.year_scroll = true;
+						cal2.time_comp = false;
+					</script>
+				</td>
+			</tr>
+			<tr>
+				<td><label for="end_date">End date (dd/mm/yyyy)</label></td>
+				<td colspan="3">
+					<input type="text" id="end_date" name="end_date" value="{TPL_VAR_ENDDATE}" class="formField date" maxlength="20" />
+					<a class="linkCalendar" href="javascript:cal3.popup()">Choose a date</a>
+					<script language="JavaScript">
+						var cal3 = new calendar2(document.forms[0].elements['end_date']);
+						cal3.year_scroll = true;
+						cal3.time_comp = false;
+					</script>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<table class="whiteTable2 Builder">
+		<thead>
+			<tr>
+				<th class="headerID">ID</th>
+				<th>Description</th>
+				<th>Order total</th>
+				<th>Discount</th>
+			</tr>
+		</thead>
+		<tbody>
+			<!-- BEGIN TPL_CODE_BLK -->
+			<input type="hidden" name="id[]" value="{TPL_VAR_ID}">
+				<tr> 
+					<td>{TPL_VAR_COUNT}</td>
+					<td><input type="text" name="description[]" value="{TPL_VAR_DESCRIPTION}" class="formField" size="30" maxlength="50" /></td>
+					<td><input type="text" name="total[]" value="{TPL_VAR_TOTAL}" class="formField short" size="2" maxlength="12" /></td>
+					<td><input type="text" name="discount[]" value="{TPL_VAR_DISCOUNT}" class="formField short" size="2" maxlength="3" style="width: 80%;" /> %</td>
+				</tr>
+				<!-- END TPL_CODE_BLK -->
+				<tr> 
+					<td>{TPL_VAR_COUNT}</td>
+					<td><input type="text" name="newdescription" value="" class="formField" size="30" maxlength="50" /></td>
+					<td><input type="text" name="newtotal" value="0" class="formField short" size="2" maxlength="12" /></td>
+					<td><input type="text" name="newdiscount" value="" class="formField short" size="2" maxlength="3" style="width: 80%;" /> %</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="checkbox" class="checkbox" name="endPromo" value="1" />
+					</td>
+					<td colspan="3">
+						<label for="endPromo">End Promotion Now?</label>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<p class="formButtonWrapper">
+		<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="Set Discount Ranges" /> Set Discount Ranges</button>
+		</p>
+	</form>
+</div></div>

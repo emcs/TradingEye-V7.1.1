@@ -1,0 +1,33 @@
+<div class="historyWidgetContainer">
+	<a href='adminindex.php'>Home</a> <strong>&raquo;</strong> 
+	<a href='/sales/adminindex.php?action=email.home&amp;flag=marketing'>Marketing</a> <strong>&raquo;</strong>
+	<a href='/sales/adminindex.php?action=report.home&amp;flag=marketing'>Reports</a> <strong>&raquo;</strong>  
+	<a href="#">Top Searches</a>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">Top Searches</div>
+	<div class="WidgetContent">
+		<p class="buttonWrapper">
+			<button onclick="window.location='{TPL_VAR_SITEURL}adminindex.php'" class="formButton"><img src="{TPL_VAR_SITEURL}graphics/i_back.gif" alt="Back" /> <div>Return to Dashboard</div></button>
+		</p>
+		<table class="whiteTable2 Orders" cellspacing="0">
+			<thead>
+				<tr>
+					<th class="title">Search Term</th>
+					<th>Number of Searches</th>
+					<th>Records Found</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- BEGIN TPL_TOPSEARCHES_BLK -->
+				<tr>
+					<td>{TPL_VAR_TOPSEARCHTITLE}</td>
+					<td>{TPL_VAR_TOPSEARCHCOUNT}</td>
+					<td>{TPL_VAR_RECORDSFOUND}</td>
+				</tr>
+				<!-- END TPL_TOPSEARCHES_BLK -->
+			</thead>
+		</table>
+	</div>
+</div>

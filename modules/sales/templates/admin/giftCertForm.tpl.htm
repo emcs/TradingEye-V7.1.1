@@ -1,0 +1,43 @@
+<script language="JavaScript" type="text/javascript">
+function validateForm(){
+	var frm = document.ThisForm;
+	if(isNull(frm.code.value)){
+		alert("You must enter certificate code");
+		frm.code.value = '';
+		frm.code.focus();
+		return false;
+	}
+	return true;
+}
+</script>
+<div class="historyWidgetContainer"><a href='adminindex.php'>Home </a><strong> &raquo; </strong><a href='adminindex.php?action=email.home'>Marketing</a><strong> &raquo; </strong><a href='adminindex.php?action=promotions.home'>Promotions</a><strong> &raquo; </strong><a href='#'>Gift Certificate Builder</a></div>
+<div class="fullWidgetContainer">
+      <div class="WidgetTitle">Gift Certificate Builder</div>
+      <div class="WidgetContent">
+	<p>Enter a value for the gift certificate below. Do not use money signs. The system will generate a certificate with a sequential Code/ID number. If you already have gift certificates and wish to use their sequence numbers, place the certificate Code/ID in the manual code field. Otherwise, Tradingeye will create a sequential code for you if left blank.</p>
+	<!-- BEGIN TPL_MSG_BLK --><p>{TPL_VAR_MSG}</p><!-- END TPL_MSG_BLK -->
+	<table class="whiteTable2" cellspacing="0">
+		<thead>
+			<tr>
+				<th colspan="2">Gift Certificate Builder</th>
+			</tr>
+		</thead>
+		<tbody>
+			<form action="{TPL_VAR_SITEURL}sales/adminindex.php?action=promotions.giftcert.update" method="POST" name="ThisForm" id="ThisForm" onsubmit="return validateForm();">
+				<input type="hidden" name="mode" value="{TPL_VAR_MODE}">
+				<input type="hidden" name="id" value="{TPL_VAR_ID}">
+				<tr>
+					<td class="first"><label>Certificate Value</label></td>
+					<td><input type="text" name="amount" value="{TPL_VAR_AMOUNT}" class="formField" maxlength="12" /></td>
+				</tr>
+				<tr> 
+					<td><label>Manual Certificate Code <span>*</span></label></td>
+					<td><input type="text" name="code" value="{TPL_VAR_CODE}" class="formField" maxlength="50" /></td>
+				</tr>
+			</tbody>
+		</table>
+		<p class="formButtonWrapper">
+			<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="{TPL_VAR_BTNLBL}" /> {TPL_VAR_BTNLBL}</button>
+		</p>
+	</form>
+</div></div>

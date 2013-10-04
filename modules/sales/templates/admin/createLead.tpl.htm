@@ -1,0 +1,177 @@
+<script language="JavaScript" type="text/javascript">
+	function validateit()
+	{
+		if(document.ThisForm2.items.value=="")
+		{
+			alert("No option is selected");
+			return false;
+		}
+		return true;
+	}
+	
+	function validate()
+	{
+		frm=document.myFrm;
+		if(compareDates(frm.start_date.value,frm.end_date.value)>=0)
+		{
+			alert("Invalid dates\nStart date should be less than End date");
+			frm.start_date.focus();
+			return false;
+		}
+		return true;
+	}
+    
+    function sendToAll() {
+		var ans=confirm("You will now be redirected to write lead list");
+		if(ans) {
+			document.location.href = '{TPL_VAR_SITEURL}sales/adminindex.php?action=email.dspForm';
+		}else{
+			document.getElementById('radAll2').checked = true;
+			document.getElementById('radAll1').checked = false;
+		}
+	}	
+
+</script>
+
+<div class="historyWidgetContainer"><a href='adminindex.php'>Home </a><strong> &raquo; </strong><a href='adminindex.php?action=email.home'>Marketing</a><strong> &raquo; </strong><a href='adminindex.php?action=email.home'>Email Campaigns</a><strong> &raquo; </strong><a href='#'>Create New Campaigns</a></div>
+<div class="fullWidgetContainer">
+      <div class="WidgetTitle">Campaign Editor</div>
+      <div class="WidgetContent">
+      	<table class="whiteTable2 Builder OneColum">
+			<tr>
+				<td>
+					<label>Create Lead List For</label>
+				</td>
+				<td>
+					<input type="radio" name="radAll" id="radAll1" value="0"  onclick="sendToAll();">All Customers
+					<input type="radio" name="radAll" id="radAll2" value="1" checked>Based on Items Below
+				</td>
+			</tr>
+		</table>
+		<!-- START DEPARTMENT -->
+			<div class="LeftBox">
+				<form action="{TPL_VAR_SITEURL}sales/adminindex.php" method="get" name="ThisForm1">
+					<input type="hidden" name="action" value="email.leadForm">
+					<input type="hidden" name="leadid" value="{TPL_VAR_LEADID}">
+					<h4>Departments</h4>
+					<select name="postOwner" size="10" class="formSelect attach" style="width:610px;">
+						<option value="0" {SELECTED1}>Home page</option>
+						<option value="orphan">All orphan products</option>
+						<!-- BEGIN TPL_DEPARTMENT_BLK -->	
+							<option value="{TPL_VAR_ID}" {SELECTED2}>{TPL_VAR_TITLE}</option>
+						<!-- END TPL_DEPARTMENT_BLK -->	
+					</select>
+					<p class="formButtonWrapper">
+						<button type="submit" class="formButton"><img src="../graphics/i_preview.gif" alt="View items" /> <div>View items</div></button>
+					</p>
+				</form>
+				
+			</div>
+		<!-- END DEPARTMENT -->
+		<!-- START ITEMS -->
+			<div class="RightBox">
+				<form action="{TPL_VAR_SITEURL}sales/adminindex.php?action=email.updateLead" method="post" name="ThisForm2" onSubmit="return validateit();">
+					<input type="hidden" name="leadid" value="{TPL_VAR_LEADID}">
+					<input type="hidden" name="postOwner" value="{TPL_VAR_POSTOWNER}">
+					<h4>Items</h4>
+					<select name="items" size="10" class="formSelect attach" style="width:610px;">
+						<!-- BEGIN TPL_ITEMS_BLK -->	
+							<option value="{TPL_VAR_ID}">{TPL_VAR_TITLE}</option>
+						<!-- END TPL_ITEMS_BLK -->
+					</select>
+					<p class="formButtonWrapper">
+						<button type="submit" class="formButton"><img src="../graphics/i_add.gif" alt="Add item(s)" /> <div>Add item(s)</div></button>
+					</p>
+				</form>
+			</div>
+		<!-- END ITEMS -->
+		<div class="placeHolder"></div>
+		<!-- BEGIN TPL_MAINATTACHED_BLK -->
+			<h3>Currently Attached Items</h3>
+			<table class="whiteTable2">
+				<thead>
+					<tr class="headers"> 
+						<th class="first">Item Title</th>
+						<th class="headerType">Type</th>
+						<th>Item Location</th>
+						<th class="headerPreview">Preview</th>
+						<th class="headerRemove">Remove</th>
+					</tr>
+				</thead>
+				<tbody>
+					<!-- BEGIN TPL_ATTACHED_BLK -->
+						<tr>
+							<td><a href="{TPL_VAR_SITEURL}ecom/adminindex.php?action=ec_show.home&owner={TPL_VAR_PID}&type=product">{TPL_VAR_TITLE}</a></td>
+							<td>Product</td>
+							<td>/Menswear/T Shirts/</td>
+							<td><a href="#" class="linkPreview">Preview</a></td>
+							<td><a href="{TPL_VAR_SITEURL}sales/adminindex.php?action=email.deleteLead&id={TPL_VAR_ID}&leadid={TPL_VAR_LEADID}&postOwner={TPL_VAR_POSTOWNER}&amp;auth={TPL_VAR_AUTH_TOKEN}" class="linkDelete">Remove</a></td>
+						</tr>
+					<!-- END TPL_ATTACHED_BLK -->
+				</tbody>
+			</table>
+			
+			<form action="{TPL_VAR_SITEURL}sales/adminindex.php?action=email.updateLead1" method="post" name="myFrm" id="myFrm" onSubmit="return validate();">
+				<input type="hidden" name="leadid" value="{TPL_VAR_LEADID}">
+		        <table class="whiteTable2 Builder" cellspacing="0" style="border-top: 0;">
+		        	<thead>
+		        		<tr>
+		        			<th colspan="3">
+		        				Lead List Details
+		        			</th>
+		        		</tr>
+		        	</thead>
+		        	<tbody>
+		        		<tr>
+		        			<td style="border-bottom: 0; border-right: 1px solid #E1E1E1; width: 260px">
+		        				<label>Date Range</label>
+		        			</td>
+		        			<td>
+		        				<label>Lead List Name</label>
+		        			</td>
+		        			<td>
+		        				<input type="text" name="txtName" size="15" class="formField long" maxlength="20"/>
+		        			</td>
+		        		</tr>
+		        		<tr>
+		        			<td rowspan="2" style="border-right: 1px solid #E1E1E1; width: 260px">
+		        				<label>Start Date (dd/mm/yyyy)</label><br />
+		        				<input type="text" id="start_date" name="start_date" value="{TPL_VAR_FROMDATE}" class="formField" maxlength="10" style="width: 120px;" />
+								<a class="linkCalendar" href="javascript:cal2.popup();">Choose a date</a><br />
+								<script language="JavaScript">
+									var cal2 = new calendar2(document.getElementById('myFrm').elements['start_date']);
+									cal2.year_scroll = true;
+									cal2.time_comp = false;
+								</script>
+								<label>End Date (dd/mm/yyyy)</label><br />
+		        				<input type="text" id="end_date" name="end_date" value="{TPL_VAR_TODATE}" class="formField" maxlength="10" style="width: 120px;" />
+								<a class="linkCalendar" href="javascript:cal3.popup();">Choose a date</a>
+								<script language="JavaScript">
+									var cal3 = new calendar2(document.getElementById('myFrm').elements['end_date']);
+									cal3.year_scroll = true;
+									cal3.time_comp = false;
+								</script>
+		        			</td>
+		        			<td>
+		        				<label>
+		        					Target Customers Who...
+		        				</label>
+		        			</td>
+		        			<td>
+		        				<input type="radio" name="leadBuyers" class="formRadio" value="yes" /> <label><strong>Have</strong> purchased these items.</label>
+		        				<input type="radio" name="leadBuyers" class="formRadio" value="no" /> <label><strong>Have not</strong> purchased these items.</label>
+		        			</td>
+		        		</tr>
+		        		<tr>
+		        			<td colspan="2" style="text-align: right">
+		        				<button class="formButton" onclick="history.go(-1); return false;" /><img src="../graphics/i_cross.gif" alt="Cancel" /> <div>Cancel</div>
+		        				<button class="formButton" type="submit" /><img src="../graphics/i_tick.gif" alt="Create Lead List" /> <div>Create Lead List</div>
+		        			</td>
+		        		</tr>
+		        	</tbody>
+		        </table>
+			</form>
+		<!-- END TPL_MAINATTACHED_BLK -->
+		<div class="placeHolder"></div>	
+	</div>
+</div>

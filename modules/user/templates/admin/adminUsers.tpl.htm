@@ -1,0 +1,41 @@
+<div class="historyWidgetContainer">
+	<a href="adminindex.php?flag=dashboard">Home</a> <strong>&raquo;</strong> 
+	<a href="/user/adminindex.php?action=security.home&flag=admin">Admin</a> <strong>&raquo;</strong> 
+	<a href='#'>Staff Login</a>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">Admin/Staff Login <small>{TPL_VAR_RECORDCOUNT} Users Found</small></div>
+	<div class="WidgetContent">
+		<button class="formButton" onclick="window.location='{TPL_USERURL}adminindex.php?action=security.createAdmin'" class="btnAdd"><img src="../graphics/i_add.gif" alt="Add New Customer" /><div>Add New User</div></button>
+		<table class="whiteTable2" cellspacing="0">
+			<thead>
+				<tr>
+					<th>Username</th>
+					<th>User Type</th>
+					<th class="headerDateLong">Last Edited</th>
+					<th class="headerDateLong">Signup Date</th>
+					<th class="headerEdit">Edit</th>
+					<th class="headerDelete">Delete</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- BEGIN TPL_USER_BLK -->
+					<tr>
+						<td>{TPL_VAR_NAME}</td>
+						<td>Master Admin</td>
+						<td>{TPL_VAR_EDITDATE}</td>
+						<td>{TPL_VAR_BUILDDATE}</td>
+						<td><a href="{TPL_USERURL}adminindex.php?action=security.createAdmin&adminid={TPL_VAR_ADMINID}" class="linkEdit">Edit</a></td> 
+						<!-- BEGIN TPL_SUPERADMIN_BLK -->
+							<td>&mdash;</td>
+						<!-- END TPL_SUPERADMIN_BLK -->
+						<!-- BEGIN TPL_LINK_BLK -->
+							<td><a href="{TPL_USERURL}adminindex.php?action=security.deleteAdmin&adminid={TPL_VAR_ADMINID}&amp;auth={TPL_VAR_AUTH_TOKEN}" onclick="if(confirm('Are you sure you want to delete this user?')){return true}else{return false}" class="linkDelete">Delete</a></td>
+						<!-- END TPL_LINK_BLK -->
+					</tr>
+				<!-- END TPL_USER_BLK -->
+			</tbody>
+		</table>
+	</div>
+</div>

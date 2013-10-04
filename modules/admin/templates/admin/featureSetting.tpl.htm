@@ -1,0 +1,131 @@
+<div class="historyWidgetContainer"><a href="../adminindex.php?flag=dashboard">Home</a> <strong>&raquo;</strong> <a href="adminindex.php?action=settings.companyHome&flag=settings">Settings</a> <strong>&raquo;</strong> <a href="adminindex.php?action=settings.global">Global Settings</a> <strong>&raquo;</strong><a href='#'>Feature Settings</a></div>
+    <div class="fullWidgetContainer">
+      <div class="WidgetTitle">Feature Settings<!-- BEGIN TPL_DSPMSG_BLK --><small>{TPL_VAR_MSG}</small><!-- END TPL_DSPMSG_BLK --></div>
+      <div class="WidgetContent">
+	<div class="LeftBox">
+		<form action="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.updateFeature" method="post">	  
+			<table class="whiteTable2" cellspacing="0">
+				<thead>
+					<tr>
+						<th colspan="2">Feature Settings</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="first"><label>Select language</label></td>
+						<td>
+							<div class="selectContainerSmall" style="width: 200px;"><select class="formSelect" id="Language" name="Language" style="width: 235px;">
+															<!-- BEGIN TPL_LANG_BLK -->
+															<option value="{TPL_VAR_LANGNAME}" {SELLANG}>{TPL_VAR_LANGNAME}</option>
+															<!-- END TPL_LANG_BLK -->
+														</select></div>
+						</td>
+					</tr>
+					<tr>
+						<td><label for="stock">Enable Stock Control</label> </td>
+						<td><input type="checkbox" class="checkbox" id="stock" name="inventory" value="1" {TPL_VAR_ENABLEINVENTORY} /></td>
+					</tr>
+					<tr>
+						<td><label for="topsellers">Show Top Sellers on Homepage</label> </td>
+						<td><input type="checkbox" class="checkbox" id="topsellers" name="topsellers" value="1" {TPL_VAR_ENABLETOPSELLERS} /></td>
+					</tr>
+					<tr>
+						<td><label for="shopbybrand">Shop by Supplier</label> </td>
+						<td><input type="checkbox" class="checkbox" id="shopbybrand" name="shopbybrand" value="1" {TPL_VAR_ENABLESHOPBYBRAND} /></td>
+					</tr>
+					<tr>
+						<td><label for="recent">Show Recently Viewed Products</label> </td>
+						<td><input type="checkbox" class="checkbox" id="recent" name="recent" value="1" {TPL_VAR_ENABLERECENT} /></td>
+					</tr>
+					<tr>
+					<tr>
+						<td><label for="RecentlyViewedLimit">Recently Viewed Limit</label> </td>
+						<td><input type="text" id="RecentlyViewedLimit" name="RecentlyViewedLimit" value="{TPL_VAR_ENABLERECENT_LIMIT}"  /></td>
+					</tr>
+					<tr>
+						<td><label for="reviews">Enable Customer Reviews</label> </td>
+						<td><input type="checkbox" class="checkbox" id="reviews" name="customerReviews" value="1" {TPL_VAR_ENABLEREVIEWS} /></td>
+					</tr>
+					<tr>
+						<td><label for="wish_list">Enable Wish List</label> </td>
+						<td><input type="checkbox" class="checkbox" id="wish_list" name="wishlist" value="1" {TPL_VAR_ENABLEWISHLIST} /></td>
+					</tr>
+					<tr>
+						<td><label for="rssfeeds">Enable Article RSS Feeds</label> </td>
+						<td><input type="checkbox" class="checkbox" id="rssarticles" name="rssarticles" value="1" {TPL_VAR_ENABLEARTICLESRSS} /></td>
+					</tr>
+					<tr>
+						<td><label for="rssfeeds">Enable Product RSS Feeds</label> </td>
+						<td><input type="checkbox" class="checkbox" id="rssproducts" name="rssproducts" value="1" {TPL_VAR_ENABLEPRODUCTRSS} /></td>
+					</tr>
+					
+					<tr>
+						<td><label for="compare_list">Enable Product Comparison</label> </td>
+						<td><input type="checkbox" class="checkbox" id="usecompare" name="usecompare" value="1" {TPL_VAR_ENABLECOMPARE} /></td>
+					</tr>
+					<tr>
+						<td><label for="captcha_registration">Enable Captcha on Registration</label></td>
+						<td><input type="checkbox" class="checkbox" id="captcha_registration" name="captcha_registration" value="1" {CAPTCHA_REGISTRATION} /></td>
+					</tr>
+					<tr>
+						<td><label for="captcha_contactus">Enable Captcha on Contact Us</label></td>
+						<td><input type="checkbox" class="checkbox" id="captcha_contactus" name="captcha_contactus" value="1" {CAPTCHA_CONTACTUS} /></td>
+					</tr>
+					<tr>
+						<td><label for="speciald">Enable Special Delivery</label></td>
+						<td><input type="checkbox" class="checkbox" id="speciald" name="speciald" value="1" {TPL_VAR_SPECIALD} /></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="RightBox">
+			<table class="whiteTable2" cellspacing="0">
+				<thead>
+					<tr>
+						<th colspan="2">Shopping Cart Settings</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="first"><label for="gift">Enable Gift Wrapping</label></td>
+						<td><input type="checkbox" class="checkbox" id="gift" name="cartGiftWrapping" value="1" {ENABLE_GIFTWRAP} /></td>
+					</tr>
+					<tr>
+						<td><label for="news">Newsletter Signup (customer)</label></td>
+						<td><input type="checkbox" class="checkbox" id="news" name="cartMailList" value="1" {ENABLE_NEWSLETTER} /></td>
+					</tr>
+					<tr>
+						<td><label for="newsletter">Newsletter Signup (visitor)</label></td>
+						<td><input type="checkbox" class="checkbox" id="newsletternav" name="newsletternav" value="1" {ENABLE_NEWSLETTERNAV} /></td>
+					</tr>
+					<tr>
+						<td><label for="dropship">Enable Drop Ship</label></td>                
+						<td><input type="checkbox" class="checkbox" id="dropship" name="dropshipFeature" value="1" {ENABLE_DROPSHIP} /></td>
+					</tr>
+					<tr>
+						<td><label for="member_points">Offer Member Points</label></td>
+						<td><input type="checkbox" class="checkbox" id="member_points" name="membership" value="1" {TPL_VAR_ENABLEMEMBERSHIP} /></td>
+					</tr>
+				</tbody>
+			</table>
+			<table class="whiteTable2" cellspacing="0">
+				<thead>
+					<tr>
+						<th colspan="2">Google Analytics</th>
+					</tr>
+				</thead>
+				<tbody>
+					<form action="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.updateAnalytics" method="POST" name="ThisForm1">
+						<tr>
+							<td class="first"><label for="analyticsCode">Google Analytics Tracking Code</label></td>
+							<td><textarea class="formField" name="analyticsCode" id="analyticsCode" rows="10" cols="40">{TPL_VAR_TRACKINGCODE}</textarea></td>
+						</tr>
+					</tbody>
+				</table>
+				<p class="formButtonWrapper">
+					<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="Update Settings" /> Update Settings</button>
+				</p>
+			</form>
+	</div>
+<div class="placeHolder"></div>
+</div></div>

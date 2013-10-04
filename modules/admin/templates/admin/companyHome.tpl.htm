@@ -1,0 +1,58 @@
+    <div class="historyWidgetContainer"><a href="../adminindex.php?flag=dashboard">Home</a> <strong>&raquo;</strong> <a href="adminindex.php?action=settings.companyHome&flag=settings">Settings</a> <strong>&raquo;</strong> <a href="#">Company Information</a></div>
+    <div class="fullWidgetContainer">
+      <div class="WidgetTitle ">Company Information</div>
+      <div class="WidgetContent">
+		
+			<table class='whiteTable2' cellspacing="0">
+				<thead>
+					<tr>
+						<th>Company Name</th>
+						<th>Company Slogan</th>
+						<th>Address</th>
+						<th>City</th>
+						<th>Country</th>
+						<th>County/State</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style='width:192px;'>{TPL_VAR_COMPANY}</td>
+						<td style='width:192px;'>{TPL_VAR_SLOGAN}</td>
+						<td style='width:297px;'>{TPL_VAR_ADDRESS}</td>
+						<td style='width:164px;'>{TPL_VAR_CITY}</td>
+						<td style='width:199px;'>{TPL_COUNTRY_NAME}</td>
+						<td style='width:239px;'>{TPL_STATE_NAME}</td>
+					</tr>
+				</tbody>
+			</table>
+			<table class='whiteTable2'>
+				<thead>
+					<tr>
+						<th>Postal Code</th>
+						<th>Phone</th>
+						<th>Fax</th>
+						<th>Freephone</th>
+						<th>VAT Reg. No.</th>
+						<th>Company Reg. No.</th>
+						<th>Company Logo</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style='width:166px;'>{TPL_VAR_ZIP}</td>
+						<td style='width:166px;'>{TPL_VAR_PHONE}</td>
+						<td style='width:166px;'>{TPL_VAR_FAX}</td>
+						<td style='width:166px;'>{TPL_VAR_FREEPHONE}</td>
+						<td style='width:166px;'>{TPL_VAR_VATNUMBER}</td>
+						<td style='width:166px;'>{TPL_VAR_RNUMBER}</td>
+						<td style='width:243px;'>{TPL_VAR_LOGO}</td>
+					</tr>
+				</tbody>
+			</table>
+	
+<button class="formButton" onclick="window.location='{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.company&flag=settings'" class="btnEdit"><img src="../graphics/i_edit.gif" alt="Edit Company Info" /><div>Edit Company Info</div></button>
+
+	
+	
+</div>
+</div>

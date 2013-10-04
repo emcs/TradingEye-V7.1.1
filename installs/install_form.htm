@@ -1,0 +1,182 @@
+<script type="text/javascript">
+	var reEmail=/^[0-9a-zA-Z_\.-]+@[0-9a-zA-Z_\.-]+\..{2,8}$/;
+	function checkEmail(str){
+		var at="@";
+		var dot=".";
+		var lat=str.indexOf(at);
+		var lstr=str.length;
+		var ldot=str.indexOf(dot);
+		
+		if (str.indexOf(at)==-1){
+			return false;
+		}
+		
+		if (str.indexOf(at)==-1 || str.indexOf(at)==0 || str.indexOf(at)==lstr){
+			return false;
+		}
+		
+		if (str.indexOf(dot)==-1 || str.indexOf(dot)==0 || str.indexOf(dot)==lstr){
+			return false;
+		}
+		
+		if (str.indexOf(at,(lat+1))!=-1){
+			return false;
+		}
+		
+		if (str.substring(lat-1,lat)==dot || str.substring(lat+1,lat+2)==dot){
+			return false;
+		}
+		
+		if (str.indexOf(dot,(lat+2))==-1){
+			return false;
+		}
+		
+		if (str.indexOf(" ")!=-1){
+			return false;
+		}
+		
+		return true;
+	}
+</script>
+<script type="text/javascript">
+function ValidateForm() {
+	if(document.ThisForm.dbType.selectedIndex>-1) {
+		if(!isNull(document.ThisForm.dbServer.value)) {
+			if(!isNull(document.ThisForm.dsn.value)) {
+				if(!isNull(document.ThisForm.dbUserName.value)) {
+					if(!isNull(document.ThisForm.dbPassword.value)) {
+						if(!isNull(document.ThisForm.dbPrefix.value)) {
+							if(!isNull(document.ThisForm.siteurl.value)) {
+								if(!isNull(document.ThisForm.adminUser.value)) {
+									if(!isNull(document.ThisForm.adminPassword.value)) {
+										if(!isNull(document.ThisForm.adminemail.value)) {
+											if(checkEmail(document.ThisForm.adminemail.value)) {
+												 return true;
+											} else {
+												alert("Please provide valid email address!");
+												document.ThisForm.adminemail.focus();
+												return false;
+											}	
+										} else {
+											alert("You must provide email address for the Administrator!");
+											document.ThisForm.adminemail.focus();
+											return false;
+										}	
+									} else {
+										alert("You must provide a password for the Administrator!");
+										document.ThisForm.adminPassword.focus();
+										return false;
+									}			
+								} else {
+									alert("You must provide a default Administration Username!");
+									document.ThisForm.adminUser.focus();
+									return false;
+								}
+							} else {
+								alert("You must provide a Secure URL Path!");
+								document.ThisForm.siteurl.focus();
+								return false;
+							}	
+						} else {
+							alert("You must enter a db prefix (example sd_)!");
+							document.ThisForm.dbPrefix.focus();
+							return false;
+						}
+					} else {
+						alert("You must enter a database password!");
+						document.ThisForm.dbPassword.focus();
+						return false;
+					}
+				} else {
+					alert("You must enter a database username!");
+					document.ThisForm.dbUserName.focus();
+					return false;
+				}
+			} else {
+				alert("You must enter a datasource name!");
+				document.ThisForm.dsn.focus();
+				return false;
+			}
+			} else {
+						alert("You must enter a database server");
+						document.ThisForm.dbServer.focus();
+						return false;
+					}
+		} else {
+				alert("You must select a database type!");
+				document.ThisForm.dbType.focus();
+				return false;
+			}		
+}
+//-->
+</script>
+<form action="index.php?mode=install" method="post" name="ThisForm" id="ThisForm" onsubmit="return ValidateForm()">
+<div id="installer">
+	<h3>Database Details</h3>
+	<!-- BEGIN TPL_DSPMSG_BLK -->
+	<p>{TPL_VAR_MSG}</p>
+	<!-- END TPL_DSPMSG_BLK -->
+	<div class="block">
+		<p>Database Type: <strong>MySQL</strong> only</p>
+		<p>Database Server:<br />
+		<input type="text" name="dbServer" class="formField" value="{TPL_VAR_DBSERVER}" /><br />
+		<span>Usually "localhost", although you may wish to check before proceeding</span>
+		</p>
+		<p>Database Name:<br />
+		<input type="text" name="dsn" class="formField" value="{TPL_VAR_DBNAME}" /><br />
+		<span>The system database name for this installation, for example "tradingeye"</span>
+		</p>
+		<p>Database User:<br />
+		<input type="text" name="dbUserName" class="formField" value="{TPL_VAR_DBUNAME}" /><br />
+		<span>The username for logging into the database</span>
+		</p>
+		<p>Database Password:<br />
+		<input type="password" name="dbPassword" class="formField" value="{TPL_VAR_DBPASS}" /><br />
+		<span>The matching password for the database user</span>
+		</p>
+		<p>Database Prefix:<br />
+		<input type="text" name="dbPrefix" class="formField" value="{TPL_VAR_DBPREFIX}" /><br />
+		<span>Use a unique prefix to identify the Tradingeye Install, such as "te6_"</span>
+		</p>
+		<p>Secure URL:<br />
+		<input type="text" name="siteurl" class="formField secure" value="{TPL_VAR_SITEURL}" /><br />
+		<span>Example: "https://www.sitename.com/"</span>
+		</p>
+	</div>
+	<h3>License Information</h3>
+	<div class="block">
+		<p>License Key:<br />
+		<input type="text" name="license" class="formField" value="{TPL_VAR_LICENSE}" />
+		</p>
+	</div>
+	<h3>Admin Panel Details</h3>
+	<div class="block">
+		<p>Admin Username:<br />
+		<input type="text" name="adminUser" class="formField" value="{TPL_VAR_ADMINNAME}" />
+		</p>
+		<p>Admin Password:<br />
+		<input type="password" name="adminPassword" class="formField" value="{TPL_VAR_ADMINPASS}" />
+		</p>
+		<p>Admin Email Address:<br />
+		<input type="text" name="adminemail" class="formField" value="{TPL_VAR_ADMINEMAIL}" />
+		</p>
+	</div>
+	<h3>SEO friendly URLs</h3>
+	<p><strong>Note:</strong> To enable SEO friendly URLs, an <strong>.htaccess</strong> file is required. <a href='{SITE_URL}test/'>Check now</a> to see if your .htaccess file is working. A <strong>Not Found</strong> page will be displayed if the .htaccess file is not configured properly. Check the <a href="{SITE_URL}installs/htaccessnote.htm">.htaccess File Notes</a> for more information.</p>
+	<p><input type="checkbox" name="seofriendly" class="checkbox" value="1" /> SEO friendly urls (optional)</p>
+	<h3>Plugins and Themes</h3>
+	<p>Would you like the installer to download the default plugins and themes?</p>
+	<p><input type="checkbox" name="plugins" class="checkbox" value="1" /> Default Plugins (optional)</p>
+	<p><input type="checkbox" name="themes" class="checkbox" value="1" /> Default Themes (optional)</p>
+</div>
+<div id="steps">
+	<ul>
+		<li><a href="index.php">1) Install Requirements</a></li>
+		<li><a href="index.php?mode=begin">2) Terms &amp; Conditions</a></li>
+		<li class="current">3) Install Configuration</li>
+	</ul>
+</div>
+	<p class="formButtonWrapper" style="text-align:right;">
+		<button type="submit" value="Install" class="formButton"><img src="../graphics/i_tick.gif" alt="Complete Installation" /> Complete Installation</button>
+	</p>
+</form>

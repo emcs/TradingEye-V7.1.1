@@ -1,0 +1,110 @@
+<div class="historyWidgetContainer">
+	<a href='adminindex.php'>Home</a> <strong>&raquo;</strong> 
+	<a href='/sales/adminindex.php?action=email.home&amp;flag=marketing'>Marketing</a> <strong>&raquo;</strong>
+	<a href='/sales/adminindex.php?action=report.home&amp;flag=marketing'>Reports</a> <strong>&raquo;</strong>  
+	<a href="#">Product Report</a>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">Report Generator</div>
+	<div class="WidgetContent">
+		<form action="{FORM_URL}" method="post">
+			<table class="whiteTable2 Orders OneColum" cellspacing="0">
+				<thead>
+					<tr>
+						<th colspan="2">Product Report</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="first"><label>Search For</label></td>
+						<td>
+							<input type="text" name="search" value="{TPL_VAR_SEARCHTEXT}" class="formField" />
+						</td>
+					</tr>
+					<tr>
+						<td><label>Inside</label></td>
+						<td>
+							<div class="selectContainer"><select class="formSelect" name="method">
+															<option value="title" {TPL_VAR_MSEL1}>Product Title</option>
+															<option value="sku" {TPL_VAR_MSEL2}>Product Code</option>
+															<option value="kit" {TPL_VAR_MSEL3}>Product Kit</option>
+														</select></div>
+						</td>
+					</tr>
+					<tr>
+						<td><label>Order By</label></td>
+						<td>
+							<div class="selectContainer"><select class="formSelect" name="orderby">
+															<option value="vTitle" {TPL_VAR_OSEL1}>Product Title</option>
+															<option value="vSku" {TPL_VAR_OSEL2}>Product Code</option>
+															<option value="iInventory" {TPL_VAR_OSEL3}>Stock Levels</option>
+															<option value="fPrice" {TPL_VAR_OSEL4}>Price</option>
+															<option value="iState" {TPL_VAR_OSEL5}>Status</option>
+														</select></div>
+						</td>
+					</tr>
+					<tr>
+						<td><label>Display Order</label></td>
+						<td>
+							<div class="selectContainer"><select class="formSelect">
+															<option name="order_type" value="asc" {TPL_VAR_CHECK2}>Ascending</option>
+															<option name="order_type" value="desc" {TPL_VAR_CHECK1}>Descending</option>
+														</select></div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="formButtonWrapper">
+				<button type="submit" class="formButton"><img src="{TPL_VAR_SITEURL}graphics/i_tick.gif" alt="Generate Report" /> <div>Generate Report</div></button>
+			</p>
+		</form>
+	</div>
+</div>
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">Product Report <small>4 Record(s) Found</small></div>
+	<div class="WidgetContent">
+	<!-- BEGIN TPL_MESSAGE_BLK --><p>{TPL_VAR_MESSAGE}</p><!-- END TPL_MESSAGE_BLK -->
+	<table class="whiteTable2 Builder">
+		<thead>
+			<tr>
+				<th class="headerID">ID</th>
+				<th>Item</th>
+				<th>Status</th>
+				<th>Stock</th>
+				<th>Price</th>
+				<th class="headerEdit">Edit</th>
+				<th class="headerDelete">Delete</th>
+			</tr>
+		</thead>
+		<tbody>
+			<!-- BEGIN TPL_PRODUCT_BLK -->
+			<tr>
+				<td>{TPL_VAR_PRODUCT_SKU}</td>
+				<td>
+					<!-- BEGIN TPL_NOLINK_BLK -->
+					{TPL_VAR_PRODUCT_TITLE} (orphan product)
+					<!-- END TPL_NOLINK_BLK -->
+					<!-- BEGIN TPL_LINK_BLK -->
+					<a href="{TPL_PRODUCT_URL}">{TPL_VAR_PRODUCT_TITLE}</a>
+					<!-- END TPL_LINK_BLK -->
+				</td>
+				<td><span class="statusActive">{TPL_VAR_ONOFF}</span></td>
+				<td>{TPL_VAR_PRODUCT_STOCK}</td>
+				<td>{TPL_VAR_CURRENCY}{TPL_VAR_PRODUCT_PRICE}</td>
+				<td>
+					<!-- BEGIN TPL_EDIT_LINK_BLK -->
+					<a class="linkEdit" href="{TPL_SHOP_URL}?action=ec_show.dspProFrm&id={TPL_SUBPRODUCT_ID}&owner={TPL_OWNER_ID}&type={TPL_OTYPE}">Edit</a>
+					<!-- END TPL_EDIT_LINK_BLK -->
+					<!-- BEGIN TPL_EDIT_NOLINK_BLK -->
+					Edit
+				<!-- END TPL_EDIT_NOLINK_BLK -->
+				</td>
+				<td><a href="{TPL_VAR_SITEURL}adminindex.php?action=home.deleteProduct&id={TPL_SUBPRODUCT_ID}&rtype=product" onclick="if(confirm('Are you sure you want to delete this product?')){return true}else{return false}" class="linkDelete">Delete</a></td>
+			</tr>
+			<!-- END TPL_PRODUCT_BLK -->
+		</tbody>
+	</table>
+	{PagerBlock2}
+	</div>
+</div>

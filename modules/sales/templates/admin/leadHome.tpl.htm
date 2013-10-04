@@ -1,0 +1,42 @@
+<div class="historyWidgetContainer"><a href='adminindex.php'>Home </a><strong> &raquo; </strong><a href='adminindex.php?action=email.home'>Marketing</a><strong> &raquo; </strong><a href='adminindex.php?action=email.home'>Email Campaigns</a><strong> &raquo; </strong><a href='#'>Create New Lead List</a></div>
+<div class="fullWidgetContainer">
+      <div class="WidgetTitle">Lead Builder</div>
+      <div class="WidgetContent">
+<h3>Lead Builder <span><!-- BEGIN TPL_MSG_BLK -->{TPL_VAR_MSG}<!-- END TPL_MSG_BLK --> </span></h3>
+<p class="buttonWrapper">
+	<a href="{TPL_VAR_SALESURL}adminindex.php?action=email.leadForm" class="btnAdd"><span><img src="../graphics/i_add.gif" alt="Create Lead list" /> Create Lead list</span></a>
+</p> 
+	 
+<table>
+	<thead>
+		  <tr> 
+				<th>Description</th>
+				<th>User count</th>
+				<th>Build date</th>
+				<th>View</th>
+				<th>Delete</th>
+		  </tr>
+	 </thead> 
+	<tbody>
+		  <!-- BEGIN TPL_MESSAGE_BLK -->
+		  <tr> 
+			<td colspan="5" class="message">{TPL_VAR_MESSAGE}</td>
+		  </tr>
+		  <!-- END TPL_MESSAGE_BLK -->
+  
+   <!-- BEGIN TPL_LEAD_BLK -->
+		  <tr onMouseover="this.style.backgroundColor='#eff3f5';" onMouseout="this.style.backgroundColor='#ffffff';"> 
+			<td class="txt-left">{TPL_VAR_DESCRIPTION}</td>
+			<td><a href="{TPL_VAR_SALESURL}adminindex.php?action=email.dspCustomerlist&leadid={TPL_VAR_ID}" onClick="PopWindow()" target="windowname">{TPL_VAR_COUNT}</a></td>
+			<td>{TPL_VAR_BUILDDATE}</td>
+			<td><a href="{TPL_VAR_SALESURL}adminindex.php?action=email.dspForm&leadid={TPL_VAR_ID}" class="linkPreview">View</a></td>
+			<td><a href="{TPL_VAR_SALESURL}adminindex.php?action=email.deleteLeadMain&id={TPL_VAR_ID}&amp;auth={TPL_VAR_AUTH_TOKEN}" onclick="if(confirm('Are you sure you want to delete {TPL_VAR_DESCRIPTION}?')){return true}else{return false}" class="linkDelete">Delete</a></td>
+		  	
+		  </tr>
+  <!-- END TPL_LEAD_BLK -->
+		  
+  </tbody>
+</table>
+ <p>*Note: User count is a realtime count based on the users choice to be on the mailing list.</p>
+</div>
+</div>

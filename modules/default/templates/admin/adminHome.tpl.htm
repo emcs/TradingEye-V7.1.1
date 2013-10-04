@@ -1,0 +1,329 @@
+<!--[if gte IE 7]>
+	<style type="text/css">
+		#footer { margin-top: 0 !important; }
+	</style>
+<![endif]-->
+
+<!--[if lte IE 9]>
+	<div class="WidgetTitle" style="text-align: center;">
+		<small>Please upgrade your browser to Internet Explorer 9 or change to <a href="http://www.google.com/Chrome">Google Chrome</a> or <a href="http://www.firefox.com">Mozilla FireFox</a> for optimal experience.</small>
+	</div>
+<![endif]-->
+<div class="historyWidgetContainer">
+	<a href="#">Home</a>
+</div>
+<div class="dashWidgetContainer LeftBox">
+	<div class="WidgetTitle">Inventory</div>
+	<div class="TabbedPanels WidgetContent" id="tp1">
+		<ul class="TabbedPanelsTabGroup">
+			<li class="TabbedPanelsTab inactiveButton"><a href="#">Best Sellers</a></li>
+			<li class="TabbedPanelsTab inactiveButton"><a href="#">Out of Stock</a></li>
+			<li class="TabbedPanelsTab inactiveButton"><a href="#">Low in Stock</a></li>
+		</ul>
+		<div class="TabbedPanelsContentGroup">
+			<div class="TabbedPanelsContent">
+				<table class="whiteTable" summary="Inventory List" cellpadding="0" cellspacing="0">
+					<thead>
+						<tr>
+							<th >Product Name</th>
+							<th >Units Sold</th>
+							<th >Order Total</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- BEGIN TPL_BESTSELLERS_BLK -->
+							<tr>
+								<td><a href="{TPL_VAR_TOPTENPRODUCTURL}">{TPL_VAR_TOPSELLERTITLE}</a></td>
+								<td>{TPL_VAR_TOPSELLERCOUNT}</td>
+								<td><span class="bold">{TPL_VAR_CURRENCY}{TPL_VAR_TOPSELLERPRICE}</span></td>
+							</tr>
+						<!-- END TPL_BESTSELLERS_BLK -->
+				  </tbody>
+				</table>
+				<span class="viewAll blue"><a href="adminindex.php?action=home.bSeller">View All</a></span>
+			</div>
+			<div class="TabbedPanelsContent">
+				<table class="whiteTable" summary="Inventory List" cellpadding="0" cellspacing="0">
+					<thead>
+						<tr>
+							<th >Product Name</th>
+							<th >Original Stock</th>
+							<th >Current Stock</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- BEGIN TPL_OUTOFSTOCK_BLK -->
+							<tr>
+								<td><a href="{TPL_VAR_OUTOFPRODUCTURL}">{TPL_VAR_OUTOFTITLE}</a></td>
+								<td></td>
+								<td><span class="bold">{TPL_VAR_OUTOFINVENTORY}</span></td>
+							</tr>
+						<!-- END TPL_OUTOFSTOCK_BLK -->
+					</tbody>
+				</table>
+				<span class="viewAll blue"><a href="adminindex.php?action=home.outOf">View All</a></span>
+			</div>
+			<div class="TabbedPanelsContent">
+				<table class="whiteTable" summary="Inventory List" cellpadding="0" cellspacing="0">
+					<thead>
+						<tr>
+							<th >Product Name</th>
+							<th >Min. Stock Level</th>
+							<th >Current Stock</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- BEGIN TPL_LOWSTOCK_BLK -->
+							<tr>
+								<td><a href="{TPL_VAR_LOWPRODUCTURL}">{TPL_VAR_LOWOFTITLE}</a></td>
+								<td>{TPL_VAR_MINIMUM}</td>
+								<td><span class="bold">{TPL_VAR_LOWOFINVENTORY}</span></td>
+							</tr>
+						<!-- END TPL_LOWSTOCK_BLK -->
+					</tbody>
+				</table>
+				<span class="viewAll blue"><a href="adminindex.php?action=home.lowStock">View All</a></span>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="dashWidgetContainer RightBox">
+	<div class="WidgetTitle">Sales</div>
+	<div class="TabbedPanels WidgetContent" id="tp2">
+		<ul class="TabbedPanelsTabGroup">
+			<li class="TabbedPanelsTab inactiveButton"><a href="#">New Orders</a></li>
+        	<li class="TabbedPanelsTab inactiveButton"><a href="#">Pending Orders</a></li>
+        	<li class="TabbedPanelsTab inactiveButton"><a href="#">Incomplete Orders</a></li>
+		</ul>
+		<div class="TabbedPanelsContentGroup">
+			<div class="TabbedPanelsContent">
+				<table class="whiteTable" summary="Inventory List" cellpadding="0" cellspacing="0">
+					<thead>
+						<tr>
+							<th >Invoice Number</th>
+							<th >Customer Name</th>
+							<th >Order Total</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- BEGIN TPL_NEWORDER_BLK -->
+							<tr>
+								<td><a href="order/adminindex.php?action=orders.dspDetails&orderid={TPL_VAR_NEWORDERNUMBER}">{TPL_VAR_NEWORDERNUMBER}</a></td>	
+								<!-- BEGIN TPL_BLK_REGISTERED_USER -->
+									<td><a href="user/adminindex.php?action=user.details&id={TPL_VAR_CUSTOMERID}">{TPL_VAR_CUSTOMER}</a></td>
+								<!-- END TPL_BLK_REGISTERED_USER -->
+								<!-- BEGIN TPL_BLK_NONREGISTERED_USER -->
+									<td>{TPL_VAR_CUSTOMER}</td>
+								<!-- END TPL_BLK_NONREGISTERED_USER -->
+								<td><span class="bold">{TPL_VAR_ORDERTOTAL}</span></td>
+							</tr>
+						<!-- END TPL_NEWORDER_BLK -->
+					</tbody>
+				</table>
+				<span class="viewAll blue"><a href="adminindex.php?action=home.newOrder">View All</a></span>
+			</div>
+			<div class="TabbedPanelsContent">
+				<table class="whiteTable" summary="Inventory List" cellpadding="0" cellspacing="0">
+					<thead>
+						<tr>
+							<th >Invoice No</th>
+							<th>Customer Name</th>
+							<th >Order Total</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- BEGIN TPL_PENDINGORDER_BLK -->
+							<tr>
+								<td><a href="{TPL_VAR_PENURL}">{TPL_VAR_PENORDERNUMBER}</a></td>
+								<td>{TPL_VAR_CUSTURL}{TPL_VAR_PENORDERCUSTOMER}{TPL_VAR_CLOSETAG}</td>
+								<td>{TPL_VAR_PENORDERTOTAL}</td>
+							</tr>
+						<!-- END TPL_PENDINGORDER_BLK -->
+					</tbody>
+				</table>
+				<span class="viewAll blue"><a href="adminindex.php?action=home.pending">View All</a></span>
+			</div>
+			<div class="TabbedPanelsContent">
+				<table class="whiteTable" summary="Inventory List" cellpadding="0" cellspacing="0">
+					<thead>
+						<tr>
+							<th >Invoice Number</th>
+							<th>Customer Name</th>
+							<th >Order Total</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- BEGIN TPL_INCOMPLETEORDER_BLK -->
+							<tr>
+								<td><a href="{TPL_VAR_INCURL}">{TPL_VAR_INCORDERNUMBER}</a></td>
+								<td>{TPL_VAR_CUSTURL}{TPL_VAR_INCCUSTOMER}{TPL_VAR_CLOSETAG}</td>
+								<td>{TPL_VAR_INCORDERTOTAL}</td>
+							</tr>
+						<!-- END TPL_INCOMPLETEORDER_BLK -->
+					</tbody>
+				</table>
+				<span class="viewAll blue"><a href="adminindex.php?action=home.incomplete">View All</a></span>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="dashWidgetContainer LeftBox">
+	<div class="WidgetTitle">Statistics</div>
+	<div class="TabbedPanels WidgetContent" id="tp3">
+		<ul class="TabbedPanelsTabGroup">
+			<li class="TabbedPanelsTab inactiveButton"><a href="#">Top Searches</a></li>
+			<li class="TabbedPanelsTab inactiveButton"><a href="#">Most Viewed</a></li>
+        	<li class="TabbedPanelsTab inactiveButton"><a href="#">Abandonment</a></li>
+		</ul>
+		<div class="TabbedPanelsContentGroup">
+			<div class="TabbedPanelsContent">
+				<table class="whiteTable" summary="Inventory List" cellpadding="0" cellspacing="0">
+					<thead>
+						<tr>
+							<th >Product Name</th>
+							<th >Searches Count</th>
+							<th >Results Found</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- BEGIN TPL_TOPSEARCHES_BLK -->
+							<tr>
+								<td>{TPL_VAR_TOPSEARCHTITLE}</td>
+								<td>{TPL_VAR_TOPSEARCHCOUNT}</td>
+								<td>{TPL_VAR_RECORDSFOUND}</td>
+							</tr>
+						<!-- END TPL_TOPSEARCHES_BLK -->
+					</tbody>
+				</table>
+				<span class="viewAll blue"><a href="adminindex.php?action=home.topSearch">View All</a></span>
+			</div>
+			<div class="TabbedPanelsContent">
+				<table class="whiteTable" summary="Inventory List" cellpadding="0" cellspacing="0">
+					<thead>
+						<tr>
+							<th >Product Name</th>
+							<th >No. of Views</th>
+							<th >Price</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- BEGIN TPL_MOSTVIEWED_BLK -->
+							<tr>
+								<td><a href="{TPL_VAR_MOSTPRODUCTURL}">{TPL_VAR_MOSTTITLE}</a></td>
+								<td>{TPL_VAR_VIEWS}</td>
+								<td>{TPL_VAR_MOSTPRICE}</td>
+							</tr>
+						<!-- END TPL_MOSTVIEWED_BLK -->
+					</tbody>
+				</table>
+				<span class="viewAll blue"><a href="adminindex.php?action=home.mostViewed">View All</a></span>
+			</div>
+			<div class="TabbedPanelsContent">
+				<table class="whiteTable" summary="Inventory List" cellpadding="0" cellspacing="0">
+					<thead>
+						<tr>
+							<th >Product Name</th>
+							<th >Added to Cart</th>
+							<th >Purchased</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- BEGIN TPL_ABANDONMENT_BLK -->
+							<tr>
+								<td><a href="{TPL_VAR_ABANDONPRODUCTURL}">{TPL_VAR_ABANDONTITLE}</a></td>
+								<td>{TPL_VAR_TOTALADDED}</td>
+								<td>{TPL_VAR_TOTALPURCHASED}</td>
+							</tr>
+						<!-- END TPL_ABANDONMENT_BLK -->
+					</tbody>
+				</table>
+				<span class="viewAll blue"><a href="adminindex.php?action=home.abandonment">View All</a></span>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="dashWidgetContainer RightBox">
+	<div class="WidgetTitle">Customers</div>
+	<div class="TabbedPanels WidgetContent" id="tp4">
+		<ul class="TabbedPanelsTabGroup">
+			<li class="TabbedPanelsTab inactiveButton"><a href="#">New Customers</a></li>
+        	<li class="TabbedPanelsTab inactiveButton"><a href="#">Returning Customers</a></li>
+        	<li class="TabbedPanelsTab inactiveButton"><a href="#">Best Paying</a></li>
+		</ul>
+		<div class="TabbedPanelsContentGroup">
+			<div class="TabbedPanelsContent">
+				<table class="whiteTable" summary="Inventory List" cellpadding="0" cellspacing="0">
+					<thead>
+						<tr>
+							<th>Customer Name</th>
+							<th >Signup Date</th>
+							<th >Location</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- BEGIN TPL_NEWCUSTOMERS_BLK -->
+							<tr>
+								<td><a href="{TPL_VAR_CUSTURL}">{TPL_VAR_NEWCUSTOMER}</a></td>
+								<td>{TPL_VAR_SIGNUPDATE}</td>
+								<td>{TPL_VAR_LOCATION}</td>
+							</tr>
+						<!-- END TPL_NEWCUSTOMERS_BLK -->
+					</tbody>
+				</table>
+				<span class="viewAll blue"><a href="adminindex.php?action=home.newCust">View All</a></span>
+			</div>
+			<div class="TabbedPanelsContent">
+				<table class="whiteTable" summary="Inventory List" cellpadding="0" cellspacing="0">
+					<thead>
+						<tr>
+							<th>Customer Name</th>
+							<th >Orders to Date</th>
+							<th >Total Spend</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- BEGIN TPL_RETCUSTOMERS_BLK -->
+							<tr>
+								<td><a href="{TPL_VAR_CUSTURL}">{TPL_VAR_RETCUSTOMER}</a></td>
+								<td>{TPL_VAR_NUMORDERS}</td>
+								<td>{TPL_VAR_TOTAL}</td>
+							</tr>
+						<!-- END TPL_RETCUSTOMERS_BLK -->
+					</tbody>
+				</table>
+				<span class="viewAll blue"><a href="adminindex.php?action=home.returnCust">View All</a></span>
+			</div>
+			<div class="TabbedPanelsContent">
+				<table class="whiteTable" summary="Inventory List" cellpadding="0" cellspacing="0">
+					<thead>
+						<tr>
+							<th>Customer Name</th>
+							<th >Orders to Date</th>
+							<th >Total Spend</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- BEGIN TPL_BESTCUSTOMERS_BLK -->
+							<tr>
+								<td><a href="{TPL_VAR_CUSTURL}">{TPL_VAR_BESTCUSTOMER}</a></td>
+								<td>{TPL_VAR_BESTNUMORDERS}</td>
+								<td>{TPL_VAR_BESTTOTAL}</td>
+							</tr>
+						<!-- END TPL_BESTCUSTOMERS_BLK -->
+					</tbody>
+				</table>
+				<span class="viewAll blue"><a href="adminindex.php?action=home.bestCust">View All</a></span>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="placeHolder"></div>
+	<script language="JavaScript" type="text/javascript">
+		var tp1 = new Spry.Widget.TabbedPanels("tp1", { defaultTab: 0 });
+		var tp2 = new Spry.Widget.TabbedPanels("tp2", { defaultTab: 0 });
+		var tp2 = new Spry.Widget.TabbedPanels("tp3", { defaultTab: 0 });
+		var tp2 = new Spry.Widget.TabbedPanels("tp4", { defaultTab: 0 });
+	</script>

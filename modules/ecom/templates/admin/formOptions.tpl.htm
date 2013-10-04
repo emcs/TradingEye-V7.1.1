@@ -1,0 +1,103 @@
+<script language="JavaScript" type="text/javascript">
+function ValidateForm()
+{
+if(isNull(document.ThisForm.description.value))
+{
+		alert("You must enter an option description");
+		document.ThisForm.description.value = '';	
+		document.ThisForm.description.focus();
+		return false;
+}
+else if(isNull(document.ThisForm.name1.value))
+{
+		alert("You must select an option title");
+		document.ThisForm.name1.value = '';
+		document.ThisForm.name1.focus();
+		return false;
+}
+
+var len=document.ThisForm.elements.length;
+var frm = document.ThisForm;
+for(var i=0; i<len; i++)
+{
+	if(document.ThisForm.elements[i].name == 'item[]')
+	{
+		if(document.ThisForm.elements[i].value=="")
+		{
+		alert("Please enter option name");
+		document.ThisForm.elements[i].focus();
+		return false;
+		}
+	}
+}
+	return true;
+}
+</script>
+<div class="historyWidgetContainer">
+	<a href="adminindex.php?flag=dashboard">Home</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=ec_show.home&amp;flag=builder">Builder</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=ec_option.home">Product Options &amp; Attributes</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=ec_option.home">Standard Options</a> <strong>&raquo;</strong> 
+	<a href='#'>Standard Option Builder</a>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">{LANG_VAR_STANDOPTTXT}</div>
+	<div class="WidgetContent">
+		<form action="{TPL_VAR_FORMURL}" method="post" enctype="multipart/form-data" name="ThisForm" id="ThisForm" onsubmit="return ValidateForm()">
+			<input type="hidden" name="option_count" value="{TPL_VAR_OPTIONCOUNT}" />
+			<table class="whiteTable2 Orders OneColum" cellpadding="0" cellspacing="2">
+				<thead>
+					<tr> 
+						<th colspan="2">Title &amp; Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr> 
+						<td class="first"><label>{LANG_VAR_TITLE}</label></td>
+						<td><input type="text" class="formField long" name="name1" maxlength="30" /></td>
+					</tr>
+					<tr> 
+						<td class="first"><label>{LANG_VAR_DESCRIPTION}</label></td>
+						<td><input type="text" class="formField long" name="description" maxlength="50" /></td>
+					</tr>
+					<tr> 
+						<td class="first"><label for="mandatory">{LANG_VAR_MANDATORY}</label></td>
+						<td><input type="checkbox" class="checkbox" name="mandatory" /></td>
+					</tr>
+				</tbody>
+			</table>
+			<table class="whiteTable2 Builder" cellpadding="0" cellspacing="0">
+				<thead>
+					<tr>
+						<th class="headerID">{LANG_VAR_ID}</th>
+						<th>Sku</th>
+						<th>{LANG_VAR_OPTIONNAME}</th>
+						<th class="headerImage">Image</th>
+						<th class="headerAddedCost">{LANG_VAR_ADDEDCOST}</th>
+						<th class="headerStock">{LANG_VAR_STOCK}</th>
+						<th class="headerStockLevels">{LANG_VAR_STOCKLVL}</th>
+						<th class="headerBackorder">{LANG_VAR_BACKORDER}</th>
+					</tr>
+					<!-- BEGIN TPL_OPTIONS_BLK -->
+					<tr> 
+						<td>{TPL_VAR_ID}</td>
+						<td><input type="text" class="formField" name="sku[]" /></td>
+						<td style="width: 30%;"><input type="text" class="formField" name="item[]" style="width: 100%;" /></td>
+						<!--<td><a href="#" class="linkImage">View Image</a></td> -->
+						<td><input type="file" class="formField.middle" size="12" name="image[]"/></td>
+						<td style="width: 120px;"><input type="text" class="formField short" size="5" name="price[]" /></td>
+						<td><input type="checkbox" class="checkbox" name="use_inventory[]" value="1" /></td>
+						<td style="width: 120px;"><input type="text" class="formField short" size="4" name="inventory[]" /></td>
+						<td><input type="checkbox" class="checkbox" name="backorder[]" value="1" /></td>
+					</tr>
+					<!-- END TPL_OPTIONS_BLK -->
+				</tbody>
+			</table>
+			<p class="formButtonWrapper">
+				<button type="submit" class="formButton"><img src="../graphics/i_cross.gif" alt="Cancel">Cancel</button></a>
+				<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="Create New Standard Option">Create New Standard Option</button></a>
+			</p>
+		</form>
+	</div>
+</div>

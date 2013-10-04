@@ -1,0 +1,89 @@
+<script language="JavaScript" type="text/javascript">
+	function ValidateForm()
+	{
+		var frm = document.ThisForm;
+		if(isNull(frm.price.value)){
+			alert("You must enter a value if additonal cost (0 if no charge)");
+			frm.price.value = "";	
+			frm.price.focus();
+			return false;
+		}
+		if(isNull(frm.title.value)){
+			alert("You must enter a title");
+			frm.title.value = "";	
+			frm.title.focus();
+			return false;
+		}
+		if(frm.mode.value!='edit')
+		{
+			var status1 = fileUploadExt(frm.image, '.jpg, .jpeg, .gif, pjpeg');
+			var status2 = fileUploadExt(frm.image_large, '.jpg, .jpeg, .gif, pjpeg');
+			if(status1 && status2)
+				return true;
+			else
+				return false;
+		}
+	}
+	function PopWindow()
+	{
+	window.open("","windowname","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=350,height=425,top=50,left=50");
+	}
+</script>
+<div class="historyWidgetContainer"><a href='adminindex.php'>Home </a><strong> &raquo; </strong><a href='adminindex.php?action=email.home'>Marketing</a><strong> &raquo; </strong><a href='adminindex.php?action=promotions.home'>Promotions</a><strong> &raquo; </strong><a href='#'>Gift Wrapping Builder</a></div>
+<div class="fullWidgetContainer">
+      <div class="WidgetTitle">Gift Wrapping Builder</div>
+      <div class="WidgetContent">
+	<!-- BEGIN TPL_MSG_BLK --><p>{TPL_VAR_MSG}</p><!-- END TPL_MSG_BLK -->
+	<table class="whiteTable2" cellspacing="0">
+		<tbody>
+			<form action="{TPL_VAR_SALESURL}adminindex.php?action=promotions.giftwrap.update" method="post" enctype="multipart/form-data" name="ThisForm" id="ThisForm" onsubmit="return ValidateForm()">
+				<input type="hidden" name="mode" value="{TPL_VAR_MODE}">
+				<input type="hidden" name="id" value="{TPL_VAR_ID}">
+				<tr> 
+					<td class="first"><label for="gift_title">Gift Wrap title</label></td>
+					<td>
+						<input type="text" id="gift_title" name="title" value="{TPL_VAR_TITLE}" class="formField" maxlength="50" />
+					</td>
+				</tr>
+				<tr> 
+					<td><label for="add_cost">Additional cost</label></td>
+					<td>
+						<input type="text" id="add_cost" name="price" value="{TPL_VAR_PRICE}" size="5" class="formField" maxlength="12" /> (enter 0.00 for no charge)</td>
+				</tr>
+				<tr> 
+					<td><label for="short_description">Short description</label></td>
+					<td>
+						<textarea id="short_description" name="description" rows="4" cols="40" class="formField" >{TPL_VAR_DESCRIPTION}</textarea>
+					</td>
+				</tr>
+				<!-- BEGIN DSPIMAGEBOX_BLK -->
+				<tr> 
+					<td><label for="img_browse_a"> Image A (Thumbnail)</label></td>
+					<td>
+						<input id="img_browse_a" type="file" name="image" size="30" class="img-submit-btn" />
+					</td>
+				</tr>
+				<tr> 
+					<td><label for="img_browse_b">Image B (Large)</label></td>
+					<td>
+						<input id="img_browse_b" type="file" name="image_large" size="30" class="img-submit-btn" />
+					</td>
+				</tr>
+				<!-- END DSPIMAGEBOX_BLK -->
+				<!-- BEGIN DSPIMAGELINK_BLK -->
+				<tr> 
+					<td><label for="img_browse_a"> Image A (Thumbnail)</label></td>
+					<td><a href="{TPL_VAR_SITEURL}sales/adminindex.php?action=promotions.giftwrap.uploadForm&img=vImage&id={TPL_VAR_ID}" onClick="PopWindow()" target="windowname">{LBL_LINK1}</a></td>
+				</tr>
+				<tr> 
+					<td><label for="img_browse_b">Image B (Large)</label></td>
+					<td><a href="{TPL_VAR_SITEURL}sales/adminindex.php?action=promotions.giftwrap.uploadForm&img=vImageLarge&id={TPL_VAR_ID}" onClick="PopWindow()" target="windowname">{LBL_LINK2}</a></td>
+				</tr>
+				<!-- END DSPIMAGELINK_BLK -->
+			</tbody>
+		</table>
+		<p class="formButtonWrapper">
+			<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="{TPL_VAR_BTNLBL}" /> <div>{TPL_VAR_BTNLBL}</div></button>
+		</p>
+	</form>
+</div></div>

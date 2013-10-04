@@ -1,0 +1,72 @@
+#installer {
+	width:868px;
+	margin:0;
+	padding:0;
+	display:inline-block;
+	
+	font-size: 14px;
+}
+.WidgetContent {
+
+	
+	font-size: 14px;
+}
+#installer h3{
+font-size:16px;
+}
+#steps {
+	width:347px;
+	margin:0;
+	padding:0;
+	display:inline-block;
+	vertical-align:top;
+}
+#steps ul {
+list-style-type:none;
+}
+#steps li {
+border-bottom:1px solid rgb(225, 225, 225);
+padding:10px;
+color: rgb(99, 166, 217);
+font-size: 13px;
+font-weight:bolder;
+}
+#steps li a{
+text-decoration:none;
+color: rgb(99, 166, 217);
+font-size: 13px;
+font-weight:normal;
+}
+#steps li.current {
+color:#000;
+font-size: 15px !important;
+}
+.block {
+	background: #f9f9f9;
+	border: 1px solid #e5e5e5;
+	display: block;
+	margin: 1.5em 0;
+	padding: .1em 15px;
+	}
+.block p {
+	font-size: 14px;
+	line-height: 1.8em;
+	}
+.block p span {
+	color: #999;
+	font: italic 1em Georgia, Times, serif;
+	letter-spacing: .025em;
+	}
+.block p .green {
+	color: #0a0;
+	}
+.block p .red {
+	color: #c00;
+	}
+	
+.popWarning {
+	background: #fff8db url(../graphics/popWarning.png) no-repeat 10px 50%;
+	border: 1px solid #eeda88;
+	margin: 1em 0 0 0;
+	padding: 0 10px 0 32px;
+	}

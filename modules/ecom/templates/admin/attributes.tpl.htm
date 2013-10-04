@@ -1,0 +1,39 @@
+<div class="historyWidgetContainer">
+	<a href="adminindex.php?flag=dashboard">Home</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=ec_show.home&amp;flag=builder">Builder</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=ec_option.home">Product Options &amp; Attributes</a> <strong>&raquo;</strong> 
+	<a href='#'>Product Attributes</a>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">Product Attributes <small>{TPL_TOTAL_RECORDS} Product Attributes(s) Listed</small></div>
+	<div class="WidgetContent">
+		<form action="{TPL_ADD_ATTRIBUTE_URL}" method="POST">
+			<p class="formButtonWrapper">
+				<button type="submit" class="formButton"><img src="../graphics/i_add.gif" alt="Add new product attribute" /> <div>Add new product attribute</div></button>
+			</p>
+		</form>
+	<!-- BEGIN TPL_MAINATTRIBUTES_BLK -->	
+		<table class="whiteTable2 Builder" cellspacing="0">
+			<thead>
+				<tr>
+					<th>Custom Field Title</th>
+					<th>Number of Fields</th>
+					<th>Edit</th>
+					<th>Delete</th>
+				</tr>
+			</thead>
+			<!-- BEGIN TPL_STDOPTIONS_BLK -->
+			<tbody>
+				<tr>
+					<td class="extend">{TPL_VAR_TITLE}</td>
+					<td>{TPL_VAR_NO_FIELDS}</td>
+					<td><a href="adminindex.php?action=ec_option.dspAddattribute&optionid={TPL_OPTION_ID}&flag=edit" class="linkEdit">Edit</a></td>
+					<td><a href="adminindex.php?action=ec_option.deleteattribute&attributeid={TPL_OPTION_ID}&amp;auth={TPL_VAR_AUTH_TOKEN}"  onclick="if(confirm('Are you sure you wish to delete this attribute?')){return true}else{return false}" class="linkDelete">Delete</a></td>
+				</tr>  
+			</tbody>
+			<!-- END TPL_STDOPTIONS_BLK -->
+		</table>
+	<!-- END TPL_MAINATTRIBUTES_BLK -->	
+	</div>
+</div>

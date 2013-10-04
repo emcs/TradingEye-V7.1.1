@@ -1,0 +1,30 @@
+<style>
+a {
+text-decoration:none;
+}
+</style>
+<div class='WidgetTitle'>{TPL_STATUS_TOPTEXT}</div>
+<div class="fullWidgetContainer" style='margin:0;'>
+	<div class="WidgetContent">
+<div class="popWarning">
+	<p>{TPL_VAR_STATUS}</p>
+</div><br/>
+<!-- BEGIN INSERTBLK -->
+	<a href="{RETURN_LINK}"><button class='formButton'><img src="../graphics/i_back.gif" alt="Return" /> Return</button></a>
+	<a href="{DUPLICATE_LINK}"><button class='formButton'><img src="../graphics/i_add.gif" alt="Duplicate" /> Duplicate</button></a> 
+	<a href="{ADD_LINK}"><button class='formButton'><img src="../graphics/i_add.gif" alt="Add Another" /> Add Another</button></a> 
+	<a href="{PREVIEW_LINK}"><button class='formButton'><img src="../graphics/i_preview.gif" alt="Preview" /> Preview</button></a> 
+<!-- END INSERTBLK -->
+<!-- BEGIN UPDATEBLK -->
+	<a href="{RETURN_LINK}"><button class='formButton'><img src="../graphics/i_back.gif" alt="Return" /> Return</button></a> 
+	<a href="{PREVIEW_LINK}"><button class='formButton'><img src="../graphics/i_preview.gif" alt="Preview" /> Preview</button></a>
+<!-- END UPDATEBLK -->
+<!-- BEGIN DELETEBLK -->
+	<!-- BEGIN DELETEINSTANCE -->
+	<a href="{DELETEINSTANCE_LINK}&amp;auth={TPL_VAR_AUTH_TOKEN}"><button class='formButton'><img src="../graphics/i_delete.gif" alt="Delete Instance" /> Delete Instance</button></a> 
+	<!-- END DELETEINSTANCE -->
+	<a href="{DELETE_LINK}&amp;auth={TPL_VAR_AUTH_TOKEN}"><button class='formButton'><img src="../graphics/i_delete.gif" alt="Delete Everything" /> Delete Everything</button></a> 
+	<a href="{CANCEL_LINK}&amp;auth={TPL_VAR_AUTH_TOKEN}"><button class='formButton'><img src="../graphics/i_cross.gif" alt="Delete Instance" /> Cancel</button></a> 
+	<!-- END DELETEBLK -->
+</div>
+</div>

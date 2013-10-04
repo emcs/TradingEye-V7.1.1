@@ -1,0 +1,70 @@
+<script language="JavaScript" type="text/javascript">
+function validateForm()
+{
+	var frm = document.ThisForm;
+	if(isNull(frm.server.value)){
+		alert("You must enter froogle server.");
+		frm.server.value = '';
+		frm.server.focus();
+		return false;
+	}
+	if(isNull(frm.username.value)){
+		alert("You must enter username.");
+		frm.username.value = '';
+		frm.username.focus();
+		return false;
+	}
+	if(isNull(frm.password.value)){
+		alert("You must enter password.");
+		frm.password.value = '';
+		frm.password.focus();
+		return false;
+	}
+	return true;
+}
+</script>
+<div class="historyWidgetContainer">
+	<a href='adminindex.php'>Home </a> <strong>&raquo;</strong>
+	<a href='adminindex.php?action=email.home'>Marketing</a> <strong>&raquo;</strong> 
+	<a href='adminindex.php?action=feeds.home'>Feeds</a> <strong>&raquo;</strong> 
+	<a href='adminindex.php?action=froogle.home'>Google Base</a> <strong>&raquo;</strong>
+	Settings
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">Google Base Settings</div>
+	<div class="WidgetContent">
+		<!-- BEGIN TPL_MSG_BLK -->
+			<p>{TPL_VAR_MSG}</p>
+		<!-- END TPL_MSG_BLK -->
+		<form action="{TPL_VAR_SITEURL}sales/adminindex.php?action=froogle.update" method="post" name="ThisForm" id="ThisForm" onsubmit="return validateForm();">
+			<table class="whiteTable2 Orders OneColum" cellspacing="0">
+				<thead>
+					<tr>
+						<th colspan="2">Froogle FTP settings</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr> 
+						<td class="first"><label for="server">Server<span>*</span></label></td>
+						<td>
+							<input type="text" id="server" name="server" value="{TPL_VAR_SERVER}" class="formField" maxlength="100" />
+						</td>
+					</tr>
+					<tr class="red-a"> 
+						<td><label for="username">Username <span>*</span></label></td>
+						<td><input type="text" id="username" name="username" value="{TPL_VAR_USERNAME}" class="formField" maxlength="50" /></td>
+					</tr>
+					<tr> 
+						<td><label for="password">Password <span>*</span></label></td>
+						<td><input type="password" id="password" name="password" value="{TPL_VAR_PASSWORD}" class="formField" maxlength="50" /></td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="formButtonWrapper">
+				<button type="submit" class="formButton"><img src="../graphics/i_cross.gif" alt="Update" /> <div>Cancel</div></button>
+				<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="Update" /> <div>Update</div></button>
+			</p>
+		</form>
+	</div>
+</div>

@@ -1,0 +1,37 @@
+<div class="historyWidgetContainer">
+	<a href="adminindex.php">Home</a> <strong>&raquo;</strong>
+	<a href="adminindex.php?action=file.home&amp;flag=security.home">Admin</a> <strong>&raquo;</strong>
+	<a href="adminindex.php?action=file.home&amp;flag=admin">File Manager</a> <strong>&raquo;</strong>
+	<a href='#'>View Fiews</a>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">Contents of /images/{TPL_VAR_DIR}/ <small>{TPL_VAR_COUNT} Files Found</small></div>
+	<div class="WidgetContent">
+		<!-- BEGIN TPL_MSG_BLK -->
+			<p>{TPL_VAR_MSG}</p>
+		<!-- END TPL_MSG_BLK -->
+		<button class="formButton" onclick="window.location='{TPL_VAR_SITEURL}admin/adminindex.php?action=file.uploadFrm&dir={TPL_VAR_DIR}'"><img src="../graphics/i_add.gif" alt="Add New File" /> <div>Add New File</div></button>
+		<table class="whiteTable2" cellspacing="0">
+			<thead>
+				<tr>
+					<th>Filename</th>
+					<th>File Size</th>
+					<th class="headerPreview">Preview</th>
+					<th class="headerDelete">Delete</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- BEGIN TPL_LIST_BLK -->
+					<tr>
+						<td>{TPL_VAR_FILENAME}</td>
+						<td>{TPL_VAR_FILETYPE}</td>
+						<td><a href="{TPL_VAR_IMAGEURL}{TPL_VAR_FILENAME}" onClick="PopWindow()" target="windowname" class="linkPreview">Preview</a></td>
+						<td><a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=file.delete&dir={TPL_VAR_DIR}&fname={TPL_VAR_FILENAME}&amp;auth={TPL_VAR_AUTH_TOKEN}"  onclick="if(confirm('Are you sure would like to delete the file {TPL_VAR_FILENAME}?')){return true}else{return false}" class="linkDelete">Delete</a></td>
+					</tr>
+				<!-- END TPL_LIST_BLK -->
+			</tbody>
+		</table>
+	</div>
+</div>
+

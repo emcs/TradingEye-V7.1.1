@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>{TPL_VAR_SITETITLE}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<meta http-equiv="Content-Language" content="en-gb" />
+	<meta http-equiv="imagetoolbar" content="false" />
+	<meta name="MSSmartTagsPreventParsing" content="true" />
+	<meta name="author" content="Tradingeye" />
+	<link rel="shortcut icon" href="{TPL_VAR_REAL_PATH}favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" type="text/css" href="{TPL_VAR_REAL_PATH}css/dashboard.css" media="screen" />
+	<meta name="robots" content="noindex" />
+	<script type="text/javascript" src="{TPL_VAR_REAL_PATH}jscript/loginFocus.js"></script>
+</head>
+<body id="login">
+	<div id="loginContainer">	
+		<form action="{TPL_VAR_SITEURL}adminindex.php?action=loginCheck" method="post" name="TheForm">
+			<input type="hidden" name="mode" value="{TPL_VAR_MODE}" />
+			<h1>{TPL_VAR_SITENAME}</h1>
+			<p id="intro">Welcome to the <strong>{TPL_VAR_SITENAME}</strong> admin panel. Enter your Account Name and Password below to login.</p>
+			{TPL_VAR_MSG}
+			<label>Account name:</label>
+			<input type="text" name="username" value="" class="formField" maxlength="30" id="accName" />
+			<!-- BEGIN TPL_LOGIN_BLK -->
+			<label>Password:</label>
+			<input type="password" name="password" value="" class="formField" maxlength="30" />
+			<!-- END TPL_LOGIN_BLK -->
+			<!-- BEGIN TPL_FORGET_BLK -->
+			<label>Email:</label>
+			<input type="text" name="email" value="" class="formField"  maxlength="60" />
+			<!-- END TPL_FORGET_BLK -->
+			<input type="checkbox" class="checkbox" value="1" /> <label class="remember">Remember me?</label>
+			<p class="formButtonWrapper alt"><button type="submit" name="login" class="formButton"><span><img src="{TPL_VAR_SITEURL}graphics/i_tick.gif" alt="Login" /></span> Login</button></p>
+			<div id="loginFooter">
+				<!-- BEGIN TPL_FORGETLINK_BLK -->
+	  			<p><a href="{TPL_VAR_SITEURL}adminindex.php?action=forget"><strong>Forgot your password?</strong></a></p>
+  	  			<!-- END TPL_FORGETLINK_BLK -->
+	  		  	<p>Your IP address is: {TPL_VAR_IPADDRESS}</p>
+	  			<p><a href="{TPL_VAR_SITEURL}"><strong>Return to shop front</strong></a></p>
+	  		  	<p>&copy; TradingEye is a product of <a href="http://www.tradingeye.com/" target="_blank"><strong>Electronic And Mobile Commerce Software Ltd.</strong></a></p>
+  	  		</div>
+		</form>
+	</div>
+</body>
+</html>

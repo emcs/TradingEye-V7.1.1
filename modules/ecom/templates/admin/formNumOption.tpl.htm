@@ -1,0 +1,46 @@
+<script language="JavaScript" type="text/javascript">
+<!--
+function ValidateForm(){
+	if(!isNull(document.ThisForm.option_count.value)){
+		return true;
+	} else {
+		alert("You must enter the number of option items");
+		document.ThisForm.option_count.value = '';
+		document.ThisForm.option_count.focus();
+		return false;
+	}
+}
+//-->
+</script>
+<div class="historyWidgetContainer">
+	<a href="adminindex.php?flag=dashboard">Home</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=ec_show.home&amp;flag=builder">Builder</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=ec_option.home">Product Options &amp; Attributes</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=ec_option.home">Standard Options</a> <strong>&raquo;</strong> 
+	<a href='#'>Standard Option Builder</a>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">{LANG_VAR_PRODUCTOPTIONS}</div>
+	<div class="WidgetContent">
+		<form action="{TPL_VAR_FORMURL}" method="post" name="ThisForm" id="ThisForm" onsubmit="return ValidateForm()" />
+			<table class="whiteTable Builder" cellpadding="0" cellspacing="0">
+				<thead>
+					<tr>
+						<th colspan="2">Standard Option Builder</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="first long"><label>{LANG_VAR_ENTERNUM}</label></td>
+						<td><input type="text" class="formField short" size="4" name="option_count" maxlength="3" /></td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="formButtonWrapper">
+				<button type="button" name="cancel" class="formButton"><img src="../graphics/i_cross.gif" alt="Cancel" /><div>Cancel</div></button>
+				<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="{LANG_VAR_BUILDOPT}" /> <div>{LANG_VAR_BUILDOPT}</div></button>
+			</p>
+		</form>
+	</div>
+</div>

@@ -1,0 +1,223 @@
+/*
+
+Tradingeye PRINT style sheet
+-------------------------------------
+
+Copyright:		TradingEye.com
+Last edit:		10/02/2011
+
+*/
+
+
+html,
+body {
+	background: none;
+	color: black;
+	font-family: Arial, Helvetica, Sans-serif;
+	font-size: 12px;
+	}
+
+/* links */
+
+a {
+	text-decoration: none;
+	}
+
+/* typography */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-weight: bold;
+	margin: 1em 0;
+	}
+p {
+	margin: 1em 0;
+	}
+h1 {
+	font-size: 25px;
+	}
+h2 {
+	font-size: 18px;
+	}
+h3 {
+	font-size: 14px;
+	}
+h4 {
+	font-size: 12px;
+	}
+
+/* header */
+
+#header {
+	border-bottom: 1px solid #ccc;
+	}
+#header h2 {
+	margin-top: -1em;
+	}
+#info {
+	float: right;
+	margin-top: -3.85em;
+	}
+
+/* products */
+
+.products,
+.products li {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	}
+.products {
+	border-top: 1px solid #ccc;
+	}
+.products li {
+	border-bottom: 1px solid #ccc;
+	padding-left: 200px;
+	}
+.products li .image {
+	border: 1px solid #ccc;
+	float: left;
+	margin-left: -200px;
+	margin-top: -35px;
+	text-align: center;
+	width: 178px;
+	}
+.onSale {
+	font-weight: bold;
+	}
+
+/* product details */
+
+#product {
+	border-bottom: 1px solid #ccc;
+	padding-bottom: 1em;
+	}
+#product .image {
+	float: left;
+	width: 48%;
+	}
+#product .info {
+	float: right;
+	width: 48%;
+	}
+
+/* tables */
+
+table,
+tr,
+th,
+td {
+	border: 0;
+	border-collapse: collapse;
+	line-height: 1.6;
+	text-align: left;
+	vertical-align: top;
+	}
+table {
+	border-top: 1px solid #ccc;
+	font-size: 11px;
+	margin: 1em 0;
+	text-align: right;
+	width: 100%;
+	}
+table td {
+	padding: .5em 0;
+	}
+table tr {
+	background: #aaa;
+	border-bottom: 1px solid #ccc;
+	color: #fff;
+	}
+table th {
+	background: #ccc;
+	color: #fff;
+	font-size: 12px;
+	padding: .5em 0;
+	}
+table td {
+	font-size: 12px;
+	padding: .5em 0;
+	}
+table td input {
+	background: none;
+	border: 0;
+	font-size: 12px;
+	padding: 0;
+	}
+dl#total,
+dl#total dt,
+dl#total dd {
+	margin: 0;
+	padding: 0;
+	}
+dl#total {
+	margin: 1em 0;
+	width: 50%;
+	}
+dl#total dt {
+	border-bottom: 1px solid #ccc;
+	font-size: 14px;
+	margin: .5em 0;
+	padding-bottom: .5em;
+	}
+dl#total dd {
+	float: right;
+	font-size: 14px;
+	font-weight: bold;
+	margin-top: -2.3em;
+	}
+
+/* hidden items */
+
+#skip,
+.hidden,
+#breadcrumbs,
+#sidebar,
+#footer,
+.addWishlist,
+.addCompare,
+#addWishlist,
+#addComparison,
+#product .image p,
+#imgGallery,
+.formButton,
+#productDisplay #quantity,
+#productDisplay label,
+.addGiftWrap,
+#ThisForm .module1 {
+	display: none;
+	}
+
+/* header */
+
+.products:after,
+.products li:after,
+#product:after,
+#product .image:after,
+#product .info:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+	}
+.products,
+.products li,
+#product,
+#product .image,
+#product .info {
+	display: inline-block;
+	}
+/* Hide from IE Mac \*/
+.products,
+.products li,
+#product,
+#product .image,
+#product .info {
+	display: block;
+	}
+/* End hide from IE Mac */

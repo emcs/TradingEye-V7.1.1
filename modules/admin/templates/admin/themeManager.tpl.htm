@@ -1,0 +1,155 @@
+<style>
+#plugins
+{
+	width:100%;
+}
+#plugins td
+{
+	
+}
+</style>
+<div class="historyWidgetContainer">
+	<a href="adminindex.php?flag=dashboard">Home</a> <strong>&raquo;</strong> 
+	<a href="/user/adminindex.php?action=security.home&flag=admin">Admin</a> <strong>&raquo;</strong> 
+	<a href='#'>Theme Manager</a>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">Theme Manager</div>
+	<div class="WidgetContent">
+		<form action="{TPL_VAR_FORM_URL}" method="post">
+	<div class="TabbedPanels" id="tp1">
+		<ul class="TabbedPanelsTabGroup">
+			<li class="TabbedPanelsTab inactiveButton"><a href="#">Frontend Templates</a></li>
+			<li class="TabbedPanelsTab inactiveButton"><a href="#">Admin Templates</a></li>
+		</ul>
+		<div>
+			<div class="TabbedPanelsContent">
+				<table id="plugins" class="whiteTable2" cellspacing="0">
+					<tbody>
+							<tr>
+								<th class="first">
+								Choose
+								</th>
+								<th class="second">
+								Name
+								</th>
+								<th class="third">
+								</th>
+								<th class="fourth">
+								Author
+								</th>
+								<th class="last">
+								Mod Included?
+								</th>
+							</tr>
+							<tr>
+								<td class="first">
+									<input type="radio" checked name="theme" value="{TPL_VAR_SEL_VALUE}"/>
+								</td>
+								<td class="second">
+									<h3>{TPL_VAR_SEL_NAME}</h3>
+									{TPL_VAR_SEL_IMAGE1}
+								</td>
+								<td class="third">
+									{TPL_VAR_SEL_IMAGE2}
+								</td>
+								<td class="fourth">
+									{TPL_VAR_SEL_AUTHOR}
+								</td>
+								<td class="last">
+									{TPL_VAR_SEL_MOD}
+								</td>
+							</tr>
+							<!-- BEGIN TPL_THEME_BLK -->
+							<tr>
+								<td class="first">
+									<input type="radio" name="theme" value="{TPL_VAR_TEMP_VALUE}"/>
+								</td>
+								<td class="second">
+									<h3>{TPL_VAR_TEMP_NAME}</h3>
+									{TPL_VAR_TEMP_IMAGE1}
+								</td>
+								<td class="third">
+									{TPL_VAR_TEMP_IMAGE2}
+								</td>
+								<td class="fourth">
+									{TPL_VAR_TEMP_AUTHOR}
+								</td>
+								<td class="last">
+									{TPL_VAR_TEMP_MOD}
+								</td>
+							</tr>
+							<!-- END TPL_THEME_BLK -->
+					</tbody>
+				</table>
+			</div>
+			<div class="TabbedPanelsContent">
+				<table id="plugins" class="whiteTable2" cellspacing="0">
+					<tbody>
+							<tr>
+								<th class="first">
+								Choose
+								</th>
+								<th class="second">
+								Name
+								</th>
+								<th class="third">
+								</th>
+								<th class="fourth">
+								Author
+								</th>
+								<th class="last">
+								Mod Included?
+								</th>
+							</tr>
+							<tr>
+								<td class="first">
+									<input type="radio" checked name="atheme" value="{TPL_VAR_SEL_VALUE}"/>
+								</td>
+								<td class="second">
+									<h3>{TPL_VAR_SEL_NAMEa}</h3>
+									{TPL_VAR_SEL_IMAGE1a}
+								</td>
+								<td class="third">
+									{TPL_VAR_SEL_IMAGE2a}
+								</td>
+								<td class="fourth">
+									{TPL_VAR_SEL_AUTHORa}
+								</td>
+								<td class="last">
+									{TPL_VAR_SEL_MODa}
+								</td>
+							</tr>
+							<!-- BEGIN TPL_THEMEa_BLK -->
+							<tr>
+								<td class="first">
+									<input type="radio" name="atheme" value="{TPL_VAR_TEMP_VALUEa}"/>
+								</td>
+								<td class="second">
+									<h3>{TPL_VAR_TEMP_NAMEa}</h3>
+									{TPL_VAR_TEMP_IMAGE1a}
+								</td>
+								<td class="third">
+									{TPL_VAR_TEMP_IMAGE2a}
+								</td>
+								<td class="fourth">
+									{TPL_VAR_TEMP_AUTHORa}
+								</td>
+								<td class="last">
+									{TPL_VAR_TEMP_MODa}
+								</td>
+							</tr>
+							<!-- END TPL_THEMEa_BLK -->
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+		<button type="submit" class="formButton Left"><img src="../graphics/i_add.gif" alt="i_add" /> Activate Theme</button>
+		</form>
+	</div>
+</div>
+<script language="JavaScript" type="text/javascript">
+	var tp1 = new Spry.Widget.TabbedPanels("tp1", { defaultTab: 0 });
+</script>

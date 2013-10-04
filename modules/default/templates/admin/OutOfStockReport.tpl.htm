@@ -1,0 +1,33 @@
+<div class="historyWidgetContainer">
+	<a href='adminindex.php'>Home</a> <strong>&raquo;</strong> 
+	<a href='/sales/adminindex.php?action=email.home&amp;flag=marketing'>Marketing</a> <strong>&raquo;</strong>
+	<a href='/sales/adminindex.php?action=report.home&amp;flag=marketing'>Reports</a> <strong>&raquo;</strong>  
+	<a href="#">Out of Stock</a>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">Out of Stock</div>
+	<div class="WidgetContent">
+		<p class="buttonWrapper">
+			<button onclick="window.location='{TPL_VAR_SITEURL}adminindex.php'" class="formButton"><img src="{TPL_VAR_SITEURL}graphics/i_back.gif" alt="Back" /> <div>Return to Dashboard</div></button>
+		</p>
+		<table class="whiteTable2 Orders" cellspacing="0">
+			<thead>
+				<tr>
+					<th>Product Name</th>
+					<th>Original Stock</th>
+					<th>Current Stock</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- BEGIN TPL_OUTOFSTOCK_BLK -->
+					<tr>
+						<td><a href="{TPL_VAR_OUTOFPRODUCTURL}">{TPL_VAR_OUTOFTITLE}</a></td>
+						<td></td>
+						<td>{TPL_VAR_OUTOFINVENTORY}</td>
+					</tr>
+				<!-- END TPL_OUTOFSTOCK_BLK -->
+			</tbody>
+		</table>
+	</div>
+</div>

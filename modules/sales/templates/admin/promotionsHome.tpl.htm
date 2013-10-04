@@ -1,0 +1,60 @@
+<div class="historyWidgetContainer">
+	<a href='adminindex.php'>Home </a> <strong> &raquo; </strong> 
+	<a href='adminindex.php?action=email.home'>Marketing</a> <strong> &raquo; </strong> 
+	<a href='#'>Promotions</a>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">Promotions</div>
+	<div class="WidgetContent">
+		<!-- BEGIN TPL_MSG_BLK -->
+			{TPL_VAR_MSG}
+		<!-- END TPL_MSG_BLK -->
+		<table class="whiteTable2 Builder OneColum" cellspacing="0">
+			<thead>
+				<tr>
+					<th style="text-align: right;">Promotion</th>
+					<th>Start / End dates</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="half"><a href="{TPL_VAR_SALESURL}adminindex.php?action=promotions.flat">Flat discount</a><br />
+					Flat percentage discount for all orders</td>
+					<td>{TPL_VAR_RANGE1}</td>
+				</tr>
+				<tr>
+					<td><a href="{TPL_VAR_SALESURL}adminindex.php?action=promotions.range">Discount ranges</a><br />
+					Incremental % discounts based on order total</td>
+					<td>{TPL_VAR_RANGE2}</td>
+				</tr>
+				<tr>
+					<td><a href="{TPL_VAR_SALESURL}adminindex.php?action=promotions.free">Free postage</a><br />
+					Free postage based on order total</td>
+					<td>{TPL_VAR_RANGE3}</td>
+				</tr>
+				<tr>
+					<td><a href="{TPL_VAR_SALESURL}adminindex.php?action=promotions.giftcert.home">Gift certificates</a><br />
+					Build gift certificates (fixed value)</td>
+					<td>N/A</td>
+				</tr>
+				<tr>
+					<td><a href="{TPL_VAR_SALESURL}adminindex.php?action=promotions.giftwrap.home">Gift wrapping</a><br />
+					Build gift wrapping options for your customers as they checkout</td>
+					<td>N/A</td>
+				</tr>
+				<tr>
+					<td><a href="{TPL_VAR_SALESURL}adminindex.php?action=promotions.discount.home">Discount codes</a><br />
+					Build discount codes (% off with start/end dates)</td>
+					<td>N/A</td>
+				</tr>
+				<tr>
+					<td><a href="{TPL_VAR_SALESURL}adminindex.php?action=promotions.memberpoint.home">Member points</a><br />
+					Discount based on member points</td>
+					<td>N/A</td>
+				</tr>				 
+			</tbody>
+		</table>
+	</div>
+</div>
+

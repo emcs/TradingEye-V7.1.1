@@ -1,0 +1,66 @@
+<script language="JavaScript" type="text/javascript">
+	function validate()
+	{
+		frm=document.ThisForm;
+		if(compareDates(frm.start_date.value,frm.end_date.value)>=0)
+		{
+			alert("Invalid dates\nStart date should be less than End date");
+			frm.start_date.focus();
+			return false;
+		}
+		return true;
+	}
+</script>
+<div class="historyWidgetContainer"><a href='adminindex.php'>Home </a><strong> &raquo; </strong><a href='adminindex.php?action=email.home'>Marketing</a><strong> &raquo; </strong><a href='adminindex.php?action=promotions.home'>Promotions</a><strong> &raquo; </strong><a href='#'>Free Postage</a></div>
+<div class="fullWidgetContainer">
+      <div class="WidgetTitle">Free Postage</div>
+      <div class="WidgetContent">
+	<p>Free Postage is based on the total of the customers shopping basket. The total order must exceed the values listed below to qualify for free postage.</p>
+	<table class="whiteTable2">
+		<thead>
+			<tr> 
+				<th colspan="2">Free Postage Settings</th>
+			</tr>
+		</thead>
+		<form action="{TPL_VAR_SITEURL}sales/adminindex.php?action=promotions.updatefree" method="post" name="ThisForm" id="ThisForm" onSubmit="return validate();">
+			<input type="hidden" name="mode" value="{TPL_VAR_MODE}">
+			<tbody>
+				<tr> 
+					<td><label for="total">Order total {CURRENCY}:</label></td>
+					<td><input type="text" name="total" value="{TPL_VAR_TOTAL}" class="formField" size="5" maxlength="12" /></td>
+				</tr>
+				<tr> 
+					<td><label for="start_date">Start date (dd/mm/yyyy)</label></td>
+					<td>
+						<input type="text" id="start_date" name="start_date" value="{TPL_VAR_STARTDATE}" class="formField" maxlength="20" />
+						<a class="linkCalendar" href="javascript:cal2.popup();">Choose a date</a></a>
+						<script language="JavaScript">
+							var cal2 = new calendar2(document.forms[0].elements['start_date']);
+							cal2.year_scroll = true;
+							cal2.time_comp = false;
+						</script>
+					</td>
+				</tr>
+				<tr> 
+					<td><label for="end_date">End date (dd/mm/yyyy)</label></td>
+					<td>
+						<input type="text" id="end_date" name="end_date" value="{TPL_VAR_ENDDATE}" size="7" class="formField" maxlength="20" />
+						<a class="linkCalendar" href="javascript:cal3.popup();">Choose a date</a></a>
+						<script language="JavaScript">
+							var cal3 = new calendar2(document.forms[0].elements['end_date']);
+							cal3.year_scroll = true;
+							cal3.time_comp = false;
+						</script>
+					</td>
+				</tr>
+				<tr> 
+					<td><label>End Promotion Now?</label></td>
+					<td><input type="checkbox" class="formField" name="endPromo" value="1" /></td>
+				</tr>
+			</tbody>
+		</table>
+		<p class="formButtonWrapper">
+			<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="Submit" /> Submit</button>
+		</p>
+	</form>
+</div></div>

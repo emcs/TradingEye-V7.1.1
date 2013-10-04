@@ -1,0 +1,41 @@
+<div class="historyWidgetContainer">
+	<a href='adminindex.php'>Home </a> <strong>&raquo;</strong> 
+	<a href='adminindex.php?action=email.home'>Marketing</a> <strong>&raquo;</strong> 
+	<a href='#'>Email Campaigns</a>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">Email Campaigns <small><!-- BEGIN TPL_MSG_BLK1 --> {TPL_VAR_MSG}<!-- END TPL_MSG_BLK1 --></small></div>
+	<div class="WidgetContent">
+		<!-- BEGIN TPL_MESSAGE_BLK -->
+			<p>{TPL_VAR_MESSAGE}</p>
+		<!-- END TPL_MESSAGE_BLK -->
+		<table class="whiteTable2 Builder" cellspacing="0">
+			<thead>
+				<tr>
+					<th class="headerID">ID</th>
+					<th>Subject Line</th>
+					<th class="headerDate">User Count</th>
+					<th class="headerDate">Build Date</th>
+					<th class="headerDate">Release Date</th>
+					<th class="headerEdit">Edit</th>
+					<th class="headerDelete">Delete</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- BEGIN TPL_EMAIL_BLK -->
+				<tr>
+					<td>{TPL_VAR_SID}</td>
+					<td>{TPL_VAR_SUBJECT}</td>
+					<td>{TPL_VAR_USERCOUNT}</td>
+					<td>{TPL_VAR_BUILDDATE}</td>
+					<td><a href="{TPL_VAR_SALESURL}adminindex.php?action=email.sendmail&id={TPL_VAR_ID}&amp;auth={TPL_VAR_AUTH_TOKEN}" class="linkEmail">{TPL_VAR_SENTDATE}</a></td>
+					<td><a href="{TPL_VAR_SALESURL}adminindex.php?action=email.dspForm&id={TPL_VAR_ID}" class="linkEdit">Edit</a></td>
+					<td><a href="{TPL_VAR_SALESURL}adminindex.php?action=email.delete&id={TPL_VAR_ID}&amp;auth={TPL_VAR_AUTH_TOKEN}" onclick="if(confirm('Are you sure you want to delete {TPL_VAR_SID}?')){return true}else{return false}" class="linkDelete">Delete</a></td>
+				</tr>
+				<!-- END TPL_EMAIL_BLK -->
+			</tbody>
+		</table>
+		<button class="formButton" onclick="window.location='{TPL_VAR_SALESURL}adminindex.php?action=email.leadForm'"><img src="../graphics/i_add.gif" alt="Create Lead list" /> <div>Create Lead list</div></button>
+	</div>
+</div>

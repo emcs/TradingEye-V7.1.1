@@ -1,0 +1,97 @@
+<style>
+h4 {
+font-size:16px;
+color:rgb(66, 75, 86);
+
+}
+</style>
+<script language="JavaScript" type="text/javascript">
+function validateit()
+{
+	var count;
+	var flag1;
+	count=document.ThisForm2.items.length
+	for(i=0;i<count;i++){
+		if(document.ThisForm2.items.options[i].value!="")
+		{
+			if(document.ThisForm2.items.options[i].selected==true)
+			{
+				flag1=1;
+			}
+		}
+	}
+	if(flag1!=1)
+	{
+		alert("Please select the item(s) ")
+		document.ThisForm2.items.focus();
+		return false;
+	}
+	return true;
+}
+</script>
+<div class="historyWidgetContainer">
+	<a href="adminindex.php?flag=dashboard">Home</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=ec_show.home&amp;flag=builder">Shop Builder</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=ec_show.home&amp;flag=builder">Shop Builder</a> <strong>&raquo;</strong> 
+	<a href='#'>Associate Item</a>
+</div>
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">Associate Items</div>
+	<div class="WidgetContent">
+<div class="builderBlock">
+	<div class="column first">
+		<h4>Departments</h4>
+		<form action="{TPL_SHOPURL}adminindex.php?action=ec_show.associate&type={TPL_VAR_TYPE}&owner={TPL_VAR_OWNER}&otype={TPL_VAR_OTYPE}" method="post" name="ThisForm1">
+			<select name="postOwner" size="10" class="formSelect attach">
+				<option value="0" {SELECTED1}>Home page</option>
+				<option value="orphan" {TPL_VAR_ORPHAN_SELECTED}>All orphan {TPL_VAR_TYPE}</option>
+				<!-- BEGIN TPL_DEPARTMENT_BLK -->	
+				<option value="{TPL_VAR_ID}" {SELECTED2}>{TPL_VAR_TITLE}</option>
+				<!-- END TPL_DEPARTMENT_BLK -->	
+			</select>
+			<p class="formButtonWrapper attach">
+				<button type="submit" class="formButton"><img src="../graphics/i_preview_alt.gif" alt="View Items" /> View Items</button>
+			</p>
+		</form>
+	</div>
+	<div class="column">
+		<h4>Items</h4>
+		<form action="{TPL_SHOPURL}adminindex.php?action=ec_db.updateAssociate&type={TPL_VAR_TYPE}&owner={TPL_VAR_OWNER}" method="post" name="ThisForm2" onSubmit="return validateit();">
+			<input type="hidden" name="otype" value="{TPL_VAR_OTYPE}" />
+			<input type="hidden" name="postOwner" value="{TPL_VAR_POSTOWNER}" />
+				<select name="items[]" id="items" size="10" class="formSelect attach" multiple>
+					<!-- BEGIN TPL_ITEMS_BLK -->
+					<option value="{TPL_VAR_ID}">{TPL_VAR_TITLE}</option>
+					<!-- END TPL_ITEMS_BLK -->
+				</select>
+				<p class="formButtonWrapper attach">
+					<button type="submit" class="formButton"><img src="../graphics/i_add_alt.gif" alt="Attach Item(s)" /> Attach item(s)</button>
+				</p> 
+			</form>
+		</div>
+	<!-- BEGIN TPL_MAINTABLE_BLK -->
+
+	<h4>Currently Attached Items</h4>
+	<table class='whiteTable'>
+		<thead>
+			<tr> 
+				<th class="headerTitle">Item title</th>
+				<th class="headerType">Type</th>
+				<th class="headerPreview">Preview</th>
+				<th class="headerRemove">Remove</th>
+			</tr>
+		</thead>
+		<tbody>
+		<!-- BEGIN TPL_ATTACHED_BLK -->	
+			<tr>
+				<td><a href="adminindex.php?action=ec_show.home&owner={TPL_VAR_ID}&type={TPL_VAR_TYPE}">{TPL_VAR_TITLE}</a></td>
+				<td>{TPL_VAR_TYPE}</td>
+				<td><a class="linkPreview" href="{TPL_VAR_PREVURL}">Preview</a></td>
+				<td><a class="linkDelete" href="{TPL_SHOPURL}adminindex.php?action=ec_db.delRelation&owner={TPL_VAR_OWNER}&type={TPL_VAR_TYPE}&fid={TPL_VAR_FID}&otype={TPL_VAR_OTYPE}&amp;auth={TPL_VAR_AUTH_TOKEN}">Remove</a></td>
+			</tr>
+			<!-- END TPL_ATTACHED_BLK -->	
+		</tbody>
+	</table>
+
+	<!-- END TPL_MAINTABLE_BLK -->
+</div></div></div>

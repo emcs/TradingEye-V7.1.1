@@ -1,0 +1,57 @@
+<div class="historyWidgetContainer"><a href="adminindex.php?flag=dashboard">Home</a> <strong>&raquo;</strong> <a href="adminindex.php?action=ec_show.home&amp;flag=builder">Builder</a> <strong>&raquo;</strong> <a href="adminindex.php?action=ec_show.home&amp;flag=builder">Add New Product</a> <strong>&raquo;</strong> <a href="#">Volume Discounts</a> </div>
+<div class="builderBlock fullWidgetContainer">
+	<div class="WidgetTitle">Volume Discounts</div>
+	<div class="WidgetContent">
+	<p>Volume discounts enable you to set a {TPL_VAR_CURRENCY} value discount for products bought in bulk. If you set the <strong>Quantity Start</strong> value to 1, and the <strong>Quantity End</strong> value to 10 along with a <strong>Discount Value</strong> of {TPL_VAR_CURRENCY}10, then should a customer purchase 8 products, they will be given a {TPL_VAR_CURRENCY}10 discount on their order. If you would discount any order over a certain amount, then leave a 0 in the Quantity End field.</p>
+	<table>
+		<thead>
+			<tr>
+				<th>Delete</th>
+				<th>Quantity Start</th>
+				<th>Quantity End</th>
+				<th>Discount Value</th>
+			</tr>
+		</thead>
+		<tbody>
+			<form action="{TPL_SHOPURL}adminindex.php?action=ec_db.addDiscount" method="post" name="ThisForm">
+				<input type="hidden" name="productid" value="{TPL_VAR_PRODUCTID}">
+				<input type="hidden" name="type" value="{TPL_VAR_TYPE}">
+				<input type="hidden" name="owner" value="{TPL_VAR_OWNER}">
+				<!-- BEGIN TPL_VOLDISC_BLK -->
+				<tr>
+					<input type="hidden" name="itemid[]" value="{TPL_VAR_ID}">
+					<td class="first">
+						<input type="checkbox" class="checkbox" name="del[{TPL_VAR_ID}]" value="1" />
+					</td>
+					<td>
+						<input type="text" class="formField short" name="rangea[]" value="{TPL_VAR_RANGEA}"/>
+					</td>
+					<td>
+						<input type="text" class="formField short" name="rangeb[]" value="{TPL_VAR_RANGEB}"/>
+					</td>
+					<td>
+						{TPL_VAR_CURRENCY} <input type="text" class="formField short" name="discount[]" value="{TPL_VAR_DISCOUNT}"/>
+					</td>
+				</tr>
+				<!-- END TPL_VOLDISC_BLK -->
+				<input type="hidden" name="sort" value="1">
+				<tr> 
+					<td>Add a new Volume Discount Range &raquo;</td>
+					<td>
+						<input type="text" class="formField short" name="newrangea" />
+					</td>
+					<td>
+						<input type="text" class="formField short" name="newrangeb" />
+					</td>
+					<td>
+						{TPL_VAR_CURRENCY} <input type="text" class="formField short" name="newdiscount" />
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<p class="formButtonWrapper">
+			<button type="submit" class="formButton"><img src="../graphics/i_add.gif" alt="Update Volume Discounts" /> Update Volume Discounts</button>
+		</p>
+	</form>
+</div>
+</div>

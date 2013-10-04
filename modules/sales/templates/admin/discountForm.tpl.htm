@@ -1,0 +1,152 @@
+<script language="JavaScript" type="text/javascript">
+	<!--
+	
+	function isValidDate(s) {
+	  var bits = s.split('/');
+	  var d = new Date(bits[2], bits[1] - 1, bits[0]);
+	  return d && (d.getMonth() + 1) == bits[1] && d.getDate() == Number(bits[0]);
+	} 
+	
+	function validateForm()
+	{
+		var frm = document.ThisForm;
+		if(isNull(frm.code.value))
+		{
+			alert("You must enter discount code.");
+			frm.code.value = '';
+			frm.code.focus();
+			return false;
+		}
+		if(!isNull(frm.discount.value) && frm.discount.value>100 )
+		{
+			alert("Please enter valid discount value.");
+			frm.discount.value = '';
+			frm.discount.focus();
+			return false;
+		}
+		
+		if(!isNull(frm.discount_price.value) && frm.discount_price.value>100 )
+		{
+			alert("Please enter valid discount value.");
+			frm.discount_price.value = '';
+			frm.discount_price.focus();
+			return false;
+		}
+		
+		if(isNull(frm.start_date.value))
+		{
+			alert("You must enter start date.");
+			frm.start_date.focus();
+			return false;
+		}
+		if(isNull(frm.end_date.value))
+		{
+			alert("You must enter end date.");
+			frm.end_date.focus();
+			return false;
+		}
+		if(compareDates(frm.start_date.value,frm.end_date.value)>=0)
+		{
+			alert("Invalid dates\nStart date should be less than end date.");
+			frm.start_date.focus();
+			return false;
+		}
+		if(!isNull(frm.discount.value) && !isNull(frm.discount_price.value))
+		{
+			if (frm.discount.value == 0)
+			{
+			frm.discount.value = '';
+			}
+			else if (frm.discount_price.value == 0)
+			{
+			frm.discount_price.value= ''; 	
+			}
+			else if ((frm.discount.value != 0) && (frm.discount_price.value != 0))
+			{
+			alert("You must choose either a percentage or money discount.");
+			return false;
+			}
+		}
+		
+		if(isNull(frm.discount.value) && isNull(frm.discount_price.value))
+		{
+			alert("Please enter valid discount value.");
+			return false;
+		}	
+		
+		if(!isValidDate(frm.start_date.value)){
+			alert("Please enter valid start date.");
+			return false;
+		}
+		
+		if(!isValidDate(frm.end_date.value)){
+			alert("Please enter valid end date.");
+			return false;
+		}
+		
+		return true;
+	}
+	//-->
+</script>
+<div class="historyWidgetContainer"><a href='adminindex.php'>Home </a><strong> &raquo; </strong><a href='adminindex.php?action=email.home'>Marketing</a><strong> &raquo; </strong><a href='adminindex.php?action=promotions.home'>Promotions</a><strong> &raquo; </strong><a href='#'>Discount Code Builder</a></div>
+<div class="fullWidgetContainer">
+      <div class="WidgetTitle">Discount Code Builder</div>
+      <div class="WidgetContent">
+	<!-- BEGIN TPL_MSG_BLK --><p>{TPL_VAR_MSG}</p><!-- END TPL_MSG_BLK -->
+	<table class="whiteTable2" cellspacing="0">
+		<tbody>
+			<form action="{TPL_VAR_SITEURL}sales/adminindex.php?action=promotions.discount.update" method="POST" name="ThisForm" id="ThisForm" onsubmit="return validateForm();">
+				<input type="hidden" name="mode" value="{TPL_VAR_MODE}">
+				<input type="hidden" name="id" value="{TPL_VAR_ID}">
+				<tr>
+					<td class="first"><label for="discount_code">Discount Code <span>*</span></label></td>
+					<td><input type="text" id="discount_code" name="code" value="{TPL_VAR_CODE}" class="formField" maxlength="50" /></td>
+				</tr>
+				<tr> 
+					<td><label for="discount_minimum">Minimum Order Amount</label></td>
+					<td><input type="text" id="discount_minimum" name="minimum" value="{TPL_VAR_MINIMUM}" class="formField short" maxlength="5" /></td>
+				</tr>
+				<tr> 
+					<td><label for="discount_value">Discount Value</label></td>
+					<td>% <input type="text" id="discount_value" name="discount" value="{TPL_VAR_DISCOUNT}" size="5" class="formField short" maxlength="12" /> or {TPL_VAR_CURRENCY}
+					<input type="text" id="discount_price" name="discount_price" value="{TPL_VAR_DISCOUNT_PRICE}" size="5" class="formField short" maxlength="12" /></td>
+				</tr>
+				<tr> 
+					<td><label for="start_date">Start Date (dd/mm/yyyy)</label></td>
+					<td>
+						<input type="text" id="start_date" name="start_date" value="{TPL_VAR_STARTDATE}" class="formField date" maxlength="20" />
+						<a class="linkCalendar" href="javascript:cal2.popup();">Choose a date</a></a>
+						<script language="JavaScript">
+							var cal2 = new calendar2(document.forms[0].elements['start_date']);
+							cal2.year_scroll = true;
+							cal2.time_comp = false;
+						</script>
+					</td>
+				</tr>
+				<tr> 
+					<td><label for="end_date">End Date (dd/mm/yyyy)</label></td>
+					<td>
+						<input type="text" id="end_date" name="end_date" value="{TPL_VAR_ENDDATE}" class="formField date" maxlength="20" />
+						<a class="linkCalendar" href="javascript:cal3.popup();">Choose a date</a></a>
+						<script language="JavaScript">
+							var cal3 = new calendar2(document.forms[0].elements['end_date']);
+							cal3.year_scroll = true;
+							cal3.time_comp = false;
+						</script>
+					</td>
+				</tr>
+				<tr> 
+					<td><label for="usage">Use Only Once</label></td>
+					<td><input type="checkbox" id="usage" name="usage" value="1" class="formField" {TPL_VAR_USAGE} /></td>
+				</tr> 
+				<tr> 
+					<td><label for="active">On/Off</label></td>
+					<td><input type="checkbox" id="active" name="state" value="1"  class="formField" {TPL_VAR_STATE} /></td>
+				</tr>
+			</tbody>
+		</table>
+		<p class="formButtonWrapper">
+			<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="{TPL_VAR_BTNLBL}" /> <div>{TPL_VAR_BTNLBL}</div></button>
+		</p>
+	</form>
+</div></div>

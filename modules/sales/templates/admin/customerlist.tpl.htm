@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<title>Customer list</title>
+	<link rel="stylesheet" type="text/css" href="/css/admin.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="/css/print.css" media="print" />
+</head>
+<body>
+<div class="builderBlock">
+<div class="historyWidgetContainer"><a href='adminindex.php'>Home </a><strong> &raquo; </strong><a href='adminindex.php?action=email.home'>Marketing</a><strong> &raquo; </strong><a href='adminindex.php?action=email.home'>Email Campaigns</a><strong> &raquo; </strong><a href='#'> Customer list</a></div>
+<div class="fullWidgetContainer">
+      <div class="WidgetTitle">Customer List</div>
+	  <div class="WidgetContent">
+	
+		<table>
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>Customer name</th>
+						<th>Email</th>
+					</tr>
+				</thead>
+				<tbody>
+				<!-- BEGIN TPL_CUSTOMER_BLK -->
+				<tr>
+					<td>{TPL_VAR_ORDER}</td>
+					<td>{TPL_VAR_NAME}</td>
+					<td>{TPL_VAR_EMAIL}</td>
+				</tr>
+				<!-- END TPL_CUSTOMER_BLK -->
+				</tbody>
+		</table>		
+	</div>
+	</div>
+</body>		
+</html>

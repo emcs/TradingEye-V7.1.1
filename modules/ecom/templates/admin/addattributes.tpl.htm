@@ -1,0 +1,76 @@
+<div class="historyWidgetContainer">
+	<a href="adminindex.php?flag=dashboard">Home</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=ec_show.home&amp;flag=builder">Builder</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=ec_option.home&amp;flag=builder">Product Options &amp; Attributes</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=ec_option.dspAttributes&amp;flag=builder">Product Attributes</a> <strong>&raquo;</strong>
+	<a href='#'>Product Attributes Builder</a>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">Product Attribute Builder</div>
+	<div class="WidgetContent">
+		<!-- BEGIN TPL_ADDFIELDNUMBER_BLK -->	
+		<table class="whiteTable2 Builder OneColum" cellspacing="0">
+			<form name="fieldnumber" action="{TPL_VAR_ACTION}" method="POST" >
+				<thead>
+					<tr>
+						<th colspan="2">Details</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="first"><label>Number of Fields</label></td>
+						<td><input type="text" class="formField short" name="fieldnumber" id="fieldnumber"></td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="formButtonWrapper">
+				<button type="button" name="cancel" class="formButton"><img src="../graphics/i_cross.gif" alt="Cancel" /> <div>Cancel</div></button>
+				<button type="submit" name="add" class="formButton"><img src="../graphics/i_tick.gif" alt="Add New Product Attribute" /> <div>Add New Product Attributes</div></button>
+			</p>
+		</form>
+		<!-- END TPL_ADDFIELDNUMBER_BLK -->
+		<!-- BEGIN TPL_ADDDETAILS_BLK -->
+		<form name="fieldnumber" action ="{TPL_VAR_ACTION1}" method="POST" >
+			<input type="hidden" name="attributeid" value="{TPL_VAR_ATTRIBUTEID}" />
+			<table class="whiteTable2 Orders OneColum" cellspacing="0" style="margin-top: 0;">
+				<thead>
+					<tr>
+						<th colspan="2">Product Attribute Title</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><label style="width:50px">Title</label></td>
+						<td><input type="text" name="title" value="{TPL_VAR_TITLE}" style="width:1150px"></td>
+					</tr>
+				</tbody>
+			</table>
+			<table class="whiteTable2 Builder BuilderFix" cellspacing="0">
+				<thead>
+					<tr>
+						<th class="headerAttID">ID</th>
+						<th class="extend">Custom Field Name</th>
+						<th>Field Prefix</th>
+						<th>Field Suffix</th>
+					</tr>
+				</thead>
+				<tbody>
+					<!-- BEGIN TPL_FIELDS_BLK -->	
+					<tr>
+						<td class="shrink"><strong>{TPL_VAR_BOXNUMBER}</strong></td>
+						<td class="extend"><input type="text" name="fieldname{TPL_VAR_BOXNUMBER}" value="{TPL_VAR_NAME}"></td>
+						<td><input type="text" name="prefix{TPL_VAR_BOXNUMBER}" value="{TPL_VAR_PREFIX}" size="10"></td>
+						<td><input type="text" name="suffix{TPL_VAR_BOXNUMBER}" value="{TPL_VAR_SUFFIX}" size="10"></td>
+					</tr>
+					<!-- END TPL_FIELDS_BLK -->	
+				</tbody>
+			</table>
+			<p class="formButtonWrapper">
+				<button type="button" name="cancel" class="formButton"><img src="../graphics/i_cross.gif" alt="Cancel" /> <div>Cancel</div></button>
+				<button type="submit" name="add" class="formButton"><img src="../graphics/i_tick.gif" alt="{TPL_VAR_BUTTONVALUE}" /> <div>{TPL_VAR_BUTTONVALUE}</div></button>
+			</p>
+		</form>
+		<!-- END TPL_ADDDETAILS_BLK -->
+	</div>
+</div>

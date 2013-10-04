@@ -1,0 +1,81 @@
+<div class="historyWidgetContainer">
+	<a href="adminindex.php?flag=dashboard&amp;flag=dashboard">Home</a> <strong>&raquo;</strong> 
+	<a href="../order/adminindex.php?action=orders.home&amp;flag=orders">Orders</a> <strong>&raquo;</strong> 
+	<a href='#'>Customers</a>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">Customers <small>{TPL_VAR_RECORDCOUNT}</small></div>
+	<div class="WidgetContent">
+		<!-- BEGIN TPL_MSG_BLK -->
+			{TPL_VAR_MSG}
+		<!-- END TPL_MSG_BLK -->
+		<div class="search">
+			<form method="post" name="search" action="/user/adminindex.php?action=user.home" style="width: 100%;">
+				<input type="hidden" name="extrastring" value="{TPL_VAR_EXTRASTRING}" />
+				<label for="searchKeyword">{LANG_VAR_SEACRH}</label>
+				<input type="text" name="search" id="searchKeyword" value="{TPL_VAR_SEARCHTEXT}" maxlength="50" />
+				<div style="float: right;">
+				<label for="searchKeyword">Sort By:</label>
+				<div class="selectContainerSmall"><select class="formSelect" name="searchtype">
+									<option value="last_name" {TPL_VAR_SEL1}>{LANG_VAR_LASTNAME}</option>
+									<option value="first_name" {TPL_VAR_SEL2}>{LANG_VAR_FIRSTNAME}</option>
+									<option value="city" {TPL_VAR_SEL3}>{LANG_VAR_CITY}</option>
+									<option value="state" {TPL_VAR_SEL4}>{LANG_VAR_STATE}</option>
+									<option value="country" {TPL_VAR_SEL5}>{LANG_VAR_COUNTRY}</option>
+								</select></div>
+				<input type="submit" class="searchSubmit" value="Sort" />
+				</div>
+				<input type="submit" class="searchSubmit" value="{LANG_VAR_SEACRH}" />
+			</form>
+		</div>
+		<form name="frmMember" action="/user/adminindex.php?action=user.changestatus" method="post" > 
+			<input type="hidden" name="extrastring" value="{TPL_VAR_EXTRASTRING}" />
+			<!-- BEGIN TPL_USERMAIN_BLK -->
+				<table class="whiteTable2 Builder" cellspacing="0">
+					<thead>
+						<tr>
+							<th class="headerSelectAll"><input type="checkbox" class="checkbox" name="chkNothing" value="nothing" onClick="javascript:selectDeselect('del[]', 'chkNothing');" /></th>	
+							<th>{LANG_VAR_CUSTOMERS}</th>
+							<th>{LANG_VAR_STATE}</th>
+							<th>{LANG_VAR_COUNTRY}</th>
+							<th class="headerNewsletter">{LANG_VAR_NEWSLETTER}</th>
+							<th class="headerSignupDate">{LANG_VAR_SIGNUP}</th>
+							<th class="headerPreview">{LANG_VAR_DETAILS}</th>
+							<th class="headerCustStatus">{LANG_VAR_STATUS}</th>
+						</tr>
+					</thead>
+					<tbody>
+		            <!-- BEGIN TPL_USER_BLK -->
+		            	<tr>
+							<td><input type="checkbox" class="checkbox" id="del" name="del[]" value="{TPL_VAR_ID}"  onClick="checkMain(this.form)" /></td>
+							<td><a href="mailto:{TPL_VAR_EMAIL}" class="linkEmail">{TPL_VAR_USERNAME}</a></td>
+							<td>{TPL_VAR_STATE}</td>
+							<td>{TPL_VAR_COUNTRY}</td>
+							<td>{TPL_VAR_NEWSLETTER}</td>
+							<td>{TPL_VAR_SIGNUPDATE} </td>
+							<td><a href="/user/adminindex.php?action=user.details&amp;id={TPL_VAR_ID}" class="linkPreview">View</a></td>
+							<td>{TPL_VAR_IMG}</td>
+						</tr>
+					<!-- END TPL_USER_BLK  -->				
+						<tr>
+							<td colspan="8" style="border-bottom: 0;">
+								<span class="spanAmendAll">Set selected customers to: </span>
+								<div class="selectContainerSmall"><select class="formSelect short" name="todo">
+																	<option value="enable">{LANG_VAR_ENABLE}</option>
+																	<option value="disable">{LANG_VAR_DISABLE}</option>
+																	<option value="delete">{LANG_VAR_DELETE}</option>
+																</select></div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			<!-- END TPL_USERMAIN_BLK -->
+			<button type="submit" class="formButton"><img src="../graphics/i_refresh_alt.gif" alt="Update Customers" /> <div>Update Customers</div></button>
+			<button class="formButton" onclick="window.location='/user/adminindex.php?action=user.dspForm'; return false;"><img src="../graphics/i_add.gif" alt="Add New Customer" /> <div>Add New Customer</div></button>
+		</form>
+		<!-- BEGIN TPL_PAGE_BLK2 -->
+			{PagerBlock2}
+		<!-- END TPL_PAGE_BLK2 -->
+	</div>
+</div>

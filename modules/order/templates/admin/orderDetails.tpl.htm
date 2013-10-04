@@ -1,0 +1,342 @@
+<script type="text/javascript">
+	function invPrint()
+	{
+		var popWin = window.open("");
+		var totalstring = "<tr><th>Subtotal:</th><td></td><td>{TPL_VAR_CURRENCY}{TPL_VAR_SUBTOTAL}</td></tr>";
+		
+		var pdiscounts = "{TPL_VAR_PDISCOUNTS}";
+		if(pdiscounts.substr(1,18) != "TPL_VAR_PDISCOUNTS")
+		{
+			totalstring = totalstring + "<tr><th>Promotion Discounts:</th><td></td><td>{TPL_VAR_CURRENCY}{TPL_VAR_PDISCOUNTS}</td></tr>";
+		}
+		var voldiscount = "{TPL_VAR_VOLDISCOUNT}";
+		if(voldiscount.substr(1,19) != "TPL_VAR_VOLDISCOUNT")
+		{
+			totalstring = totalstring + "<tr><th>Volume Discount:</th><td></td><td>{TPL_VAR_CURRENCY}{TPL_VAR_VOLDISCOUNT}</td></tr>";
+		}
+		
+		var mpoints = "{TPL_VAR_MPOINTS}";
+		if(mpoints.substr(1,15) != "TPL_VAR_MPOINTS" && "{TPL_VAR_MPOINTS}" != "")
+		{
+			totalstring = totalstring + "<tr><th>Member Points:</th><td></td><td>{TPL_VAR_CURRENCY}{TPL_VAR_MPOINTS}</td></tr>";
+		}
+		
+		var codprice = "{TPL_VAR_CODPRICE}";
+		if(codprice.substr(1,16) != "TPL_VAR_CODPRICE")
+		{
+			totalstring = totalstring + "<tr><th>Cash on Delivery Charge:</th><td></td><td>{TPL_VAR_CURRENCY}{TPL_VAR_CODPRICE}</td></tr>";
+		}
+		
+		var discountprice = "{TPL_VAR_DISCOUNTPRICE}";
+		if(discountprice.substr(1,21) != "TPL_VAR_DISCOUNTPRICE")
+		{
+			totalstring = totalstring + "<tr><th>Discounts:</th><td></td><td>{TPL_VAR_CURRENCY}{TPL_VAR_DISCOUNTPRICE}</td></tr>";
+		}
+		
+		var giftcertprice = "{TPL_VAR_GIFTCERTPRICE}";
+		if(giftcertprice.substr(1,21) != "TPL_VAR_GIFTCERTPRICE")
+		{
+			totalstring = totalstring + "<tr><th>Gift Certificates:</th><td></td><td>{TPL_VAR_CURRENCY}{TPL_VAR_GIFTCERTPRICE}</td></tr>";
+		}
+		
+		var weightamount = "{TPL_VAR_WEIGHT}";
+		var weightprice = "{TPL_VAR_WEIGHTPRICE}";
+		if(weightprice.substr(1,19) != "TPL_VAR_WEIGHTPRICE")
+		{
+			totalstring = totalstring + "<tr><th>Product weight ({TPL_VAR_WEIGHT} kg):</th><td></td><td>{TPL_VAR_CURRENCY}{TPL_VAR_WEIGHTPRICE}</td></tr>";
+		}
+		
+		var postagemethod = "{TPL_VAR_POSTAGEMETHOD}";
+		var postageprice = "{TPL_VAR_POSTAGEPRICE}";
+		if(postageprice.substr(1,20) != "TPL_VAR_POSTAGEPRICE")
+		{
+			totalstring = totalstring + "<tr><th>{TPL_VAR_POSTAGEMETHOD}:</th><td></td><td>{TPL_VAR_POSTAGEPRICE}</td></tr>";
+		}
+		var footerstring = "<footer id=\"footer\"><p>";
+		var empoints = "{TPL_VAR_EMPOINTS}";
+		if(empoints.substr(1,16) != "TPL_VAR_EMPOINTS")
+		{
+			footerstring = footerstring + "<span style='float:left;'>Earned Member Points: {TPL_VAR_EMPOINTS}</span>";
+		}
+		
+		var tmpoints = "{TPL_VAR_TMPOINTS}";
+		if(tmpoints.substr(1,16) != "TPL_VAR_TMPOINTS")
+		{
+			footerstring = footerstring + "<span style='float:right;'>Total Member Points: {TPL_VAR_TMPOINTS}</span>";
+		}
+		
+		var vatprice = "{TPL_VAR_VATPRICE}";
+		if(vatprice.substr(1,16) != "TPL_VAR_VATPRICE")
+		{
+			totalstring = totalstring + "<tr><th>Vat ({TPL_VAR_VAT}%):</th><td></td><td>{TPL_VAR_CURRENCY}{TPL_VAR_VATPRICE}</td></tr>";
+		}
+		footerstring = footerstring + "</p></footer>";
+		var teststring = '{TPL_VAR_PRINTABLE_INVOICE}';
+		popWin.document.write(teststring + "<div class='invoice-totals'><table><caption>Totals:</caption><tbody>"+totalstring+"<tr><th>Total:</th><td></td><td>{TPL_VAR_CURRENCY}{TPL_VAR_CURRENTTOTAL}</td></tr></tbody></table></div></section>"+footerstring+"</div></body></html>");
+		popWin.print();
+		//popWin.close();
+	}
+</script>
+<div class="historyWidgetContainer">
+	<a href="adminindex.php?flag=dashboard&amp;flag=dashboard">Home</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=orders.home&amp;flag=orders">Orders</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=orders.home&amp;flag=orders">Invoices</a> <strong>&raquo;</strong> 
+	<a href='#'>View Invoice</a>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">Invoice <small>#{TPL_VAR_INVOICE}</small></div>
+	<div class="WidgetContent">
+		<!-- BEGIN TPL_MSG_BLK -->
+			<p>{TPL_VAR_MESSAGE} <a href="/order/adminindex.php?action=orders.home">Return &raquo;</a></p>		
+		<!-- END TPL_MSG_BLK -->
+		<!-- BEGIN TPL_LINK_BLK -->
+			<button class="formButton" onclick="window.location='adminindex.php?action=orders.find&amp;orderid={TPL_VAR_ORDERID}'"><img src="../graphics/i_add.gif" alt="Add product" /> <div>Add product</div></button>
+			<button class="formButton" onclick="invPrint(); return false;"><img src="../graphics/i_print.gif" alt="Print invoice" /> <div>Print invoice</div></button>
+			<button class="formButton" onclick="window.location='adminindex.php?action=orders.removeCredit&amp;invoice={TPL_VAR_INVOICE}&amp;orderid={TPL_VAR_ORDERID}'"><img src="../graphics/i_delete.gif" alt="Remove Credit Card" /> <div>Remove Credit Card</div></button>
+		<!-- END TPL_LINK_BLK -->
+		<!-- BEGIN TPL_CART_BLK -->
+			<form action="adminindex.php?action=orders.updateInvoice" method="post" name="TheForm" id="TheForm1">
+				<input type="hidden" name="orderid" value="{TPL_VAR_ORDERID}" />
+				<input type="hidden" name="invoice" value="{TPL_VAR_INVOICE}" />
+				<table class="whiteTable2 Orders">
+					<thead>
+						<tr>
+							<th class="invTitle"><strong>Invoice:</strong><span class="invNumber" style="text-align: center;">#{TPL_VAR_INVOICE}</span></th>
+							<th class="invTitle"><strong>Order date:</strong><span class="invNumber">{TPL_VAR_ORDERDATE}</span></th>
+							<th>
+								<input type="checkbox" class="checkbox" id="orderpaid" name="pay_status" value="1" {CHECK1}/> {TPL_MSG1}<br />
+								<input type="checkbox" class="checkbox" name="complete" value="1" {CHECK2}/> {TPL_MSG2} <br />
+								<script type="text/javascript">
+									jQuery("#orderpaid").change(function()
+									{
+										if(jQuery("#orderpaid").is(':checked'))
+										{
+											jQuery("#orderpaid").after("<span style='float:right;' id='extraops'><input type='checkbox' class='checkbox' name='mp' value='1'/><label>Update Customers Member Points?</label><br/><input type='checkbox' class='checkbox' name='gc' value='1'/><label>Update Gift Certificate's Used Amount?</label><br/><input type='checkbox' class='checkbox' name='ec' value='1'/><label>Email the Customer?</label><br/><input type='hidden' name='cid' value='{TPL_VAR_CUSTOMERID}'/><input type='hidden' name='mpa' value='{TPL_VAR_MEMBERPOINTS_USED}'/><input type='hidden' name='mpe' value='{TPL_VAR_MEMBERPOINTS_EARNED}'/><input type='hidden' name='gcid' value='{TPL_VAR_GIFTCERTID}'/><input type='hidden' name='gca' value='{TPL_VAR_GIFTCERTAMOUNT}'/></span>");
+										}
+										else
+										{
+											jQuery("#extraops").remove();
+										}
+									});
+									jQuery(document).ready(function(){
+										if(jQuery("#orderpaid").is(':checked'))
+										{
+											jQuery("#orderpaid").after("<span style='float:right;' id='extraops'><input type='checkbox' class='checkbox' name='mp' value='1'/><label>Update Customers Member Points?</label><br/><input type='checkbox' class='checkbox' name='gc' value='1'/><label>Update Gift Certificate's Used Amount?</label><br/><input type='checkbox' class='checkbox' name='ec' value='1'/><label>Email the Customer?</label><br/><input type='hidden' name='cid' value='{TPL_VAR_CUSTOMERID}'/><input type='hidden' name='mpa' value='{TPL_VAR_MEMBERPOINTS_USED}'/><input type='hidden' name='mpe' value='{TPL_VAR_MEMBERPOINTS_EARNED}'/><input type='hidden' name='gcid' value='{TPL_VAR_GIFTCERTID}'/><input type='hidden' name='gca' value='{TPL_VAR_GIFTCERTAMOUNT}'/></span>");
+										}
+									});
+								</script>
+								Mark order as:
+								<div class="selectContainerSmall"><select class="formSelect short" name="status">
+																	<option value="New" {SEL1}>New</option>
+																	<option value="Received" {SEL2}>Received</option>
+																	<option value="Backorder" {SEL3}>Backorder</option>
+																	<option value="Shipped" {SEL4}>Dispatched</option>
+																	<option value="Void" {SEL5}>Void</option>
+																	<option value="Delete">Delete</option>
+																</select></div>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- BEGIN TPL_DISPATCHED_BLK -->
+							<tr colspan="3">
+								<td><strong>Dispatched:</strong> {TPL_VAR_DATEPOST} by {TPL_VAR_SHIPPER} <br /> <strong>Tracking number:</strong> {TPL_VAR_TRACKNUM}</td>
+							</tr>
+						<!-- END TPL_DISPATCHED_BLK -->
+						<tr class="alTop">
+							<td>
+								<h4>Bill to:</h4>
+								<address style="text-align: center;">{TPL_VAR_COMPANY} <br />
+								<!-- BEGIN TPL_BLK_REGISTERED_USER -->
+									<a href="/user/adminindex.php?action=user.details&amp;id={TPL_VAR_CUSTOMERID}">{TPL_VAR_BILLNAME}</a><br />
+								<!-- END TPL_BLK_REGISTERED_USER -->
+								<!-- BEGIN TPL_BLK_NOTREGISTERED_USER -->
+									{TPL_VAR_BILLNAME}<br />
+								<!-- END TPL_BLK_NOTREGISTERED_USER -->
+								{TPL_VAR_BILLADDRESS1}<br />
+								{TPL_VAR_BILLADDRESS2}<br />
+								{TPL_VAR_CITY} <br />
+								{TPL_VAR_BILLSTATE}<br />
+								{TPL_VAR_BILLZIP}<br />
+								{TPL_VAR_BILLCOUNTRY}<br /></address>
+								<p style="text-align: center;"><strong>Telephone:</strong> {TPL_VAR_BILLPHONE}<br />
+								<strong>IP Address:</strong>{TPL_VAR_CUSTOMER_IP}</p>
+							</td>
+							<td>
+								<h4>Deliver to:</h4>
+								<!-- BEGIN TPL_DELIVERY_BLK -->
+									<address style="text-align: center;">{TPL_VAR_ALTCOMPANY}<br />
+									{TPL_VAR_SHIPNAME}<br />
+									{TPL_VAR_SHIPADDRESS1}<br />
+									{TPL_VAR_SHIPADDRESS2}<br />
+									{TPL_VAR_ALTCITY}<br />
+									{TPL_VAR_SHIPSTATE}<br />
+									{TPL_VAR_SHIPZIP}<br />
+									{TPL_VAR_SHIPCOUNTRY}<br />
+									<strong>Tel:</strong> {TPL_VAR_SHIPPHONE}<br /></address>
+								<!-- END TPL_DELIVERY_BLK -->
+								<p style="text-align: center;">{TPL_VAR_SAMEASBILLING}</p>
+							</td>
+							<td>
+								<h4>Payment method:</h4>
+								<p style="text-align: center;">{TPL_VAR_PAYMETHOD}</p>
+								<h4>{TPL_VAR_SHIPDESC}</h4>
+								<p style="text-align: center;">P&amp;P</p>
+								<h4>Auth Code:</h4>
+								<p style="text-align: center;">{TPL_VAR_AUTH}</p>
+							</td>
+						</tr>
+					</table>
+					<br />
+					<h3>Invoice Contents</h3>
+					<table class="whiteTable2">
+						<thead>
+							<tr>
+								<th class="invQuanitity">Quantity</th>
+								<th>Product Name</th>
+								<th class="invOptions">Options</th>
+								<th class="invNotes">Notes</th>
+								<th class="invItemPrice">Item Price</th>
+								<th class="invTotalPrice">Total price</th>
+							</tr>
+						</thead>
+						<tbody>
+							<!-- BEGIN TPL_PRODUCT_BLK -->
+								<input type="hidden" name="orderid" value="{TPL_VAR_ORDERID}" />
+								<input type="hidden" name="iskit" value="{TPL_VAR_ISKIT}" />
+								<input type="hidden" name="orderproductid" value="{TPL_VAR_ORDERPRODUCTID}" />
+								<input type="hidden" name="productid" value="{TPL_VAR_PRODUCTID}" />
+								<tr>
+									<td>
+										<input type="text" class="formField short" name="qty[]" value="{TPL_VAR_QTY}" size="2" maxlength="4" />
+									</td>
+									<td>
+										<a href="{TPL_VAR_PRODUCTURL}" class="linkPreview">{TPL_VAR_TITLE}</a><br />
+										{TPL_VAR_GIFTWRAP}
+										<!-- BEGIN TPL_KIT_BLK -->
+											Package Items: -<br />
+											<!-- BEGIN TPL_KITELEMENT_BLK -->
+												{TPL_VAR_KITELEMENT}<br />
+												{TPL_VAR_OPTIONS}
+											<!-- END TPL_KITELEMENT_BLK -->
+										<!-- END TPL_KIT_BLK -->				
+										{TPL_VAR_CART_VOLDISCOUNT}
+										{TPL_VAR_FREESHIPMSG}
+										{TPL_VAR_TAXABLE}
+										{TPL_VAR_SUPPLIERS_STATUS}
+										{TPL_VAR_NOTES}
+									</td>
+									<td>
+										{TPL_VAR_MAINOPTIONS}	
+										{TPL_VAR_MAINCHOICES}
+									</td>
+									<td>
+										Notes are currently hardcoded
+									</td>
+									<td>
+										{TPL_VAR_CURRENCY}{TPL_VAR_PRICE}
+									</td>
+									<td>
+										{TPL_VAR_CURRENCY}{TPL_VAR_TOTAL}
+									</td>
+								</tr>
+							<!-- END TPL_PRODUCT_BLK -->
+							<tr class="invSubTotals">
+								<td colspan="5" style="border-bottom: 0;">Sub-Total:</td>
+								<td colspan="1" class="price" style="border-bottom: 0;">{TPL_VAR_CURRENCY}{TPL_VAR_SUBTOTAL}</td>
+							</tr>
+							<!-- BEGIN TPL_PROMODISCOUNTS_BLK -->
+								<tr class="invSubTotals">
+									<td colspan="5" style="border-bottom: 0;">Promotion Discounts:</td>
+									<td colspan="1" class="price" style="border-bottom: 0;">- {TPL_VAR_CURRENCY}{TPL_VAR_PDISCOUNTS}</td>
+								</tr>
+							<!-- END TPL_PROMODISCOUNTS_BLK -->
+							<!-- BEGIN TPL_VOLDISCOUNTS_BLK -->
+								<tr class="invSubTotals">
+									<td colspan="5" style="border-bottom: 0;">Volume Discount: </td>
+									<td colspan="1" class="price" style="border-bottom: 0;">- {TPL_VAR_CURRENCY}{TPL_VAR_VOLDISCOUNT}</td>
+								</tr>
+							<!-- END TPL_VOLDISCOUNTS_BLK -->
+							<!-- BEGIN TPL_MPOINTS_BLK -->
+							<tr class="invSubTotals">
+								<td colspan="5" style="border-bottom: 0;">Member Points:</td>
+								<td colspan="1" class="price" style="border-bottom: 0;"><strong>{TPL_VAR_CURRENCY}{TPL_VAR_MPOINTS}</strong></td>
+							</tr>
+							<!-- END TPL_MPOINTS_BLK -->
+							<!-- BEGIN TPL_COD_BLK -->
+								<tr class="invSubTotals">
+									<td colspan="5" style="border-bottom: 0;">Cash on Delivery Charge:</td>
+									<td colspan="1" class="price" style="border-bottom: 0;"><strong>+ {TPL_VAR_CURRENCY}{TPL_VAR_CODPRICE}</strong></td>
+								</tr>
+							<!-- END TPL_COD_BLK -->
+							<!-- BEGIN TPL_DISCOUNT_BLK -->
+								<tr class="invSubTotals">
+									<td colspan="5" style="border-bottom: 0;">Discounts:</td>
+									<td colspan="1" class="price" style="border-bottom: 0;"><strong>- {TPL_VAR_CURRENCY}{TPL_VAR_DISCOUNTPRICE}</strong></td>
+								</tr>
+							<!-- END TPL_DISCOUNT_BLK -->
+							<!-- BEGIN TPL_GIFTCERT_BLK -->
+								<tr class="invSubTotals">
+									<td colspan="5" style="border-bottom: 0;">Gift Certificates:</td>
+									<td colspan="1" class="price" style="border-bottom: 0;"><strong>- {TPL_VAR_CURRENCY}{TPL_VAR_GIFTCERTPRICE}</strong></td>
+								</tr>
+							<!-- END TPL_GIFTCERT_BLK -->
+							<!-- BEGIN TPL_CARTWEIGHT_BLK -->
+								<tr class="invSubTotals">
+									<td colspan="5" style="border-bottom: 0;">Product weight ({TPL_VAR_WEIGHT} kg):</td>
+									<td colspan="1" class="price" style="border-bottom: 0;"><strong>{TPL_VAR_CURRENCY}{TPL_VAR_WEIGHTPRICE}</strong></td>
+								</tr>
+							<!-- END TPL_CARTWEIGHT_BLK -->
+							<!-- BEGIN TPL_POSTAGE_BLK -->	
+								<tr class="invSubTotals">
+									<td colspan="5" style="border-bottom: 0;">{TPL_VAR_POSTAGEMETHOD}:</td>
+									<td colspan="1" class="price" style="border-bottom: 0;">+ {TPL_VAR_POSTAGEPRICE}</td>
+								</tr>
+							<!-- END TPL_POSTAGE_BLK -->
+							<!-- BEGIN TPL_VAT_BLK -->
+								<tr class="invSubTotals">
+									<td colspan="5" style="border-bottom: 0;">{TPL_VAR_SHIPCOUNTRY} (VAT @ {TPL_VAR_VAT}%):</td>
+									<td colspan="1" class="price" style="border-bottom: 0;">+ {TPL_VAR_CURRENCY}{TPL_VAR_VATPRICE}</td>
+								</tr>
+							<!-- END TPL_VAT_BLK -->
+							<tr class="invTotals">
+								<td colspan="5" style="border-bottom: 0;">Current Total:</td>
+								<td colspan="1" class="price" style="border-bottom: 0;">{TPL_VAR_CURRENCY}{TPL_VAR_CURRENTTOTAL}</td>
+							</tr>
+							<!-- BEGIN TPL_EMPOINTS_BLK -->
+								<tr>
+									<td><strong>Earned Member Points: </strong></td>
+									<td>{TPL_VAR_EMPOINTS}</td>
+								</tr>
+							<!-- END TPL_EMPOINTS_BLK -->
+							<!-- BEGIN TPL_TMPOINTS_BLK -->
+								<tr>
+									<td><strong>Total Member Points:</strong></td>
+									<td>{TPL_VAR_TMPOINTS}</td>
+								</tr>
+							<!-- END TPL_TMPOINTS_BLK -->
+						</tbody>
+					</table>
+					<table class="whiteTable">
+						<tr>
+							<td>
+								<h4>Customer comments</h4>
+								<p>{TPL_VAR_COMMENTS}</p>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h4>Admin comments</h4>
+								<textarea class="formField adminComments" name="adminComments" rows="5" cols="40">{TPL_VAR_ADMIN_COMMENTS}</textarea>
+							</td>
+						</tr>
+					</table>
+			<p class="formButtonWrapper">
+				<button class="formButton" onclick="history.go(-1); return false;"><img src="../graphics/i_cross.gif" alt="Cancel" /> <div>Cancel</div></button>
+				<button type="submit" class="formButton" ><img src="../graphics/i_tick.gif" alt="Update invoice" /><div>Update invoice</div></button>
+			</p>
+		</form>
+		<!-- END TPL_CART_BLK -->
+	</div>
+</div>

@@ -1,0 +1,171 @@
+<form action="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.updateSystem" method="post">
+<input type="hidden" name="dbPrefix" value="{TPL_VAR_DBPREFIX}" />
+<div class="historyWidgetContainer"><a href="../adminindex.php?flag=dashboard">Home</a> <strong>&raquo;</strong> <a href="adminindex.php?action=settings.companyHome&flag=settings">Settings</a> <strong>&raquo;</strong> <a href="adminindex.php?action=settings.global">Global Settings</a> <strong>&raquo;</strong><a href='#'>System Settings</a></div>
+    <div class="fullWidgetContainer">
+      <div class="WidgetTitle">System Settings</div>
+      <div class="WidgetContent">
+	<!-- BEGIN TPL_DSPMSG_BLK -->
+	{TPL_VAR_MSG}
+	<!-- END TPL_DSPMSG_BLK -->
+	<div class="LeftBox">
+		<table class="whiteTable2" cellspacing="0">
+			<thead>
+				<tr>
+					<th colspan="2">System Settings</th>
+				</tr>
+			</thead>
+			<tbody>			
+				<tr>
+					<td class="first"><label>Debug mode (PHP)</label></td>
+					<td><input type="checkbox" name="systemstate" class="checkbox" value='1' {TPL_VAR_SYSTEM} /></td>
+						
+				</tr>
+				<tr>
+					<td><label>License Key</label></td>
+					<td><input type="text" name="newlicense" class="formField" value="{TPL_VAR_LICENSE}" /></td>	
+				</tr>
+				<tr>
+					<td class="first"><label>Computer Encoding</label></td>
+					<td>
+						<div class="selectContainerSmall" style="width: 230px;"><select name="cencoding" class="formSelect" id="cencoding" style="width:255px !important;">
+													<!-- BEGIN COMPUTER_ENCODING_BLK -->
+													<option value="{KEY}" {_SELECTED}>{VALUE}</option>
+													<!-- END COMPUTER_ENCODING_BLK -->
+												</select></div>
+					</td>
+				</tr>
+				<tr>
+					<td><label>Admin Email</label></td>
+					<td><input type="text" name="ADMINEMAIL" class="formField" value="{TPL_VAR_ADMINEMAIL}" /></td>	
+				</tr>
+				<tr>
+					<td><label>Currency</label></td>
+					<td>
+						<select id="CURRENCY">
+							<option value="&pound;">&pound;</option>
+							<option value="&dollar;">&dollar;</option>
+							<option value="&#128;">&#128;</option>
+							<option value="other">Other</option>
+						</select>
+						<input type="hidden" id="CurrencyValue" value="{TPL_VAR_CURRENCY}" name="CURRENCY" />
+						<script type="text/javascript">
+							var curflag = false;
+							jQuery(document).ready(function()
+							{
+								if(jQuery('#CurrencyValue').val() == "other")
+								{
+									jQuery('#CURRENCY').val("other");
+									jQuery('#CurrencyValue').after("<input type='text' name='CURRENCY' value='{TPL_VAR_CURRENCY}' id='temp_cur'/>");
+									jQuery('#CurrencyValue').remove();
+									jQuery('#temp_cur').attr('id','CurrencyValue');
+									jQuery('#CurrencyValue').val(jQuery('#CURRENCY').val());
+									curflag = true;
+								}
+								else
+								{
+									jQuery('#CURRENCY').val(jQuery('#CurrencyValue').val());
+								}
+							});
+							jQuery('#CURRENCY').change(function(){
+								if(jQuery('#CURRENCY').val() == "other")
+								{
+									jQuery('#CurrencyValue').after("<input type='text' name='CURRENCY' value='{TPL_VAR_CURRENCY}' id='temp_cur'/>");
+									jQuery('#CurrencyValue').remove();
+									jQuery('#temp_cur').attr('id','CurrencyValue');
+									curflag = true;
+								}
+								else
+								{
+									if(curflag == true)
+									{
+										jQuery('#CurrencyValue').after("<input type='hidden' name='CURRENCY' value='{TPL_VAR_CURRENCY}' id='temp_cur'/>");
+										jQuery('#CurrencyValue').remove();
+										curflag == false;
+									}
+									jQuery('#temp_cur').attr('id','CurrencyValue');
+									jQuery('#CurrencyValue').val(jQuery('#CURRENCY').val());
+								}
+							});
+						</script>
+					</td>	
+				</tr>
+			</tbody>
+		</table>
+		<table class="whiteTable2" cellspacing="0">
+			<thead>
+				<tr>
+					<th colspan="2">SMTP Authentication Settings</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="first"><label>SMTP Authentication</label></td>
+					<td><input type="checkbox" name="SMTP_AUTH" class="checkbox" value="1" {TPL_VAR_SMTP_AUTH} /></td>
+				</tr>
+				<tr>
+					<td><label>SMTP Username</label></td>
+					<td><input type="text" name="SMTP_USERNAME" class="formField" value="{TPL_VAR_SMTP_USERNAME}" /></td>
+				</tr>
+				<tr>
+					<td><label>SMTP Password</label></td>
+					<td><input type="text" name="SMTP_PASSWORD" class="formField" value="{TPL_VAR_SMTP_PASSWORD}" /></td>
+				</tr>
+				<tr>
+					<td><label>SMTP Host</label></td>
+					<td><input type="text" name="SMTP_HOST" class="formField" value="{TPL_VAR_SMTP_HOST}" /></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="RightBox">
+		<table class="whiteTable2" cellspacing="0">
+			<thead>
+				<tr>
+					<th colspan="2">Database &amp; Server Settings</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="half"><label>Database Server</label></td>
+					<td><input type="text" name="dbServer" class="formField" value="{TPL_VAR_DBSERVER}" /></td>
+				</tr>
+				<tr>
+					<td><label>Database Name</label></td>
+					<td><input type="text" name="dsn" class="formField" value="{TPL_VAR_DSN}" /></td>
+				</tr>
+				<tr>
+					<td><label>Database Type</label></td>
+					<td>
+						<div class="selectContainerSmall" style="width: 145px;"><select name="dbType" class="formSelect">
+													<option value="mysql" selected>MySQL</option>
+												</select></div>
+					</td>
+				</tr>
+				<tr>
+					<td><label>Database UserName</label></td>
+					<td><input type="text" name="dbUserName" class="formField" value="{TPL_VAR_USERNAME}" /></td>
+				</tr>
+				<tr>
+					<td><label>Database Password</label></td>
+					<td><input type="password" name="dbPassword" class="formField" value="{TPL_VAR_PASSWORD}" /></td>
+				</tr>
+				<tr>
+					<td><label>Root URL</label></td>
+					<td><input type="text" name="SITEURL" class="formField" value="{TPL_VAR_URLROOT}" /></td>
+				</tr>
+				<tr>
+					<td><label>Directory Path</label></td>
+					<td><input type="text" name="SITEPATH" class="formField" value="{TPL_VAR_SITEDIRECTORY}" /></td>
+				</tr>
+				<tr>
+					<td><label>Secure Server URL</label></td>
+					<td><input type="text" name="cartSecureServer" class="formField" value="{CART_SECURE_SERVER}" /></td>
+				</tr>
+			</tbody>
+		</table>
+		<p class="formButtonWrapper">
+			<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="Update System Settings" /> Update System Settings</button>
+		</form>
+	</div>
+	<div class="placeHolder"></div>
+</div></div>

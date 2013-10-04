@@ -1,0 +1,189 @@
+<script language="JavaScript">
+	function validate()
+	{
+		if(isNull(document.addform.name.value))
+		{
+			alert("Please enter the name of the state.");
+			document.addform.name.focus();
+			return false;
+		}
+		if(isNull(document.addform.short_name.value))
+		{
+			alert("Please enter the short name of the country.");
+			document.addform.short_name.focus();
+			return false;
+		}
+		if(isNull(document.addform.tax.value))
+		{
+			alert("Please enter the value of tax.");
+			document.addform.tax.focus();
+			return false;
+		}	
+		if(isNaN(document.addform.tax.value))
+		{
+			alert("Please enter the correct value of tax.");
+			document.addform.tax.focus();
+			return false;
+		}
+		if(Number(document.addform.tax.value) < 0)
+		{
+			alert("Please enter the correct value of tax.");
+			document.addform.tax.focus();
+			return false;
+		}
+		return true;
+	}
+</script>
+
+   <div class="historyWidgetContainer"><a href="../adminindex.php?flag=dashboard">Home</a> <strong>&raquo;</strong> <a href="adminindex.php?action=settings.companyHome&flag=settings">Settings</a> <strong>&raquo;</strong> <a href="#"> Manage States &amp; VAT</a></div>
+    <div class="fullWidgetContainer">
+      <div class="WidgetTitle">Manage States &amp; VAT</div>
+      <div class="WidgetContent">
+<div class="builderBlock">
+	<!-- BEGIN TPL_ERROR_BLK -->{TPL_VAR_ERROR}<!-- END TPL_ERROR_BLK -->
+	<form action="{TPL_VAR_SITEURL}admin/adminindex.php?action=state.update" method="post" name="addform" onsubmit="return validate()">
+		<input type="hidden" name="mode" value="{TPL_VAR_MODE}">
+		<input type="hidden" name="cid" value="{TPL_VAR_CID}">
+		<input type="hidden" name="stateid" value="{TPL_VAR_STATEID}">
+		<table>
+			<thead>
+				<tr>
+					<th colspan="2">Manage states</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="first"><label>Name</label><font class="message">*</font></td>
+					<td><input type="text" name="name" value="{TPL_VAR_NAME}" class="formField long"></td>
+				</tr>
+				<tr>
+					<td><label>Short Name <span>*</span></label></td>
+					<td><input type="text" name="short_name" value="{TPL_VAR_SHORTNAME}" class="formField long"></td>
+				</tr>
+				<tr>
+					<td><label>VAT <span>*</span></label></td>
+					<td><input type="text" name="tax" value="{TPL_VAR_TAX}" class="formField short"> %</td>
+				</tr>
+				<tr>
+					<td><label>Shipping Charge</label><font class="message">*</font></td>
+					<td><input type="text" name="shipCharge" value="{TPL_VAR_SHIP}" class="formField short"></td>
+				</tr>
+				<tr>
+					<td colspan="2"><input type="checkbox" name="applyall" class="checkbox" value="1"> <label>Apply to all states of the this country?</label> </td>
+				</tr>
+			</tbody>
+		</table>
+		<p class="formButtonWrapper">
+			<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="Submit" /> Submit</button>
+		</p>
+	</form>
+</div>
+<script language="JavaScript" TYPE="text/javascript">
+	function selectAllCheckbox(frm){
+		for(i=0;i<frm.elements.length;i++)
+			if(frm.elements[i].type == "checkbox")
+				frm.elements[i].checked = frm.selectAll.checked;
+	}
+	function validateStateForm(frm)
+	{
+		if(validateForm(frm))
+		{
+			if(ConfirmDelete())
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
+	function validateForm(frm)
+	{
+		flag =false;
+		for(i=0;i<frm.elements.length;i++)
+		{
+			if(frm.elements[i].type=="checkbox" && frm.elements[i].name=="selection[]" && true == frm.elements[i].checked)
+			{
+				flag = true;
+				break;
+			}
+		}
+		if(false == flag){
+			alert("Please check at least one checkbox to proceed");
+			return false;
+		}
+		return true;
+	}
+	function ConfirmDelete()
+	{  
+	var frm=document.stateForm;
+		if(true == frm.selectAll.checked)
+		{
+			return confirm("You are about to delete all selected records.");
+		}
+		flag =false;
+		for(i=0;i<frm.elements.length;i++)
+		{
+			if(frm.elements[i].type=="checkbox" && frm.elements[i].name=="selection[]" && true == frm.elements[i].checked)
+			{
+				flag = true;
+				break;
+			}
+		}
+		if(true == flag){
+			return confirm("You are about to delete selected records");
+		}
+		return false;
+	}
+</script>
+<div class="builderBlock">
+	<h3>Existing VAT &amp; Tax Settings</h3>
+	<!-- BEGIN TPL_MSG_BLK -->{TPL_VAR_MESSAGE}<!-- END TPL_MSG_BLK -->
+	<!-- BEGIN TPL_MAINSTATE_BLK -->
+	<form action="{TPL_VAR_SITEURL}admin/adminindex.php?action=state.delete{EXTRASTRING}" name="stateForm"  method="post" onsubmit="return validateStateForm(this)">
+    <table>
+		<thead>
+			<tr>
+				<th class="selectAll">
+					<input type="checkbox" class="checkbox" name="selectAll" value="1" onclick="selectAllCheckbox(this.form)">
+				</th>
+				<th>S.No.</th>
+				<th>Name</th>
+				<th>Short Name</th>
+				<th>Tax(%)</th>
+				<th>Shipping Charge</th>
+			</tr>
+		</thead>
+		<tbody>
+			
+				<input type="hidden" name="cid" value="{TPL_VAR_CID}">
+				<!-- BEGIN TPL_STATE_BLK --> 
+				<tr>
+					<td>
+						<input type="checkbox" class="checkbox" name="selection[]" value="{TPL_VAR_SID}">
+					</td>
+					<td>{TPL_VAR_COUNT}</td>
+					<td><a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=state.home&cid={TPL_VAR_CID}&stateid={TPL_VAR_SID}">{TPL_VAR_SNAME}</a></td>
+					<td>{TPL_VAR_SSHORTNAME}</td>
+					<td>{TPL_VAR_STAX}</td>
+					<td>{TPL_VAR_SHIPCHARGE}</td>
+				</tr>
+				<!-- END TPL_STATE_BLK --> 
+			</tbody>
+		</table>
+		
+		<p class="formButtonWrapper">
+			<button type="submit" class="formButton"><img src="../graphics/i_cross.gif" alt="Delete" /> Delete</button>
+		</p><br style='clear:both;'/>
+	</form>
+		<div style='background-color:#fff;padding:10px;'><!-- BEGIN TPL_PAGING2_BLK -->
+				{PagerBlock2}
+		<!-- END TPL_PAGING2_BLK -->
+	<!-- END TPL_MAINSTATE_BLK --><br style='clear:both;'/></div>
+</div>
+</div></div>

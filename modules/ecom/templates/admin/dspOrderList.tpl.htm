@@ -1,0 +1,131 @@
+<script>var elementSize = 10;</script>
+<script language="JavaScript" type="text/javascript">
+	<!-- Begin hiding
+		function order(index,to) {
+			var list = document.getElementById('objectItems'); //document.ThisForm.objectItems;
+			var total = list.options.length-1;
+			if (index == -1) return false;
+			if (to == +1 && index == total) return false;
+			if (to == -1 && index == 0) return false;
+			var items = new Array;
+			var values = new Array;
+			for (i = total; i >= 0; i--) {
+				items[i] = list.options[i].text;
+				values[i] = list.options[i].value;
+			}
+			for (i = total; i >= 0; i--) {
+				if (index == i) {
+					list.options[i + to] = new Option(items[i],values[i], 0, 1);
+					list.options[i] = new Option(items[i + to], values[i + to]);
+					i--;
+				} else {
+					list.options[i] = new Option(items[i], values[i]);
+				}
+			}
+			list.focus();
+		}
+		function submitForm(x,form) {
+			var sorted_list = "";
+			for (i = 0; i <= x.options.length-1; i++) { 
+				sorted_list += x.options[i].value + ',';
+			}
+			form.sorted_list.value = sorted_list;
+			form.submit();
+		}
+		function changeList(sort,order)
+		{
+			if(order)
+				theorder = "ASC"
+			else
+				theorder = "DESC"		
+			theDiv = "document.getElementById('" + sort + theorder + "')";
+			document.getElementById('select_box').innerHTML = eval(theDiv + ".innerHTML");
+			document.getElementById('objectItems').size = elementSize;
+		}
+		function backToOriginal()
+		{
+			document.getElementById('select_box').innerHTML = document.getElementById('startlist').innerHTML
+			document.getElementById('objectItems').size = elementSize;
+		}
+	//  End -->
+</script>
+<h2>Builder <span>&raquo;</span> Shop Builder <span>&raquo;</span> Order List</h2>
+	<form action="{TPL_SHOPURL}adminindex.php?action=ec_db.updateSort&type={TPL_VAR_TYPE}&owner={TPL_VAR_OWNER}" method="post" name="ThisForm">
+<div class="builderBlock">
+	<h3>Item Sorter</h3>
+
+	<table>
+		<thead>
+			<tr> 
+				<th>Current Items</th>
+				<th>Manual Reorder</th>
+				<th>Automatic Reorder</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="alTop">
+					<td class="first">
+						<div id="select_box">					
+						</div>
+					</td>
+					<td class="manualReorder">
+						<p class="formButtonWrapper">
+							<button type="button" onClick="order(document.getElementById('objectItems').selectedIndex,-1)" /><img src="../graphics/i_up.gif" alt="Up" /> Up</button>
+							<button type="button" onClick="order(document.getElementById('objectItems').selectedIndex,+1)" /><img src="../graphics/i_down.gif" alt="Down" /> Down</button>
+						</p>
+						<input type="hidden" name="sorted_list" value="" />
+					</td>
+					<td>
+						<select class="formSelect" name="sortby" onchange="changeList(window.document.ThisForm.sortby.value,window.document.ThisForm.radOrder[0].checked);">
+							<option value="Date">Date added</option>
+							<option value="Alpha">Alphabetically</option>
+						</select>
+						<p>
+							<input type="radio" name="radOrder" id="radOrder" class="formRadio" checked  onclick="changeList(window.document.ThisForm.sortby.value,window.document.ThisForm.radOrder[0].checked);"/>Ascending<br />
+							<input type="radio" name="radOrder" id="radOrder" class="formRadio"  onclick="changeList(window.document.ThisForm.sortby.value,window.document.ThisForm.radOrder[0].checked);"/>Descending
+						</p>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<p class="formButtonWrapper">
+			<button type="button" onclick="javascript: backToOriginal();" /><img src="../graphics/i_cross.gif" alt="Back to Original" /> Back to original list</button>
+			<button type="submit" class="formButton" onclick="submitForm(document.getElementById('objectItems'),window.document.ThisForm)"><img src="../graphics/i_tick.gif" alt="Apply All Changes" /> Apply all changes</button></p>
+		<div id="startlist" style="display:none">
+			<select name="objectItems" id="objectItems" size="10" class="formSelect sort">
+				<!-- BEGIN TPL_ORG_SORT_BLK -->	
+				<option value="{TPL_VAR_ID}">{TPL_VAR_TITLE}</option>
+				<!-- END TPL_ORG_SORT_BLK -->	
+			</select>
+		</div>
+		<div id="AlphaASC" style="display:none">
+			<select name="objectItems" id="objectItems" size="10" class="formSelect sort">
+				<!-- BEGIN TPL_ALPHA_ASC_BLK -->	
+				<option value="{TPL_VAR_ID}">{TPL_VAR_TITLE}</option>
+				<!-- END TPL_ALPHA_ASC_BLK -->		
+			</select>
+		</div>
+		<div id="AlphaDESC" style="display:none">
+			<select name="objectItems" id="objectItems" size="10" class="formSelect sort">
+				<!-- BEGIN TPL_ALPHA_DESC_BLK -->	
+				<option value="{TPL_VAR_ID}">{TPL_VAR_TITLE}</option>
+				<!-- END TPL_ALPHA_DESC_BLK -->	
+			</select>
+		</div>
+		<div id="DateASC" style="display:none">
+			<select name="objectItems" id="objectItems" size="10" class="formSelect sort">
+				<!-- BEGIN TPL_DATE_ASC_BLK -->	
+				<option value="{TPL_VAR_ID}">{TPL_VAR_TITLE}</option>
+				<!-- END TPL_DATE_ASC_BLK -->	
+			</select>
+		</div>
+		<div id="DateDESC" style="display:none">
+			<select name="objectItems" id="objectItems" size="10" class="formSelect sort">
+				<!-- BEGIN TPL_DATE_DESC_BLK -->	
+				<option value="{TPL_VAR_ID}">{TPL_VAR_TITLE}</option>
+				<!-- END TPL_DATE_DESC_BLK -->	
+			</select>
+		</div>
+	</div>
+	</form>
+	<script language="Javascript">backToOriginal();</script>

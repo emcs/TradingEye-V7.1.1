@@ -1,0 +1,41 @@
+<div class="historyWidgetContainer"><a href="adminindex.php?flag=dashboard">Home</a> <strong>&raquo;</strong> <a href="adminindex.php?action=ec_show.home&amp;flag=builder">Builder</a> <strong>&raquo;</strong> <a href="adminindex.php?action=ec_menu.show">{LANG_VAR_MENUBUILDER}</a> </div>
+<div class="builderBlock fullWidgetContainer">
+	<div class="WidgetTitle">Menu Builder <small>{TPL_VAR_COUNT} {LANG_VAR_MENUAVAILABLE}</small></div>
+	<div class="WidgetContent">
+	<button class="formButton" onclick="window.location='{TPL_SHOPURL}adminindex.php?action=ec_menu.dspForm'" style="float: left;"><img src="../graphics/i_add.gif" alt="Add New Menu" /><div>Add New Menu</div></button>
+	<form action="{TPL_SHOPURL}adminindex.php?action=ec_menu.updatehome" method="post">
+	<!-- BEGIN TPL_MENUBTN_BLK -->
+	<button type="submit" class="formButton" style="float: right; margin-bottom: 5px;"><img src="../graphics/i_tick.gif" alt="{LANG_VAR_APPLYCHANGES}" /><div> {LANG_VAR_APPLYCHANGES}</div></button><input type="hidden" name="count" value="1" />
+	<!-- END TPL_MENUBTN_BLK -->	
+	<!-- BEGIN TPL_MAINTABLE_BLK -->
+	<br style='clear:both;'/>
+	<table class="whiteTable Order" cellspacing="0" cellpadding="0">
+	  	<thead>
+			<tr>
+				<th class="extend">{LANG_VAR_MENUTITLE}</th>
+				<th class="headerSort">{LANG_VAR_SORT}</th>
+				<th class="headerStatus">{LANG_VAR_ONOFF}</th>
+				<th class="subMenus">{LANG_VAR_SUBMENUS}</th>
+				<th class="headerEdit">{LANG_VAR_EDIT}</th>
+				<th class="headerDelete">{LANG_VAR_DELETE}</th>
+			</tr>
+		</thead>
+		<tbody>
+			
+				<!-- BEGIN TPL_MENUHEADER_BLK -->
+				<tr> 
+					<td><a href="adminindex.php?action=ec_menu.viewItems&amp;headerid={TPL_HEADER_ID}">{TPL_VAR_MENUTITLE}</a></td>
+					<td><input type="text" id="sort" class="formField short"  size="1" name="sort[{TPL_HEADER_ID}]" value="{TPL_SORT_NUM}" maxlength="3" /></td>
+					<td><input type="checkbox" class="checkbox" name="state[{TPL_HEADER_ID}]" value="1" {TPL_VAR_CHECKED} /></td>
+					<td><a href="adminindex.php?action=ec_menu.viewItems&amp;headerid={TPL_HEADER_ID}" class="linkPreview">{LANG_VAR_VIEWITEMS}</a></td>
+					<td><a href="adminindex.php?action=ec_menu.dspForm&amp;headerid={TPL_HEADER_ID}" class="linkEdit">{LANG_VAR_EDIT}</a></td>
+					<td><a href="adminindex.php?action=ec_menu.deleteMenu&amp;headerid={TPL_HEADER_ID}&amp;auth={TPL_VAR_AUTH_TOKEN}" onclick="if(confirm('Are you sure you wish to delete Demo menu title and all sub-menus?')){return true}else{return false}" class="linkDelete">{LANG_VAR_DELETE}</a></td>
+				</tr>
+				<!-- END TPL_MENUHEADER_BLK -->
+			</tbody>
+		</table>
+	<!-- END TPL_MAINTABLE_BLK -->	
+	</form>
+	<br style='clear:both;'/>
+</div>
+</div>

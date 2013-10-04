@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<title>Trading Eye Image/File Management</title>
+	<link rel="stylesheet" type="text/css" href="{TPL_VAR_SITEURL}css/admin.css" media="screen" />
+	<script type="text/javascript" src="{TPL_VAR_SITEURL}jscript/admin.js"></script>
+</head>
+<body id="uploader">
+	<h1>Image/File Manager</h1>
+	<div id="tabcontent">
+		<p>{TPL_VAR_TOPMSG}</p>
+		<!-- BEGIN TPL_IMAGE_BLK -->
+		<form action="{FORMURL}" name="ThisForm" id="ThisForm" method="post" enctype="multipart/form-data" onsubmit="return fileUploadExt(this.image, '.jpg, .jpeg, .pjpeg, .gif, .png');">
+			<input type="hidden" name="img" value="{TPL_VAR_IMG}">
+			<input type="hidden" name="id" value="{TPL_VAR_ID}">
+			<input type="hidden" name="current_image" value="{imgName}">
+			<p>Choose a new Image:</p>
+			<p><input type="file" name="image" class="fileBrowse"></p>
+			<p class="formButtonWrapper">
+				<button type="submit" class="formButton" name="submitbutton"><img src="{TPL_VAR_SITEURL}graphics/i_tick.gif" alt="Upload File" /> Upload Image</button>
+			</p>
+		</form>
+		<!-- END TPL_IMAGE_BLK -->
+		<div id="picnmix">
+			<p>{TPL_VAR_IMAGE}</p>
+			<p id="delete">{TPL_VAR_DELETELINK}</p>
+		</div>
+	</div>
+</body>
+</html>

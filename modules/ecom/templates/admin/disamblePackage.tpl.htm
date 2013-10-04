@@ -1,0 +1,46 @@
+<script language="JavaScript" type="text/javascript">
+	function validateit()
+	{
+		if(document.TheForm.template.value=="")
+		{
+			alert("No template selected");
+			document.TheForm.template.focus();
+			return false;
+		}
+		return true;
+	}
+</script>
+<h2>Builder <span>&raquo;</span> Product Packages <span>&raquo;</span> Disassemble Package</h2>
+<div class="builderBlock">
+	<h3>Disassemble Package</h3>
+	<table>
+		<thead>
+			<tr>
+				<th>{TPL_VAR_PRODUCTDISS}</th>
+				<th>{TPL_VAR_MSG}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td class="associate">
+					<h4>{TPL_VAR_PACKAGEITEM} {TPL_VAR_PNAME}</h4>
+					<p>{TPL_VAR_DISSMESSAGE}</p>
+				</td>
+				<form action="{TPL_SHOPURL}adminindex.php?action=ec_package.disambleit" method="post" name="TheForm" onSubmit="return validateit();">
+					<input type="hidden" name="kitid" value="{TPL_VAR_KITID}">
+				<td class="associate">
+						<select name="template" size="5" class="formSelect attach">
+							<!-- BEGIN TPL_TEMPLATE_BLK -->
+							<option value="{TPL_VAR_TEMPLATENAME}" {SELTEMPLATE}>{TPL_VAR_TEMPLATENAME}</option>
+							<!-- END TPL_TEMPLATE_BLK -->
+						</select>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<p class="formButtonWrapper">
+			<button type="submit" class="formButton" onClick="javascript:history.go(-1)"><img src="../graphics/i_cross.gif" alt="Cancel" /> Cancel</button>
+			<button type="submit" class="formButton" onclick="if(confirm('Are you sure you wish to disassemble the package {TPL_VAR_PNAME} ?')){return true}else{return false}"><img src="../graphics/i_tick.gif" alt="Disassemble Package" /> Disassemble Package</button>
+		</p>
+	</form>
+</div>

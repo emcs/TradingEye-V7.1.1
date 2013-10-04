@@ -1,0 +1,606 @@
+<div class="historyWidgetContainer">Home <strong>&raquo;</strong>
+	<a href="adminindex.php?action=settings.companyHome&amp;flag=settings">Settings</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=settings.postageHome&amp;flag=settings">Postage &amp; Package</a> <strong>&raquo;</strong> 
+	<a href="#">Editing Postage Settings</a></div>
+
+<!-- BEGIN TPL_ZONE_BLK -->
+    <div class="fullWidgetContainer">
+      <div class="WidgetTitle">International Postage</div>
+      <div class="WidgetContent">
+	<p>Setup postage cost based on customers location.</p>
+	<p>{TPL_VAR_ERRORMSG}</p>
+	<table class="whiteTable2" cellspacing="0">
+		<thead>
+			<tr>
+				<th colspan="4">Add Postage Zones</th>
+			</tr>
+		</thead>
+		<tbody>
+			<form name="special" id="special" action="{TPL_VAR_ACTION}" method="post" onsubmit="return validateSpecialForm();">
+				<input type="hidden" name="shipping_method" value="zone"/>
+				<tr class="alTop">
+					<td class="first"><label>Zone Name</label></td>
+					<td><input type="text" name="zonename" class="formField" value="{TPL_VAR_ZONETEXT}"/></td>
+					<td><label>Apply to these Countries:</label></td>
+					<td>
+						<select name="coutries[]" multiple class="formSelect countries" size="5">
+							<!-- BEGIN TPL_COUNTRIES_BLK -->
+							<option value = "{TPL_VAR_COUNTRYID}" {TPL_VAR_SELECTED}>{TPL_VAR_COUTRYNAME}</option>
+							<!-- END TPL_COUNTRIES_BLK -->
+						</select>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<p class="formButtonWrapper">
+			<button type="submit" class="formButton"><img src="../graphics/i_add.gif" alt="{TPL_VAR_MODE}" /> {TPL_VAR_MODE}</button>
+		</p>
+		<!-- BEGIN TPL_RESTOFTHEWORLD_BLK -->
+		<p class="buttonWrapper alt">
+			<a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.addZone&row=1"><img src="../graphics/i_add.gif" alt="Create Rest World Zone" /> Create Rest World Zone</a>
+		</p>
+		<!-- END TPL_RESTOFTHEWORLD_BLK -->
+	</div>
+	</div>
+	<div class="fullWrapperContainer">
+		<div class="WidgetTitle">Existing Postage Zones</div>
+		<div class="WidgetContent">
+		<table class="whiteTable2" cellspacing="0">
+			<thead>
+				<tr>
+					<th>Zone Name</th>
+					<th>Country List</th>
+					<th>Setup Cost</th>
+					<th class="headerEdit">Edit</th>
+					<th class="headerDelete">Delete</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- BEGIN TPL_ZONELIST_BLK -->
+				<tr>
+					<td>{TPL_VAR_ZONENAME}</td>
+					<td>{TPL_VAR_COUNTRYLIST}</td>
+					<td><a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.setupcost&id={TPL_VAR_ZONEID}">Setup cost</a></td>
+					<td><a class="linkEdit" href="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.postageEditor&mode=zones&edit=1&id={TPL_VAR_ZONEID}">Edit</a></td>
+					<td><a class="linkDelete" href="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.deletezone&id={TPL_VAR_ZONEID}&amp;auth={TPL_VAR_AUTH_TOKEN}">Delete</a></td>
+				</tr>	
+				<!-- END TPL_ZONELIST_BLK -->
+			</form>
+		</tbody>
+	</table>
+</div>
+</div>
+<!-- END TPL_ZONE_BLK -->
+
+<!-- BEGIN TPL_CITY_BLK -->
+<style type="text/css">
+	.formButtonWrapper{
+		width: 26%;
+	}
+</style>
+    <div class="fullWidgetContainer">
+      <div class="WidgetTitle">Postage By State</div>
+      <div class="WidgetContent">
+	<p>Setup postage cost based on customers location.</p>
+	<p>{TPL_VAR_ERRORMSG}</p>
+	<table class="whiteTable2" cellspacing="0">
+		<thead>
+			<tr>
+				<th colspan="4">Add Postage for State</th>
+			</tr>
+		</thead>
+		<tbody>
+			<form name="special" id="special" action="{TPL_VAR_ACTION}" method="post" onsubmit="return validateSpecialForm();">
+				<input type="hidden" name="shipping_method" value="zone"/>
+				<tr class="alTop">
+					<td class="first"><label>State</label></td>
+										<td><select name="state" class="formSelect">
+						<!-- BEGIN TPL_STATES_BLK -->
+						<option value="{TPL_VAR_STATEID}">{TPL_VAR_STATENAME}</option>
+						<!-- END TPL_STATES_BLK -->
+					</select></td>
+					<td><label>Country</label>
+						<select name="country" class="formSelect countries" size="5">
+							<!-- BEGIN TPL_COUNTRIES_BLK -->
+							<option value = "{TPL_VAR_COUNTRYID}" {TPL_VAR_SELECTED}>{TPL_VAR_COUTRYNAME}</option>
+							<!-- END TPL_COUNTRIES_BLK -->
+						</select>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<p class="formButtonWrapper" style="width: 22%">
+			<button type="submit" class="formButton"><img src="../graphics/i_add.gif" alt="{TPL_VAR_MODE}" /> {TPL_VAR_MODE}</button>
+		</p>
+		<!-- BEGIN TPL_RESTOFTHEWORLD_BLK -->
+		<p class="formButtonWrapper">
+			<button type="submit" class="formButton" onclick="document.special.action='{TPL_VAR_ACTION}&type=world'"><img src="../graphics/i_add.gif" alt="Create Rest World"/> Create Rest of World Price</a></button>
+		</p>
+		<!-- END TPL_RESTOFTHEWORLD_BLK -->
+		<!-- BEGIN TPL_RESTOFTHECOUNTRY_BLK -->
+		<p class="formButtonWrapper">
+			<button type="submit" class="formButton" onclick="document.special.action='{TPL_VAR_ACTION}&type=country'"><img src="../graphics/i_add.gif" alt="Create Rest Country" /> Create Rest of Country Price</a></button>
+		</p>
+		<!-- END TPL_RESTOFTHECOUNTRY_BLK -->
+		<!-- BEGIN TPL_RESTOFTHESTATE_BLK -->
+		<p class="formButtonWrapper">
+			<button type="submit" class="formButton" onclick="document.special.action='{TPL_VAR_ACTION}&type=state'"><img src="../graphics/i_add.gif" alt="Create Rest State" /> Create Rest of State Price</a></button>
+		</p>
+		<!-- END TPL_RESTOFTHESTATE_BLK -->
+	</div>
+	</div>
+	<div class="fullWidgetContainer">
+		<div class="WidgetTitle">Existing Postage for States</div>
+	<div class="WidgetContent">
+		<table class="whiteTable2" cellspacing="0">
+			<thead>
+				<tr>
+					<th>State</th>
+					<th>Country</th>
+					<th>Setup Cost</th>
+					<th class="headerEdit">Edit</th>
+					<th class="headerDelete">Delete</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- BEGIN TPL_CITYLIST_BLK -->
+				<tr>
+					<td>{TPL_VAR_STATENAME}</td>
+					<td>{TPL_VAR_COUNTRYLIST}</td>
+					<td><a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.setupcitycost&id={TPL_VAR_CITYID}">Setup cost</a></td>
+					<td><a class="linkEdit" href="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.postageEditor&mode=cities&edit=1&id={TPL_VAR_CITYID}">Edit</a></td>
+					<td><a class="linkDelete" href="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.deletecity&id={TPL_VAR_CITYID}&amp;auth={TPL_VAR_AUTH_TOKEN}">Delete</a></td>
+				</tr>	
+				<!-- END TPL_CITYLIST_BLK -->
+			</form>
+		</tbody>
+	</table>
+</div>
+</div>
+<!-- END TPL_CITY_BLK -->
+
+<!-- BEGIN TPL_FLATRATE_BLK -->
+    <div class="fullWidgetContainer">
+      <div class="WidgetTitle">Flat Rates</div>
+      <div class="WidgetContent">
+	<p>A flat postage rate will be applied to each and every order, regardless of size or value.</p>
+	<table class="whiteTable2" cellspacing="0">
+		<form action="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.updatePostage" method="post">
+			<thead>
+				<tr> 
+					<th colspan="2">Flat Rate Settings</th>
+				</tr>
+			</thead>
+			<tbody>
+				<input type="hidden" name="shipping_method" value="flat" />
+				<tr>
+					<td class="first"><label>Flat Rate</label></td>
+					<td>
+						<span class="formSymbol">{TPL_VAR_CURRENCY}</span><input type="text" name="shipping_field1" class="formField short" value="{TPL_VAR_FLATRATE}" />
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<input type="hidden" name="shipping_field2" value="0" />
+		<p class="formButtonWrapper">
+			<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="Set Flat Rate" /> Set Flat Rate</button>
+		</p>
+	</form>
+</div>
+</div>
+<!-- END TPL_FLATRATE_BLK -->
+
+<!-- BEGIN TPL_PERCENTAGE_BLK -->
+    <div class="fullWidgetContainer">
+      <div class="WidgetTitle">Percentage Rate</div>
+      <div class="WidgetContent">
+	<p>If you want to charge a postage rate of 5% of the total order, you would put 5 in the percentage rate box below. You will then need to add a base postage charge. If the 5% is lower than the base postage charge, Tradingeye will charge the base postage charge to the customer.</p>
+	<table class="whiteTable2" cellspacing="0">
+		<thead>
+			<tr>
+				<th colspan="2">Percentage Rates Settings</th> 
+			</tr>
+		</thead>
+		<tbody>
+			<form action="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.updatePostage" method="post">
+				<tr>
+					<td class="first"><label>Percentage Rate</label></td>
+					<td>
+						<input type="text" name="shipping_field1" class="formField short" value="{TPL_VAR_PERCENTRATE}"  />
+					</td>
+				</tr>
+				<tr>
+					<td><label>Base Charge</label></td>
+					<td>
+						<input type="hidden" name="shipping_field2" class="formField" value="0" />
+						<input type="text" name="base_rate" class="formField short" value="{TPL_VAR_BASERATE}" />
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<p class="formButtonWrapper">
+			<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="Set Percentage Rate" /> Set Percentage Rate</button>
+		</p>
+		<input type="hidden" name="shipping_method" value="percent" />
+	</form>
+</div>
+</div>
+<!-- END TPL_PERCENTAGE_BLK -->
+
+
+<!-- BEGIN TPL_PERITEM_BLK -->
+    <div class="fullWidgetContainer">
+      <div class="WidgetTitle">Per Item Postage</div>
+      <div class="WidgetContent">
+	<p>If your first item charge is {TPL_VAR_CURRENCY}5.00 with each additional item set to {TPL_VAR_CURRENCY}1.00, your customer if they purchase three items would be charged {TPL_VAR_CURRENCY}7.00 ({TPL_VAR_CURRENCY}5.00 + {TPL_VAR_CURRENCY}1.00 + {TPL_VAR_CURRENCY}1.00)</p>
+	<form action="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.updatePostage" method="post">
+		<input type="hidden" name="shipping_method" value="peritem" />
+		<table class="whiteTable2" cellspacing="0">
+			<thead>
+				<tr>
+					<th colspan="2">Per Item Postage Settings</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="first"><label>First Item Charge</label></td>
+					<td>{TPL_VAR_CURRENCY} <input type="text" class="formField short" name="shipping_field1" value="{TPL_VAR_FIRSTITEM}" /></td>
+				</tr>
+				<tr>
+					<td><label>Additional Item Charge</label></td>
+					<td>{TPL_VAR_CURRENCY} <input type="text" class="formField short" name="shipping_field2" value="{TPL_VAR_ADDITIONAL}" /></td>
+				</tr>
+			<tbody>
+		</table>
+		<p class="formButtonWrapper">
+			<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="Set Per Item Rate" /> Set Per Item Rate</button>
+		</p>
+	</form>
+</div>
+</div>
+<!-- END TPL_PERITEM_BLK -->
+
+
+<!-- BEGIN TPL_POSTAGECODES_BLK -->
+<script language="JavaScript" type="text/javascript">
+	function validateForm()
+	{
+		if(isNull(document.codes.base_rate.value))
+		{
+				alert("You must enter base rate");
+				document.codes.base_rate.focus();
+				return false;
+		}
+		var len=document.codes.elements.length;
+		var frm = document.codes;
+		for(var i=0; i<len; i++)
+		{
+			if(document.codes.elements[i].name == 'description[]')
+			{
+				if(document.codes.elements[i].value=="")
+				{
+				alert("Please enter short description");
+				document.codes.elements[i].focus();
+				return false;
+				}
+			}
+		}
+		for(var i=0; i<len; i++)
+		{
+			if(document.codes.elements[i].name == 'field1[]')
+			{
+				if(document.codes.elements[i].value=="")
+				{
+				alert("Please enter postage code");
+				document.codes.elements[i].focus();
+				return false;
+				}
+			}
+		}
+		for(var i=0; i<len; i++)
+		{
+			if(document.codes.elements[i].name == 'field2[]')
+			{
+				if(document.codes.elements[i].value=="")
+				{
+				alert("Please enter postage value");
+				document.codes.elements[i].focus();
+				return false;
+				}
+			}
+		}
+		return true;
+	}
+	</script>
+    <div class="fullWidgetContainer">
+      <div class="WidgetTitle">Postage Codes</div>
+      <div class="WidgetContent">
+	<p>Setting postage codes will enable you to specify a postage cost for each product ordered. If a postage code '1' has a value of {TPL_VAR_CURRENCY}1.50, each product that has a Postage code of '1' will be charged a {TPL_VAR_CURRENCY}1.50 postage charge.</p>
+	<form name="codes" id="codes" action="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.updatePostage" method="post" onsubmit="return validateForm();">
+		<input type="hidden" name="shipping_method" value="codes" />
+		<table class="whiteTable2" cellspacing="0">
+			<thead>
+				<tr>
+					<th colspan="2">Postage Codes</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="first"><label>Base Postage Charge</label></td>
+					<td>{TPL_VAR_CURRENCY} <input type="text" name="base_rate" class="formField" value="{TPL_VAR_BASERATE}" /></td>
+				</tr>
+				<tr>
+					<td><label>Default to Highest?</label></td>
+					<td>
+						<input type="checkbox" name="chk_default_high" class="checkbox" value="1" {TPL_VAR_SEL_DEFAULTHIGHEST} />
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<br />
+		<h3>Existing Postage Codes</h3>
+		<table class="whiteTable2" cellspacing="0">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Short description</th>
+					<th>Postage code</th>
+					<th>Code value</th>
+					<th>Delete</th>
+				</tr>
+			</thead>
+			<tbody>
+		    	<!-- BEGIN TPL_CODE_BLK -->
+				<input type="hidden" name="codeid[]" value="{TPL_VAR_ID}" />
+				<tr>
+					<td>{TPL_VAR_COUNT}</td>
+					<td><input type="text" name="description[]" value="{TPL_VAR_DESCRIPTION}" class="formField" maxlength="50" /></td>
+					<td><input type="text" name="field1[]" value="{TPL_VAR_FIELD1}" class="formField short" /></td>
+					<td>{TPL_VAR_CURRENCY} <input type="text" name="field2[]" value="{TPL_VAR_FIELD2}" class="formField short" /></td>
+					<td><input type="checkbox" name="del[{TPL_VAR_ID}]" value="1" /></td>
+					<input type="hidden" name="field3[]" value="0"  />
+				</tr>
+				<!-- END TPL_CODE_BLK -->
+				<tr> 
+					<td>&mdash;</td>
+					<td><input type="text" name="newdescription" class="formField" /></td>
+					<td><input type="text" name="newfield1" class="formField short" /></td>
+					<td colspan="2">{TPL_VAR_CURRENCY} <input type="text" name="newfield2" class="formField short" /></td>
+				</tr>
+			</tbody>
+		</table>
+		<p class="formButtonWrapper">
+			<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="Save / Write" /> Save / Write</button>
+		</p>
+	</form>
+</div> 
+</div>
+<!-- END TPL_POSTAGECODES_BLK -->
+
+<!-- BEGIN TPL_POSTAGERANGES_BLK -->
+<script language="JavaScript" type="text/javascript">
+		function validateRangeForm()
+		{
+				
+			var len=document.range.elements.length;
+			var frm = document.range;
+			for(var i=0; i<len; i++)
+			{
+				if(document.range.elements[i].name == 'description[]')
+				{
+					if(document.range.elements[i].value=="")
+					{
+					alert("Please enter short description");
+					document.range.elements[i].focus();
+					return false;
+					}
+				}
+			}
+			for(var i=0; i<len; i++)
+			{
+				if(document.range.elements[i].name == 'field1[]')
+				{
+					if(document.range.elements[i].value=="")
+					{
+					alert("Please enter range start value");
+					document.range.elements[i].focus();
+					return false;
+					}
+				}
+			}
+			for(var i=0; i<len; i++)
+			{
+				if(document.range.elements[i].name == 'field2[]')
+				{
+					if(document.range.elements[i].value=="")
+					{
+					alert("Please enter range start end");
+					document.range.elements[i].focus();
+					return false;
+					}
+				}
+			}
+			for(var i=0; i<len; i++)
+			{
+				if(document.range.elements[i].name == 'field3[]')
+				{
+					if(document.range.elements[i].value=="")
+					{
+					alert("Please enter value");
+					document.range.elements[i].focus();
+					return false;
+					}
+				}
+			}
+			return true;
+		}
+	</script>
+    <div class="fullWidgetContainer">
+      <div class="WidgetTitle">Postage Ranges</div>
+      <div class="WidgetContent">
+	<p>Postage ranges enable you to set price ranges for postage charges. If you set a range from {TPL_VAR_CURRENCY}10 to {TPL_VAR_CURRENCY}20 that has a rate of {TPL_VAR_CURRENCY}14, if you customer spends {TPL_VAR_CURRENCY}30, they would be charged {TPL_VAR_CURRENCY}14 postage. If you want to set your final range to unlimited, then just put '0' or 'unlimited' in the last range field.</p>
+	<form name="range" id="range" action="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.updatePostage" method="post" onsubmit="return validateRangeForm();">
+		<input type="hidden" name="shipping_method" value="range"/>
+		<table class="whiteTable2" cellspacing="0">
+			<thead>
+				<tr>
+					<th>Delete</th>
+					<th>ID</th>
+					<th>Description</th>
+					<th>Range start</th>
+					<th>Range end</th>
+					<th>Value</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- BEGIN TPL_RANGE_BLK -->
+				<input type="hidden" name="codeid[]" value="{TPL_VAR_ID}" />
+                <tr>
+					<td><input type="checkbox" class="checkbox" name="del[{TPL_VAR_ID}]" value="1" /></td>
+					<td>{TPL_VAR_COUNT}</td>
+					<td><input type="text" name="description[]" value="{TPL_VAR_DESCRIPTION}" class="formField" /></td>
+					<td>Between<br />{TPL_VAR_CURRENCY} <input type="text" name="field1[]" value="{TPL_VAR_FIELD1}" class="formField short" /></td>
+					<td>and<br />{TPL_VAR_CURRENCY} <input type="text" name="field2[]" value="{TPL_VAR_FIELD2}" class="formField short" /></td>
+					<td>charge<br />{TPL_VAR_CURRENCY} <input type="text" name="field3[]" value="{TPL_VAR_FIELD3}" class="formField short" /></td>
+				</tr>
+				<!-- END TPL_RANGE_BLK -->
+				<tr> 
+					<td colspan="2">New range</td>
+					<td><input type="text" name="newdescription" size="25" class="formField" /></td>
+					<td>{TPL_VAR_CURRENCY} <input type="text" name="newfield1" size="5" class="formField short" /></td>
+					<td>{TPL_VAR_CURRENCY} <input type="text" name="newfield2" size="5" class="formField short" /></td>
+					<td>{TPL_VAR_CURRENCY} <input type="text" name="newfield3" size="5" class="formField short" /></td>
+				</tr>
+			</tbody>
+		</table>
+		<p class="formButtonWrapper">
+			<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="Save / Write" /> Save / Write</button>
+		</p>
+	</form>
+</div>
+</div>
+<!-- END TPL_POSTAGERANGES_BLK -->
+
+
+<!-- BEGIN TPL_SPECIALRATE_BLK -->
+<script language="JavaScript" type="text/javascript">
+	function validateSpecialForm()
+	{
+		var len=document.special.elements.length;
+		var frm = document.special;
+		for(var i=0; i<len; i++)
+		{
+			if(document.special.elements[i].name == 'description[]')
+			{
+				if(document.special.elements[i].value=="")
+				{
+				alert("Please enter short description");
+				document.special.elements[i].focus();
+				return false;
+				}
+			}
+		}
+		for(var i=0; i<len; i++)
+		{
+			if(document.special.elements[i].name == 'field1[]')
+			{
+				if(document.special.elements[i].value=="")
+				{
+				alert("Please enter first item");
+				document.special.elements[i].focus();
+				return false;
+				}
+			}
+		}
+		for(var i=0; i<len; i++)
+		{
+			if(document.special.elements[i].name == 'field2[]')
+			{
+				if(document.special.elements[i].value=="")
+				{
+				alert("Please enter addtional item");
+				document.special.elements[i].focus();
+				return false;
+				}
+			}
+		}
+		return true;
+	}
+</script>
+    <div class="fullWidgetContainer">
+      <div class="WidgetTitle">Special Rates</div>
+      <div class="WidgetContent">
+	<p>Setting special postage rates enable you to offer different postage charges to your customers which they can select from a list when checking out. For example you could set a base charge of {TPL_VAR_CURRENCY}5 for all orders, but then give your customer the possibility of choosing 1st class or an express postage option. Alternatively your list could be 1) UK orders 2) EU orders 3) International orders. Each rate also has a charge for the first item, and then each additional item.</p>
+	<table class="whiteTable2" cellspacing="0">
+		<thead>
+			<tr>
+				<th>Delete</th>
+				<th>Description</th>
+				<th>First item</th>
+				<th>Each additional</th>
+			</tr>
+		</thead>
+		<tbody>
+			<form name="special" id="special" action="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.updatePostage" method="post" onsubmit="return validateSpecialForm();">
+				<input type="hidden" name="shipping_method" value="special"/>
+				<!-- BEGIN TPL_SPECIAL_BLK -->
+				<input type="hidden" name="codeid[]" value="{TPL_VAR_ID}" />
+				<tr> 
+					<td>
+						<input type="checkbox" class="checkbox" name="del[{TPL_VAR_ID}]" value="1" />
+					</td>
+					<td>
+						<input type="text" name="description[]" value="{TPL_VAR_DESCRIPTION}" class="formField long" />
+					</td>
+					<td>
+						{TPL_VAR_CURRENCY} <input type="text" name="field1[]" value="{TPL_VAR_FIELD1}" class="formField short" />
+					</td>
+					<td>
+						{TPL_VAR_CURRENCY} <input type="text" name="field2[]" value="{TPL_VAR_FIELD2}" class="formField short" />
+					</td>
+					<input type="hidden" name="field3[]" value="0"  />
+				</tr>
+				<!-- END TPL_SPECIAL_BLK -->
+				<tr> 
+					<td><strong>Add New:</strong></td>
+				<td><input type="text" name="newdescription" size="25" class="formField long" /></td>
+					<td>{TPL_VAR_CURRENCY} <input type="text" name="newfield1" size="5" class="formField short" /></td>
+					<td>{TPL_VAR_CURRENCY} <input type="text" name="newfield2" size="5" class="formField short" /></td>
+				</tr>
+			</tbody>
+		</table>
+		<p class="formButtonWrapper">
+			<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="Save Changes" /> Save Changes</button>
+		</p>
+	</form>
+</div>
+</div>
+<!-- END TPL_SPECIALRATE_BLK -->
+
+<!-- BEGIN TPL_POSTAGEBYWEIGHT_BLK -->
+    <div class="fullWidgetContainer">
+      <div class="WidgetTitle">Postage By Weight</div>
+      <div class="WidgetContent">
+	<p>The Postage By Weight value is multiplied by the Item Weight of a product in order to calculate the shipping value.</p>
+	<table class="whiteTable2" cellspacing="0">
+		<thead>
+			<tr>
+				<th colspan="2">Postage by Weight Settings</th>
+			</tr>
+		</thead>
+		<tbody>
+			<form action="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.updatePostage" method="post">
+				<input type="hidden" name="shipping_method" value="pweight" />
+				<tr>
+					<td class="first"><label>Postage Weight Multiplier</label></td>
+					<td>{TPL_VAR_CURRENCY} <input type="text" name="shipping_field1" class="formField short" value="{TPL_VAR_POSTAGEBY_WEIGHTRATE}" /></td>
+				</tr>
+			</tbody>
+		</table>
+		<p class="formButtonWrapper">
+			<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="Update Postage by Weight Settings" /> Update Postage by Weight Settings</button>
+		</p>
+	</form>
+</div> 
+</div>
+<!-- END TPL_POSTAGEBYWEIGHT_BLK -->

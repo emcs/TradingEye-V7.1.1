@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>Tradingeye v6.00</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<meta http-equiv="Content-Language" content="en-gb" />
+	<meta http-equiv="imagetoolbar" content="false" />
+	<meta name="MSSmartTagsPreventParsing" content="true" />
+	<meta name="author" content="dpivision.com Ltd" />
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" type="text/css" href="install.css" media="screen" />
+	<meta name="robots" content="noindex" />
+	<script language="Javascript" type="text/javascript" src="validations.js"></script>
+</head>
+<body>
+	<div id="container">  
+		<h1>Tradingeye v6.00 Installation</h1>
+		{TPL_VAR_BODY}
+		<div id="footer">
+			<p>Copyright {TPL_VAR_YEAR} <a href="http://dpivision.com/">dpivision.com Ltd.</a></p>
+		</div>
+	</div>
+</body>
+</html>

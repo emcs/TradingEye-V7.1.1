@@ -1,0 +1,123 @@
+		<script language="JavaScript" type="text/javascript">
+					<!-- Begin hiding
+						function move(fbox, tbox) {
+							var arrFbox = new Array();
+							var arrTbox = new Array();
+							var arrLookup = new Array();
+							var i;
+							for (i = 0; i < tbox.options.length; i++) {
+								arrLookup[tbox.options[i].text] = tbox.options[i].value;
+								arrTbox[i] = tbox.options[i].text;
+							}
+							var fLength = 0;
+							var tLength = arrTbox.length;
+							for(i = 0; i < fbox.options.length; i++) {
+								arrLookup[fbox.options[i].text] = fbox.options[i].value;
+								if (fbox.options[i].selected && fbox.options[i].value != "") {
+									arrTbox[tLength] = fbox.options[i].text;
+									tLength++;
+								} else {
+									arrFbox[fLength] = fbox.options[i].text;
+									fLength++;
+								}
+							}
+							fbox.length = 0;
+							tbox.length = 0;
+							var c;
+							for(c = 0; c < arrFbox.length; c++) {
+								var no = new Option();
+								no.value = arrLookup[arrFbox[c]];
+								no.text = arrFbox[c];
+								fbox[c] = no;
+							}
+							for(c = 0; c < arrTbox.length; c++) {
+								var no = new Option();
+								no.value = arrLookup[arrTbox[c]];
+								no.text = arrTbox[c];
+								tbox[c] = no;
+							}
+						}
+						
+						function order(index,to) {
+							var list = document.opt_form.current;
+							var total = list.options.length-1;
+							if (index == -1) return false;
+							if (to == +1 && index == total) return false;
+							if (to == -1 && index == 0) return false;
+							var items = new Array;
+							var values = new Array;
+							for (i = total; i >= 0; i--) {
+								items[i] = list.options[i].text;
+								values[i] = list.options[i].value;
+							}
+							for (i = total; i >= 0; i--) {
+								if (index == i) {
+									list.options[i + to] = new Option(items[i],values[i], 0, 1);
+									list.options[i] = new Option(items[i + to], values[i + to]);
+									i--;
+								} else {
+									list.options[i] = new Option(items[i], values[i]);
+								}
+							}
+							list.focus();
+						}
+					
+						function submitForm(x,form) {
+							var sorted_list = "";
+							for (i = 0; i <= x.options.length-1; i++) { 
+								sorted_list += x.options[i].value + ',';
+							}
+							form.sorted_list.value = sorted_list;
+							return true;
+						}
+					//  End -->
+		</script>
+
+
+<div class="historyWidgetContainer">
+	<a href="adminindex.php?flag=dashboard">Home</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=ec_show.home&amp;flag=builder">Shop Builder</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=ec_option.home">Standard Options</a> <strong>&raquo;</strong> 
+	<a href='#'>Attach Options</a>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">Attach Standard Option(s) to: {TPL_PRODUCT_NAME} <span>{TPL_VAR_CRECORDS} Option(s) Currently Attached</span></div>
+	<div class="WidgetContent">
+<div class="builderBlock">
+	<div class="column first">
+		<h4>Available Options</h4>
+		<form action="{TPL_SHOPURL}adminindex.php?action=ec_db.attach" onsubmit="if(submitForm(this.current,this)){return true}else{return false}" method="post" name="opt_form" id="opt_form">
+			<input type="hidden" name="productid" value="{TPL_VAR_PRODUCTID}" />
+			<input type="hidden" name="owner" value="{TPL_VAR_OWNER}" />
+			<input type="hidden" name="prtype" value="{TPL_VAR_PRTYPE}" />
+			<input type="hidden" name="type" value="{TPL_VAR_TYPE}" />
+			<input type="hidden" name="vdiscount" value="{TPL_VAR_VDISCOUNT}" />
+			<input type="hidden" name="sorted_list" value="" />
+			<select style='width:100%;' name="option_list" class="formSelect attach" size="5">
+				<!-- BEGIN TPL_AVAILABLE_BLK -->
+				<option value="{TPL_VAR_ID}">{TPL_VAR_DESC} ({TPL_VAR_TITLE})</option>
+				<!-- END TPL_AVAILABLE_BLK -->
+			</select>
+			<p class="formButtonWrapper attach"> 
+				<button type="submit" class="formButton" onClick="move(this.form.option_list,this.form.current)"><img src="../graphics/i_add_alt.gif" alt="Add Option" /> Add Option</button>
+			</p>
+		</div>
+		<div class="column">
+			<h4>Current Options</h4>
+			<select style='width:100%;' name="current" class="formSelect attach" size="5">
+				<!-- BEGIN TPL_CURRENT_BLK -->
+				<option value="{TPL_VAR_ID}">{TPL_VAR_DESC} ({TPL_VAR_TITLE})</option>
+				<!-- END TPL_CURRENT_BLK -->
+			</select>
+			<p class="formButtonWrapper reorder">
+				<button type="submit" class="formButton" onClick="move(this.form.current,this.form.option_list)"><img src="../graphics/i_delete_alt.gif" alt="Remove Option" /> Remove Option</button>
+				<button type="submit" class="formButton" onClick="order(this.form.current.selectedIndex,-1)"><img src="../graphics/i_up_alt.gif" alt="Reorder Up" /> Reorder Up</button>
+				<button type="submit" class="formButton" onClick="order(this.form.current.selectedIndex,+1)"><img src="../graphics/i_down_alt.gif" alt="Reorder Down" /> Reorder Down</button>
+			</p>
+		</div>
+		<button class="formButton" type="submit" value="Save changes" /><img src="../graphics/i_tick.gif" alt="{TPL_VAR_MSG}" /> Save Changes</button>
+	</div>
+</div>
+</div>
+</div>

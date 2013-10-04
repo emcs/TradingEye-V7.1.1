@@ -1,0 +1,167 @@
+<div class="historyWidgetContainer"><a href="../adminindex.php?flag=dashboard">Home</a> <strong>&raquo;</strong> <a href="adminindex.php?action=settings.companyHome&flag=settings">Settings</a> <strong>&raquo;</strong> <a href="adminindex.php?action=settings.global">Global Settings</a> <strong>&raquo;</strong><a href='#'>Design Settings</a></div>
+    <div class="fullWidgetContainer">
+      <div class="WidgetTitle">Design Settings<!-- BEGIN TPL_DSPMSG_BLK --><small>{TPL_VAR_MSG}</small><!-- END TPL_DSPMSG_BLK --></div>
+      <div class="WidgetContent">
+	<div class="LeftBox">
+		<form action="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.updateDesign" method="post" name="ThisForm" id="ThisForm" enctype="multipart/form-data">
+		<table class="whiteTable2" cellspacing="0">
+			<thead>
+				<tr>
+					<th colspan="2">Product Images</th>
+				</tr>
+			</thead>
+			<tbody>
+				<form action="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.updateDesign" method="post">
+					<tr>
+						<td class="first"><label for="">JPEG Quality</label></td>
+						<td><input type="text" class="formField short" id="imgUploadJPGCompression" name="imgUploadJPGCompression" value="{TPL_VAR_JPGCOMPRESSION}" /> %</td>
+					</tr>
+					<tr>
+						<td><label for="imgUploadSmallWidth">Small Image Width</label></td>
+						<td><input type="text" class="formField short" id="imgUploadSmallWidth" name="imgUploadSmallWidth" value="{TPL_VAR_SMIMAGEWIDTH}" /> px</td>
+					</tr>
+					<tr>
+						<td><label for="imgUploadSmallHeight">Small Image Height</label></td>
+						<td><input type="text" class="formField short" id="imgUploadSmallHeight" name="imgUploadSmallHeight" value="{TPL_VAR_SMIMAGEHEIGHT}" /> px</td>
+					</tr>
+					<tr>
+						<td><label for="imgUploadMediumWidth">Medium Image Width</label></td>
+						<td><input type="text" class="formField short" id="imgUploadMediumWidth" name="imgUploadMediumWidth" value="{TPL_VAR_MDIMAGEWIDTH}" /> px</td>
+					</tr>
+					<tr>
+						<td><label for="imgUploadMediumHeight">Medium Image Height</label></td>
+						<td><input type="text" class="formField short" id="imgUploadMediumHeight" name="imgUploadMediumHeight" value="{TPL_VAR_MDIMAGEHEIGHT}" /> px</td>
+					</tr>
+					<tr>
+						<td><label for="imgUploadLargeWidth">Large Image Width</label></td>
+						<td><input type="text" class="formField short" id="imgUploadLargeWidth" name="imgUploadLargeWidth" value="{TPL_VAR_LGIMAGEWIDTH}" /> px</td>
+					</tr>
+					<tr>
+						<td><label for="imgUploadLargeHeight">Large Image Height</label></td>
+						<td><input type="text" class="formField short" id="imgUploadLargeHeight" name="imgUploadLargeHeight" value="{TPL_VAR_LGIMAGEHEIGHT}" /> px</td>
+					</tr>
+				</tbody>
+			</table>
+			<table class="whiteTable2" cellspacing="0">
+				<thead>
+					<tr>
+						<th colspan="2">Image Gallery</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="first"><label for="imgGalleryThumbnailWidth">Image Gallery Thumbnail Width</label></td>
+						<td><input type="text" class="formField short" id="imgGalleryThumbnailWidth" name="imgGalleryThumbnailWidth" value="{TPL_VAR_THUMBIMGWIDTH}" /> px</td>
+					</tr>
+					<tr>
+						<td><label for="imgGalleryThumbnailHeight">Image Gallery Thumbnail Height</label></td>
+						<td><input type="text" class="formField short" id="imgGalleryThumbnailHeight" name="imgGalleryThumbnailHeight" value="{TPL_VAR_THUMBIMGHEIGHT}" /> px</td>
+					</tr>
+					<tr>
+						<td><label for="imgGalleryLargeWidth">Image Gallery Large Width</label></td>
+						<td><input type="text" class="formField short" id="imgGalleryLargeWidth" name="imgGalleryLargeWidth" value="{TPL_VAR_LARGEIMGWIDTH}" /> px</td>
+					</tr>
+					<tr>
+						<td><label for="imgGalleryLargeHeight">Image Gallery Large Height</label></td>
+						<td><input type="text" class="formField short" id="imgGalleryLargeHeight" name="imgGalleryLargeHeight" value="{TPL_VAR_LARGEIMGHEIGHT}" /> px</td>
+					</tr>
+				</tbody>
+			</table>
+			<table class="whiteTable2" cellspacing="0">
+				<thead>
+					<tr>
+						<th colspan="2">Department Images</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="first"><label for="imgUploadDeptSmallWidth">Small Image Width</label></td>
+						<td><input type="text" class="formField short" id="imgUploadDeptSmallWidth" name="imgUploadDeptSmallWidth" value="{TPL_VAR_DEPTSMIMAGEWIDTH}" /> px</td>
+					</tr>
+					<tr>
+						<td><label for="imgUploadDeptSmallHeight">Small Image Height</label></td>
+						<td><input type="text" class="formField short" id="imgUploadDeptSmallHeight" name="imgUploadDeptSmallHeight" value="{TPL_VAR_DEPTSMIMAGEHEIGHT}" /> px</td>
+					</tr>
+					<tr>
+						<td><label for="imgUploadDeptMediumWidth">Medium Image Width</label></td>
+						<td><input type="text" class="formField short" id="imgUploadDeptMediumWidth" name="imgUploadDeptMediumWidth" value="{TPL_VAR_DEPTMDIMAGEWIDTH}" /> px</td>
+					</tr>
+					<tr>
+						<td><label for="imgUploadDeptMediumHeight">Medium Image Height</label></td>
+						<td><input type="text" class="formField short" id="imgUploadDeptMediumHeight" name="imgUploadDeptMediumHeight" value="{TPL_VAR_DEPTMDIMAGEHEIGHT}" /> px</td>
+					</tr>
+				</tbody>
+			</table>
+			<table class="whiteTable2" cellspacing="0">
+				<thead>
+					<tr>
+						<th colspan="2">Content Images</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="first"><label for="imgUploadContentSmallWidth">Image Width</label></td>
+						<td><input type="text" class="formField short" id="imgUploadContentSmallWidth" name="imgUploadContentSmallWidth" value="{TPL_VAR_CONTENTSMIMAGEWIDTH}" /> px</td>
+					</tr>
+					<tr>
+						<td><label for="imgUploadContentSmallHeight">Image Height</label></td>
+						<td><input type="text" class="formField short" id="imgUploadContentSmallHeight" name="imgUploadContentSmallHeight" value="{TPL_VAR_CONTENTSMIMAGEHEIGHT}" /> px</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="RightBox">
+			<table class="whiteTable2" cellspacing="0">
+				<thead>
+					<tr>
+						<th colspan="2">Navigation &amp; Product Display Options</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="first"><label for="stock">Enable Tree Navigation</label></td>
+						<td><input type="checkbox" class="checkbox" id="treemenu" name="iTreeMenu" value="1" {TPL_VAR_TREEMENU} /></td>
+					</tr>
+					<tr>
+						<td><label for="deptlimit">Products Shown per Page</label></td>
+						<td><input type="text" class="formField short" id="deptlimit" name="deptlimit" value="{TPL_VAR_IMGPERPAGE}" /></td>
+					</tr>
+				</tbody>
+			</table>
+			<table class="whiteTable2" cellspacing="0">
+				<thead>
+					<tr>
+						<th colspan="2">Default Layout Templates</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr> 
+						<td class="first"><label for="mainLayout">Select a Homepage layout</label></td>
+						<td>
+							<div class="selectContainerSmall"><select class="formSelect" id="homeLayout" name="homeLayout">
+															<!-- BEGIN TPL_HOME_LAYOUT_BLK -->
+															<option value="{TPL_VAR_HOME_LAYOUT}" {SEL_HOME_LAYOUT}>{TPL_VAR_HOME_LAYOUT}</option>
+															<!-- END TPL_HOME_LAYOUT_BLK -->
+														</select></div>
+						</td>
+					</tr>
+					<tr> 
+						<td><label for="mainLayout">Select a Site layout</label></td>
+						<td>
+							<div class="selectContainerSmall"><select class="formSelect" id="mainLayout" name="mainLayout">
+															<!-- BEGIN TPL_MAIN_LAYOUT_BLK -->
+															<option value="{TPL_VAR_MAIN_LAYOUT}" {SELLAYOUT}>{TPL_VAR_MAIN_LAYOUT}</option>
+															<!-- END TPL_MAIN_LAYOUT_BLK -->
+														</select></div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="formButtonWrapper">
+				<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="Update Design Settings" /> Update Design Settings</button>
+			</p>
+		</form>	
+	</div>
+	<div class="placeHolder"></div>
+</div>
+</div>

@@ -1,0 +1,97 @@
+<script language="JavaScript" type="text/javascript">
+	function validateit()
+	{
+		if(document.ThisForm2.pid.value=="")
+		{
+			alert("No option is selected");
+			document.ThisForm2.pid.focus();
+			return false;
+		}
+		return true;
+	}
+</script>
+<div class="historyWidgetContainer">
+	<a href="adminindex.php?flag=dashboard">Home</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=ec_show.home&amp;flag=builder">Builder</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=ec_package.home&amp;flag=builder">Product Packages</a> <strong>&raquo;</strong> 
+	<a href='#'>{LANG_VAR_BUILDPACKAGE}</a>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">{LANG_VAR_BUILDPACKAGE}</div>
+	<div class="WidgetContent">
+		<div class="Right"><button class="formButton" onclick="window.location='{TPL_SHOPURL}adminindex.php?action=ec_package.home&owner={TPL_VAR_OWNER}&type={TPL_VAR_OTYPE}'"><img src="../graphics/i_back.gif" alt="Back" /> <div>Return to Package Builder</div></button></div>
+		<table>
+			<tr>
+				<td style="width: 619px;">
+					<h4>Current Department</h4>
+					<form action="{TPL_SHOPURL}adminindex.php?action=ec_package.build&type={TPL_VAR_TYPE}&owner={TPL_VAR_OWNER}" method="post" name="ThisForm1">
+						<input type="hidden" name="kitid" value="{TPL_VAR_KITID}" />
+						<select size="10" class="formSelect attach" name="postOwner" style="width: 610px;">
+							<option value="0" {SELECTED1}>{LANG_VAR_HOME}</option>
+							<option value="orphan">{LANG_VAR_ALLORPHAN} {TPL_VAR_TYPE}</option>
+							<!-- BEGIN TPL_DEPARTMENT_BLK -->	
+							<option value="{TPL_VAR_ID}" {SELECTED2}>{TPL_VAR_TITLE}</option>
+							<!-- END TPL_DEPARTMENT_BLK -->	
+						</select>
+						<p class="formButtonWrapper attach">
+							<button type="submit" class="formButton"><img src="../graphics/i_go_alt.gif" alt="Open Department" /> Open Department</button>
+							<button type="submit" class="formButton"><img src="../graphics/i_preview_alt.gif" alt="{LANG_VAR_VIEWITEMS}" /> {LANG_VAR_VIEWITEMS}</button>
+						</p>
+					</form>
+				</td>
+				<td style="width: 619px;">
+					<h4>Listed Items</h4>
+					<form action="{TPL_SHOPURL}adminindex.php?action=ec_package.update" method="post" name="ThisForm2" onSubmit="return validateit();">
+						<input type="hidden" name="postowner" value="{TPL_VAR_POSTOWNER}" />
+						<input type="hidden" name="kitid" value="{TPL_VAR_KITID}" />
+						<select size="10" class="formSelect attach" name="pid" style="width: 610px;">
+							<!-- BEGIN TPL_ITEMS_BLK -->	
+							<option value="{TPL_VAR_ID}">{TPL_VAR_TITLE}</option>
+							<!-- END TPL_ITEMS_BLK -->
+						</select>
+						<p class="formButtonWrapper attach">
+							<button type="submit" name="submit" class="formButton"><img src="../graphics/i_add_alt.gif" alt="Add Item(s) to Package" /> Add Item(s) to Package</button>
+						</p>
+					</form>
+				</td>
+			</tr>
+		</table>
+		<!-- BEGIN TPL_MAIN_BLK -->
+		<h3 style="margin-left: 5px;">Currently Attached Items</h3>
+		<table class="whiteTable2 Builder" cellspacing="0">
+			<thead>
+				<tr>
+					<th>{LANG_VAR_CODE}</th>
+					<th class="extend">{LANG_VAR_PRODUCT}</th>
+					<th>{LANG_VAR_QTY}</th>
+					<th>{LANG_VAR_SORT}</th>
+					<th>{LANG_VAR_REMOVE}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<form action="{TPL_SHOPURL}adminindex.php?action=ec_package.updateHome" method="post" name="UpdateForm" id="UpdateForm">
+					<input type="hidden" name="kitid" value="{TPL_VAR_KITID}" />
+					<input type="hidden" name="postowner" value="{TPL_VAR_POSTOWNER}" />
+					
+					<!-- BEGIN TPL_ATTACHED_BLK -->	
+					<input type="hidden" name="itemid[]" value="{TPL_VAR_KID}">
+					<tr>
+						<td>{TPL_VAR_SKU}</td>
+						<td class="extend">{TPL_VAR_TITLE}</td>
+						<td><input type="text" class="formField short" name="qty[]" value="{TPL_VAR_QTY}" size="1" maxlength="3"  /></td>
+						<td><input type="text" class="formField short" name="sort[]" value="{TPL_VAR_SORT}" size="1"  maxlength="3" /></td>
+						<td><a href="adminindex.php?action=ec_package.delete&kid={TPL_VAR_KID}&kitid={TPL_VAR_KITID}&postowner={TPL_VAR_POSTOWNER}&amp;auth={TPL_VAR_AUTH_TOKEN}" onclick="if(confirm('Are you sure you wish to remove {TPL_VAR_TITLE1} from this Package?')){return true}else{return false}" class="linkDelete">{LANG_VAR_REMOVE}</a></td>
+					</tr>
+					<!-- END TPL_ATTACHED_BLK -->
+					<input type="hidden" name="item_count" value="">
+				</tbody>
+			</table>
+			<p class="formButtonWrapper">
+				<button type="submit" class="formButton"><img src="../graphics/i_cross.gif" alt="Cancel" /> <div>Cancel</div></button>
+				<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="{LANG_VAR_UPDATEPACKAGE}" /> <div>{LANG_VAR_UPDATEPACKAGE}</div></button>
+			</p>
+		</form>
+		<!-- END TPL_MAIN_BLK -->
+	</div>
+</div>

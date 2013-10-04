@@ -1,0 +1,177 @@
+<script type="text/javascript">
+	$(function() {
+		$("form").submit(function() {
+			$('body').css('cursor', 'progress');
+			var id = $(this).attr('id');
+			var action = $(this).attr('action');
+			
+			var $inputs = $('#' + id + ' :input');
+			var values = {};
+			
+			var dataString = $inputs.serialize();
+			
+			$.ajax({
+				type: "POST",
+				url: action,
+				data: dataString,
+				success: function() {
+					$('#jqueryStatus' + id).html("{LANG_VAR_SAVE}").hide().fadeIn(1500).delay(2000).fadeOut(1500).html();
+					$('body').css('cursor', 'auto');
+				}
+			});
+			return false;
+		});
+	});
+</script>
+
+<div class="historyWidgetContainer">
+	<a href="adminindex.php?flag=dashboard">Home</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=ec_show.home&amp;flag=builder">Builder</a> <strong>&raquo;</strong> 
+	<a href='#'>Shop Builder</a>
+	<div id="builderCrumbs">
+		{TPL_VAR_BREDCRUMBTEXT}: <span>{TPL_VAR_BREDCRUMBS}</span>
+	</div>
+</div>
+
+<!-- BEGIN DSPMESSAGE_BLK -->
+<div class="fullWidgetContainer">
+	<div class="WidgetContent">
+		<p>{TPL_VAR_STATUS</p>
+	</div>
+</div>
+<!-- END DSPMESSAGE_BLK -->
+    
+<div id="Acc1" class="Accordion fullWidgetContainer">
+	<div class='AccordionPanel'>
+		<div class="AccordionPanelTab colaspTitle">
+			<img src="{TPL_SHOPURL}../images/collasp-arrow.png" alt="collasp" />
+			<div>Departments <small>{TPL_DEPARTMENT_NUMBER} Departments Listed</small></div>
+			<span class='jqstatus' id="jqueryStatusformDepartments"></span>
+		</div>
+		<div class="AccordionPanelContent colaspWrapper">
+      		<div class="colaspContent">
+	  			<form action="{TPL_SHOPURL}adminindex.php?action=ec_db.updateHome&type=department" method="post" id="formDepartments">
+        			<button class="formButton" onclick="window.location='{TPL_VAR_DEPTLINK}'"><img src="{TPL_SHOPURL}../images/add.png" alt="add" /><div>Add New Department</div></button>
+					<!-- BEGIN TPL_SHOPLINK_BLK1 -->
+						<button class="formButton" onclick="window.location='{TPL_SHOPURL}adminindex.php?action=ec_show.reorder&amp;otype={TPL_OWNERTYPE}&amp;owner={TPL_DEPARTMENT_ID}&amp;type=department'"><img src="{TPL_SHOPURL}../images/order.png" alt="{LANG_VAR_ORDERLIST}" /><div>{LANG_VAR_ORDERLIST}</div></button>
+					<!-- END TPL_SHOPLINK_BLK1 -->
+					<!-- BEGIN TPL_SHOPBTN_BLK1 -->
+						<button class="formButton Right jqueryButton" type="submit"><img src="{TPL_SHOPURL}../images/i_accept.gif" alt="Accept" /><div>{LANG_VAR_APPLYCHANGES}</div></button>
+					<!-- END TPL_SHOPBTN_BLK1 -->
+					<input type="hidden" name="itemcount" value="4" />
+					<input type="hidden" name="ownerid" value="{TPL_DEPARTMENT_ID}" />
+					<!-- BEGIN TPL_MAINDEPARTMENT_BLK -->
+				        <table class="whiteTable Builder" summary="Inventory List" cellpadding="0" cellspacing="0">
+				          <tr>
+				            <th><b>{LANG_VAR_PREVIEW}</b></th><th><b>{LANG_VAR_SORT}</b></th><th class="extend"><b>{LANG_VAR_TITLE}</b></th><th><b>{LANG_VAR_ONOFF}</b></th><th><b>{LANG_VAR_DUPLICATE}</b></th><th><b>{LANG_VAR_EDIT}</b></th><th><b>{LANG_VAR_DELETE}</b></th>
+				          </tr>
+						  <!-- BEGIN TPL_DSPDEPARTMENT_BLK -->
+					          <tr>
+					            <td><a href="{TPL_VAR_PREVIEWURL}" title="Preview {TPL_VAR_TEMPLATE} template" ><img src="{TPL_SHOPURL}../images/preview.png" alt="preview" />{LANG_VAR_PREVIEW}</a></td>
+								<td><input type="text" class="small" name="sort[{TPL_SUBDEPARTMENT_ID}]" value="{TPL_SORT_NUM}" size="2" maxlength="3" /></td>
+								<td class="extend"><a href="adminindex.php?action=ec_show.home&amp;type=department&amp;owner={TPL_SUBDEPARTMENT_ID}">{TPL_VAR_DEPARTMENTTITLE}</a></td>
+								<td><input type="checkbox" name="state[{TPL_SUBDEPARTMENT_ID}]" value="1" {TPL_VAR_CHECKED} /></td>
+								<td><a href="adminindex.php?action=ec_show.deptFrm&amp;type={TPL_OWNERTYPE}&amp;dupeid={TPL_SUBDEPARTMENT_ID}&amp;owner={TPL_DEPARTMENT_ID}"><img src="{TPL_SHOPURL}../images/linkDuplicate.png" alt="{LANG_VAR_DUPLICATE}" />{LANG_VAR_DUPLICATE}</a></td>
+								<td><a href="adminindex.php?action=ec_show.deptFrm&amp;type={TPL_OWNERTYPE}&amp;id={TPL_SUBDEPARTMENT_ID}&amp;owner={TPL_DEPARTMENT_ID}"><img src="{TPL_SHOPURL}../images/linkEdit.png" alt="{LANG_VAR_EDIT}" />{LANG_VAR_EDIT}</a></td>
+								<td><a href="adminindex.php?action=ec_show.dspMsg&amp;type=department&amp;otype={TPL_OWNERTYPE}&amp;msg=3&amp;id={TPL_SUBDEPARTMENT_ID}&amp;owner={TPL_DEPARTMENT_ID}"><img src="{TPL_SHOPURL}../images/linkDelete.png" alt="{LANG_VAR_DELETE}" />{LANG_VAR_DELETE}</a></td>
+					          </tr>
+						  <!-- END TPL_DSPDEPARTMENT_BLK -->
+				        </table>
+					<!-- END TPL_MAINDEPARTMENT_BLK -->
+				</form>
+			</div>
+      </div>
+	</div>
+</div>
+    
+<div id="Acc2" class="Accordion fullWidgetContainer">
+	<div class='AccordionPanel'>
+		<div class="AccordionPanelTab colaspTitle">
+			<img src="{TPL_SHOPURL}../images/collasp-arrow.png" alt="collasp" />
+			<div>Products <small>{TPL_PRODUCT_NUMBER} Products Listed</small></div>
+			<span class='jqstatus' id="jqueryStatusformProducts"></span>
+		</div>
+		<div class="AccordionPanelContent colaspWrapper">
+      		<div class="colaspContent">
+	  			<form action="{TPL_SHOPURL}adminindex.php?action=ec_db.updateHome&amp;type=product" method="post" id="formProducts">
+			        <button class="formButton" onclick="window.location='{TPL_VAR_PRODLINK}'"><img src="{TPL_SHOPURL}../images/add.png" alt="{LANG_VAR_ADDPRODUCT}" /><div>{LANG_VAR_ADDPRODUCT}</div></button>
+					<button class="formButton" onclick="window.location='{TPL_SHOPURL}adminindex.php?action=ec_show.associate&amp;otype={TPL_OWNERTYPE}&amp;owner={TPL_PRODUCT_ID}&amp;type=product'"><img src="{TPL_SHOPURL}../images/order.png" alt="{LANG_VAR_ASSOCIATEPRODUCTS}" /><div>{LANG_VAR_ASSOCIATEPRODUCTS}</div></button>
+					<!-- BEGIN TPL_SHOPLINK_BLK2 -->
+						<button class="formButton" onclick="window.location='{TPL_SHOPURL}adminindex.php?action=ec_show.reorder&amp;otype={TPL_OWNERTYPE}&amp;owner={TPL_PRODUCT_ID}&amp;type=product'"><img src="{TPL_SHOPURL}../images/order.png" alt="{LANG_VAR_ORDERLIST}" /><div>{LANG_VAR_ORDERLIST}</div></button>
+					<!-- END TPL_SHOPLINK_BLK2 -->
+					<!-- BEGIN TPL_SHOPBTN_BLK2 -->
+						<button class="formButton Right jqueryButton" type="submit"><img src="{TPL_SHOPURL}../images/i_accept.gif" alt="Accept" /><div>{LANG_VAR_APPLYCHANGES}</div></button>
+					<!-- END TPL_SHOPBTN_BLK2 -->
+					<input type="hidden" name="itemcount" value="2" />
+					<input type="hidden" name="ownerid" value="{TPL_PRODUCT_ID}" />
+					<input type="hidden" name="otype" value="{TPL_OWNERTYPE}" />
+					<!-- BEGIN TPL_MAINPRODUCT_BLK -->
+				        <table class="whiteTable Builder" summary="Inventory List" cellpadding="0" cellspacing="0">
+				          <tr>
+				            <th><b>{LANG_VAR_PREVIEW}</b></th><th><b>{LANG_VAR_SORT}</b></th><th class="extend"><b>{LANG_VAR_TITLE}</b></th><th><b>{LANG_VAR_ONOFF}</b></th><th><b>{LANG_VAR_DUPLICATE}</b></th><th><b>{LANG_VAR_EDIT}</b></th><th><b>{LANG_VAR_DELETE}</b></th>
+				          </tr>
+						  <!-- BEGIN TPL_PRODUCT_BLK -->	
+					          <tr>
+					            <td><a href="{TPL_VAR_PREVIEWURL}" title="Preview {TPL_VAR_TEMPLATE} template" ><img src="{TPL_SHOPURL}../images/preview.png" alt="preview" />{LANG_VAR_PREVIEW}</a></td>
+								<td><input type="text" class="small" name="sort[{TPL_SUBPRODUCT_ID}]" value="{TPL_SORT_NUM}" size="2" maxlength="3" /></td>
+								<td class="extend"><a href="adminindex.php?action=ec_show.home&amp;type=product&amp;owner={TPL_SUBPRODUCT_ID}">{TPL_VAR_PRODUCTTITLE}</a></td>
+								<td><input type="checkbox" name="state[{TPL_SUBPRODUCT_ID}]" value="1" {TPL_VAR_CHECKED1} /></td>
+								<td><a href="adminindex.php?action=ec_show.dspProFrm&amp;type={TPL_OWNERTYPE}&amp;dupeid={TPL_SUBPRODUCT_ID}&amp;owner={TPL_PRODUCT_ID}"><img src="{TPL_SHOPURL}../images/linkDuplicate.png" alt="{LANG_VAR_DUPLICATE}" />{LANG_VAR_DUPLICATE}</a></td>
+								<td><a href="adminindex.php?action=ec_show.dspProFrm&amp;type={TPL_OWNERTYPE}&amp;id={TPL_SUBPRODUCT_ID}&amp;owner={TPL_PRODUCT_ID}"><img src="{TPL_SHOPURL}../images/linkEdit.png" alt="{LANG_VAR_EDIT}" />{LANG_VAR_EDIT}</a></td>
+								<td><a href="adminindex.php?action=ec_show.dspMsg&amp;msg=3&amp;type=product&amp;otype={TPL_OWNERTYPE}&amp;id={TPL_SUBPRODUCT_ID}&amp;owner={TPL_PRODUCT_ID}"><img src="{TPL_SHOPURL}../images/linkDelete.png" alt="{LANG_VAR_DELETE}" />{LANG_VAR_DELETE}</a></td>
+					          </tr>
+						  <!-- END TPL_PRODUCT_BLK -->
+				        </table>
+					<!-- END TPL_MAINPRODUCT_BLK -->
+				</form>
+    		</div>
+    	</div>
+    </div>
+</div>
+    
+<div id="Acc3" class="Accordion fullWidgetContainer">
+	<div class='AccordionPanel'>
+		<div class="AccordionPanelTab colaspTitle">
+			<img src="{TPL_SHOPURL}../images/collasp-arrow.png" alt="collasp" />
+			<div>Articles <small>{TPL_ARTICLES_NUMBER} Article(s)</small></div>
+			<span class='jqstatus' id="jqueryStatusformArticles"></span>
+		</div>
+		<div class="AccordionPanelContent colaspWrapper">
+			<div class="colaspContent">
+				<form action="{TPL_SHOPURL}adminindex.php?action=ec_db.updateHome&amp;type=content" method="post" id="formArticles">
+			        <button class="formButton" onclick="window.location='{TPL_VAR_CONTENTLINK}'"><img src="{TPL_SHOPURL}../images/add.png" alt="Add New Article" /><div>Add New Article</div></button>
+					<button class="formButton" onclick="window.location='{TPL_SHOPURL}adminindex.php?action=ec_show.associate&amp;otype={TPL_OWNERTYPE}&amp;owner={TPL_PRODUCT_ID}&amp;type=content'"><img src="{TPL_SHOPURL}../images/order.png" alt="Associate Article" /><div>Associate Article</div></button>
+					<!-- BEGIN TPL_SHOPLINK_BLK3 -->
+						<button class="formButton" onclick="window.location='{TPL_SHOPURL}adminindex.php?action=ec_show.reorder&amp;otype={TPL_OWNERTYPE}&amp;owner={TPL_CONTENT_ID}&amp;type=content'"><img src="{TPL_SHOPURL}../images/order.png" alt="{LANG_VAR_ORDERLIST}" /><div>{LANG_VAR_ORDERLIST}</div></button>
+					<!-- END TPL_SHOPLINK_BLK3 -->
+					<!-- BEGIN TPL_SHOPBTN_BLK3 -->
+						<button class="formButton Right jqueryButton" type="submit"><img src="{TPL_SHOPURL}../images/i_accept.gif" alt="{LANG_VAR_APPLYCHANGES}" /><div>{LANG_VAR_APPLYCHANGES}</div></button>
+					<!-- END TPL_SHOPBTN_BLK3 -->
+					<input type="hidden" name="itemcount" value="2" />
+					<input type="hidden" name="otype" value="{TPL_OWNERTYPE}" />
+					<input type="hidden" name="ownerid" value="{TPL_CONTENT_ID}" />
+					<!-- BEGIN TPL_MAINARTICLES_BLK -->
+				        <table class="whiteTable Builder" summary="Inventory List" cellpadding="0" cellspacing="0">
+				          <tr>
+				            <th><b>{LANG_VAR_PREVIEW}</b></th><th><b>{LANG_VAR_SORT}</b></th><th class="extend"><b>{LANG_VAR_TITLE}</b></th><th><b>{LANG_VAR_ONOFF}</b></th><th><b>{LANG_VAR_DUPLICATE}</b></th><th><b>{LANG_VAR_EDIT}</b></th><th><b>{LANG_VAR_DELETE}</b></th>
+				          </tr>
+						  <!-- BEGIN TPL_CONTENT_BLK -->	
+					          <tr>
+					            <td><a href="{TPL_VAR_PREVIEWURL}" title="Preview {TPL_VAR_TEMPLATE} template" ><img src="{TPL_SHOPURL}../images/preview.png" alt="preview" />{LANG_VAR_PREVIEW}</a></td>
+								<td><input type="text" class="small" name="sort[{TPL_SUBCONTENT_ID}]" value="{TPL_SORT_NUM}" size="2" maxlength="3" /></td>
+								<td class="extend"><a href="adminindex.php?action=ec_show.home&amp;type=content&amp;owner={TPL_SUBCONTENT_ID}">{TPL_VAR_CONTENTTITLE}</a></td>
+								<td><input type="checkbox" name="state[{TPL_SUBCONTENT_ID}]" value="1" {TPL_VAR_CHECKED2} /></td>
+								<td><a href="adminindex.php?action=ec_show.contentFrm&amp;type={TPL_OWNERTYPE}&amp;dupeid={TPL_SUBCONTENT_ID}&amp;owner={TPL_CONTENT_ID}"><img src="{TPL_SHOPURL}../images/linkDuplicate.png" alt="{LANG_VAR_DUPLICATE}" />{LANG_VAR_DUPLICATE}</a></td>
+								<td><a href="adminindex.php?action=ec_show.contentFrm&amp;type={TPL_OWNERTYPE}&amp;id={TPL_SUBCONTENT_ID}&amp;owner={TPL_CONTENT_ID}"><img src="{TPL_SHOPURL}../images/linkEdit.png" alt="{LANG_VAR_EDIT}" />{LANG_VAR_EDIT}</a></td>
+								<td><a href="adminindex.php?action=ec_show.dspMsg&amp;msg=3&amp;type=content&amp;otype={TPL_OWNERTYPE}&amp;id={TPL_SUBCONTENT_ID}&amp;owner={TPL_CONTENT_ID}"><img src="{TPL_SHOPURL}../images/linkDelete.png" alt="{LANG_VAR_DELETE}" />{LANG_VAR_DELETE}</a></td>
+					          </tr>
+						  <!-- END TPL_CONTENT_BLK -->
+				        </table>
+					<!-- END TPL_MAINARTICLES_BLK -->
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+    
+    

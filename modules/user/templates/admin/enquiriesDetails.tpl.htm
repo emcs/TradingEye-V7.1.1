@@ -1,0 +1,47 @@
+<div class="historyWidgetContainer">
+	<a href="{TPL_VAR_SITEURL}adminindex.php?flag=dashboard&amp;flag=dashboard">Home</a> <strong>&raquo;</strong> 
+	<a href="{TPL_VAR_SITEURL}adminindex.php?action=orders.home&amp;flag=orders">Orders</a> <strong>&raquo;</strong> 
+	<a href="{TPL_VAR_SITEURL}adminindex.php?action=enquiry.home&amp;flag=orders">Enquiries</a> <strong>&raquo;</strong> 
+	<a href='#'>View Enquiry</a>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">Enquiry <small>Recieved on {TPL_VAR_DATE}</small></div>
+	<div class="WidgetContent">
+		<table class="whiteTable2 Builder OneColum" cellspacing="0">
+			<tbody>
+				<tr>
+					<td class="first"><strong>{LANG_VAR_NAME}</strong></td>
+					<td>{TPL_VAR_NAME}</td>
+				</tr>
+				<tr>
+					<td><strong>{LANG_VAR_EMAIL}</strong></td>
+					<td><a href="{TPL_VAR_EMAIL" class="linkEmail">{TPL_VAR_EMAIL}</a></td>
+				</tr>
+				<tr>
+					<td><strong>{LANG_VAR_ADDRESS1}</strong></td>
+					<td>{TPL_VAR_ADDRESS1}</td>
+				</tr>
+				<tr>
+					<td><strong>{LANG_VAR_ADDRESS2}</strong></td>
+					<td>{TPL_VAR_ADDRESS2}</td>
+				</tr>
+				<tr>
+					<td><strong>{LANG_VAR_TELEPHONE}</strong></td>
+					<td>{TPL_VAR_PHONE}</td>
+				</tr>
+				<tr>
+					<td><strong>{LANG_VAR_COUNTRY}</strong></td>
+					<td>{TPL_VAR_COUNTRY}</td>
+				</tr>
+				<tr>
+					<td><strong>Request</strong></td>
+					<td>{TPL_VAR_REQUEST}</td>
+				</tr>
+			</tbody>
+		</table>
+		<p class="buttonWrapper">
+			<button class="formButton" onclick="window.location='{TPL_USERURL}adminindex.php?action=enquiry.delete&contactId={TPL_VAR_ID}'"><img src="../graphics/i_delete.gif" alt="Delete This Enquiry" /> Delete This Enquiry</button>
+		</p>
+	</div>
+</div>

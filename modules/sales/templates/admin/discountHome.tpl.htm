@@ -1,0 +1,47 @@
+<div class="historyWidgetContainer"><a href='adminindex.php'>Home </a><strong> &raquo; </strong><a href='adminindex.php?action=email.home'>Marketing</a><strong> &raquo; </strong><a href='adminindex.php?action=promotions.home'>Promotions</a><strong> &raquo; </strong><a href='#'>Discount Codes</a></div>
+<div class="fullWidgetContainer">
+      <div class="WidgetTitle">Discount Codes</div>
+      <div class="WidgetContent">
+	<!-- BEGIN TPL_MSG_BLK1 --><p>{TPL_VAR_MSG}</p><!-- END TPL_MSG_BLK1 -->
+	<!-- BEGIN TPL_MESSAGE_BLK --><p>{TPL_VAR_MESSAGE}</p><!-- END TPL_MESSAGE_BLK -->
+	<p class="buttonWrapper">
+		<button onclick="window.location='{TPL_VAR_SALESURL}adminindex.php?action=promotions.discount.dspForm'" class="formButton"><img src="../graphics/i_add.gif" alt="Add New Discount" /> <div>Add New Discount</div></button>
+	</p>
+	<!-- BEGIN TPL_WHOLETABLE_BLK -->
+	<table class="whiteTable2" cellspacing="0">
+		<thead>
+			<form action="{TPL_VAR_SALESURL}adminindex.php?action=promotions.discount.updateHome" method="post">
+				<tr>
+					<th>Code</th>
+					<th>Discount</th>
+					<th>Start</th>
+					<th>End</th>
+					<th>Build date</th>
+					<th>Active</th>
+					<th class="headerEdit">Edit</th>
+					<th class="headerDelete">Delete</th>
+				</tr>
+			</thead>
+			<tbody>
+			<!-- BEGIN TPL_DISCOUNT_BLK -->
+			<tr>
+				<td>{TPL_VAR_CODE}</td>
+				<td>{TPL_VAR_DISCOUNT_CURRENCY}{TPL_VAR_DISCOUNT} {TPL_VAR_DISCOUNT_TYPE}</td>
+				<td>{TPL_VAR_STARTDATE}</td>
+				<td>{TPL_VAR_ENDDATE}</td>
+				<td>{TPL_VAR_BUILDDATE}</td>
+				<td><input type="checkbox" class="checkbox" name="state[{TPL_VAR_ID}]" value="1" {TPL_VAR_CHECKED}/></td>
+				<td><a class="linkEdit" href="{TPL_VAR_SALESURL}adminindex.php?action=promotions.discount.dspForm&id={TPL_VAR_ID}">Edit</a></td>
+				<td><a class="linkDelete"  href="{TPL_VAR_SALESURL}adminindex.php?action=promotions.discount.delete&id={TPL_VAR_ID}&amp;auth={TPL_VAR_AUTH_TOKEN}" onclick="if(confirm('Are you sure you want to delete {TPL_VAR_CODE1}?')){return true}else{return false}">Delete</a></td>
+			</tr>
+			<!-- END TPL_DISCOUNT_BLK -->
+		</table>
+	<!-- END TPL_WHOLETABLE_BLK -->
+		<!-- BEGIN TPL_BUTTON_BLK -->
+		<p class="formButtonWrapper">
+			<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="Update Discounts" /> Update Discounts</button>
+		</p>
+		<!-- END TPL_BUTTON_BLK -->
+		<!-- BEGIN TPL_MSG_BLK2 --><!-- END TPL_MSG_BLK2 -->
+	</form>
+</div></div>

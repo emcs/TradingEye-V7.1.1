@@ -1,0 +1,45 @@
+<div class="historyWidgetContainer">
+	<a href="adminindex.php?flag=dashboard&amp;flag=dashboard">Home</a> <strong>&raquo;</strong> 
+	<a href="../order/adminindex.php?action=orders.home&amp;flag=orders">Orders</a> <strong>&raquo;</strong> 
+	<a href='#'>{LANG_VAR_SUPPLIERS}</a>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">{LANG_VAR_SUPPLIERS} <small>{TPL_VAR_RECORDCOUNT} {LANG_VAR_RECORDSFOUND}</small></div>
+	<div class="WidgetContent">
+		<div class="search">
+			<form name="search" action="{TPL_SHOPURL}user/adminindex.php?action=supplier.home" method="post">
+				<input type="text" name="orderid" id="searchKeyword" onfocus="if(this.value=='Search for Supplier')this.value='';" onblur="if(this.value=='')this.value='Search for Supplier';" value="Search for Supplier" maxlength="50" />
+				<input type="submit" class="searchSubmit" value="{LANG_VAR_SEARCH}" />
+			</form>
+		</div>
+		<!-- BEGIN TPL_MAINSUPPLIER_BLK -->
+			<table class="whiteTable2 Builder" cellspacing="0">
+				<thead>
+					<tr>
+						<th>{LANG_VAR_COMPANY}</th>
+						<th>{LANG_VAR_COUNTY}</th>
+						<th>{LANG_VAR_TELEPHONE}</th>
+						<th>{LANG_VAR_CONTACT}</th>
+						<th class="headerEdit">{LANG_VAR_EDIT}</th>
+						<th class="headerDelete">{LANG_VAR_DELETE}</th>
+					</tr>
+				</thead>
+				<!-- BEGIN TPL_SUPPLIER_BLK -->
+					<tbody>
+						 
+						<tr> 
+							<td>{TPL_VAR_COMPANY}</td>
+							<td>{TPL_VAR_STATE}</td>
+							<td>{TPL_VAR_PHONE}</td>
+							<td><a href="mailto:{TPL_VAR_EMAIL}" class="linkEmail">{TPL_VAR_CONTACT}</a></td>
+							<td><a href="adminindex.php?action=supplier.dspForm&id={TPL_VAR_ID}" class="linkEdit">{LANG_VAR_EDIT}</a></td>
+							<td><a href="adminindex.php?action=supplier.delete&id={TPL_VAR_ID}&amp;auth={TPL_VAR_AUTH_TOKEN}" class="linkDelete" onclick="if(confirm('Are you sure you wish to delete {TPL_VAR_COMPANY}?')){return true}else{return false}">{LANG_VAR_DELETE}</a></td>
+						</tr>
+					</tbody>
+				<!-- END TPL_SUPPLIER_BLK  -->
+			</table>
+		<!-- END TPL_MAINSUPPLIER_BLK  -->	
+		<button class="formButton" onclick="window.location='adminindex.php?action=supplier.dspForm'"><img src="../graphics/i_add.gif" alt="Add New Supplier" /> <div>Add New Supplier</div></button>
+	</div>
+</div>

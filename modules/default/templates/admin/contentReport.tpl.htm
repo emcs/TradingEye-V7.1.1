@@ -1,0 +1,83 @@
+<div class="historyWidgetContainer">
+	<a href='adminindex.php'>Home</a> <strong>&raquo;</strong> 
+	<a href='/sales/adminindex.php?action=email.home&amp;flag=marketing'>Marketing</a> <strong>&raquo;</strong>
+	<a href='/sales/adminindex.php?action=report.home&amp;flag=marketing'>Reports</a> <strong>&raquo;</strong>  
+	<a href='#'>Content Report</a>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">Content Generator</div>
+	<div class="WidgetContent">
+		<form action="{FORM_URL}" method="post">
+			<table class="whiteTable2 Order OneColum">
+				<thead>
+					<tr>
+						<th colspan="2">Content Report</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><label>Search For</label></td>
+						<td>
+							<input type="text" name="search" value="{TPL_VAR_SEARCHTEXT}" class="formField" />
+						</td>
+					</tr>
+					<tr>
+						<td><label>Order By</label></td>
+						<td>
+							<div class="selectContainer"><select class="formSelect" name="orderby">
+														<option value="vTitle" {TPL_VAR_OSEL1}>Content title</option>
+														<option value="iState" {TPL_VAR_OSEL2}>On/Off</option>
+													  </select></div>
+						</td>
+					</tr>
+					<tr>
+						<td><label>Display Order</label></td>
+						<td>
+							<div class="selectContainer"><select class="formSelect">
+														<option name="order_type" value="asc" {TPL_VAR_CHECK2}>Ascending</option>
+														<option name="order_type" value="desc" {TPL_VAR_CHECK1}>Descending</option>
+													</select></div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="formButtonWrapper">
+				<button type="submit" class="formButton"><img src="{TPL_VAR_SITEURL}graphics/i_tick.gif" alt="Generate Report" /> <div>Generate Report</div></button>
+			</p>
+		</form>
+	</div>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">Content Report <!-- BEGIN TPL_MESSAGE_BLK --><small>{TPL_VAR_MESSAGE}</small><!-- END TPL_MESSAGE_BLK --></div>
+	<div class="WidgetContent">
+		<table class="whiteTable2 Builder">
+			<thead>
+				<tr>
+					<th>Content Page Title</th>
+					<th class="headerStatus">Status</th>
+					<th class="headerEdit">Edit</th>
+					<th class="headerDelete">Delete</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- BEGIN TPL_CONTENT_BLK -->
+				<tr>
+					<td>
+						<!-- BEGIN TPL_NOLINK_BLK -->
+						{TPL_VAR_CONTENT_TITLE}<em>(orphan content)</em>
+						<!-- END TPL_NOLINK_BLK -->
+						<!-- BEGIN TPL_LINK_BLK -->
+						<a href="{TPL_CONTENT_URL}">{TPL_VAR_CONTENT_TITLE}</a>
+						<!-- END TPL_LINK_BLK -->
+					</td>
+					<td><span class="statusActive">{TPL_VAR_ONOFF}</span></td>
+					<td><a href="{TPL_SHOP_URL}?action=ec_show.contentFrm&id={TPL_SUBPRODUCT_ID}&owner={TPL_OWNER_ID}&type={TPL_OTYPE}" class="linkEdit">Edit</a></td>
+					<td><a href="{TPL_VAR_SITEURL}adminindex.php?action=home.deleteContent&id={TPL_SUBPRODUCT_ID}&amp;auth={TPL_VAR_AUTH_TOKEN}" onclick="if(confirm('Are you sure you wish to delete this content item?')){return true}else{return false}" class="linkDelete">Delete</a></td>
+				</tr>
+				<!-- END TPL_CONTENT_BLK -->
+			</table>
+			{PagerBlock2}
+	</div>
+</div>

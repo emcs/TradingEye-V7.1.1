@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<title>Trading Eye Image/File Management</title>
+	<link rel="stylesheet" type="text/css" href="{TPL_VAR_SITEURL}css/admin.css" media="screen" />
+	<script type="text/javascript" src="{TPL_VAR_SITEURL}jscript/admin.js"></script>
+</head>
+<body id="uploader">
+	<h1>Image/File Manager</h1>
+	<div id="tabs">
+		<a id="image1" class="{imgName1}" href="{TPL_VAR_SITEURL}ecom/adminindex.php?action=ec_show.dspUploadFrm&id={TPL_VAR_ID}&type={TPL_VAR_TYPE}&image=image1">Small</a>
+		<!-- BEGIN TPL_CONTENTLINK_BLK -->
+		<a id="image2" class="{imgName2}" href="{TPL_VAR_SITEURL}ecom/adminindex.php?action=ec_show.dspUploadFrm&id={TPL_VAR_ID}&type={TPL_VAR_TYPE}&image=image2">Medium</a>
+		<!-- END TPL_CONTENTLINK_BLK -->
+		<!-- BEGIN TPL_FILELINK_BLK -->
+		<a id="image3" class="{imgName3}" href="{TPL_VAR_SITEURL}ecom/adminindex.php?action=ec_show.dspUploadFrm&id={TPL_VAR_ID}&type={TPL_VAR_TYPE}&image=image3">Large</a>
+		<a id="extraimage1" class="{extraimage1}" href="{TPL_VAR_SITEURL}ecom/adminindex.php?action=ec_show.dspUploadFrm&id={TPL_VAR_ID}&type={TPL_VAR_TYPE}&image=extraimage1">Extra image 1</a>
+		<a id="extraimage2" class="{extraimage2}" href="{TPL_VAR_SITEURL}ecom/adminindex.php?action=ec_show.dspUploadFrm&id={TPL_VAR_ID}&type={TPL_VAR_TYPE}&image=extraimage2">Extra image 2</a>
+		<a id="extraimage3" class="{extraimage3}" href="{TPL_VAR_SITEURL}ecom/adminindex.php?action=ec_show.dspUploadFrm&id={TPL_VAR_ID}&type={TPL_VAR_TYPE}&image=extraimage3">Extra image 3</a>
+		<a id="extraimage4" class="{extraimage4}" href="{TPL_VAR_SITEURL}ecom/adminindex.php?action=ec_show.dspUploadFrm&id={TPL_VAR_ID}&type={TPL_VAR_TYPE}&image=extraimage4">Extra image 4</a>
+		<a id="extraimage5" class="{extraimage5}" href="{TPL_VAR_SITEURL}ecom/adminindex.php?action=ec_show.dspUploadFrm&id={TPL_VAR_ID}&type={TPL_VAR_TYPE}&image=extraimage5">Extra image 5</a>
+		<a id="extraimage6" class="{extraimage6}" href="{TPL_VAR_SITEURL}ecom/adminindex.php?action=ec_show.dspUploadFrm&id={TPL_VAR_ID}&type={TPL_VAR_TYPE}&image=extraimage6">Extra image 6</a>
+		<a id="image4" class="{imgName4}" href="{TPL_VAR_SITEURL}ecom/adminindex.php?action=ec_show.dspUploadFrm&id={TPL_VAR_ID}&type={TPL_VAR_TYPE}&image=image4">File</a>
+		<!-- END TPL_FILELINK_BLK -->
+	</div>
+	<div id="tabcontent">
+		<p>{TPL_VAR_TOPMSG}</p>
+		<!-- BEGIN TPL_IMAGE_BLK -->
+		<form action="{FORMURL}" name="ThisForm" id="ThisForm" method="post" enctype="multipart/form-data" onsubmit="return fileUploadExt(this.{imgName}, '.jpg, .jpeg, .pjpeg, .gif, .png');">
+			<input type="hidden" name="type" value="{TPL_VAR_TYPE}" />						<input type="hidden" name="auth" value="{TPL_VAR_AUTH_TOKEN}" />
+			<input type="hidden" name="id" value="{TPL_VAR_ID}" />
+			<input type="hidden" name="current_image" value="{imgName}" />
+			<p>Choose an image to upload:</p>
+			<p><input type="file" name="{imgName}" class="fileBrowse" /></p>
+			<!-- BEGIN TPL_RESIZEIMAGE_BLK -->
+			<p><input name="resample" type="checkbox" value="true" checked="checked" /> Resize image to fit within {imgWidth} x {imgHeight}?</p>
+			<div class="popNeutral">
+				<p>The following image types can be resized: {resampleList}</p>
+			</div>
+			<!-- END TPL_RESIZEIMAGE_BLK -->
+			<p class="formButtonWrapper">
+				<button type="submit" class="formButton" name="submitbutton"><img src="../graphics/i_tick.gif" alt="Upload Image" /> Upload Image</button>
+			</p>
+		</form>
+		<!-- END TPL_IMAGE_BLK -->
+		<!-- BEGIN TPL_FILE_BLK -->
+		<form action="{FORMURL}" name="ThisForm" id="ThisForm" method="post" enctype="multipart/form-data" onsubmit="return fileUploadExt(this.{imgName}, '.doc, .txt, .pdf, .htm, .html, .zip, .rar');">
+			<input type="hidden" name="type" value="{TPL_VAR_TYPE}" />						<input type="hidden" name="auth" value="{TPL_VAR_AUTH_TOKEN}" />
+			<input type="hidden" name="id" value="{TPL_VAR_ID}" />
+			<input type="hidden" name="current_image" value="{imgName}" />
+			<p>Choose a file to upload:</p>
+			<p><input type="file" name="{imgName}" class="fileBrowse" /></p>
+			<p class="formButtonWrapper">
+				<button type="submit" class="formButton" name="submitbutton"><img src="../graphics/i_tick.gif" alt="Upload Image" /> Upload Image</button>
+			</p>
+		</form>
+		<!-- END TPL_FILE_BLK -->
+		<div id="picnmix">
+			<p>{TPL_VAR_IMAGE}</p>
+			<p id="delete">{TPL_VAR_DELETELINK}</p>
+		</div>
+	</div>
+</body>
+</html>

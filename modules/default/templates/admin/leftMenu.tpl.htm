@@ -1,0 +1,130 @@
+<div id="topNav">
+	<!-- BEGIN TPL_DASHBOARD_BLK -->
+		<div id="dashboard" {TPL_VAR_DASHSELECTED}><a href="{TPL_VAR_SITEURL}adminindex.php?flag=dashboard">Dashboard</a></div>
+	<!-- END TPL_DASHBOARD_BLK -->
+	<!-- BEGIN TPL_BUILDER_BLK -->
+		<div {TPL_VAR_BUILDSELECTED}><a href="{TPL_VAR_SITEURL}ecom/adminindex.php?action=ec_show.home&amp;flag=builder">Builder</a></div>
+	<!-- END TPL_BUILDER_BLK -->
+	<!-- BEGIN TPL_ORDER_BLK -->
+		<div {TPL_VAR_ORDERSELECTED}><a href="{TPL_VAR_SITEURL}order/adminindex.php?action=orders.home&amp;flag=orders">Orders</a></div>
+	<!-- END TPL_ORDER_BLK -->
+	<!-- BEGIN TPL_MARKETING_BLK -->
+		<div {TPL_VAR_MARKETINGSELECTED}><a href="{TPL_VAR_SITEURL}sales/adminindex.php?action=email.home&amp;flag=marketing">Marketing</a></div>
+	<!-- END TPL_MARKETING_BLK -->
+	<!-- BEGIN TPL_ADMIN_BLK -->
+		<div {TPL_VAR_ADMINSELECTED}><a href="{TPL_VAR_SITEURL}user/adminindex.php?action=security.home&amp;flag=admin">Admin</a></div>
+	<!-- BEGIN TPL_SETTINGS_BLK -->
+	<!--  <dd><a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.home">Shop Settings</a></dd>  -->
+	<!-- END TPL_SETTINGS_BLK -->
+	<!-- END TPL_ADMIN_BLK -->
+	<!-- BEGIN TPL_SETTINGS_BLK -->
+		<div {TPL_VAR_SETTINGSELECTED}><a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.companyHome&amp;flag=settings">Settings</a></div>
+	<!-- END TPL_SETTINGS_BLK -->
+</div>
+<div id="topTrading">TradingEye v7.1</div>
+
+<!-- BEGIN TPL_BUILDERSUB_BLK -->
+<div id="topSubNavLeft">
+	<!-- BEGIN TPL_SHOP_BLK -->
+		<div><a href="{TPL_VAR_SITEURL}ecom/adminindex.php?action=ec_show.home">Shop Builder</a></div>
+	<!-- END TPL_SHOP_BLK -->
+	<!-- BEGIN TPL_MENU_BLK -->
+		<div><a href="{TPL_VAR_SITEURL}ecom/adminindex.php?action=ec_menu.show">Menu Builder</a></div>
+	<!-- END TPL_MENU_BLK -->
+	<!-- BEGIN TPL_OPTION_BLK -->
+		<div><a href="{TPL_VAR_SITEURL}ecom/adminindex.php?action=ec_option.home">Product Options &amp; Attributes</a></div>
+	<!-- END TPL_OPTION_BLK -->
+	<!-- BEGIN TPL_PACKAGE_BLK -->
+		<div><a href="{TPL_VAR_SITEURL}ecom/adminindex.php?action=ec_package.home">Product Packages</a></div>
+	<!-- END TPL_PACKAGE_BLK -->
+</div>
+<!-- END TPL_BUILDERSUB_BLK -->
+
+<!-- BEGIN TPL_ORDERSUB_BLK -->	
+<div id="topSubNavLeft">
+	<!-- BEGIN TPL_INVOICE_BLK -->
+		<div><a href="{TPL_VAR_SITEURL}order/adminindex.php?action=orders.home">Invoices</a></div>
+	<!-- END TPL_INVOICE_BLK -->
+	<!-- BEGIN TPL_CUSTOMER_BLK -->
+		<div><a href="{TPL_VAR_SITEURL}user/adminindex.php?action=user.home">Customers</a></div>
+	<!-- END TPL_CUSTOMER_BLK -->
+	<!-- BEGIN TPL_SUPPLIER_BLK -->
+		<div><a href="{TPL_VAR_SITEURL}user/adminindex.php?action=supplier.home">Suppliers</a></div>
+	<!-- END TPL_SUPPLIER_BLK -->
+	<!-- BEGIN TPL_ENQUIRY_BLK -->
+		<div><a href="{TPL_VAR_SITEURL}user/adminindex.php?action=enquiry.home">Enquiries</a></div>
+	<!-- END TPL_ENQUIRY_BLK -->
+</div>
+<!-- END TPL_ORDERSUB_BLK -->	
+
+<!-- BEGIN TPL_MARKETINGSUB_BLK --> 	
+<div id="topSubNavLeft">
+	<!-- BEGIN TPL_EMAIL_BLK -->
+		<div><a href="{TPL_VAR_SITEURL}sales/adminindex.php?action=email.home">Email Campaigns</a></div>
+	<!-- END TPL_EMAIL_BLK -->
+	<!-- BEGIN TPL_FEEDS_BLK -->
+		<div><a href="{TPL_VAR_SITEURL}sales/adminindex.php?action=feeds.home">Feeds</a></div>
+	<!-- END TPL_FEEDS_BLK -->
+	<!-- BEGIN TPL_PROMOTIONS_BLK -->
+		<div><a href="{TPL_VAR_SITEURL}sales/adminindex.php?action=promotions.home">Promotions</a></div>
+	<!-- END TPL_PROMOTIONS_BLK -->
+	<!-- BEGIN TPL_REPORT_BLK -->
+		<div><a href="{TPL_VAR_SITEURL}sales/adminindex.php?action=report.home">Reports</a></div>
+	<!-- END TPL_REPORT_BLK -->
+</div>
+<!-- END TPL_MARKETINGSUB_BLK --> 	
+
+<!-- BEGIN TPL_ADMINSUB_BLK -->	
+<div id="topSubNavLeft">
+	<!-- BEGIN TPL_SECURITY_BLK -->
+		<div><a href="{TPL_VAR_SITEURL}user/adminindex.php?action=security.home">Staff Login</a></div>
+	<!-- END TPL_SECURITY_BLK -->
+	<!-- BEGIN TPL_CSV_BLK -->
+		<div><a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=csv.home">Import / Export</a></div>
+	<!-- END TPL_CSV_BLK -->	  
+	<!-- BEGIN TPL_FILE_BLK -->
+		<div><a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=file.home">File Manager</a></div>
+	<!-- END TPL_FILE_BLK -->	  
+	<!-- BEGIN TPL_PLUGINLINK_BLK -->
+		<div><a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=plugin.home">Plugin Modules</a></div>
+	<!-- END TPL_PLUGINLINK_BLK -->
+	<!-- BEGIN TPL_PLUGIN_BLK -->
+		<div><a href="{TPL_VAR_PLUGINPATH}">{TPL_VAR_NAME}</a></div>
+	<!-- END TPL_PLUGIN_BLK -->
+		<div><a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=themes.home">Theme Manager</a></div>
+</div>
+<!-- END TPL_ADMINSUB_BLK -->
+
+<!-- BEGIN TPL_SETTINGSSUB_BLK -->
+<div id="topSubNavLeft">
+	<!-- BEGIN TPL_COMPANY_INFO_BLK -->
+		<div><a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.companyHome">Company Information</a></div>
+	<!-- END TPL_COMPANY_INFO_BLK -->
+	<!-- BEGIN TPL_GATEWAYS_BLK -->
+		<div><a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.payment">Payment Gateways</a></div>
+	<!-- END TPL_GATEWAYS_BLK -->
+	<!-- BEGIN TPL_POSTAGE_BLK -->
+		<div><a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.postageHome">Postage &amp; Packaging</a></div>
+	<!-- END TPL_POSTAGE_BLK -->
+	<!-- BEGIN TPL_TAX_VAT_BLK -->
+		<div><a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=country.home">VAT/Tax Settings</a></div>
+	<!-- END TPL_TAX_VAT_BLK -->
+	<!-- BEGIN TPL_TEXTAREA_BLK -->
+		<div><a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.textareas">Text areas</a></div>
+	<!-- END TPL_TEXTAREA_BLK -->
+	<!-- BEGIN TPL_GLOBAL_SETTINGS_BLK -->
+		<div><a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.global">Global Settings</a></div>
+	<!-- END TPL_GLOBAL_SETTINGS_BLK -->
+</div>
+<!-- END TPL_SETTINGSSUB_BLK -->
+ <div id="topSubNavRight">
+ 	<div>
+ 		<a href="{TPL_VAR_SITEURL}">Preview</a>
+	</div>
+	<div>
+		<a href="http://wiki.tradingeye.com/" target="_blank">Help</a>
+	</div>
+	<div>
+		<a href="{TPL_VAR_SITEURL}user/adminindex.php?action=logout">Logout</a>
+	</div>
+</div>

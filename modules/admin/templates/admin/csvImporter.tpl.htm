@@ -1,0 +1,138 @@
+<style type="text/css">
+	.selectContainerSmall { width: 200px; }
+	.selectContainerSmall select { width: 235px; }
+</style>
+
+<div class="historyWidgetContainer">
+	<a href="../adminindex.php?flag=dashboard">Home</a> <strong>&raquo;</strong> 
+	<a href="/user/adminindex.php?action=security.home&flag=admin">Admin</a> <strong>&raquo;</strong> 
+	<a href='#'>Import / Export Products</a>
+</div>
+        
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">Product Importer</div>
+	<div class="WidgetContent">
+		<form action="{TPL_VAR_SITEURL}admin/adminindex.php?action=csv.upload" method="post" enctype="multipart/form-data" name="frmImporter" onsubmit="return valImporter()">
+			<div class="LeftBox">
+				<p>Required fields: vTitle, vSku, fPrice, vSeoTitle</p>
+				<table class='whiteTable'>
+					<thead>
+						<tr>
+							<th colspan="2">Product Importer</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- BEGIN TPL_IMPORTER_BLK -->
+							<tr>
+								<td class="headerID">
+									<label for="s{TPL_VAR_COUNT}">{TPL_VAR_COUNT}{TPL_VAR_SPACE}</label>
+								</td>
+								<td>
+									<div class="selectContainerSmall"><select name="item[]">
+									<optgroup>
+										<option value="">-- Select field --</option>
+									</optgroup>
+									<optgroup>
+										<!-- BEGIN TPL_OPTIONS_BLK -->
+										<option value="{TPL_VAR_NAME}" {TPL_VAR_SELECTED}>{TPL_VAR_NAME}</option>
+										<!-- END TPL_OPTIONS_BLK -->
+									</optgroup>
+									</select></div>
+								</td>
+							</tr>
+						<!-- END TPL_IMPORTER_BLK -->
+					</tbody>
+				</table>
+			</div>
+			<div class="RightBox">
+				<h3>Upload Options</h3>
+				<p>Choose the "Pick from CSV" option to import products into a specific department.</p>
+				<table class='whiteTable'>
+					<thead>
+						<tr>
+							<th colspan="2">CSV Format Options</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="first"><label>Choose department</label></td>
+							<td>
+								<div class="selectContainerSmall"><select name="department">
+									<option value="0">Home page</option>
+									<!-- BEGIN TPL_DEPARTMENT_BLK -->	
+									<option value="{TPL_VAR_ID}" {SELECTED2}>{TPL_VAR_TITLE}</option>
+									<!-- END TPL_DEPARTMENT_BLK -->	
+									<option value="-1" {SELECTED_CSV}>Pick from CSV</option>
+								</select></div>
+							</td>
+						</tr>
+						<tr>
+							<td><label>Choose delimiter</label></td>
+							<td>
+								<div class="selectContainerSmall"><select name="delimiter">
+									<option value="|" {TPL_VAR_DELIM1}> | - Pipe (recommended)</option>
+									<option value=";" {TPL_VAR_DELIM2}> ; - Semi-colon</option>
+									<option value="," {TPL_VAR_DELIM3}> , - Comma</option>
+								</select></div>
+							</td>
+						</tr>
+						<tr>
+							<td><label>Select a site layout</label></td>
+							<td>
+								<div class="selectContainerSmall"><select name="layout">
+									<!-- BEGIN TPL_LAYOUT_BLK -->
+									<option value="{TPL_VAR_LAYOUT}">{TPL_VAR_LAYOUT}</option>
+									<!-- END TPL_LAYOUT_BLK -->
+								</select></div>
+							</td>
+						</tr>
+						<tr>
+							<td><label>Select a product template</label></td>
+							<td>
+								<div class="selectContainerSmall"><select name="template">
+									<!-- BEGIN TPL_TEMPLATE_BLK -->
+									<option value="{TPL_VAR_TEMPLATENAME}" {SELTEMPLATE}>{TPL_VAR_TEMPLATENAME}</option>
+									<!-- END TPL_TEMPLATE_BLK -->
+								</select></div>
+							</td>
+						</tr>
+						<tr>
+							<td><label>Choose file (CSV)</label></td>
+							<td><input type="file" name="import_file" size="30" /></td>
+						</tr>
+					</tbody>
+				</table>
+				<p class="formButtonWrapper">
+					<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="Import Products" /> Import Products</button>
+				</p>
+			</form>
+		</div>
+		<div class="RightBox">
+			<form action="{TPL_VAR_SITEURL}admin/adminindex.php?action=csv.export" method="post">
+				<h3>Export to CSV</h3>
+	        	<p>{TPL_VAR_ERRORMSG}</p>
+				<table class='whiteTable'>
+					<thead>
+						<tr>
+							<th colspan="2">CSV Exporter</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="first"><label>Export:</label></td>
+							<td>
+								<div class="selectContainerSmall"><select name="exporttype">
+									<option value="cu">Customers</option>
+									<option value="tr">Transactions</option>
+									<option value="en">Enquiries</option>
+								</select></div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="Export to CSV" /> Export to CSV</button>
+     	 	</form>    
+		</div>
+		<div class="placeHolder"></div>
+	</div>
+</div>

@@ -1,0 +1,519 @@
+<style>
+.whiteTable3 td label{
+color:rgb(102, 102, 102);
+font-size:14px;
+line-height:100%;
+}
+.whiteTable3 td{
+color:rgb(102, 102, 102);
+font-size:12px;
+line-height:100%;
+}
+.whiteTable3 td{
+padding-bottom:15px;
+}
+</style>
+<script language="JavaScript" type="text/javascript">
+// For Ajax things (product attribute) 
+  	var http = false;
+		if(navigator.appName == "Microsoft Internet Explorer") {
+		  http = new ActiveXObject("Microsoft.XMLHTTP");
+		} else {
+		  http = new XMLHttpRequest();
+		} 
+	
+	function attribute(attributeid)
+	{
+		http.open('GET','{TPL_SHOPURL}adminindex.php?action=ec_option.ajaxAttribute&attributeid='+attributeid+'{TPL_VAR_ATTMODE}');
+		http.onreadystatechange = handleAttribute;
+		http.send(null);
+	}
+
+	function handleAttribute() {		
+		if(http.readyState == 4){
+        var response = http.responseText;
+        var update = new Array();
+        
+	 	   if(response.indexOf('~' != -1)) { 
+				update = response.split('~');
+				document.getElementById(update[1]).innerHTML= update[0];
+					}
+				}		
+		}
+
+	function filterNum(str) {
+		re = /^\?|,/g;
+		// remove "?" and ","
+		return str.replace(re, "");
+		}
+	
+	function changevalue()
+	{
+		if(document.ThisForm.mode.value!="edit")
+		{
+			fillValue(document.ThisForm.title.value, document.ThisForm.seo_title);
+		}
+	}
+</script>
+
+<div class="historyWidgetContainer">
+	<a href="adminindex.php?flag=dashboard">Home</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=ec_show.home&amp;flag=builder">Builder</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=ec_show.home&amp;flag=builder">Shop Builder</a>  <strong>&raquo;</strong> 
+	<a href='#'>{TPL_VAR_BUILDACT}</a>
+	<div id="builderCrumbs">
+		{TPL_VAR_BREDCRUMBTEXT}: <span>{TPL_VAR_BREDCRUMBS}</span>
+	</div>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">{LANG_VAR_PRODUCTBUILDER}</div>
+	<div class="WidgetContent">
+	<form action="{FORMURL}" id="main_form" method="POST" name="ThisForm" enctype="multipart/form-data" onsubmit="return valProductBuilder()">
+	<button type="submit" class="formButton Right"><img src="../graphics/i_add.gif" alt="i_add" /> {TPL_VAR_BTNMESSAGE}</button>
+
+		<!-- BEGIN TPL_OPTIONLINK_BLK -->
+		<button class="formButton" type="button" onclick="window.location='{TPL_SHOPURL}adminindex.php?action=ec_show.vdiscount&type={TPL_VAR_TYPE}&productid={TPL_VAR_PRODID}&owner={TPL_VAR_OWNER}'"><img src="../graphics/i_add.gif" alt="Add Volume Discount" /><div>Add Volume Discount</div></button>
+		<button class="formButton" type="button" onclick="window.location='{TPL_SHOPURL}adminindex.php?action=ec_show.attachOpt&type={TPL_VAR_TYPE}&productid={TPL_VAR_PRODID}&owner={TPL_VAR_OWNER}&prtype=option'"><img src="../graphics/i_add.gif" alt="Add Standard Options" /><div>Add Standard Options</div></button>
+		<button class="formButton" type="button" onclick="window,location='{TPL_SHOPURL}adminindex.php?action=ec_show.attachOpt&type={TPL_VAR_TYPE}&productid={TPL_VAR_PRODID}&owner={TPL_VAR_OWNER}&prtype=choice'"><img src="../graphics/i_add.gif" alt="Add Custom Options" /><div>Add Custom Options</div></button>
+		<!-- END TPL_OPTIONLINK_BLK -->
+		
+			<input type="hidden" id="mode" name="mode" value="{TPL_VAR_MODE}"/>
+			<input type="hidden" id="type" name="type" value="{TPL_VAR_TYPE}"/>
+			<input type="hidden" id="prodId" name="prodId" value="{TPL_VAR_PRODID}" />
+			<h3>Basic Product Settings<div class='Right'><!-- BEGIN DSPMSG_BLK -->{TPL_VAR_MSG}<!-- END DSPMSG_BLK --></div></h3>
+			<table class="whiteTable2">
+				<thead>
+					<tr>
+						<th>{LANG_VAR_PRODUCTTITLE}</th>
+						<th>{LANG_VAR_PRODUCTCODE}</th>
+						<th>{LANG_VAR_PRODUCTPRICE}</th>
+						<th>{LANG_VAR_PRODUCTRETAILPRICE}</th>
+						<th>{LANG_VAR_RRP}</th>
+						<th>{LANG_VAR_ONOFF}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><input type="text" id="title" name="title" value="{TPL_VAR_TITLE}" onBlur="changevalue();"  maxlength="255" /></td>
+						<td><input type="text" id="sku" name="sku" value="{TPL_VAR_SKU}" size="5" maxlength="50" /></td>
+						<td><input type="text" class="formField short" id="price" name="price" value="{TPL_VAR_PRICE}" onBlur="this.form.price.value=filterNum(this.form.price.value);" size="5" maxlength="12"/></td>
+						<td><!-- BEGIN TPL_VAR_RETAILPRICE_BLK -->	
+						<input type="text" class="formField short" id="retailprice" name="retailprice" value="{TPL_VAR_RETAILPRICE}" onBlur="this.form.price.value=filterNum(this.form.price.value);" size="5" maxlength="12"  />
+						<!-- END TPL_VAR_RETAILPRICE_BLK --> </td>
+						<td><input type="text" class="formField short" id="list_price" name="list_price" value="{TPL_VAR_LISTPRICE}" onBlur="this.form.list_price.value=filterNum(this.form.list_price.value);" size="5" maxlength="12" /></td>
+						<td>
+							<input type="checkbox" class="checkbox" id="active" name="state" value="1" {TPL_VAR_STATE} />
+							<script language="JavaScript" type="text/javascript">
+								jQuery('#active').change(function(){
+									if(this.checked)
+									{
+										var result = confirm("Do you want turn this product on in all departments? Click Cancel to only turn it on for the current department.");
+										if(result == true)
+										{
+										jQuery('#active').after('<input type="hidden" name="fusionall" id="fusionall" value="1"/>');
+										}
+										else
+										{
+										jQuery('#fusionall').remove();
+										}
+									}
+									else
+									{
+										var result = confirm("Do you want turn this product off in all departments? Click Cancel to only turn it off for the current department.");
+										if(result == true)
+										{
+										jQuery('#active').after('<input type="hidden" name="fusionall" id="fusionall" value="1"/>');
+										}
+										else
+										{
+										jQuery('#fusionall').remove();
+										}
+									}
+								});
+							</script>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<table class="whiteTable2">
+				<thead>
+					<tr>
+						<th>{LANG_VAR_SHORTDESC}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><textarea rows="4" cols="150" class="formField" name="short_description">{TPL_VAR_SHORTDESC}</textarea></td>
+					</tr>
+				</tbody>
+			</table>
+			<table class="whiteTable2">
+				<thead>
+					<tr>
+						<th>{LANG_VAR_LONGDESC}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>{cmsEditor}</td>
+					</tr>
+				</tbody>
+			</table>
+			<h3>Options</h3>
+			<table class="whiteTable2" style='width:800px;display:inline;'>
+				<thead>
+					<tr>
+						<th>{LANG_VAR_VATTAX}</th>
+						<th>{LANG_VAR_ONSALE}</th>
+						<th>{LANG_VAR_ADDTOBASKETBUTT}</th>
+						<th>{LANG_VAR_ENQUIREBUTT}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						
+						<td width='15%'><input type="checkbox" class="checkbox" id="vat" name="taxable" value="1" {TPL_VAR_VAT}  /></td>
+						<td width='15%'><input type="checkbox" class="checkbox" id="on_sale" name="sale" value="1" {TPL_VAR_SALE} /></td>
+						<td width='35%'><input type="checkbox" class="checkbox" id="shopping_basket" name="cart_button" value="1" {TPL_VAR_BASKET} /></td>
+						<td width='35%'><input type="checkbox" class="checkbox" id="enquirebutt" name="enquirebutt" value="1" {TPL_VAR_ENQUIRE} /></td>
+					</tr>
+				</tbody>
+			</table>
+					<!-- BEGIN TPL_OPTION_BLK -->  
+			<table class="whiteTable2" style='width:400px;display:inline;'>
+				<thead>
+					<tr>
+						<th>{LANG_VAR_PRODUCTOPTIONS}</th>
+						<th>{LANG_VAR_PVOLUMEDISCOUNTS}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td width='50%'><input type="checkbox" class="checkbox" id="product_options" name="option" value="1" /></td>
+						<td width='50%'><input type="checkbox" class="checkbox" id="volume_discounts" name="vdiscount" value="1"  /></td>
+					</tr>
+				</tbody>
+			</table>
+					<!-- END TPL_OPTION_BLK -->
+			<table class='whiteTable2 left'>
+				<tbody>
+					<tr>
+						<td style='width:185px;'>Select a Product Attribute</td>
+						<td>
+							<div class="selectContainer"><select name="attributeid" id="attributeid" class="formSelect" onchange="attribute(this.value)">
+															<optgroup>
+																<option selected value="0">None</option>
+															</optgroup>
+															<optgroup>
+																<!-- BEGIN TPL_ATTRIBUTES_BLK -->
+																<option {TPL_VAR_SELECTED} value="{TPL_VAR_ATTRIBUTEID}" >{TPL_VAR_ATTRIBUTES}</option>
+																<!-- END TPL_ATTRIBUTES_BLK -->
+															</optgroup>
+														</select></div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<!-- BEGIN TPL_AJAX_BLK -->
+			<table id="attribute" class="whiteTable2 left"><!-- DO NOT CHANGE OR REMOVE TABLE ID -->
+				<!-- BEGIN TPL_ATTRIBUTESFOREDIT_BLK -->
+				<tr>
+					<thead>
+						<tr>
+							<th>{TPL_VAR_ATTRIBUTENAME}</th>
+						</tr>
+					<tbody>
+						<tr>
+							<td><span>{TPL_VAR_PREFIX}</span>
+							<input type="text" class="formField" name="attributevalue[]" value="{TPL_VAR_VALUE}" />
+							<span>{TPL_VAR_SUFFIX}</span></td>
+					
+						</tr>
+			<!-- END TPL_ATTRIBUTESFOREDIT_BLK -->
+			</table>
+			<!-- END TPL_AJAX_BLK -->
+			<table class="whiteTable2 left">
+				<tbody>
+					<tr>
+						<td style='width:185px;'>{LANG_VAR_SELECTLAYOUT}</td>
+						<td>								
+							<div class="selectContainer"><select class="formSelect" id="layout" name="layout">
+															<!-- BEGIN TPL_LAYOUT_BLK -->
+															<option value="{TPL_VAR_LAYOUT}" {SELLAYOUT}>{TPL_VAR_LAYOUT}</option>
+															<!-- END TPL_LAYOUT_BLK -->
+														</select></div>
+						</td>
+					</tr>
+					<tr>
+						<td style='width:185px;'>{LANG_VAR_SELECTTEMPLATE}</td>
+						<td>
+							<div class="selectContainer"><select class="formSelect" id="template" name="template">
+															<!-- BEGIN TPL_TEMPLATE_BLK -->
+															<option value="{TPL_VAR_TEMPLATENAME}" {SELTEMPLATE}>{TPL_VAR_TEMPLATENAME}</option>
+															<!-- END TPL_TEMPLATE_BLK -->
+														</select></div>
+						</td>				
+					</tr>
+				</tbody>
+			</table>
+			<h3>Images</h3>
+			<script>  
+				function PopWindow()
+	{window.open("","windowname","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=350,height=425,top=50,left=50");}
+			</script>
+			<table class="whiteTable Orders">
+				<thead>
+					<tr>
+						<th>Default Images</th>
+						<th>Gallery Images</th>
+					</tr>
+				</thead>
+				<tbody>
+				<!-- BEGIN DSPIMAGEBOX_BLK -->
+					<tr> 
+						<td class="half" style="padding-left: 20px;">
+							<table class='whiteTable3'>
+								<tr>
+									<td colspan='2'><label>These are the three default images used by Tradingeye, as shown in "product lists", "product info" pages and the "View Larger Image" pages.</label></td>
+								</tr>
+								<tr>
+									<td><label>Department List Thumbnail</label></td>
+									<td><input class="imageGallery" id="img_browse_a" type="file" name="image1" /></td>
+								</tr>
+								<tr>
+									<td colspan='2'><input type="checkbox" name="resample1" value="true" checked="checked" /> Resize image to fit {imgWidth1} x {imgHeight1} - ({resampleList} only)</td>
+								</tr>
+								<tr>
+									<td><label>Product Page Image</label></td>
+									<td><input class="imageGallery" id="img_browse_b" type="file" name="image2" /></td>
+								</tr>
+								<tr>
+									<td colspan='2'><input type="checkbox" name="resample2" value="true" checked="checked" /> Resize image to fit {imgWidth2} x {imgHeight2} - ({resampleList} only)</td>
+								</tr>
+								<tr>
+									<td><label>Product Large Image</label></td>
+									<td><input class="imageGallery" id="img_browse_c" type="file" name="image3" /></td>
+								</tr>
+								<tr>
+									
+									<td colspan='2'><input type="checkbox" name="resample3" value="true" checked="checked" /> Resize image to fit {imgWidth3} x {imgHeight3} - ({resampleList} only)</td>
+								</tr>
+							</table>
+						</td>
+						<td class="half" style="padding-right: 20px;">
+							
+							<table class='whiteTable3'>
+								<tr>
+									<td> </td>
+									<td> </td>
+								</tr>
+								<tr>
+									<td><label>Gallery Image 1</label></td>
+									<td><input class="imageGallery" id="extraimage1" name="extraimage1" type="file" class="multi accept-gif|jpg" /></td>
+								</tr>
+								<tr>
+									<td><label>Gallery Image 2</label></td>
+									<td><input class="imageGallery" id="extraimage2" name="extraimage2" type="file" class="multi accept-gif|jpg" /></td>
+								</tr>
+								<tr>
+									<td><label>Gallery Image 3</label></td>
+									<td><input class="imageGallery" id="extraimage3" name="extraimage3" type="file" class="multi accept-gif|jpg" /></td>
+								</tr>
+								<tr>
+									<td><label>Gallery Image 4</label></td>
+									<td><input class="imageGallery" id="extraimage4" name="extraimage4" type="file" class="multi accept-gif|jpg" /></td>
+								</tr>
+								<tr>
+									<td><label>Gallery Image 5</label></td>
+									<td><input class="imageGallery" id="extraimage5" name="extraimage5" type="file" class="multi accept-gif|jpg" /></td>
+								</tr>
+								<tr>
+									<td><label>Gallery Image 6</label></td>
+									<td><input class="imageGallery" id="extraimage6" name="extraimage6" type="file" class="multi accept-gif|jpg" /></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<!-- END DSPIMAGEBOX_BLK -->	
+					<!-- BEGIN DSPIMAGELINK_BLK -->
+					
+					<tr> 
+						<td class="half" style="padding-left: 20px;">
+							<table class='whiteTable3'>
+								<tr>
+									<td colspan='2'><label>These are the three default images used by Tradingeye, as shown in "product lists", "product info" pages and the "View Larger Image" pages.</label></td>
+								</tr>
+								<tr>
+									<td><label>{LANG_VAR_IMAGEASMALL}</label></td>
+								</tr>
+								<tr>
+									<td colspan='2'><a class="lightwindow" target="_blank" href="{TPL_VAR_POPUPURL}&image=image1&type=product" rel="lightwindow" params="lightwindow_width=500,lightwindow_height=455,lightwindow_type=external">{TPL_VAR_IMGLABEL1}</a></td>
+								</tr>
+								<tr>
+									<td><label>{LANG_VAR_IMAGEBMED}</label></td>
+								</tr>
+								<tr>
+									<td colspan='2'><a class="lightwindow" target="_blank" href="{TPL_VAR_POPUPURL}&image=image2&type=product" rel="lightwindow" params="lightwindow_width=500,lightwindow_height=455,lightwindow_type=external">{TPL_VAR_IMGLABEL2}</a></td>
+								</tr>
+								<tr>
+									<td><label>{LANG_IMAGECLAR}</label></td>
+								</tr>
+								<tr>
+									
+									<td colspan='2'><a class="lightwindow" target="_blank" href="{TPL_VAR_POPUPURL}&image=image3&type=product" rel="lightwindow" params="lightwindow_width=500,lightwindow_height=455,lightwindow_type=external">{TPL_VAR_IMGLABEL3}</a></td>
+								</tr>
+							</table>
+						</td>
+						<td class="half" style="padding-right: 20px;">
+							
+							<table class='whiteTable3'>
+								<tr>
+									<td> </td>
+									<td> </td>
+								</tr>
+								<tr>
+									<td><label>Gallery Image 1</label></td>
+									<td><a class="lightwindow" target="_blank" href="{TPL_VAR_POPUPURL}&image=extraimage1&type=product" rel="lightwindow" params="lightwindow_width=500,lightwindow_height=455,lightwindow_type=external">{TPL_VAR_EXTRAIMGLABEL1}</a></td>
+								</tr>
+								<tr>
+									<td><label>Gallery Image 2</label></td>
+									<td><a class="lightwindow" target="_blank" href="{TPL_VAR_POPUPURL}&image=extraimage2&type=product" rel="lightwindow" params="lightwindow_width=500,lightwindow_height=455,lightwindow_type=external">{TPL_VAR_EXTRAIMGLABEL2}</a></td>
+								</tr>
+								<tr>
+									<td><label>Gallery Image 3</label></td>
+									<td><a class="lightwindow" target="_blank" href="{TPL_VAR_POPUPURL}&image=extraimage3&type=product" rel="lightwindow" params="lightwindow_width=500,lightwindow_height=455,lightwindow_type=external">{TPL_VAR_EXTRAIMGLABEL3}</a></td>
+								</tr>
+								<tr>
+									<td><label>Gallery Image 4</label></td>
+									<td><a class="lightwindow" target="_blank" href="{TPL_VAR_POPUPURL}&image=extraimage4&type=product" rel="lightwindow" params="lightwindow_width=500,lightwindow_height=455,lightwindow_type=external">{TPL_VAR_EXTRAIMGLABEL4}</a></td>
+								</tr>
+								<tr>
+									<td><label>Gallery Image 5</label></td>
+									<td><a class="lightwindow" target="_blank" href="{TPL_VAR_POPUPURL}&image=extraimage5&type=product" rel="lightwindow" params="lightwindow_width=500,lightwindow_height=455,lightwindow_type=external">{TPL_VAR_EXTRAIMGLABEL5}</a></td>
+								</tr>
+								<tr>
+									<td><label>Gallery Image 6</label></td>
+									<td><a class="lightwindow" target="_blank" href="{TPL_VAR_POPUPURL}&image=extraimage6&type=product" rel="lightwindow" params="lightwindow_width=500,lightwindow_height=455,lightwindow_type=external">{TPL_VAR_EXTRAIMGLABEL6}</a></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<!-- END DSPIMAGELINK_BLK -->
+				</tbody>
+			</table>
+			<h3>Downloadable File and Stock Controls</h3>
+			<table class="whiteTable2">
+				<thead>
+					<tr>
+						<th>{LANG_DOWNLOADFILE}</th>
+						<th>{LANG_VAR_USESTOCK}</th>
+						<th>{LANG_VAR_ALLOWBACKORDERS}</th>
+						<th>{LANG_VAR_STOCKLEVELS}</th>
+						<th>{LANG_VAR_MINSTOCKLEVELS}</th>
+					</tr>
+				</thead>
+				<tbody>
+				    <tr>
+						<td>
+							<!-- BEGIN TPL_DOWNLOADABLEFILE_LINK_BLK -->
+								<a class="lightwindow" href="{TPL_VAR_POPUPURL}&image=image4&type=product" rel="lightwindow" params="lightwindow_width=500,lightwindow_height=455,lightwindow_type=external">{TPL_VAR_IMGLABEL4}</a>
+							<!-- END TPL_DOWNLOADABLEFILE_LINK_BLK -->
+									
+							<!-- BEGIN TPL_DOWNLOADABLEFILE_BOX_BLK -->
+								<input id="img_downloadable_file" type="file" name="downloadable_file" class="multi accept-gif|jpg"/>
+							<!-- END TPL_DOWNLOADABLEFILE_BOX_BLK -->	
+						</td>
+						<!-- BEGIN TPL_STOCKCONTROL_BLK -->
+						<td><input type="checkbox" class="checkbox" id="use_inventory" name="use_inventory" value="1" {TPL_VAR_STOCK} /></td>
+						<td><input type="checkbox" class="checkbox" id="allow_backorders" name="backorder" value="1" {TPL_VAR_BACKORDERS} /></td>
+						<td><input type="text" class="formField short" id="stock_levels" name="inventory" value="{TPL_VAR_STOCKLEVELS}" size="5" maxlength="5" /></td>
+						<td><input type="text" class="formField short" id="min_inventory" name="min_inventory" value="{TPL_VAR_STOCKMINIMUM}" size="5" maxlength="5" />
+					</tr>
+				</tbody>
+			</table>
+			<h3>Supply</h3>
+			<table class="whiteTable2">
+				<thead>
+					<tr>
+						<th>{LANG_VAR_ONORDER}</th>
+						<th>{LANG_VAR_DUEDATE} <span><a href="javascript:cal2.popup()" class="linkCalendar"><small>Choose a Date</small></a>
+							</span></th>
+						<th>{LANG_VAR_SUPPLIERLOGO}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr></td>
+						<td><input type="text" class="formField short" id="on_order" name="on_order" value="{TPL_VAR_ONORDER}" size="5" maxlength="8" /></td>
+						<td>
+							<input type="text" class="formField date" maxlength="12" id="due_date" name="due_date"/>
+						
+						</td>
+						<td>
+							<div class="selectContainer"><select class="formSelect" id="supplier" name="vendorid">
+															<option value="0">{LANG_VAR_SELECTSUPP}</option>
+															<!-- BEGIN TPL_VAR_SUPPLIER -->
+															<option value="{TPL_VAR_VALUE}" {SELECTED}>{TPL_VAR_NAME}</option>
+															<!-- END TPL_VAR_SUPPLIER -->
+														</select></div>
+						</td>
+						<!-- END TPL_STOCKCONTROL_BLK -->
+					</tr>
+				</tbody>
+			</table>
+			<h3>Postage</h3>
+			<table class='whiteTable2'>
+				<thead>
+					<tr>
+						<th>{LANG_VAR_ITEMWEIGHT}</th>
+						<th>{LANG_VAR_PRODUCTNOTES}</th>
+						<th>{LANG_VAR_FREEPOSTAGE}</th>
+						<th>{LANG_VAR_POSTAGECODE}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><input type="text" class="formField short" id="product_weight" name="item_weight" value="{TPL_VAR_ITEMWEIGHT}" onBlur="this.form.item_weight.value=filterNum(this.form.item_weight.value);" size="5" maxlength="12" /></td>
+						<td><input type="text" class="formField long" id="product_notes" name="ship_notes" value="{TPL_VAR_PRODUCTNOTES}" maxlength="200"  /></td>
+						<td><input type="checkbox" class="checkbox" id="free_postage" name="free_postage" value="1" {TPL_VAR_FREEPOSTAGE} /></td>
+						<td>
+							<select class="formSelect" id="postage_code" name="ship_code">
+								<option value="0">{LANG_VAR_CODESELECT}</option>
+								<!-- BEGIN TPL_VAR_POSTAGECODE -->
+								<option value="{TPL_VAR_POSTID}" {SELECTED1}>{TPL_VAR_POSTTITLE} ({TPL_VAR_CURRENCY}{TPL_VAR_POSTVALUE})</option>
+								<!-- END TPL_VAR_POSTAGECODE -->
+							</select>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<h3>Search Engine Optimization</h3>
+			<table class='whiteTable2'>
+				<thead>
+					<tr>
+						<th>{LANG_VAR_FILENAME}<br/>(URL) <span>*</span></th>
+						<th>{LANG_VAR_METATITLE}<br /><span>{LANG_VAR_LEAVEBLANKMETATITLE}</span></th>
+						<th>{LANG_VAR_METADESCRIPTION}<br /><span>{LANG_VAR_LEAVEBLANKGLOBAL}</span></th>
+						<th>{LANG_VAR_METAKEYWORDS}<br /><span>{LANG_VAR_LEAVEBLANKGLOBALKEY}</span></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><input type="text" class="formField long" id="seo_title" name="seo_title" value="{TPL_VAR_SEOTITLE}" maxlength="255" /></td>
+						<td><input type="text" class="formField long" id="meta_title" name="meta_title" value="{TPL_VAR_METATITLE}" /></td>
+						<td><textarea rows="1" cols="37" class="formField long" id="meta_description" name="meta_description">{TPL_VAR_METADESC}</textarea></td>
+						<td><textarea rows="1" cols="37" class="formField long" id="keywords" name="keywords" >{TPL_VAR_KEYWORDS}</textarea></td>
+					</tr>
+				</tbody>
+			</table>
+						
+			<button type="submit" class="formButton Right"><img src="../graphics/i_add.gif" alt="i_add" /> {TPL_VAR_BTNMESSAGE}</button><br style="clear:both;"/>
+		</form>
+	</div>
+</div>
+
+							<script language="JavaScript">
+								var cal2 = new calendar2(document.forms[0].elements['due_date']);
+								cal2.year_scroll = true;
+								cal2.time_comp = false;
+							</script>

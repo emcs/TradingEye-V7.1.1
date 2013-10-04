@@ -1,0 +1,141 @@
+<script language="JavaScript" type="text/javascript">
+function PopWindow()
+{
+window.open("","windowname","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=625,height=425,top=50,left=50");
+}
+function ValidateForm()
+{
+	if(isNull(document.ThisForm.optdescription.value))
+	{
+			alert("You must enter an option description");
+			document.ThisForm.optdescription.value = '';	
+			document.ThisForm.optdescription.focus();
+			return false;
+	}
+	else if(isNull(document.ThisForm.optname.value))
+	{
+			alert("You must select an option title");
+			document.ThisForm.optname.value = '';
+			document.ThisForm.optname.focus();
+			return false;
+	}
+	var len=document.ThisForm.elements.length;
+	var frm = document.ThisForm;
+	for(var i=0; i<len; i++)
+	{
+		if(document.ThisForm.elements[i].name == 'item[]')
+		{
+			if(document.ThisForm.elements[i].value=="")
+			{
+			alert("Please enter option name");
+			document.ThisForm.elements[i].focus();
+			return false;
+			}
+		}
+	}
+	if(isdefined(document.ThisForm.itemnew))
+	{
+		if(isNull(document.ThisForm.itemnew.value))
+		{
+				alert("You must enter an New option name");
+				document.ThisForm.itemnew.focus();
+				return false;
+		}
+	}
+	return true;
+}
+</script>
+<div class="historyWidgetContainer">
+	<a href="adminindex.php?flag=dashboard">Home</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=ec_show.home&amp;flag=builder">Builder</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=ec_option.home">Product Options &amp; Attributes</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=ec_option.home">Standard Options</a> <strong>&raquo;</strong> 
+	<a href='#'>Standard Option Builder</a>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">{LANG_VAR_STANDOPTTXT} <small class="Right">{TPL_VAR_MSG}</small></div>
+	<div class="WidgetContent">
+		<form action="{TPL_VAR_FORMURL}" method="post" name="ThisForm" id="ThisForm" onsubmit="return ValidateForm('2')">
+			<input type="hidden" name="optionid" value="{TPL_VAR_OPTIONID}">
+			<input type="hidden" name="option_count" value="{TPL_VAR_OPTIONCOUNT}" />
+			<table class="whiteTable Orders OneColum">
+				<thead>
+					<tr> 
+						<th colspan="2">Title &amp; Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr> 
+						<td class="first"><label>{LANG_VAR_TITLE}</label></td>
+						<td><input type="text" class="formField long" name="optname" maxlength="50" value="{TPL_VAR_OPTNAME}" /></td>
+					</tr>
+					<tr> 
+						<td class="first"><label>{LANG_VAR_DESCRIPTION}</label></td>
+						<td><input type="text" class="formField long" name="optdescription" maxlength="30" value="{TPL_VAR_OPTDESC}" /></td>
+					</tr>
+					<tr> 
+						<td class="first"><label for="mandatory">{LANG_VAR_MANDATORY}</label></td>
+						<td><input type="checkbox" class="checkbox" name="mandatory" {TPL_VAR_MANDATORY}/></td>
+					</tr>
+				</tbody>
+			</table>
+			<br />
+			<h3>Option Details <span>{TPL_VAR_OPTIONCOUNT} {LANG_VAR_RECORDSFOUND}</span></h3>
+			<!-- BEGIN TPL_LINK_BLK -->
+			<p class="buttonWrapper">
+				<button class="formButton" onclick="window.location='adminindex.php?action=ec_option.editForm&addrow=yes&optionid={TPL_VAR_OPTIONID}'; return false;"><img src="../graphics/i_add.gif" alt="{LANG_VAR_RETURNOPTBUILD}" /> <div>{LANG_VAR_ADDANOTHERROW}</div></button>
+			</p>
+			<!-- END TPL_LINK_BLK -->
+			<table class="whiteTable2 Builder" cellpadding="0" cellspacing="0">
+				<thead>
+					<tr>
+						<th>{LANG_VAR_DELETE}</th>
+		  				<th>{LANG_VAR_SORT}</th>
+		  				<th>Sku</th>
+						<th>{LANG_VAR_OPTIONNAME}</th>
+						<th class="headerAddedCost">{LANG_VAR_ADDEDCOST}</th>
+						<th class="headerStock">{LANG_VAR_STOCK}</th>
+						<th class="headerStockLevels">{LANG_VAR_STOCKLVL}</th>
+						<th class="headerBackorder">{LANG_VAR_BACKORDER}</th>
+						<th class="headerImage">{LANG_VAR_IMAGE}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<!-- BEGIN TPL_OPTIONS_BLK -->
+					<input type="hidden" name="itemid[]" value="{TPL_VAR_ID}" />
+					<tr> 
+						<td><input type="checkbox" class="checkbox" name="del[{TPL_VAR_ID}]" value="1" /></td>
+						<td><input type="text" class="formField short" size="2" name="sort[{TPL_VAR_ID}]" value="{TPL_VAR_SORTNUM}" maxlength="3" /></td>
+						<td><input type="text" class="formField" name="sku[{TPL_VAR_ID}]" maxlength="30" value="{TPL_VAR_OPTSKU}"/></td>
+						<td style="width: 40%;"><input type="text" class="formField" name="item[{TPL_VAR_ID}]" maxlength="30" value="{TPL_VAR_NAME}" style="width: 100%;"/></td>
+						<td style="width: 120px;"><input type="text" class="formField short" size="5" name="price[{TPL_VAR_ID}]" maxlength="10"  value="{TPL_VAR_PRICE}"/></td>
+						<td><input type="checkbox" class="checkbox" name="use_inventory[{TPL_VAR_ID}]" value="1"  {TPL_VAR_SELECTED1}/></td>
+						<td style="width: 120px;"><input type="text" class="formField short" size="4" name="inventory[{TPL_VAR_ID}]" maxlength="5" value="{TPL_VAR_INVENTORY}"/></td>
+						<td><input type="checkbox" class="checkbox" name="backorder[{TPL_VAR_ID}]"  value="1" {TPL_VAR_SELECTED2} /></td>
+						<td><a href="adminindex.php?action=ec_option.uploadForm&id={TPL_VAR_ID}" onClick="PopWindow()" target="windowname">{TPL_VAR_IMGLBL}</a></td>
+					</tr>
+					<!-- END TPL_OPTIONS_BLK -->
+					<!-- BEGIN TPL_NEW_BLK -->
+					<input type="hidden" name="addnew" value="1"/>
+	   				<tr> 
+	   					<td></td>
+						<td><input type="text" class="formField short" size="2" name="sortnew" value="{TPL_VAR_SORTNUMNEW}" maxlength="3" /></td>
+	   					<td><input type="text" class="formField" name="skunew" maxlength="30" /></td>
+	                    <td style="width: 40%;"><input type="text" class="formField" name="itemnew" maxlength="30" style="width: 100%;" /></td>
+	       				<td style="width: 120px;"><input type="text" class="formField short" size="5" name="pricenew" maxlength="10" /></td>
+	       				<td><input type="checkbox" class="checkbox" name="use_inventorynew" value="1" /></td>
+	   					<td style="width: 120px;"><input type="text" class="formField short" size="4" name="inventorynew" maxlength="10" /></td>
+	       				<td><input type="checkbox" class="checkbox" name="backordernew" value="1" /></td>
+	       				<td></td>
+	   				</tr>
+					<!-- END TPL_NEW_BLK -->
+				</tbody>
+			</table>
+			<p class="formButtonWrapper">
+				<button type="submit" class="formButton" href="standard_options.php"><img src="../graphics/i_cross.gif" alt="Cancel" /> Cancel</button>
+				<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="{LANG_VAR_UPDATEOPT} Option" {TPL_VAR_READONLY} /> {LANG_VAR_UPDATEOPT}</button>
+			</p>
+		</form>
+	</div>
+</div>

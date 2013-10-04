@@ -1,0 +1,39 @@
+<div class="historyWidgetContainer"><a href="adminindex.php?flag=dashboard">Home</a> <strong>&raquo;</strong> <a href="adminindex.php?action=ec_show.home&amp;flag=builder">Builder</a> <strong>&raquo;</strong> <a href="adminindex.php?action=ec_menu.show">{LANG_VAR_MENUTITLE}</a> </div>
+<div class="builderBlock fullWidgetContainer">
+	<div class="WidgetTitle">View Menu Items <small>{TPL_VAR_COUNT} {LANG_VAR_SUBUNDERTXT} {TPL_VAR_HEADERTITLE}</small></div>
+	<div class="WidgetContent">
+		<button class="formButton" onclick="window.location='{TPL_SHOPURL}adminindex.php?action=ec_menu.itemForm&headerid={TPL_HEADER_ID}'"><img src="../graphics/i_add.gif" alt="Add New Menu Item" /> <div>Add New Menu Item</div></a>
+		<form action="{TPL_SHOPURL}adminindex.php?action=ec_menu.itemhome" method="post" name="ThisForm">
+		<!-- BEGIN TPL_MENUBTN_BLK -->	
+		<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="{LANG_VAR_APPLYCHANGES}" /> <div>{LANG_VAR_APPLYCHANGES}</div> </button>
+		<input type="hidden" name="count" value="2" />
+		<!-- END TPL_MENUBTN_BLK -->	  
+		
+		<!-- BEGIN TPL_MAINTABLE_BLK -->
+		<input type="hidden" name="headerid" value="{TPL_HEADER_ID}" />
+		<table class="whiteTable Build" cellpadding="0" cellspacing="0">
+			<thead>
+				<tr> 
+					<th class="extend">{LANG_VAR_ITEMTITLE}</th>
+					<th class="headerSort">{LANG_VAR_SORT}</th>
+					<th class="headerStatus">{LANG_VAR_ONOFF}</th>
+					<th class="headerEdit">{LANG_VAR_EDIT}</th>
+					<th class="headerDelete">{LANG_VAR_DELETE}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- BEGIN TPL_MENUITEM_BLK -->
+				<tr>  
+					<td>{TPL_VAR_ITEMTITLE}</td>
+					<td><input type="text" class="formField sort" id="sort" size="1" name="sort[{TPL_ITEM_ID}]" value="{TPL_VAR_SORTNUM}" maxlength="3"  value="1" /></td>
+					<td><input type="checkbox" class="checkbox" name="state[{TPL_ITEM_ID}]" value="1" {TPL_VAR_CHECKED} /></td>
+					<td><a href="adminindex.php?action=ec_menu.itemForm&headerid={TPL_HEADER_ID}&itemid={TPL_ITEM_ID}" class="linkEdit">{LANG_VAR_EDIT}</a></td>
+					<td><a href="adminindex.php?action=ec_menu.deleteItem&headerid={TPL_HEADER_ID}&itemid={TPL_ITEM_ID}" onclick="if(confirm('Are you sure you want to delete this Menu Item?')){return true}else{return false}" class="linkDelete">{LANG_VAR_DELETE}</a></td>
+				</tr>
+				<!-- END TPL_MENUITEM_BLK -->
+			</tbody>
+		</table>
+		<!-- END TPL_MAINTABLE_BLK -->
+		</form>
+	</div>
+</div>

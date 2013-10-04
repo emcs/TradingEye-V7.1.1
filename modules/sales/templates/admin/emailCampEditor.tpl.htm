@@ -1,0 +1,123 @@
+<script language="JavaScript" type="text/javascript">
+function validateForm()
+{
+	var frm = document.ThisForm;
+	if(isNull(frm.subject.value))
+	{
+		alert("You must enter a subject line");
+		frm.subject.value = "";
+		frm.subject.focus();
+		return false;
+	}
+}
+
+function validateForm3()
+{
+	var frm = document.ThisForm3;
+	if(!checkEmail(frm.email.value))
+	{
+		alert("You must enter a valid email address");
+		frm.email.focus();
+		return false;
+	}
+	return true;
+}
+</script>
+<div class="historyWidgetContainer">
+	<a href="adminindex.php">Home </a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=email.home&amp;flag=marketing">Marketing</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=email.home&amp;flag=marketing">Email Campaigns</a> <strong>&raquo;</strong> 
+	<a href='#'>Campaign Editor</a>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">Campaign Editor</div>
+	<div class="WidgetContent">
+		<!-- BEGIN TPL_TOPMSG_BLK -->
+			<p>{TPL_VAR_MSG}</p>
+		<!-- END TPL_TOPMSG_BLK -->
+		<form action="{TPL_VAR_SITEURL}sales/adminindex.php?action=email.update" method="POST" name="ThisForm" id="ThisForm" onsubmit="return validateForm();">
+			<input type="hidden" name="id" value="{TPL_VAR_ID}">
+			<input type="hidden" name="mode" value="{TPL_VAR_MODE}">
+			<table class="whiteTable2 Builder OneColum">
+				<tbody>
+					<tr> 
+						<td class="first"><label for="subject">Subject Line</label></td>
+						<td><input type="text" class="formField long" id="content_subject" name="subject" value="{TPL_VAR_SUBJECT}" size="30" maxlength="200" /></td>
+					</tr>
+					<tr> 
+						<td><label for="sourceid">Tracking Number/ID</label></td>
+						<td><input type="text" class="formField" id="sourceid" name="sid" value="{TPL_VAR_SID}" size="30"  maxlength="20" /></td>
+					</tr>
+					<tr> 
+						<td><label for="user_list">Recipient List</label></td>
+						<td>
+							<div class="selectContainer"><select class="formSelect" id="user_list" name="optUserList">
+															<option value="All" selected="selected">All - ({TPL_VAR_CUSTCNT}) users</option>
+															<!-- BEGIN TPL_SELECT_BLK -->
+																<option value="{TPL_VAR_LEADID}" {TPL_VAR_SELECTED}>{TPL_VAR_NAME} - ({TPL_VAR_COUNT}) users</option>
+															<!-- END TPL_SELECT_BLK --> 
+														</select></div>
+						</td>
+					</tr>
+					<tr> 
+						<td><label for="visitor_list">Recipient List(Visitors)</label></td>
+						<td>
+							<div class="selectContainer"><select class="formSelect" id="user_list" name="optVisitorList">
+															<option value="0" {TPL_MAILN_VISITORS>Don't send to Visitors - ({TPL_VAR_VISITORCNT}) visitors</option>
+															<option value="1" {TPL_MAILY_VISITORS}>Send To Visitors - ({TPL_VAR_VISITORCNT}) visitors</option>
+														</select></div>
+						</td>
+					</tr>
+					<tr> 
+						<td><label for="html">HTML Content</label></td>
+						<td><textarea id="html" class="formField long tall" name="html_mail" rows="12" cols="50">{TPL_VAR_HTMLMSG}</textarea></td>
+					</tr>
+					<tr> 
+						<td><label for="text">Plain Text Content</label></td>
+						<td><textarea id="text" class="formField long tall" name="text_mail" rows="12" cols="50">{TPL_VAR_PLAINMSG}</textarea></td>
+					</tr>
+				</tbody>
+			</table>
+			<!-- BEGIN TPL_BTN_BLK -->
+				<p class="formButtonWrapper">
+					<button class="formButton" type="submit"><img src="../graphics/i_add.gif" alt="{TPL_VAR_BTNLBL}" /> <div>{TPL_VAR_BTNLBL}</div></button>
+				</p>
+			<!-- END TPL_BTN_BLK -->
+		</form>
+		<!-- BEGIN TPL_TESTMAIL_BLK -->
+			<!-- BEGIN TPL_SENDMAIL_BLK -->
+				<form action="{TPL_VAR_SITEURL}sales/adminindex.php?action=email.sendmail" method="Post" name="ThisForm2" id="ThisForm2" onsubmit="return validateForm();">
+					<input type="hidden" name="id" value="{TPL_VAR_ID}">
+				</form>
+			<!-- END TPL_SENDMAIL_BLK -->
+			<form action="{TPL_VAR_SITEURL}sales/adminindex.php?action=email.sendmail&to=test" method="Post" name="ThisForm3" id="ThisForm3" onsubmit="return validateForm3();">
+				<input type="hidden" name="id" value="{TPL_VAR_ID}">
+				<table class="whiteTable2 Builders OneColum">
+					<thead>
+						<tr>
+							<th colspan="2">
+								<!-- BEGIN TPL_SENTMSG_BLK -->
+									Send Test Email - Campaign was last sent on {TPL_VAR_SENTDATE} by {TPL_VAR_ADMIN}
+								<!-- END TPL_SENTMSG_BLK -->
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="first">
+								Test Email Address
+							</td>
+							<td>
+								<input type="text" />
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<p class="formButtonWrapper">
+					<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="Send Test Email" /> <div>Send Test Email</div></button>
+				</p>
+			</form>
+		<!-- END TPL_TESTMAIL_BLK -->
+	</div>
+</div>

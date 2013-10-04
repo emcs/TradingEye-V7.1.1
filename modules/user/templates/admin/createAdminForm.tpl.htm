@@ -1,0 +1,90 @@
+<script language="javascript">
+function validateForm(form)
+{
+	if(isNull(form.username.value))
+	{
+		alert("Please enter a username name");
+		form.username.value='';
+		form.username.focus();
+		return false;
+	}
+
+	if(isNull(form.email.value))
+	{
+		alert("Please enter a email");
+		form.email.value='';
+		form.email.focus();
+		return false;
+	}
+	if(!checkEmail(form.email.value))
+	{
+		alert("Please enter valid email");
+		form.email.value='';
+		form.email.focus();
+		return false;
+	}
+}
+</script>
+<div class="historyWidgetContainer">
+	<a href="adminindex.php?flag=dashboard">Home</a> <strong>&raquo;</strong> 
+	<a href="/user/adminidex.php?action=security.home&amp;flag=admin">Admin</a> <strong>&raquo;</strong> 
+	<a href='#'>{TPL_VAR_FUNCTION} Admin User</a>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">User Details</div>
+	<div class="WidgetContent">
+		<!-- BEGIN TPL_MSG_BLK -->
+			<p>{TPL_VAR_MSG}</p>
+		<!-- END TPL_MSG_BLK -->
+		<form action="{TPL_USERURL}adminindex.php?action=security.addAdmin" method="post" name="TheForm" onSubmit="javascript:return validateForm(TheForm)">
+			<input type="hidden" name="mode" value="{TPL_VAR_MODE}"/>
+			<input type="hidden" name="adminid" value="{TPL_VAR_ADMINID}"/>
+			<div class="LeftBox">
+				<table class="whiteTable" style="border: 1px solid #E1E1E1;">
+					<thead>
+						<tr>
+							<th colspan="2">Access Permissions</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- BEGIN COLUMN_BLK -->
+						<tr>
+							<!-- BEGIN ROW_BLK -->
+							<td>
+								<input type="checkbox" class="checkbox" name="moduleid[]" value="{TPL_VAR_MID}" {SELECTED} /> {TPL_VAR_MODULENAME}
+							</td>
+							<!-- END ROW_BLK -->		
+						</tr>
+						<!-- END COLUMN_BLK -->
+					</tbody>
+				</table>
+			</div>
+			<div class="RightBox">
+				<table class="whiteTable" style="border: 1px solid #E1E1E1;">
+					<thead>
+						<tr>
+							<th colspan="2">User Login Details</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="first short"><label>Username</label></td>
+							<td><input type="text" name="username" value="{TPL_VAR_USERNAME}" class="formField" maxlength="30" /></td>	
+						</tr>
+						<tr>
+							<td><label>Password</label></td>
+							<td><input type="password" name="password" value="" class="formField" maxlength="30" /></td>
+						</tr>
+						<tr> 
+							<td><label>Email</label></td>
+							<td><input type="text" name="email" value="{TPL_VAR_EMAIL}" class="formField" maxlength="60" /></td>
+						</tr>
+					</tbody>
+				</table>
+				<button name="submit" type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="Set User Account" /> Set User Account</button>
+			</div>
+		</form>
+		<div class="placeHolder"></div>
+	</div>
+</div>

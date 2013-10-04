@@ -1,0 +1,244 @@
+<SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
+	function loadvalues()
+	{
+		stateName =  Array();
+		stateVal = Array();
+		
+		stateName[-1] = Array();
+		stateVal[-1] = Array();
+		stateName[0] = Array();
+		stateVal[0] = Array();
+	<!-- BEGIN countryblk -->
+		stateName[{k}] = Array();
+		stateVal[{k}] = Array();
+		stateName[{k}][-1] = "Select below";
+		stateVal[{k}][-1] = "-1";
+		stateName[{k}][-1] = "Select below";
+		stateName[{k}][0] = "Others";
+		stateVal[{k}][0] = "0";
+	<!-- END countryblk -->
+
+		stateName[0][0] = "Others";
+		stateVal[0][0] = "0";
+		
+	<!-- BEGIN stateblk -->
+		stateName[{i}][{j}] = "{stateName}"
+		stateVal[{i}][{j}] = "{stateVal}"
+	<!-- END stateblk -->
+	
+	}
+
+	function setbillstate(index,fstatus)
+	{
+		loadvalues();
+		document.ThisForm.bill_state_id.length=1;
+
+		if(index>-1)
+		{
+		for(i=-1;i<stateName[index].length;i++)
+		{
+			document.ThisForm.bill_state_id.options[i+1]=new Option(stateName[index][i],stateVal[index][i]);
+		}		
+
+		if(stateName[index].length==1)
+		{
+			document.ThisForm.bill_state_id.options[1].selected=true;
+		}
+
+		if(stateName[index].length>1)
+		{
+			document.getElementById("bill_state").style.background="#E8E8E8";
+			document.ThisForm.bill_state.value="";
+			document.ThisForm.bill_state.disabled=true;
+			document.getElementById("bill_state_id").style.background="#FFFFFF";
+			document.ThisForm.bill_state_id.disabled=false;
+			if(fstatus==2)
+			{
+				document.ThisForm.bill_state_id.focus();
+			}
+		}
+		else
+		{
+			document.getElementById("bill_state").style.background="#FFFFFF";
+			document.ThisForm.bill_state.disabled=false;
+			document.getElementById("bill_state_id").style.background="#E8E8E8";
+			document.ThisForm.bill_state_id.disabled=true;
+			if(fstatus==2)
+			{
+				document.ThisForm.bill_state.focus();
+			}
+		}
+		}
+
+	}
+
+
+	function validateForm(){
+		var frm = document.ThisForm;
+		if(isNull(frm.first_name.value)){
+			frm.first_name.value = '';
+			alert("You must enter a First name");
+			frm.first_name.focus();
+			return false;
+		}
+		if(isNull(frm.last_name.value)){
+			frm.last_name.value = '';
+			alert("You must enter a Last name");
+			frm.last_name.focus();
+			return false;
+		}
+		if(isNull(frm.txtemail.value)){
+			frm.txtemail.value = '';
+			alert("You must enter a Email");
+			frm.txtemail.focus();
+			return false;
+		}
+		if(isNull(frm.address1.value)){
+			frm.address1.value = '';
+			alert("You must enter a Address 1");
+			frm.address1.focus();
+			return false;
+		}
+		if(isNull(frm.zip.value)){
+			frm.zip.value = '';
+			alert("You must enter a Postcode/zip");
+			frm.zip.focus();
+			return false;
+		}
+		return true;
+	}
+</script>
+<div class="historyWidgetContainer">
+	<a href="adminindex.php?flag=dashboard&amp;flag=dashboard">Home</a> <strong>&raquo;</strong> 
+	<a href="../order/adminindex.php?action=orders.home&amp;flag=orders">Orders</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=user.home&amp;flag=orders">Customers</a> <strong>&raquo;</strong> 
+	<a href="javascript:history.go(-1);">Customer Details</a> <strong>&raquo;</strong> 
+	<a href='#'>Editing Customer Details</a>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">Customer Details</div>
+	<div class="WidgetContent">
+		<table class="whiteTable2 Builder OneColum">
+			<!-- BEGIN DSPMSG_BLK -->
+				<tr> 
+					<td colspan="5">{TPL_VAR_MSG}</td>
+				</tr>
+			<!-- END DSPMSG_BLK -->
+			<form action="{FORM_URL}" method="post" name="ThisForm" id="ThisForm" onsubmit="return validateForm();">
+				<input type="hidden" name="mode" value="{TPL_VAR_MODE}">
+				<input type="hidden" name="id" value="{TPL_VAR_ID}">
+				<tr>
+					<td><label>{LANG_VAR_PASSWORD}</label></td>
+					<td><input type="text" class="formField" id="customer_password" name="password" type="password"  value="" maxlength="30" /></td>
+				</tr>
+				<tr>
+					<td class="first short"><label>{LANG_VAR_FIRSTNAME}</label></td>	
+					<td><input type="text" class="formField" id="first_name" name="first_name" value="{TPL_VAR_FNAME}" maxlength="50"  /></td>
+				</tr>
+				<tr>
+					<td><label>{LANG_VAR_LASTNAME}</label></td>	
+					<td><input type="text" class="formField" id="last_name" name="last_name" value="{TPL_VAR_LNAME}" maxlength="40" /></td>
+				</tr>
+				<tr>
+					<td><label>{LANG_VAR_COMPANY}</label></td>	
+					<td><input type="text" class="formField" id="company" name="company" value="{TPL_VAR_COMPANY}" maxlength="80" /></td>
+				</tr>
+				<tr>
+					<td><label>{LANG_VAR_EMAIL}</label></td>	
+					<td><input type="text" class="formField" id="txtemail" name="txtemail" value="{TPL_VAR_EMAIL}" maxlength="60" /></td>
+				</tr>
+				<tr>
+					<td><label>{LANG_VAR_ADDRESS1}</label></td>	
+					<td><input type="text" class="formField" id="address_one" name="address1" value="{TPL_VAR_ADDRESS1}" maxlength="100" /></td>
+				</tr>
+				<tr>
+					<td><label>{LANG_VAR_ADDRESS2}</label></td>	
+					<td><input type="text" class="formField" id="address_two" name="address2" value="{TPL_VAR_ADDRESS2}" maxlength="100" /></td>
+				</tr>
+				<tr>
+					<td><label>{LANG_VAR_CITY}</label></td>	
+					<td><input type="text" class="formField" id="city" name="city" value="{TPL_VAR_CITY}" maxlength="60" /></td>
+				</tr>
+				<tr>
+					<td><label>{LANG_VAR_COUNTRY}</label></td>	
+					<td>
+						<div class="selectContainer"><select class="formSelect" id="country" name="bill_country_id" onchange="javascript:setbillstate(this.options[this.selectedIndex].value,2)">>
+													<!-- BEGIN BillCountry -->
+														<option value="{TPL_COUNTRY_VALUE}" {BILL_COUNTRY_SELECT}>{TPL_COUNTRY_NAME}</option>
+													<!-- END BillCountry -->
+												</select></div>
+					</td>
+				</tr>
+				<tr>
+					<td><label>{LANG_VAR_STATE}</label></td>	
+					<td>
+						<div class="selectContainer"><select class="formSelect" id="bill_state_id" name="bill_state_id">
+													<option></option>
+												</select></div>
+					</td>
+				</tr>
+				<tr> 
+					<td><label for="county">{LANG_VAR_STATEOTHER}</label></td>
+					<td><input class="formField" type="text" name="bill_state" value="{BILL_STATE}" maxlength="50" size="12" id="bill_state"></td>
+				</tr>
+				<tr>
+					<td><label>{LANG_VAR_POSTCODE}</label></td>	
+					<td><input type="text" class="formField" id="postcode" name="zip" value="{TPL_VAR_ZIP}" maxlength="15" /></td>
+				</tr>
+				<tr>
+					<td><label>{LANG_VAR_TELEPHONE}</label></td>	
+					<td><input type="text" class="formField" id="telephone" name="phone" value="{TPL_VAR_PHONE}" maxlength="20" /></td>
+				</tr>
+				<tr>
+					<td><label>{LANG_VAR_WEBSITE}</label></td>	
+					<td><input type="text" class="formField" id="homepage" name="homepage" value="{TPL_VAR_HOMEPAGE}" maxlength="80" /></td>
+				</tr>
+				<tr>
+					<td><label>{LANG_VAR_NEWSLETTER}</label></td>	
+					<td>
+						<input type="radio" id="mailing_list_html" name="mail_list" value="1"  {TPL_VAR_CHECK1}/>{LANG_VAR_HTML}
+						<input type="radio" id="mailing_list_plain" name="mail_list" value="2" {TPL_VAR_CHECK2}/>{LANG_VAR_PLAIN}
+						<input type="radio" id="mailing_list_none" name="mail_list" value="0" {TPL_VAR_CHECK3}/>{LANG_VAR_NONE}
+					</td>
+				</tr>
+				<tr>
+					<td><label>{LANG_VAR_MEMPOINTS}</label></td>	
+					<td><input type="text" class="formField short" id="membership_points" name="member_points" value="{TPL_VAR_MPOINTS}"  size="8"  maxlength="10" /></td>
+				</tr>
+				<tr>
+				<td><strong>{LANG_VAR_LBLCUSTOMERTYPE}</strong></td>	
+					<td><input type="checkbox" class="checkbox" id="customertype" name="customertype" value="1" size="8" {TPL_VAR_CUSTOMERTYPE} /></td>
+				</tr>
+				<tr>
+					<td><label>{LANG_VAR_STATUS}</label></td>	
+					<td>
+						<input type="checkbox" class="checkbox" id="membership_status" name="status" value="1" size="8" {TPL_VAR_STATUS} />
+						
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" style="border-bottom: 0;">
+						<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="{TPL_VAR_BTNLBL}" /> <div>{TPL_VAR_BTNLBL}</div></button>
+					</td>
+				</tr>
+			</form>	
+		</table>
+	</div>
+</div>
+<script>
+		if(document.ThisForm.bill_country_id.value=="" || document.ThisForm.bill_country_id.value<=0)
+			{
+			setbillstate({selbillcountid},2);
+			}
+			else
+			{
+			setbillstate(document.ThisForm.bill_country_id.value,2);
+			}
+			
+			for(var i=0;i<document.ThisForm.bill_state_id.options.length;i++)
+			{
+			if(document.ThisForm.bill_state_id.options[i].value == '{selbillstateid}')
+			document.ThisForm.bill_state_id.options[i].selected = true;
+			}
+</script>

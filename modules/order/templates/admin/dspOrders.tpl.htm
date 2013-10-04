@@ -1,0 +1,105 @@
+<div class="historyWidgetContainer">
+	<a href="adminindex.php?flag=dashboard&amp;flag=dashboard">Home</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=orders.home&amp;flag=orders">Orders</a> <strong>&raquo;</strong> 
+	<a href='#'>Invoices</a>
+</div>
+
+<div class='fullWidgetContainer'>
+	<div class='WidgetContent'>
+ 		<!-- BEGIN TPL_MSG_BLK -->	
+			{TPL_VAR_MESSAGE}
+		<!-- END TPL_MSG_BLK -->
+		<div class="search">
+			<form class="searchInvoices" method="post" name="SecondForm" action="/order/adminindex.php?action=orders.dspDetails" style="float: left; clear: left;">
+				<input type="text" name="orderid" id="searchKeyword" onfocus="if(this.value=='View Invoice Number')this.value='';" onblur="if(this.value=='')this.value='View Invoice Number';" value="View Invoice Number" maxlength="50" />
+				<input type="submit" name="go" class="searchSubmit" value="Go" />
+			</form>
+			<form method="post" name="TheForm" action="adminindex.php?{TPL_VAR_EXTRASTRING1}" style="float: right; clear: right;">
+				<label>Sort Invoices By:</label>
+					<div class="selectContainerSmall"><select class="formSelect" name="orderby">
+											<option value="invoice" {SELECTED_ORDERBY}>Invoice</option>
+											<option value="date" {SELECTED_ORDERBY1}>Order date</option>
+											<option value="paymethod" {SELECTED_ORDERBY2}>Payment method</option>
+											<option value="paystatus" {SELECTED_ORDERBY3}>Payment status</option>
+											<option value="lastname" {SELECTED_ORDERBY4}>Last name</option>
+											<option value="city" {SELECTED_ORDERBY5}>City</option>
+											<option value="state" {SELECTED_ORDERBY6}>County/State</option>
+											<option value="country" {SELECTED_ORDERBY7}>Country</option>
+											<option value="alt_city" {SELECTED_ORDERBY8}>Postage city</option>
+											<option value="alt_state" {SELECTED_ORDERBY9}>Postage county</option>
+											<option value="alt_country" {SELECTED_ORDERBY10}>Postage country</option>
+										</select></div>
+				<label>Status:</label>
+					<div class="selectContainerSmall"><select class="formSelect" name="mstatus">
+											<option value="New" {SELECTED1}>New</option>
+											<option value="Pending" {SELECTED2}>Pending</option>
+											<option value="Received" {SELECTED3}>Received</option>
+											<option value="Backorder" {SELECTED4}>Backorder</option>
+											<option value="Shipped" {SELECTED5}>Dispatched</option>
+											<option value="Void" {SELECTED6}>Void</option>
+											<option value="All" {SELECTED8}>All orders</option>
+										</select></div>
+				<label>Asc.</label>
+					<input type="radio" style='position:relative;top:-10px;' class="radio" name="direction" value="asc" {TPL_VAR_SEL1} />
+				<label>Desc.</label>
+					<input type="radio" style='position:relative;top:-10px;' class="radio" name="direction" value="desc" {TPL_VAR_SEL2} />
+				<input id='2ndsearch' style='position:relative;top:-10px;' type="submit" name="Sort Orders" class="searchSubmit" value="Sort Orders" />
+			</form>
+		</div>
+		<!-- BEGIN TPL_ORDERMAIN_BLK -->
+			<form action="adminindex.php?{TPL_VAR_EXTRASTRING}" method="post">
+				<table class="whiteTable2" cellspacing="0">
+					<thead>
+						<tr>
+							<th class="headerInvoiceNumber">Invoice</th>
+							<th class="headerOrderDate">Order Date</th>
+							<th>Customer</th>
+							<th class="headerMethod">Method</th>
+							<th class="headerInvStatus">Status</th>
+							<th class="headerInvStatusSelect">Status</th>
+							<th class="headerInvStatus">Status</th>
+							<th class="headerPreview">View</th>
+						</tr>
+					</thead>
+						<tbody>
+					<!-- BEGIN TPL_ORDERS_BLK -->
+							<tr>
+								<td>{TPL_VAR_INVOICE}</td>
+								<td>{TPL_VAR_ORDERDATE}</td>
+								<!-- BEGIN TPL_BLK_REGISTERED_USER -->
+									<td><a href="/user/adminindex.php?action=user.details&id={TPL_VAR_CUSTOMERID}">{TPL_VAR_CUSTOMER}</a></td>
+								<!-- END TPL_BLK_REGISTERED_USER -->
+								<!-- BEGIN TPL_BLK_NOTREGISTERED_USER -->
+									<td>{TPL_VAR_CUSTOMER}</td>
+								<!-- END TPL_BLK_NOTREGISTERED_USER -->
+								<td>{TPL_VAR_METHOD}</td>
+								<td>{TPL_VAR_PAYSTATUS}</td>
+								<td>
+				<input type="hidden" name="orderid[]" value="{TPL_VAR_ORDERID}" />
+									<div class="selectContainerSmall"><select class="formSelect short" name="status[]">
+																			<option value="New" {SEL1}>New</option>
+											
+											<option value="Pending" {SEL2}>Pending</option>
+																			<option value="Received" {SEL3}>Received</option>
+																			<option value="Backorder" {SEL4}>Backorder</option>
+																			<option value="Shipped" {SEL5}>Dispatched</option>
+																			<option value="Void" {SEL6}>Void</option>
+																			<option value="Delete" >Delete</option>
+																		</select></div>
+								</td>
+								<td>{TPL_VALID_ORDER}</td>
+								<td>
+									<a href="adminindex.php?action=orders.dspDetails&orderid={TPL_VAR_INVOICE}" class="linkPreview">View</a>
+								</td>
+							</tr>
+					<!-- END TPL_ORDERS_BLK -->	
+						</tbody>
+				</table>
+				<button type="submit" class="formButton"><img src="../graphics/i_refresh_alt.gif" alt="Update Orders" /> <div>Update Orders</div></button>
+			</form>
+		<!-- END TPL_ORDERMAIN_BLK -->
+	</div>
+	<!-- BEGIN TPL_PAGE_BLK2 -->
+		{PagerBlock2}
+	<!-- END TPL_PAGE_BLK2 -->
+</div>

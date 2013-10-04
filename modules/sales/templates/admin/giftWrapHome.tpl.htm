@@ -1,0 +1,47 @@
+<div class="historyWidgetContainer"><a href='adminindex.php'>Home </a><strong> &raquo; </strong><a href='adminindex.php?action=email.home'>Marketing</a><strong> &raquo; </strong><a href='adminindex.php?action=promotions.home'>Promotions</a><strong> &raquo; </strong><a href='#'>Gift Wrapping</a></div>
+<div class="fullWidgetContainer">
+      <div class="WidgetTitle">Gift Wrapping <span><!-- BEGIN TPL_MSG_BLK1 --><small>{TPL_VAR_MSG}</small><!-- END TPL_MSG_BLK1 --></span></div>
+      <div class="WidgetContent">
+	<p class="buttonWrapper">
+		<button onclick="window.location='{TPL_VAR_SALESURL}adminindex.php?action=promotions.giftwrap.dspForm'" class="formButton"><img src="../graphics/i_add.gif" alt="Add New Gift Wrap" /> <div>Add New Gift Wrap</div></button>
+	</p>
+	<table class="whiteTable2" cellspacing="0">
+		<thead>
+			<tr>
+				<th class="headerSort">Sort</th>
+				<th>Title</th>
+				<th>Image</th>
+				<th>Price</th>
+				<th>On/Off</th>
+				<th class="headerEdit">Edit</th>
+				<th class="headerDelete">Delete</th>
+			</tr>
+		</thead>
+		<tbody>
+			<form action="{TPL_VAR_SALESURL}adminindex.php?action=promotions.giftwrap.updateHome" method="post" name="ThisForm" id="ThisForm">
+				<!-- BEGIN TPL_GIFTWRAP_BLK -->
+				<tr> 
+					<td><input type="text" name="sort[{TPL_VAR_ID}]" value="{TPL_VAR_SORT}" size="2" class="formField short" maxlength="5" /></td>
+					<td>{TPL_VAR_TITLE}</td>
+					<td>{TPL_VAR_IMAGE}</td>
+					<td>{TPL_VAR_CURRENCY}{TPL_VAR_PRICE}</td>
+					<td><input type="checkbox" name="state[{TPL_VAR_ID}]" value="1" class="checkbox" {TPL_VAR_CHECKED}/></td>
+					<td><a class="linkEdit" href="{TPL_VAR_SALESURL}adminindex.php?action=promotions.giftwrap.dspForm&id={TPL_VAR_ID}">Edit</a></td>
+					<td><a class="linkDelete" href="{TPL_VAR_SALESURL}adminindex.php?action=promotions.giftwrap.delete&id={TPL_VAR_ID}&amp;auth={TPL_VAR_AUTH_TOKEN}" onclick="if(confirm('Are you sure you want to delete {TPL_VAR_CODE1}?')){return true}else{return false}">Delete</a></td>
+				</tr>
+				<!-- END TPL_GIFTWRAP_BLK --> 
+				<!-- BEGIN TPL_MESSAGE_BLK -->
+					<tr>
+						<td colspan="7">{TPL_VAR_MESSAGE}.</td>
+					</tr>
+				<!-- END TPL_MESSAGE_BLK -->   
+			</tbody>
+		</table>
+		<!-- BEGIN TPL_BUTTON_BLK -->
+		<p class="formButtonWrapper">
+			<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="Apply Changes" /> <div>Apply Changes</div></button>
+			<input type="hidden" name="itemcount" value="2" />
+		</p>
+		<!-- END TPL_BUTTON_BLK -->
+	</form>
+</div></div>

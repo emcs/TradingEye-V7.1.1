@@ -1,0 +1,42 @@
+<div class="historyWidgetContainer">
+	<a href="adminindex.php?flag=dashboard">Home</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=ec_show.home&amp;flag=builder">Builder</a> <strong>&raquo;</strong> 
+	<a href='#'>Product Packages</a>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">{LANG_VAR_PRODUCTPACKAGE} <small>{TPL_VAR_RECORDCOUNT} {LANG_VAR_RECORDSFOUND}</small></div>
+	<div class="WidgetContent">
+		<button class="formButton" onclick="window.location='{TPL_SHOPURL}adminindex.php?action=ec_package.build'"><img src="../graphics/i_add.gif" alt="Add New Product Package" /> <div>Add New Product Package</div></button>
+		<form action="{TPL_SHOPURL}adminindex.php?action=ec_package.updatePackHome" method="post">
+			<!-- BEGIN TPL_ATTACHED_BLK -->
+			<table class="whiteTable2 Builder" cellspacing="0">
+				<thead>
+					<tr>
+						<th>On /Off</th>
+						<th>{LANG_VAR_ID}</th>
+						<th class="extend">{LANG_VAR_NAME}</th>
+						<th>{LANG_VAR_PRODUCTSTXT}</th>
+						<th>{LANG_VAR_DISASSEMBLE}</th>
+						<th>{LANG_VAR_EDIT}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<input type="hidden" name="pid[]" value="{TPL_VAR_ID}">
+						<td><input type="checkbox" name="status[{TPL_VAR_ID}]" value="1" {TPL_VAR_CHECKED}></td>
+						<td>{TPL_VAR_SKU}</td>
+						<td class="extend"><a href="adminindex.php?action=ec_show.dspProFrm&type={TPL_VAR_TYPE}&id={TPL_VAR_ID}&owner={TPL_VAR_OWNER}">{TPL_VAR_TITLE}</a></td>
+						<td>{TPL_VAR_RCOUNT}</td>
+						<td><a href="adminindex.php?action=ec_package.disamble&kitid={TPL_VAR_ID}&amp;auth={TPL_VAR_AUTH_TOKEN}" class="linkDisassemble">{LANG_VAR_DISASSEMBLE}</a></td>
+						<td><a href="adminindex.php?action=ec_package.build&kitid={TPL_VAR_ID}" class="linkEdit">{LANG_VAR_EDIT}</a></td>
+					</tr>
+				</tbody>
+			</table>
+			<!-- END TPL_ATTACHED_BLK -->
+			<!-- BEGIN TPL_BUTTON_BLK -->
+			<p class="formButtonWrapper alt"><button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="Apply Changes" /> Apply Changes</button></p>
+			<!-- END TPL_BUTTON_BLK -->
+		</form>
+	</div>
+</div>

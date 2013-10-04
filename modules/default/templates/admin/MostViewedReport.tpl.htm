@@ -1,0 +1,33 @@
+<div class="historyWidgetContainer">
+	<a href='adminindex.php'>Home</a> <strong>&raquo;</strong> 
+	<a href='/sales/adminindex.php?action=email.home&amp;flag=marketing'>Marketing</a> <strong>&raquo;</strong>
+	<a href='/sales/adminindex.php?action=report.home&amp;flag=marketing'>Reports</a> <strong>&raquo;</strong>  
+	<a href="#">Most Viewed Products</a>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">Most Viewed Products</div>
+	<div class="WidgetContent">
+		<p class="buttonWrapper">
+			<button onclick="window.location='{TPL_VAR_SITEURL}adminindex.php'" class="formButton"><img src="{TPL_VAR_SITEURL}graphics/i_back.gif" alt="Back" /> <div>Return to Dashboard</div></button>
+		</p>
+		<table class="whiteTable2 Orders" cellspacing="0">
+			<thead>
+				<tr>
+					<th>Product Name</th>
+					<th>Number of Views</th>
+					<th>Price</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- BEGIN TPL_MOSTVIEWED_BLK -->
+					<tr>
+						<td><a href="{TPL_VAR_MOSTPRODUCTURL}">{TPL_VAR_MOSTTITLE}</a></td>
+						<td>{TPL_VAR_VIEWS}</td>
+						<td>{TPL_VAR_MOSTPRICE}</td>
+					</tr>
+				<!-- END TPL_MOSTVIEWED_BLK -->
+			</tbody>
+		</table>
+	</div>
+</div>

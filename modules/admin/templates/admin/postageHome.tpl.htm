@@ -1,0 +1,64 @@
+
+<div class="historyWidgetContainer"><a href="../adminindex.php?flag=dashboard">Home</a> <strong>&raquo;</strong> <a href="adminindex.php?action=settings.companyHome&flag=settings">Settings</a> <strong>&raquo;</strong> <a href="#"> Postage &amp; Packing</a></div>
+    <div class="fullWidgetContainer">
+      <div class="WidgetTitle">Postage &amp; Packing</div>
+      <div class="WidgetContent">
+	<div class="LeftBox">
+		<h3>Default Postage &amp; Packing Method</h3>
+		<p>Choose a base Postage &amp; Packing method, to be applied as your default setting.</p>
+		<table class="whiteTable2">
+			<thead>
+				<tr>
+					<th class="headerStatus">Status</th>
+					<th class="headerPostageMethod">Postage method</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<form name="codes" id="codes" action="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.postHomeUpdate" method="post">
+					<!-- BEGIN TPL_METHODS_BLK -->
+					<tr>
+						<td><input type="radio" class="formRadio" name="postageid" value="{TPL_VAR_ID}" {TPL_VAR_STATUS} /></td>
+						<td><a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.postageEditor&mode={TPL_VAR_KEY}" class="linkEdit">{TPL_VAR_NAME}</a></td>
+						<td>{TPL_VAR_DESCRIPTION}</td>
+					</tr>
+					<!-- END TPL_METHODS_BLK -->
+				</tbody>
+			</table>
+		</div>
+		<div class="RightBox">
+			<h3>Postage &amp; Packing Extensions</h3>
+			<p>Postage options below can work in conjunction with any base Postage &amp; Packing method.</p>
+			<table class="whiteTable2">
+				<thead>
+					<tr>
+						<th class="headerStatus">Status</th>
+						<th class="headerPostageMethod">Postage method</th>
+						<th>Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><input type="checkbox" class="formRadio" name="weightid" value="{TPL_VAR_WEIGHTID}" {TPL_VAR_WEIGHTSTATUS}/></td>
+						<td><a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.postageEditor&mode={TPL_VAR_WEIGHTKEY}" class="linkEdit">{TPL_VAR_WEIGHTNAME}</a></td>
+						<td>{TPL_VAR_WEIGHTDESCRIPTION}</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" class="formRadio" name="specialid" value="{TPL_VAR_SPCID}" {TPL_VAR_SPECIALSTATUS} /></td>
+						<td><a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.postageEditor&mode={TPL_VAR_SPCKEY}" class="linkEdit">{TPL_VAR_SPCNAME}</a></td>
+						<td>{TPL_VAR_SPCDESCRIPTION}</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" class="formRadio" id="SpecialPostage" name="SpecialPostage" value="1" {ENABLE_SPECIALPOSTAGE} /></td>
+						<td colspan="2"><a>Special Rates with other Postage Method</a></td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="formButtonWrapper">
+				<button type="submit" name="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="Apply Changes" /> Apply Changes</button>
+			</p>
+			</form>
+		</div>
+<div class="placeHolder"></div>
+	</div>
+</div>

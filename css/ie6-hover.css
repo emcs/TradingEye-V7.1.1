@@ -1,0 +1,15 @@
+
+/* ------------------------------------------------------------
+
+  Calls in an ie6 behaviour to force this browser to act on 
+  the :hover pseudo-element. Required for the hover/drop-down
+  navigation style.
+
+  Thanks to Peter Nederlof for this script:
+  http://www.xs4all.nl/~peterned/about.html
+
+---------------------------------------------------------------*/
+
+body {
+	behavior: url("../jscript/csshover3.htc");
+	}

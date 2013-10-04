@@ -1,0 +1,46 @@
+<div class="historyWidgetContainer">
+	<a href='adminindex.php'>Home</a> <strong>&raquo;</strong> 
+	<a href='/sales/adminindex.php?action=email.home&amp;flag=marketing'>Marketing</a> <strong>&raquo;</strong>
+	<a href='/sales/adminindex.php?action=report.home&amp;flag=marketing'>Reports</a> <strong>&raquo;</strong>  
+	<a href="#">Stock Report</a>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">Stock Report</div>
+	<div class="WidgetContent">
+		<!-- BEGIN TPL_MESSAGE_BLK -->
+			<p>{TPL_VAR_MESSAGE}</p>
+		<!-- END TPL_MESSAGE_BLK -->
+		<table class="whiteTable2 Orders" cellspacing="0">
+			<thead>
+				<tr>
+					<th class="headerStatus">On/Off</th>
+					<th>Product name</th>
+					<th>Stock</th>
+					<th class="headerEdit">Edit</th>
+					<th class="headerDelete">Delete</th>
+				</tr>
+			</thead>
+			<tbody>
+			<!-- BEGIN TPL_PRODUCT_BLK -->
+				<tr> 
+					<td>{TPL_VAR_ONOFF}</td>
+					<td>
+						<!-- BEGIN TPL_NOLINK_BLK -->
+						{TPL_VAR_PRODUCT_TITLE} <em>(orphan product)</em>
+						<!-- END TPL_NOLINK_BLK -->
+						<!-- BEGIN TPL_LINK_BLK -->
+						<a href="{TPL_PRODUCT_URL}">{TPL_VAR_PRODUCT_TITLE}</a>
+						<!-- END TPL_LINK_BLK -->
+					</td>
+					<td>{TPL_VAR_PRODUCT_STOCK}</td>
+					<td><a class="linkEdit"href="{TPL_SHOP_URL}?action=ec_show.dspProFrm&id={TPL_SUBPRODUCT_ID}&owner={TPL_OWNER_ID}&type={TPL_OTYPE}">Edit</a></td>
+					<td><a class="linkDelete" href="{TPL_VAR_SITEURL}adminindex.php?action=home.deleteProduct&id={TPL_SUBPRODUCT_ID}&rtype=stock&amp;auth={TPL_VAR_AUTH_TOKEN}" onclick="if(confirm('Are you sure you want to delete this product?')){return true}else{return false}">Delete</a></td>
+				</tr>
+				<!-- END TPL_PRODUCT_BLK -->
+			</tbody>
+		</table>
+		{PagerBlock2}
+	</div>
+</div>
+		

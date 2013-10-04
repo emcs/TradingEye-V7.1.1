@@ -1,0 +1,43 @@
+<div class="historyWidgetContainer">
+	<a href="adminindex.php?flag=dashboard&amp;flag=dashboard">Home</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=orders.home&amp;flag=orders">Orders</a> <strong>&raquo;</strong> 
+	<a href="adminindex.php?action=orders.home&amp;flag=orders">Invoices</a> <strong>&raquo;</strong> 
+	<a href='#'>Add Product</a>
+</div>
+
+<div class="fullWidgetContainer">
+	<div class="WidgetTitle">Add Product To Invoice</div>
+	<div class="WidgetContent">
+	<p class="buttonWrapper full">
+		<a href="{TPL_VAR_SITEURL}ecom/adminindex.php?action=ec_show.home"><img src="../graphics/i_back.gif" alt="Back" /> Return to Shop Builder</a>
+	</p>
+	<div class="column first">
+		<form action="{TPL_VAR_SITEURL}order/adminindex.php?action=orders.find" method="post" name="ThisForm1">
+			<input type='hidden' name='orderid' value='{TPL_VAR_ORDERID}' />
+			<select size="10" class="formSelect attach" name="postOwner">
+				<option value="0" {SELECTED1}>Home page</option>
+				<option value="orphan">All orphan {TPL_VAR_TYPE}</option>
+				<!-- BEGIN TPL_DEPARTMENT_BLK -->	
+				<option value="{TPL_VAR_ID}" {SELECTED2}>{TPL_VAR_TITLE}</option>
+				<!-- END TPL_DEPARTMENT_BLK -->	
+			</select>
+			<p class="formButtonWrapper attach">
+				<button type="submit" class="formButton"><img src="../graphics/i_preview_alt.gif" alt="{LANG_VAR_VIEWITEMS}" /> View Items</button>
+			</p>
+		</form>
+	</div>
+	<div class="column">
+		<form action="{TPL_VAR_SITEURL}order/adminindex.php?action=orders.addproductform" method="post" name="ThisForm2">
+			<input type='hidden' name='orderid' value='{TPL_VAR_ORDERID}' />
+			<select size="10" class="formSelect attach" name="postOwner">
+				<!-- BEGIN TPL_ITEMS_BLK -->	
+				<option value="{TPL_VAR_ID}">{TPL_VAR_TITLE}</option>
+				<!-- END TPL_ITEMS_BLK -->
+			</select>	
+			<p class="formButtonWrapper attach">
+				<button type="submit" name="submit" class="formButton"><img src="../graphics/i_add_alt.gif" alt="Add Item(s) to Package" /> Add Item(s) to Package</button>
+			</p>
+		</form>
+	</div>
+	<br style='clear:both;'/>
+</div>	</div>
