@@ -887,7 +887,7 @@ method");
 		}
 		#CHECKING FOR DELTA CARDS
 		if(VISA_DELTA) {
-			$this->ObTpl->set_var("TPL_VAR_NAME","Visa Delta");
+			$this->ObTpl->set_var("TPL_VAR_NAME","Visa Debit");
 			$this->ObTpl->set_var("TPL_VAR_VALUE","DELTA");
 			$this->ObTpl->parse("creditcard_blk","TPL_CARDS_BLK",true);
 		}

@@ -196,7 +196,6 @@ class c_optionDb
 		$this->obDb->query.="`tmEditDate`='$timeStamp',`iAdminUser`='".$_SESSION['uid']."'";
 		$this->obDb->query.=" WHERE iOptionid_PK='".$this->request['optionid']."'";
 		$this->obDb->updateQuery();
-
 		if(isset($this->request['itemid']))
 		{
 			$cnt=count($this->request['itemid']);
@@ -211,10 +210,18 @@ class c_optionDb
 				{
 					$this->request['backorder'][$itemid]="0";
 				}
+				if(is_numeric($this->request['price'][$itemid]))
+				{
+					$tempprice = $this->request['price'][$itemid];
+				}
+				else
+				{
+					$tempprice = 0;
+				}
 				$this->obDb->query ="UPDATE ".OPTIONVALUES." SET ";
 				$this->obDb->query.="`vOptSku`='".$this->libFunc->m_addToDB($this->request['sku'][$itemid])."',";
 				$this->obDb->query.="`vItem`='".$this->libFunc->m_addToDB($this->request['item'][$itemid])."',";
-				$this->obDb->query.="`fPrice`='".$this->libFunc->checkFloatValue($this->request['price'][$itemid])."',";
+				$this->obDb->query.="`fPrice`='".$tempprice."',";
 				$this->obDb->query.="`iInventory`='".$this->libFunc->checkWrongValue($this->request['inventory'][$itemid])."',";
 				$this->obDb->query.="`iUseInventory`='".$this->libFunc->checkWrongValue($this->request['use_inventory'][$itemid])."',";
 				$this->obDb->query.="`iBackorder`='".$this->libFunc->checkWrongValue($this->request['backorder'][$itemid])."',";
@@ -244,7 +251,14 @@ class c_optionDb
 			$this->obDb->query.=" VALUES('','".$this->request['optionid']."',";
             $this->obDb->query.="'".$this->libFunc->m_addToDB($this->request['skunew'])."',";
 			$this->obDb->query.="'".$this->libFunc->m_addToDB($this->request['itemnew'])."',";
-			$this->obDb->query.="'".$this->libFunc->checkFloatValue($this->request['pricenew'])."',";
+			if(is_numeric($this->request['pricenew']))
+			{
+			$this->obDb->query.="'".$this->request['pricenew']."',";
+			}
+			else
+			{
+			$this->obDb->query.="'" . 0 ."',";
+			}
 			$this->obDb->query.="'".$this->libFunc->checkWrongValue($this->request['inventorynew'])."',";
 			$this->obDb->query.="'".$this->libFunc->checkWrongValue($this->request['use_inventorynew'])."',";
 			$this->obDb->query.="'".$this->libFunc->checkWrongValue($this->request['backordernew'])."',";

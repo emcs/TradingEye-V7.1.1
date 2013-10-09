@@ -600,7 +600,6 @@ class c_ecomAdminController
 							}
 					break;
 					case "editForm":
-					$this->libfunc->check_token();
 					$obOptionInterface->optionTemplate=$this->templatePath."formEditOptions.tpl.htm";
 					$this->obTpl->set_var("TPL_VAR_BODY",$obOptionInterface->m_formEditOption());
 					break;

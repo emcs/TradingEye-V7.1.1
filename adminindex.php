@@ -41,7 +41,7 @@ foreach($_POST as $k=>$v){
 	if(is_array($_POST[$k])){
 		foreach($_POST[$k] as $k2=>$v2){
 			$_POST[$k][$k2] = escape($_POST[$k][$k2]);
-			if($k != "tabdesc")
+			if($k != "tabdesc" && $k != "price")
 			{
 				$_POST[$k][$k2] = htmlentities($_POST[$k][$k2],ENT_QUOTES,"UTF-8");
 			}
