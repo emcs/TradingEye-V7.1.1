@@ -693,7 +693,7 @@ INSERT INTO `{{prefix}}tbsettings` (`iSettingid`, `vDatatype`, `vSmalltext`, `tL
 (161, 'imgUploadDeptMediumHeight', NULL, NULL, 220, '{{timestamp}}', '{{timestamp}}', 'UPLOAD_DEPTMDIMAGEHEIGHT', '', 1),
 (162, 'imgUploadContentSmallWidth', NULL, NULL, 140, '{{timestamp}}', '{{timestamp}}', 'UPLOAD_CONTENTSMIMAGEWIDTH', '', 1),
 (163, 'imgUploadContentSmallHeight', NULL, NULL, 140, '{{timestamp}}', '{{timestamp}}', 'UPLOAD_CONTENTSMIMAGEHEIGHT', '', 1),
-(164, 'analyticsCode', NULL, '<script src="https://ssl.google-analytics.com/urchin.js" type="text/javascript"></script> <script type="text/javascript"> _uacct = "UA-XXXXX-X"; urchinTracker(); </script>', NULL, '{{timestamp}}', '{{timestamp}}', 'ANALYTICSCODE', '', 1),
+(164, 'analyticsCode', NULL, 'UA-XXXXX-X', NULL, '{{timestamp}}', '{{timestamp}}', 'ANALYTICSCODE', '', 1),
 (165, 'payPalId', NULL, NULL, NULL, '{{timestamp}}', '{{timestamp}}', 'PAYPAL_ID', '', 1),
 (166, 'paymentCurrency', 'GBP', NULL, NULL, '{{timestamp}}', '{{timestamp}}', 'PAYMENT_CURRENCY', '', 1),
 (167, 'authorizeNetLogin', NULL, NULL, NULL, '{{timestamp}}', '{{timestamp}}', 'AUTHORIZEPAYMENT_LOGIN', '', 1),
