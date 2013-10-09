@@ -644,7 +644,6 @@ class c_ecomAdminController
 
 					case "editChoice":
 					case "ctmOptForm":
-					$this->libfunc->check_token();
 					$obOptionInterface->optionTemplate=$this->templatePath."formCustomOption.tpl.htm";
 					$this->obTpl->set_var("TPL_VAR_BODY",$obOptionInterface->m_customOptionForm());
 					break;
