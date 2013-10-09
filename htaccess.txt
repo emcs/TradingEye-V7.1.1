@@ -3,6 +3,11 @@
 
 RewriteEngine On
 
+# Rewrite requests for sitemap.xml
+RewriteRule ^sitemap.xml$ /sitemap/sitemap.php?target=google [L,R]
+# Rewrite requests for urllist.txt
+RewriteRule ^urllist.txt$ /sitemap/sitemap.php?target=yahoo [L,R]
+
 RewriteBase /
 RewriteRule ^test(/)?$ installs/test_htaccess.php [nc]
 
