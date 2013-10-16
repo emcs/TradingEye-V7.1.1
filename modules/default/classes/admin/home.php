@@ -133,14 +133,13 @@ class c_home
 			for($l=0;$l<$NewOrdersCount;$l++)
 			{
 			
-				$this->obDb->query = "SELECT * FROM ".CUSTOMERS." WHERE vEmail = '".$NewOrders[$l]->vEmail."' AND iRegistered=1";
+				$this->obDb->query = "SELECT iCustmerid_PK FROM ".CUSTOMERS." WHERE vEmail = '".$NewOrders[$l]->vEmail."' AND iRegistered=1";
 				$CheckCust = $this->obDb->fetchQuery();
 				$CheckCustCount = $this->obDb->record_count;
 				
 				if($CheckCustCount >0)
 				{
-					
-					$this->ObTpl->set_var("TPL_VAR_CUSTOMERID",$NewOrders[$l]->iCustomerid_FK);
+					$this->ObTpl->set_var("TPL_VAR_CUSTOMERID",$CheckCust[0]->iCustmerid_PK);
 					$this->ObTpl->set_var("TPL_VAR_CUSTOMER",$NewOrders[$l]->vFirstName." ".$NewOrders[$l]->vLastName);
                     $this->ObTpl->set_var("nonregistered_user_blk","");
                     $this->ObTpl->parse("registered_user_blk","TPL_BLK_REGISTERED_USER");
