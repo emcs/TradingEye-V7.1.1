@@ -133,7 +133,7 @@ class c_home
 			for($l=0;$l<$NewOrdersCount;$l++)
 			{
 			
-				$this->obDb->query = "SELECT * FROM ".CUSTOMERS." WHERE vEmail = '".$NewOrders[$l]->vEmail."'";
+				$this->obDb->query = "SELECT * FROM ".CUSTOMERS." WHERE vEmail = '".$NewOrders[$l]->vEmail."' AND iRegistered=1";
 				$CheckCust = $this->obDb->fetchQuery();
 				$CheckCustCount = $this->obDb->record_count;
 				

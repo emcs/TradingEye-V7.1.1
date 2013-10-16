@@ -725,6 +725,7 @@ method");
 		
 			$this->ObTpl->set_var("TPL_VAR_DEFAULT_POSTAGEMETHOD",$_SESSION['defPostageMethod']);
 			$this->ObTpl->set_var("TPL_VAR_DEFAULT_POSTAGEPRICE",number_format($_SESSION['defPostagePrice'],2));
+			$_SESSION['postageoptions'][0] = $_SESSION['defPostagePrice'];
 			//--
 			if($_SESSION['zoneSpecialDelivery'] >0 && DEFAULT_POSTAGE_METHOD=='zones')
             {
@@ -738,10 +739,12 @@ method");
                 
                 $this->ObTpl->set_var("TPL_VAR_METHODID","1");
                 $this->ObTpl->set_var("TPL_VAR_POSTAGEPRICE",$_SESSION['postagePrice']);
+				$_SESSION['postageoptions'][1] = $_SESSION['postagePrice'];
                 $this->ObTpl->parse("postage_blk","TPL_POSTAGE_BLK");
                 
                 $this->ObTpl->set_var("TPL_VAR_METHODID","2");
                 $this->ObTpl->set_var("TPL_VAR_POSTAGEPRICE",number_format($postagePrice,2));
+				$_SESSION['postageoptions'][2] = $_SESSION['postagePrice'];
                 $this->ObTpl->parse("postage_blk","TPL_POSTAGE_BLK");
                                     
                 $this->ObTpl->parse("default_postage_blk","TPL_DEFAULTPOSTAGE_BLK");            
@@ -759,10 +762,12 @@ method");
                 
                 $this->ObTpl->set_var("TPL_VAR_METHODID","1");
                 $this->ObTpl->set_var("TPL_VAR_POSTAGEPRICE",$_SESSION['postagePrice']);
+				$_SESSION['postageoptions'][1] = $_SESSION['postagePrice'];
                 $this->ObTpl->parse("postage_blk","TPL_POSTAGE_BLK");
                 
                 $this->ObTpl->set_var("TPL_VAR_METHODID","2");
                 $this->ObTpl->set_var("TPL_VAR_POSTAGEPRICE",number_format($postagePrice,2));
+				$_SESSION['postageoptions'][2] = $_SESSION['postagePrice'];
                 $this->ObTpl->parse("postage_blk","TPL_POSTAGE_BLK");
                                     
                 $this->ObTpl->parse("default_postage_blk","TPL_DEFAULTPOSTAGE_BLK");            
@@ -813,6 +818,7 @@ method");
 						//$postagePrice=$postagePrice+$_SESSION['defPostagePrice'];
 					}
 					$this->ObTpl->set_var("TPL_VAR_POSTAGEPRICE",$postagePrice);
+				$_SESSION['postageoptions'][$rsPostage[$j]->iPostDescId_PK] = $postagePrice;
 					$this->ObTpl->parse("postage_blk","TPL_POSTAGE_BLK",true);
 				}
 			}else			
@@ -821,6 +827,7 @@ method");
 			$_SESSION['postageId']='0';
 			$_SESSION['postageMethod']=$_SESSION['defPostageMethod'];
 			$_SESSION['postagePrice']=$_SESSION['defPostagePrice'];
+			$_SESSION['postageoptions'][0] = $_SESSION['defPostagePrice'];
 			$this->ObTpl->set_var("postage_blk","");	
 			}
 		$this->ObTpl->parse("specialrate_blk","TPL_SPECIALRATE_BLK");
@@ -1451,7 +1458,7 @@ $this->ObTpl->set_var("TPL_VAR_NEXTFORMMODE",$_SESSION['NextFormMode']);
 			$_SESSION['postageId']=$m;
 			$_SESSION['postageMethod']=$this->request['ship_method'][$m];
 
-			$_SESSION['postagePrice']=$this->request['ship_total'][$m];
+			$_SESSION['postagePrice']=$_SESSION['postageoptions'][$_SESSION['postageId']];
 			$_SESSION['payMethod'] = $this->request['paymethod'];
 			if($_SESSION['payMethod'] == "cod"){
 				$_SESSION['codPrice'] = $this->request['codprice'];
