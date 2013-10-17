@@ -210,13 +210,13 @@ class c_reports
 			for($l=0;$l<$NewOrdersCount;$l++)
 			{
 			
-				$this->obDb->query = "SELECT * FROM ".CUSTOMERS." WHERE vEmail = '".$NewOrders[$l]->vEmail."'";
+				$this->obDb->query = "SELECT iCustmerid_PK FROM ".CUSTOMERS." WHERE vEmail = '".$NewOrders[$l]->vEmail."' AND iRegistered=1";
 				$CheckCust = $this->obDb->fetchQuery();
 				$CheckCustCount = $this->obDb->record_count;
 				
 				if($CheckCustCount >0)
 				{
-					$CustUrl=SITE_URL."user/adminindex.php?action=user.details&amp;id=".$NewOrders[$l]->iCustomerid_FK;
+					$CustUrl=SITE_URL."user/adminindex.php?action=user.details&amp;id=".$CheckCust[0]->iCustmerid_PK;
 					
 					//<a href="{TPL_VAR_SITEURL}user/adminindex.php?action=user.details&amp;id={TPL_VAR_ID}" class="linkPreview">View</a>
 					
@@ -234,7 +234,7 @@ class c_reports
 				$orderUrl=SITE_URL."order/adminindex.php?action=orders.dspDetails&orderid=".$NewOrders[$l]->iInvoice;
 				$this->ObTpl->set_var("TPL_VAR_ORDERURL",$orderUrl);
 				$this->ObTpl->set_var("TPL_VAR_NEWORDERNUMBER",($NewOrders[$l]->iInvoice));
-				$this->ObTpl->set_var("TPL_VAR_ORDERTOTAL",CONST_CURRENCY.$NewOrders[$l]->fTotalPrice);
+				$this->ObTpl->set_var("TPL_VAR_ORDERTOTAL",CONST_CURRENCY.number_format($NewOrders[$l]->fTotalPrice,2,'.',''));
 				
 				$this->ObTpl->parse("newOrder_blk","TPL_NEWORDER_BLK",true);
 			}	
@@ -260,13 +260,13 @@ class c_reports
 			
 			for($m=0;$m<$PenOrdersCount;$m++)	
 			{
-				$this->obDb->query = "SELECT * FROM ".CUSTOMERS." WHERE vEmail = '".$PenOrders[$m]->vEmail."'";
+				$this->obDb->query = "SELECT * FROM ".CUSTOMERS." WHERE vEmail = '".$PenOrders[$m]->vEmail."' AND iRegistered=1";
 				$CheckCust = $this->obDb->fetchQuery();
 				$CheckCustCount = $this->obDb->record_count;
 				
 				if($CheckCustCount >0)
 				{
-					$CustUrl=SITE_URL."user/adminindex.php?action=user.details&id=".$PenOrders[$m]->iCustomerid_FK;
+					$CustUrl=SITE_URL."user/adminindex.php?action=user.details&id=".$CheckCust[0]->iCustmerid_PK;
 					$this->ObTpl->set_var("TPL_VAR_CUSTURL","<a href=\"".$CustUrl."\">");
 					$this->ObTpl->set_var("TPL_VAR_PENORDERCUSTOMER",$PenOrders[$m]->vFirstName." ".$PenOrders[$m]->vLastName);
 					$this->ObTpl->set_var("TPL_VAR_CLOSETAG","</a>");
