@@ -730,7 +730,7 @@ INSERT INTO `{{prefix}}tbsettings` (`iSettingid`, `vDatatype`, `vSmalltext`, `tL
 (202, 'vTaxName', 'V.A.T.', NULL, NULL, '{{timestamp}}', '{{timestamp}}', 'VAT_TAX_TEXT', '', 1),
 (203, 'mainLayout', 'layout.htm', NULL, NULL, '{{timestamp}}', '{{timestamp}}', 'MAIN_LAYOUT', '', 1),
 (204, 'homeLayout', 'homepage.htm', NULL, NULL, '{{timestamp}}', '{{timestamp}}', 'HOMEPAGE_LAYOUT', '', 1),
-(205, 'seo_friendly', NULL, NULL, 0, '{{timestamp}}', '{{timestamp}}', 'SEOFRIENDLY', '', 1),
+(205, 'seo_friendly', NULL, NULL, {{SEO}}, '{{timestamp}}', '{{timestamp}}', 'SEOFRIENDLY', '', 1),
 (206, 'SecureTradingMerchantId', '', NULL, NULL, '{{timestamp}}', '{{timestamp}}', 'SECURETRADING_MERCHANTID', '', 1),
 (207, 'SecureTradingCurrency', '', NULL, NULL, '{{timestamp}}', '{{timestamp}}', 'SECURETRADING_CURRENCY', '', 1),
 (208, 'deptlimit', '2', NULL, NULL, '{{timestamp}}', '{{timestamp}}', 'DEPT_PRODUCT_LIMIT', '', 1),
