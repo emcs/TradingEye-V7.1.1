@@ -495,7 +495,7 @@ else
 						$choices = $comFunc->m_orderProductChoices();
 						if(!empty($rsOrderProduct[$i]->vSku))
 						{
-						$tempItem = $tempItem . "<h6>".$rsOrderProduct[$j]->vSku."</h6>";
+						$tempItem = $tempItem . "<h6>".$rsOrderProduct[$i]->vSku."</h6>";
 						}
 						#GET OPTIONS
 						if(!empty($options))
