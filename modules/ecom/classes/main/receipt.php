@@ -2155,8 +2155,63 @@ class c_receipt
 	#Creates the page the user views when the return from a paypal order (no receipt until IPN delivers results)
 	function m_return()
 	{
+		$comFunc= new c_commonFunctions();
+		$comFunc->obDb=$this->obDb;
+		$this->ObTpl=new template();
+		$mode = $_SESSION['order_id'];
 		$this->ObTpl=new template();
 		$this->ObTpl->set_file("TPL_RETURN_FILE",$this->template);
+		$this->obDb->query = "SELECT tmOrderDate,vPayMethod,vShipDescription,fShipTotal,";
+		$this->obDb->query.= "vFirstName,vLastName,vEmail,vAddress1,vAddress2,vCity,iInvoice,";
+		$this->obDb->query.= "vState,vStateName,vCountry,vZip,vCompany,vPhone,vHomepage,";
+		$this->obDb->query.= "vAltCompany,vAltName,vAltAddress1,vAltAddress2,vAltCity,vAltState,vAltCountry,";
+		$this->obDb->query.= "vAltStateName,vAltZip,vAltPhone,fCodCharge,fPromoValue,";
+		$this->obDb->query.= "vDiscountCode,fDiscount,iGiftcert_FK,fGiftcertTotal,fMemberPoints,";
+		$this->obDb->query.= "fShipByWeightPrice,fShipByWeightKg,iSameAsBilling,vAuthCode,";
+		$this->obDb->query.= "fTaxRate,fTaxPrice,tComments,vStatus,iPayStatus,fTotalPrice,iEarnedPoints,vSessionid,iCustomerid_FK";
+		$this->obDb->query .= " FROM ".ORDERS." WHERE iOrderid_PK='".$mode."'";
+		if(isset($_SESSION['userid']) && !empty($_SESSION['userid'])){
+			$this->obDb->query .= " AND iCustomerid_FK='".$_SESSION['userid']."'";
+		}
+		$qryResult = $this->obDb->fetchQuery();
+		$this->obDb->query = "SELECT iOrderProductid_PK,iProductid_FK,iQty,iGiftwrapFK,fPrice,";
+		$this->obDb->query.= "fDiscount,vTitle,vSku,iKit,tShortDescription,seo_title,iTaxable,iFreeship,vPostageNotes ";
+		$this->obDb->query .= " FROM ".ORDERPRODUCTS." WHERE iOrderid_FK='".$mode."'";
+		$rsOrderProduct=$this->obDb->fetchQuery();
+		$_SESSION['google']['id'] = $qryResult[0]->iInvoice;	
+		$_SESSION['google']['state'] = $this->libFunc->m_displayContent($row_state[0]->vStateName);
+		$_SESSION['google']['state'] = $qryResult[0]->vStateName;
+		$_SESSION['google']['country'] = $this->libFunc->m_displayContent($row_country[0]->vCountryName);
+		$_SESSION['google']['city'] = $this->libFunc->m_displayContent($qryResult[0]->vCity);
+		$_SESSION['google']['products'] = Array();
+		$comFunc->orderId=$mode;
+		foreach($rsOrderProduct as $key=>$value){
+		$comFunc->orderProductId=$rsOrderProduct[$key]->iOrderProductid_PK;
+		$comFunc->qty=$rsOrderProduct[$key]->iQty;
+		$comFunc->price=0;
+		$_SESSION['google']['products'][] = "_gaq.push(['_addItem',
+					  '".$_SESSION['google']['id']."',
+					  '".$this->libFunc->m_displayContent($rsOrderProduct[$key]->vSku)."',
+					  '".$this->libFunc->m_displayContent($rsOrderProduct[$key]->vTitle)."',
+					  '".$comFunc->m_orderProductOptions()." ".$comFunc->m_orderProductChoices()."',
+					  '".$this->price."',
+					  '".$rsOrderProduct[$key]->iQty."'
+				   ]);";
+		}
+		if($qryResult[0]->fShipTotal>0)
+		{
+			$_SESSION['google']['shipping'] = $qryResult[0]->fShipTotal;
+		}
+		elseif($qryResult[0]->vShipDescription=="Free P&P")
+		{
+			$_SESSION['google']['shipping'] = 0;
+		}
+		$_SESSION['google']['shipping'] = $_SESSION['google']['shipping'] + $qryResult[0]->fCodCharge;
+		$_SESSION['google']['subtotal'] = $temptotal;
+		$_SESSION['google']['tax'] = $qryResult[0]->fTaxPrice;
+		$_SESSION['google']['total'] = $qryResult[0]->fTotalPrice;
+		$_SESSION['google']['paid'] = 1;
+		unset($_SESSION['google']['paid']);
 		return $this->ObTpl->parse("return","TPL_RETURN_FILE");
 	}
 	

@@ -150,7 +150,7 @@ Version: 7.0.5
     }
 	if(isset($_SESSION['google']) && isset($_SESSION['google']['paid']) && $_SESSION['google']['paid']===1)
 	{
-		$googleanalytics = "<script type=\"text/javascript\">
+		$googleanalytics = "
 
 							  var _gaq = _gaq || [];
 							  _gaq.push(['_setAccount', '".stripslashes(ANALYTICSCODE)."']);
@@ -178,7 +178,7 @@ Version: 7.0.5
 								var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 							  })();
 
-							</script>";
+							";
 		unset($_SESSION['google']);
 	}
 	else
