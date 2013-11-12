@@ -262,7 +262,7 @@ class c_saveOrder
 		#ORDER ID
 		$this->orderId=$this->obDb->last_insert_id;
 		$_SESSION['order_id']=$this->orderId;
-		
+		$_SESSION['invoicenumber']=$this->invoice;
 
 		if($this->request['IssueNumber']=='0')
 		{

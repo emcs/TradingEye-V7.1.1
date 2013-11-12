@@ -1199,7 +1199,8 @@ $this->ObTpl->set_var("TPL_VAR_NEXTFORMMODE",$_SESSION['NextFormMode']);
 		$currentMonth=date('m');
 		if(!isset($this->request['paymethod']))
 		{
-			$this->request['paymethod']="";
+			$this->err=1;
+			$this->errMsg.="Please choose a payment method.<br>";
 		}
 		if(!isset($this->request['cc_type']))
 		{
@@ -1208,13 +1209,12 @@ $this->ObTpl->set_var("TPL_VAR_NEXTFORMMODE",$_SESSION['NextFormMode']);
 		switch($this->request['paymethod'])
 		{
 			case "cc":
-			if(SELECTED_PAYMENTGATEWAY!=VERISIGN){
+			
 				if(empty($this->request['cc_type']))
 				{
 					$this->err=1;
 					$this->errMsg.=MSG_CCTYPE_EMPTY."<br>";
 				}
-			}
 			
 			if($this->request['cc_type']=='SWITCH' || $this->request['cc_type']=='SOLO')
 			{
@@ -1425,7 +1425,7 @@ $this->ObTpl->set_var("TPL_VAR_NEXTFORMMODE",$_SESSION['NextFormMode']);
 				$this->errMsg.="Please choose a postage method.<br>";
 				}
 			}
-                $returnstring = $this->err . "," . $this->errMsg;
+                $returnstring = $this->errMsg;
 		return $returnstring;
 	}
 

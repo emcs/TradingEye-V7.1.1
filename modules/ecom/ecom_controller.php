@@ -402,9 +402,9 @@ class c_ecomController
 				break;
 				case "addBillShipInfo":
 				$this->comFunc->m_checkShoppingCart();
-                $result=explode(",",$obBill->m_verifyBillShipAdd());
-                if($result[0]==1) {
-                    echo "||ERROR||1||" . $result[1] . "||";
+                $result=$obBill->m_verifyBillShipAdd();
+                if($result) {
+                    echo "||ERROR||1||" . $result . "||";
 				}
 				else{
 					$obBill->m_saveBillShipInfo();
