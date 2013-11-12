@@ -832,6 +832,43 @@ method");
 			}
 		$this->ObTpl->parse("specialrate_blk","TPL_SPECIALRATE_BLK");
         }
+		elseif(SPECIAL_POSTAGE)
+		{
+		
+			$this->ObTpl->set_var("TPL_VAR_DEFAULT_POSTAGEMETHOD",DEFAULT_POSTAGE_NAME);
+			$this->ObTpl->set_var("TPL_VAR_DEFAULT_POSTAGEPRICE",number_format(0,2));
+				$this->ObTpl->parse("default_postage_blk","TPL_DEFAULTPOSTAGE_BLK");
+                $this->ObTpl->parse("special_postage_blk","TPL_SPECIALPOSTAGE_BLK");
+
+			$this->obDb->query ="SELECT vField1,vField2,iPostDescId_PK,PD.vDescription FROM  ".POSTAGE." P,".POSTAGEDETAILS." PD WHERE iPostId_PK=iPostId_FK AND vKey='special' AND iStatus='1'";
+			$rsPostage=$this->obDb->fetchQuery();
+			$rsCount=$this->obDb->record_count;
+			if($rsCount>0 && SPECIAL_POSTAGE)
+			{
+				for($j=0;$j<$rsCount;$j++)
+				{
+					$this->ObTpl->set_var("TPL_VAR_METHODID",$rsPostage[$j]->iPostDescId_PK);
+					$this->ObTpl->set_var("TPL_VAR_POSTAGEMETHOD",$rsPostage[$j]->vDescription);
+					$postagePrice=0;
+					$this->ObTpl->set_var("TPL_VAR_DISPLAYPRICE",number_format($postagePrice,2));
+					if(SPECIAL_POSTAGE){
+						$this->ObTpl->set_var("TPL_VAR_SPECIAL_POSTAGEPRICE",number_format($postagePrice,2));
+					}
+					$this->ObTpl->set_var("TPL_VAR_POSTAGEPRICE",$postagePrice);
+					$_SESSION['postageoptions'][$rsPostage[$j]->iPostDescId_PK] = $postagePrice;
+					$this->ObTpl->parse("postage_blk","TPL_POSTAGE_BLK",true);
+				}
+			}else			
+			if($_SESSION['zoneSpecialDelivery']==0 || !SPECIAL_POSTAGE)
+			{
+			$_SESSION['postageId']='0';
+			$_SESSION['postageMethod']=$_SESSION['defPostageMethod'];
+			$_SESSION['postagePrice']=0;
+			$_SESSION['postageoptions'][0] = 0;
+			$this->ObTpl->set_var("postage_blk","");	
+			}
+		$this->ObTpl->parse("specialrate_blk","TPL_SPECIALRATE_BLK");
+		}
 // End Select postage
 	
 			
