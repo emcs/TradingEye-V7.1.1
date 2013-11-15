@@ -138,7 +138,7 @@ class c_saveOrder
 				iMailList			='".$_SESSION['mail_list']."',
 				tmSignupDate	='".$timestamp."',
 				fMemberPoints ='0',
-				iStatus ='0',
+				iStatus ='1',
 				vHomePage		='".$this->libFunc->m_addToDB($_SESSION['homepage'])."'";
 				if(isset($_SESSION['txtpassword']) && !empty($_SESSION['txtpassword']))
 				{
