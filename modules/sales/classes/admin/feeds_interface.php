@@ -84,13 +84,10 @@ class feed_interface
 	{
 		$libFunc=new c_libFunctions();
 		#INTIALIZING VALUES
-		//$this->request['rssproducts']=$libFunc->ifSet($this->request,'rssproducts');		
-		foreach($this->request as $fieldname=>$value) {	
-			if( $fieldname != 'action' ) {
-				 $this->obDb->query="UPDATE ".SITESETTINGS." SET 
-					nNumberdata ='".$value."' WHERE vDatatype='".$fieldname."'";	
-				$this->obDb->updateQuery();
-			}
+		if(isset($this->request['rssproducts']))
+		{
+			$this->obDb->query="UPDATE ".SITESETTINGS." SET nNumberdata ='".$this->request['rssproducts']."' WHERE vDatatype='rssproducts'";
+			$this->obDb->updateQuery();
 		}
 		$obUpdateDb=new c_shopDb();
 		$obUpdateDb->obDb = $this->obDb;
@@ -102,14 +99,11 @@ class feed_interface
 	{
 		$libFunc=new c_libFunctions();
 		#INTIALIZING VALUES
-		//$this->request['rssarticles']=$libFunc->ifSet($this->request,'rssarticles');		
-		foreach($this->request as $fieldname=>$value){
-				if( $fieldname != 'action' ) {
-				$this->obDb->query="UPDATE ".SITESETTINGS." SET 
-				nNumberdata ='".$value."' WHERE vDatatype='".$fieldname."'";	
-				$this->obDb->updateQuery();
-			}		
-		}	
+		if(isset($this->request['rssarticles']))
+		{		
+			$this->obDb->query="UPDATE ".SITESETTINGS." SET nNumberdata ='".$this->request['rssarticles']."' WHERE vDatatype='rssarticles'";	
+			$this->obDb->updateQuery();
+		}
 		$obUpdateDb=new c_shopDb();
 		$obUpdateDb->obDb = $this->obDb;
 		$obUpdateDb->m_RSSArticleFeed();	

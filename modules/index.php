@@ -114,12 +114,12 @@ Version: 7.0.5
 	$obMainTemplate->set_var("productrss_blk","");
 
 	
-	if(RSSPRODUCT > 1)
+	if(RSSPRODUCT > 0)
 		{
 		$obMainTemplate->parse("productrss_blk","TPL_PRODUCTRSS_BLK");
 		}
 	
-	if(RSSARTICLES > 1)
+	if(RSSARTICLES > 0)
 		{
 		$obMainTemplate->parse("articlerss_blk","TPL_ARTICLERSS_BLK");
 		}

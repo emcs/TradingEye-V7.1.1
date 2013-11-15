@@ -357,7 +357,7 @@ class c_shopDb
 					
 					$body .="<item>
 					<title>".$row_rssProd[$i]->vTitle."</title>
-					<link>".$productUrl."</link>
+					<link>".urlencode($productUrl)."</link>
 					<description>".$row_rssProd[$i]->tShortDescription."</description>
 					<pubDate>".$buildDate."</pubDate>
 					</item>";		
@@ -418,7 +418,7 @@ class c_shopDb
 					
 					$body .="<item>
 					<title>".$row_rssArticle[$i]->vTitle."</title>
-					<link>".$articlUrl."</link>
+					<link>".urlencode($articlUrl)."</link>
 					<description>".$row_rssArticle[$i]->tShortDescription."</description>
 					<pubDate>".$buildDate."</pubDate>
 					</item>";		

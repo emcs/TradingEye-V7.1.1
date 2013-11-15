@@ -170,7 +170,7 @@ class c_home
 			
 			for($m=0;$m<$PenOrdersCount;$m++)	
 			{
-				$this->obDb->query = "SELECT * FROM ".CUSTOMERS." WHERE vEmail = '".$PenOrders[$m]->vEmail."'";
+				$this->obDb->query = "SELECT * FROM ".CUSTOMERS." WHERE vEmail = '".$PenOrders[$m]->vEmail."' AND iRegistered=1";
 				$CheckCust = $this->obDb->fetchQuery();
 				$CheckCustCount = $this->obDb->record_count;
 				
@@ -210,7 +210,7 @@ class c_home
 				for($m=0;$m<$INCOrdersCount;$m++)	
 				{
 				
-					$this->obDb->query = "SELECT * FROM ".CUSTOMERS." WHERE vEmail = '".$INCOrders[$m]->vEmail."'";
+					$this->obDb->query = "SELECT * FROM ".CUSTOMERS." WHERE vEmail = '".$INCOrders[$m]->vEmail."' AND iRegistered=1";
 					$CheckIncCust = $this->obDb->fetchQuery();
 					$CheckIncCount = $this->obDb->record_count;	
 					
@@ -301,7 +301,7 @@ class c_home
 		##END CART ABANDONEMNT BLOCK
 	
 		##START NEW CUSTOMERS BLOCK
-		$this->obDb->query = "SELECT * FROM ".CUSTOMERS." ORDER BY tmSignupDate DESC";
+		$this->obDb->query = "SELECT * FROM ".CUSTOMERS." WHERE iRegistered=1 ORDER BY tmSignupDate DESC";
 		$NewCust = $this->obDb->fetchQuery();
 		$rowCount = $this->obDb->record_count;
 		if ($rowCount > 5) $rowCount = 5;
@@ -322,7 +322,7 @@ class c_home
 		##END NEW CUSTOMERS BLOCK
 		
 		##START RETURNING CUSTOMERS BLOCK
-		$this->obDb->query = "SELECT iCustomerid_FK,vEmail,vFirstName,vLastName, COUNT(vEmail) AS orderCount FROM ".ORDERS."  WHERE iOrderStatus>0 GROUP BY vEmail HAVING COUNT(vEmail)> 1 ORDER BY orderCount DESC"; 	
+		$this->obDb->query = "SELECT o.iCustomerid_FK,o.vEmail,o.vFirstName,o.vLastName,c.iRegistered, COUNT(o.vEmail) AS orderCount FROM ".ORDERS." as o INNER JOIN ".CUSTOMERS." as c ON o.iCustomerid_FK=c.iCustmerid_PK WHERE o.iOrderStatus>0 AND c.iRegistered=1 GROUP BY o.vEmail HAVING COUNT(o.vEmail)> 1 ORDER BY orderCount DESC"; 	
 		$ReturnCust = $this->obDb->fetchQuery();
 		$ReturnCount = $this->obDb->record_count;
 		if ($ReturnCount > 5) $ReturnCount = 5;
@@ -353,7 +353,7 @@ class c_home
 		##END RETURNING CUSTOMERS BLOCK
 		
 		##START BESTCUSTOMERS BLOCK
-		$this->obDb->query = "SELECT iCustomerid_FK,vEmail,vFirstName,vLastName,SUM(fTotalPrice) AS total FROM ".ORDERS." WHERE iPayStatus =1 GROUP BY vEmail ORDER BY total DESC"; 	
+		$this->obDb->query = "SELECT o.iCustomerid_FK,o.vEmail,o.vFirstName,o.vLastName,SUM(fTotalPrice) AS total FROM ".ORDERS." as o INNER JOIN ".CUSTOMERS." as c ON o.iCustomerid_FK=c.iCustmerid_PK WHERE iPayStatus =1 AND c.iRegistered=1 GROUP BY vEmail ORDER BY total DESC"; 	
 		$BestCust = $this->obDb->fetchQuery();
 		$BestCount = $this->obDb->record_count;
 		if ($BestCount > 5) $BestCount = 5;

@@ -3,6 +3,7 @@
 <div class="fullWidgetContainer">
       <div class="WidgetTitle">RSS Product Feeds</div>
       <div class="WidgetContent">
+	<form action="{TPL_VAR_SITEURL}sales/adminindex.php?action=feeds.prodUpdate" method="post" name="ThisForm" id="ThisForm" onsubmit="return validateForm();">
 	<table class="whiteTable2" cellspacing="0">
 		<thead>
 			<tr>
@@ -10,7 +11,6 @@
 			</tr>
 		</thead>
 		<tbody>
-			<form action="{TPL_VAR_SITEURL}sales/adminindex.php?action=feeds.prodUpdate" method="post" name="ThisForm" id="ThisForm" onsubmit="return validateForm();">
 				<tr> 
 					<td class="first"><label for="products">Number of products to list</label></td>
 					<td>
@@ -20,7 +20,7 @@
 			</tbody>
     	</table>
 		<p class="formButtonWrapper">
-			<button type="submit" class="formButton"><img src="../graphics/i_cross.gif" alt="Cancel" /> Cancel</button>
+			<button type="button" class="formButton" onclick="window.location.assign('adminindex.php?action=feeds.home');"><img src="../graphics/i_cross.gif" alt="Cancel" /> Cancel</button>
 			<button type="submit" class="formButton"><img src="../graphics/i_refresh.gif" alt="Update" /> Update RRS Feed Settings</button>
 		</p>
 	</form>
