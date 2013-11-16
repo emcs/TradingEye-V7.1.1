@@ -81,15 +81,23 @@ class c_shopDb {
 	function m_deleteReview() {
 		$this->libFunc->obDb = $this->obDb;
 		$seoTitle = $this->libFunc->m_getSeoTitle($this->request['id']);
-
-		$this->obDb->query = "SELECT iCustRevid_PK  FROM " . REVIEWS . " WHERE  iCustRevid_PK='" . $this->request['mode'] . "' AND iItemid_FK='" . $this->request['id'] . "'";
-		$rs = $this->obDb->fetchQuery();
-		$rsCnt = $this->obDb->record_count;
-		if ($rsCnt != 0) {
-			$this->obDb->query = "DELETE FROM " . REVIEWS . " WHERE iCustRevid_PK='" . $this->request['mode'] . "'";
-			$this->obDb->updateQuery();
-			$this->obDb->query = "DELETE FROM " . REVIEWHELP . " WHERE iReviewId_FK='" . $this->request['mode'] . "'";
-			$this->obDb->updateQuery();
+		if(isset($_SESSION['userid']))
+		{
+			$this->obDb->query = "SELECT iAdminid_PK  FROM " . ADMINUSERS . " WHERE iAdminid_PK='".$_SESSION['uid']."'";
+			$rs = $this->obDb->fetchQuery();
+			
+			if($this->obDb->record_count == 1)
+			{
+				$this->obDb->query = "SELECT iCustRevid_PK  FROM " . REVIEWS . " WHERE  iCustRevid_PK='" . $this->request['mode'] . "' AND iItemid_FK='" . $this->request['id'] . "'";
+				$rs = $this->obDb->fetchQuery();
+				$rsCnt = $this->obDb->record_count;
+				if ($rsCnt != 0) {
+					$this->obDb->query = "DELETE FROM " . REVIEWS . " WHERE iCustRevid_PK='" . $this->request['mode'] . "'";
+					$this->obDb->updateQuery();
+					$this->obDb->query = "DELETE FROM " . REVIEWHELP . " WHERE iReviewId_FK='" . $this->request['mode'] . "'";
+					$this->obDb->updateQuery();
+				}
+			}
 		}
 		$retUrl = $this->libFunc->m_safeUrl(SITE_URL . "ecom/index.php?action=ecom.pdetails&mode=" . $seoTitle);
 		$this->libFunc->m_mosRedirect($retUrl);

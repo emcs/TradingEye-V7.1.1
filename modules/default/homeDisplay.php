@@ -126,11 +126,6 @@ class c_homeDisplay
 						$obCmsDb->m_addContact();
 					}
 					break;
-					case "unsubscribe":
-					$this->obTpl->set_var("TPL_VAR_BREDCRUMBS","&nbsp;&raquo;&nbsp;Unsubscribe");
-					$obCms->cmsTemplate=$this->templatePath."unsubscribe.tpl.htm";
-					$this->obTpl->set_var("TPL_VAR_BODY",$obCms->m_unsubscribe());
-					break;
 					default:
 					$obCms->cmsTemplate=$this->templatePath."contact.tpl.htm";
 					$this->obTpl->set_var("TPL_VAR_BREDCRUMBS","&nbsp;&raquo;&nbsp;Contact us");

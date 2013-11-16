@@ -800,7 +800,7 @@ class c_receipt
 		
 
 		$this->obDb->query = " SELECT * FROM ".CONFIRMATIONORDERS." WHERE iInvoice = ".$this->request['invoice']." 
-							   AND iVendorid_FK = ".$this->request['supplier'];
+							   AND iVendorid_FK ='".$this->request['supplier']."'";
 		$rows = $this->obDb->fetchQuery();
 		
 		$total_record = $this->obDb->record_count;

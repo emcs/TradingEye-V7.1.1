@@ -88,7 +88,8 @@ class c_leftMenu
 		$this->obTpl->set_var("LANG_VAR_TOTAL",LANG_TOTAL);
 	
 
-		$this->obTpl->set_var("TPL_VAR_NEWSLETTER",SITE_URL."user/index.php?action=user.addnewsletter");
+		//$this->obTpl->set_var("TPL_VAR_NEWSLETTER",SITE_URL."user/index.php?action=user.addnewsletter");
+		$this->obTpl->set_var("TPL_VAR_NEWSLETTER","");
 
 		$this->request['action']=$this->libFunc->ifSet($this->request,"action","");
 	
@@ -155,7 +156,7 @@ class c_leftMenu
 		
 		if(NEWSLETTER_NAV ==1)
 		{
-			$this->obTpl->parse("newsletter_blk","TPL_NEWSLETTER_BLK");	
+			//$this->obTpl->parse("newsletter_blk","TPL_NEWSLETTER_BLK");	
 		}
 		
 		$this->obTpl->set_var("TPL_VAR_PRODUCTTITLE","");

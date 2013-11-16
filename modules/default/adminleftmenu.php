@@ -39,7 +39,6 @@ class c_leftMenu
 		$this->obTpl->set_block("TPL_ORDERSUB_BLK","TPL_ENQUIRY_BLK","enquiry_blk");
 		
 		$this->obTpl->set_block("TPL_LEFT_FILE","TPL_MARKETINGSUB_BLK","marketingsub_blk");
-		$this->obTpl->set_block("TPL_MARKETINGSUB_BLK","TPL_EMAIL_BLK","email_blk");
 		$this->obTpl->set_block("TPL_MARKETINGSUB_BLK","TPL_PROMOTIONS_BLK","promotions_blk");
 		$this->obTpl->set_block("TPL_MARKETINGSUB_BLK","TPL_REPORT_BLK","report_blk");
 		
@@ -91,7 +90,6 @@ class c_leftMenu
 		$this->obTpl->set_var("marketing_blk","");
 		$this->obTpl->set_var("marketingsub_blk","");
 		
-		$this->obTpl->set_var("email_blk","");
 		$this->obTpl->set_var("promotions_blk","");
 		$this->obTpl->set_var("report_blk","");
 
@@ -258,11 +256,6 @@ class c_leftMenu
 		}
 //*****************************************************************	
 
-		if(in_array("email",$moduleNameArray))
-		{
-			$this->obTpl->parse("email_blk","TPL_EMAIL_BLK");			
-			$this->marketing=1;
-		}
 		if(in_array("promotions",$moduleNameArray))
 		{
 			$this->obTpl->parse("promotions_blk","TPL_PROMOTIONS_BLK");			

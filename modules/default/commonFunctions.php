@@ -1837,7 +1837,7 @@ class c_commonFunctions
 			$this->obDb->query ="SELECT fRemaining FROM ".GIFTCERTIFICATES." WHERE vGiftcode ='".$_REQUEST['giftcert']."'";
 			$rsDiscount=$this->obDb->fetchQuery();
 			$rsCount=$this->obDb->record_count;
-			$_SESSION['giftCertCode']=$_REQUEST['giftcert'];
+			$_SESSION['giftCertCode']=htmlentities($_REQUEST['giftcert']);
 			if($rsCount>0)
 			{
 				$_SESSION['giftCertPrice'] = $rsDiscount[0]->fRemaining;
@@ -1860,12 +1860,12 @@ class c_commonFunctions
 		{
 			$libFunc=new c_libFunctions();
 			$curTime=time();
-			$this->obDb->query ="SELECT fDiscount,fFixamount,fMinimum  FROM ".DISCOUNTS." WHERE vCode='".$_REQUEST['discount']."' AND tmStartDate<$curTime AND tmEndDate>$curTime AND iState=1";
+			$this->obDb->query ="SELECT fDiscount,fFixamount,fMinimum  FROM ".DISCOUNTS." WHERE vCode='".htmlentities($_REQUEST['discount'])."' AND tmStartDate<$curTime AND tmEndDate>$curTime AND iState=1";
 			$rsDiscount=$this->obDb->fetchQuery();
 			$rsCount=$this->obDb->record_count;
 			$returnstring = "";
 			$discountvalue =0;
-			$_SESSION['discountCode'] = $_REQUEST['discount'];
+			$_SESSION['discountCode'] = htmlentities($_REQUEST['discount']);
 			$_SESSION['discountPrice'] = 0;
 			$_SESSION['discountType'] = 'none';
 			$_SESSION['discountMini'] = 0;
@@ -1875,12 +1875,12 @@ class c_commonFunctions
 			if($rsCount>0)
 			{
 				if($rsDiscount[0]->fDiscount>0){
-				$_SESSION['discountCode'] = $_REQUEST['discount'];
+				$_SESSION['discountCode'] = htmlentities($_REQUEST['discount']);
 				$offertype="percent";
 				$discountvalue=	$rsDiscount[0]->fDiscount;
 				}
 				elseif($rsDiscount[0]->fFixamount>0){
-				$_SESSION['discountCode'] = $_REQUEST['discount'];
+				$_SESSION['discountCode'] = htmlentities($_REQUEST['discount']);
 				$offertype="fix";	
 				$discountvalue=$rsDiscount[0]->fFixamount;
 				}
@@ -1897,7 +1897,7 @@ class c_commonFunctions
 			//}
 			else
 			{	
-				$resultstring = $resultstring . "&DISCOUNTPRICE->0,none,0&DISCOUNTCODE->" . $_REQUEST['discount'];
+				$resultstring = $resultstring . "&DISCOUNTPRICE->0,none,0&DISCOUNTCODE->" . htmlentities($_REQUEST['discount']);
 			}
 		}
 		elseif(isset($_SESSION['discountCode']) && isset($_SESSION['discountPrice']) && isset($_SESSION['discountMini']) && isset($_SESSION['discountType']))

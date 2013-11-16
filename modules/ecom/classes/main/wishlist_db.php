@@ -66,14 +66,14 @@ class c_wishlistDb
 			{
 				$this->request['quantity'][$i]=1;
 			}
-			$this->obDb->query="UPDATE ".WISHLIST." SET vQuantity='".$this->request['quantity'][$i]."' WHERE (iShopWishid_PK='".$this->request['wishlistid'][$i]."')";
+			$this->obDb->query="UPDATE ".WISHLIST." SET vQuantity='".$this->request['quantity'][$i]."' WHERE (iShopWishid_PK='".$this->request['wishlistid'][$i]."' AND iCustomerid_FK='".$_SESSION['userid']."')";
 			$this->obDb->updateQuery();
 		}
 		if(isset($this->request['remove']))
 		{
 			foreach($this->request['remove'] as $r=>$rid)
 			{
-				 $this->obDb->query="DELETE FROM ".WISHLIST." WHERE (iShopWishid_PK='".$r."')";
+				 $this->obDb->query="DELETE FROM ".WISHLIST." WHERE (iShopWishid_PK='".$r."') AND iCustomerid_FK='".$_SESSION['userid']."'";
 				$this->obDb->updateQuery();
 			}
 		}
@@ -88,7 +88,7 @@ class c_wishlistDb
 		$libFunc=new c_libFunctions();
 		if(isset($this->request['emailid']))
 		{
-			$this->obDb->query="DELETE FROM ".WISHEMAILS."	WHERE  (iWishid_PK='".$this->request['emailid']."')";
+			$this->obDb->query="DELETE FROM ".WISHEMAILS."	WHERE  (iWishid_PK='".$this->request['emailid']."' AND iCustomerid_FK='".$_SESSION['userid']."')";
 			$this->obDb->updateQuery();
 		}
 		$retUrl=$this->libFunc->m_safeUrl(SITE_URL."ecom/index.php?action=wishlist.display");
