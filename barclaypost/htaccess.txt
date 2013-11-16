@@ -1,5 +1,0 @@
-AuthName ""
-AuthType Basic
-AuthUserFile /var/www/ht/bm-passwd/.htpasswd
-
-require user barclays

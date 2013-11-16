@@ -755,10 +755,7 @@ class c_settingsInterface
 		$this->ObTpl->set_var("TPL_VAR_VERISIGN_PARTNER", VERISIGN_PARTNER);
 		$this->ObTpl->set_var("TPL_VAR_VERISIGN_LOGIN", VERISIGN_LOGIN);
 		$this->ObTpl->set_var("TPL_VAR_VERISIGN_USER", VERISIGN_USER);
-		$this->ObTpl->set_var("TPL_VAR_VERISIGN_PASSWORD", VERISIGN_PASSWORD);
-
-		 //Implemetion Worldpay
-		$this->ObTpl->set_var("TPL_VAR_WORLDPAY_INSTID", WORLDPAY_INSTID);	
+		$this->ObTpl->set_var("TPL_VAR_VERISIGN_PASSWORD", VERISIGN_PASSWORD);	
 		
 		//Implemented HSBC
 		$this->ObTpl->set_var("TPL_VAR_HSBC_KEY", HSBC_KEY);
