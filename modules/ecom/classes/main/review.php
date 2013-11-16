@@ -526,7 +526,7 @@ class c_review
 				#VOLUME DISCOUNT**************************************************
 				#DISCOUNT ACCORDING TO QTY
 				$vDiscoutPerItem=number_format($rowCart[$i]->fVolDiscount,2,'.','');
-				if($vDiscoutPerItem>0 && ENABLE_WHOLESALE==1)
+				if($vDiscoutPerItem>0)
 				{
 					$vDiscountPerCartElement=number_format(($rowCart[$i]->iQty*$vDiscoutPerItem),2,'.','');
 					$this->ObTpl->set_var("TPL_VAR_CART_VOLDISCOUNT",

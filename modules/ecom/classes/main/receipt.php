@@ -1456,23 +1456,10 @@ class c_receipt
 			{
 			$processUrl=SITE_SAFEURL."ecom/index.php?action=checkout.status&mode=".$mode;
 			}
-			if($qryResult[0]->vPayMethod=='worldpay'){
-			
-				?>
-				 <script language="JavaScript" type="text/javascript">
-					location.href="<? echo $this->libFunc->m_safeUrl($processUrl) ?>";
-					</script>
-				<?php
-				$this->template=$this->processTemplate;
-				$this->obTpl->set_var("TPL_VAR_BREDCRUMBS","&nbsp;&raquo;&nbsp;Order Processed");
-				$this->obTpl->set_var("TPL_VAR_BODY",$this->m_orderProcessed());
-				$this->worldpay=1;
-				//$this->libFunc->m_mosRedirect($this->libFunc->m_safeUrl($processUrl));
-			}else{
 			
 				$this->worldpay=0;
 				$this->libFunc->m_mosRedirect($this->libFunc->m_safeUrl($processUrl));
-			}
+			
 		}	
 		elseif(isset($mode) && !empty($mode))
 		{
@@ -2142,13 +2129,13 @@ class c_receipt
 				//SEND TO NOTIFICATION FUNCTION
 				//domain/ecom/checkout.process&mode=orderid
 			//error_log("Marked Order as Paid.\n",3,SITE_PATH."paypal_ipn.log");
-				return "1, ". $orderid . "," . $sessionid;
+				return Array("1",$orderid,$sessionid);
 			}
 		}
 		else if (strcmp ($res, "INVALID") == 0) {
 			// log for manual investigation
 			//error_log("Invalid Response from PAYPAL IPN.",3,SITE_PATH."paypal_ipn.log");
-			return "0,";
+			return Array("0");
 		}
 	}
 	

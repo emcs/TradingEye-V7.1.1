@@ -508,7 +508,7 @@ class c_ecomController
 				case "IPN":
 					//PAYPAL INSTANT PAYMENT NOTIFICATION
 			//error_log("\nPaypal IPN received.".time()."\n",3,SITE_PATH."paypal_ipn.log");
-					$result = explode(",",$obreceipt->m_Paypal_IPN_Notification());
+					$result = $obreceipt->m_Paypal_IPN_Notification();
 			//error_log("\nPaypal IPN result:".$result[0]."|".time()."\n",3,SITE_PATH."paypal_ipn.log");
 					if($result[0] == "1")
 					{

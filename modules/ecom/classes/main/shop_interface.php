@@ -1871,9 +1871,6 @@ class c_shopInterface {
 				if ($vDiscoutPerItem > 0) {
 					$this->ObTpl->set_var("TPL_VAR_CART_VOLDISCOUNT", "Volume Discount: " .
 					CONST_CURRENCY . $vDiscoutPerItem . " each - Total: " . CONST_CURRENCY . $vDiscountPerCartElement . "<br />");
-				}
-				if($comFunc->m_checkCustomerType()==1 && ENABLE_WHOLESALE==1)
-				{
 				$this->volDiscount = $this->volDiscount + $vDiscountPerCartElement;
 				}
 				#**************************************************************
