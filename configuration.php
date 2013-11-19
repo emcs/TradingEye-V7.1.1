@@ -117,6 +117,7 @@ define("TEMPKITS",$Prefix.'temp_kits');
 define("TEMPIMAGES",$Prefix.'temp_images');
 
 define("CONFIRMATIONORDERS",$Prefix.'tbConfirmation_Orders');
+define("LOGINATTEMPTS",$Prefix.'tbLogin_Security');
 
 
 if(!defined('DATABASE_HOST')){

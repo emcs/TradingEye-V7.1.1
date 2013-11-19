@@ -359,3 +359,4 @@
 	UPDATE {{prefix}}tbCountry as C SET iso3=(SELECT T.iso3 FROM te_temptablezzzzcountry as T WHERE C.iCountryId_PK=T.iCountryId_PK);
 	DROP TABLE te_temptablezzzzcountry;
 	ALTER IGNORE TABLE {{prefix}}tbPlugin_apps ADD iMod int;
+	CREATE TABLE IF NOT EXISTS `new_tbLogin_Security` (  `iAttempt_PK` int(11) NOT NULL AUTO_INCREMENT,  `vIP` text COLLATE utf8_unicode_ci NOT NULL,  `vUser` text COLLATE utf8_unicode_ci NOT NULL,  `tmLoginAttempt` text COLLATE utf8_unicode_ci NOT NULL,  `nTriggeredBan` int(11) NOT NULL DEFAULT '0',  PRIMARY KEY (`iAttempt_PK`)) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=29 ;

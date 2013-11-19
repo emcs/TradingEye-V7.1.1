@@ -67,9 +67,17 @@ class c_authentication
 		{
 			$this->obTpl->set_var("TPL_VAR_MSG",MSG_INVALID_DETAILS);
 		}
+		elseif(isset($this->request['msg']) && $this->request['msg']==7)
+		{
+			$this->obTpl->set_var("TPL_VAR_MSG","You have been temporarily blocked. Please try again in 15 minutes.");
+		}
+		elseif(isset($this->request['msg']) && $this->request['msg']==8)
+		{
+			$this->obTpl->set_var("TPL_VAR_MSG","You have been temporarily blocked. Please try again in 1 hour. You can unblock your account by resetting your password.");
+		}
 		elseif(isset($this->request['msg']) && $this->request['msg']==9)
 		{
-			$this->obTpl->set_var("TPL_VAR_MSG","You have been temporarily banned. Please try again later.");
+			$this->obTpl->set_var("TPL_VAR_MSG","You have been temporarily blocked. Please try again in 24 hours. You can unblock your account by resetting your password.");
 		}
 		else
 		{
@@ -94,7 +102,9 @@ class c_authentication
 
 	function m_loginCheck()
 	{
+		$this->libFunc->obDb = $this->obDb;
 		$myreturn = $this->libFunc->m_checkAttempts(trim($this->request['username']));
+		//print_r($myreturn);
 		if($myreturn[0] == 0)
 		{
 			$this->obDb->query= "select iAdminid_PK,vUsername FROM ".ADMINUSERS." WHERE vUsername  = '".trim($this->request['username'])."' AND vPassword=PASSWORD('".trim($this->request['password'])."')";
@@ -118,7 +128,19 @@ class c_authentication
 		}
 		else
 		{
-			$this->libFunc->m_mosRedirect(SITE_URL."adminindex.php?msg=9");
+			$this->libFunc->m_addLoginAttempt($myreturn[0],$myreturn[1],$myreturn[2],trim($this->request['username']));
+			switch($myreturn[0])
+			{
+				case 1:
+					$this->libFunc->m_mosRedirect(SITE_URL."adminindex.php?msg=7");
+				break;
+				case 2:
+					$this->libFunc->m_mosRedirect(SITE_URL."adminindex.php?msg=8");
+				break;
+				case 3:
+					$this->libFunc->m_mosRedirect(SITE_URL."adminindex.php?msg=9");
+				break;
+			}
 		}
 	}#END LOGIN CHECK
 
@@ -156,6 +178,8 @@ class c_authentication
 		$uniqID=uniqid (3);
 		if($rCount>0) 
 		{
+			$this->libFunc->obDb = $this->obDb;
+			$this->libFunc->m_removeBans($qryResult[0]->vUsername);
 			$message ="Hi ".$qryResult[0]->vUsername;
 			$message .="<br><br>Here are your login details:";
 			$message .="<br><br>Username:&nbsp;".$qryResult[0]->vUsername;

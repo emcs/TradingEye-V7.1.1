@@ -92,29 +92,55 @@ class c_userInterface
 	#FUNCTION TO CHECK VALID LOGIN INFO
 	function m_checkLogin()
 	{
-		$this->obDb->query= "select vFirstName,iCustmerid_PK  FROM ".CUSTOMERS." WHERE vEmail = '".$this->request['email']."' AND vPassword=PASSWORD('".$this->request['password']."') AND iRegistered=1 ";
-		$qryRs = $this->obDb->fetchQuery();
-		$rCount=$this->obDb->record_count;
-
-		if($rCount==1) 
+		$this->libFunc->obDb = $this->obDb;
+		$myreturn = $this->libFunc->m_checkAttempts(trim($this->request['email']));
+		if($myreturn[0] == 0)
 		{
-			$_SESSION['username']=$qryRs[0]->vFirstName;
-			$_SESSION['userid']=$qryRs[0]->iCustmerid_PK;
-			if(isset($this->request['save_info']))
+			$this->obDb->query= "select vFirstName,iCustmerid_PK  FROM ".CUSTOMERS." WHERE vEmail = '".$this->request['email']."' AND vPassword=PASSWORD('".$this->request['password']."') AND iRegistered=1 ";
+			$qryRs = $this->obDb->fetchQuery();
+			$rCount=$this->obDb->record_count;
+
+			if($rCount==1) 
 			{
-				setcookie("email",$this->request['email']);
-				setcookie("password",$this->request['password']);
+				$_SESSION['username']=$qryRs[0]->vFirstName;
+				$_SESSION['userid']=$qryRs[0]->iCustmerid_PK;
+				$this->m_generateToken();
+				if(isset($this->request['save_info']))
+				{
+					setcookie("email",$this->request['email']);
+					setcookie("password",$this->request['password']);
+				}
+				else
+				{
+					setcookie("email","");
+					setcookie("password","");
+				}
 			}
 			else
-			{
-				setcookie("email","");
-				setcookie("password","");
-			}
+			{	
+				$this->libFunc->m_addLoginAttempt($myreturn[0],$myreturn[1],$myreturn[2],trim($this->request['email']));
+				$this->err=1;
+				$this->errMsg=MSG_INVALID_USER;
+			}	
 		}
 		else
-		{	
-			$this->err=1;
-			$this->errMsg=MSG_INVALID_USER;
+		{
+			$this->libFunc->m_addLoginAttempt($myreturn[0],$myreturn[1],$myreturn[2],trim($this->request['email']));
+			switch($myreturn[0])
+			{
+				case 1:
+					$this->err=1;
+					$this->errMsg="You have been temporarily blocked. Please try again in 15 minutes.";
+				break;
+				case 2:
+					$this->err=1;
+					$this->errMsg="You have been temporarily blocked. Please try again in 1 hour. You can unblock your account by resetting your password.";
+				break;
+				case 3:
+					$this->err=1;
+					$this->errMsg="You have been temporarily blocked. Please try again in 24 hours. You can unblock your account by resetting your password.";
+				break;
+			}
 		}
 		return $this->err;
 	}#END FUNCTION
@@ -842,13 +868,15 @@ class c_userInterface
 	}
 		function m_save_new_Password()
 		{
-			$this->obDb->query= "select iCustmerid_PK,tRequestTime FROM ".CUSTOMERS." WHERE vRecovery = '".$_SESSION['id']."' AND iRegistered='1'";
+			$this->obDb->query= "select iCustmerid_PK,vEmail,tRequestTime FROM ".CUSTOMERS." WHERE vRecovery = '".$_SESSION['id']."' AND iRegistered='1'";
 			$qryResult = $this->obDb->fetchQuery();
 			$rCount=$this->obDb->record_count;
 			if($rCount>0 && $qryResult[0]->tRequestTime + 86400 > time()) 
 			{
 				$this->obDb->query="UPDATE ".CUSTOMERS." SET vPassword=PASSWORD('".$this->request['txtpassword']."'),vRecovery='',tRequestTime='' WHERE vRecovery ='".$_SESSION['id']."'";
 				$this->obDb->updateQuery();
+				$this->libFunc->obDb = $this->obDb;
+				$this->libFunc->m_removeBans($qryResult[0]->vEmail);
 				$retUrl=$this->libFunc->m_safeUrl(SITE_URL."user/index.php?action=user.home&mode=password&msg=3");
 				$this->libFunc->m_mosRedirect($retUrl);
 				exit;
@@ -860,6 +888,32 @@ class c_userInterface
 				exit;
 			}
 		}
+
+	function m_generateToken()
+	{
+		if (function_exists("hash_algos") and in_array("sha512",hash_algos()))
+		{
+			$token=hash("sha512",mt_rand(0,mt_getrandmax()));
+		}
+		else
+		{
+			$token=' ';
+			for ($i=0;$i<128;++$i)
+			{
+				$r=mt_rand(0,35);
+				if ($r<26)
+				{
+					$c=chr(ord('a')+$r);
+				}
+				else
+				{ 
+					$c=chr(ord('0')+$r-26);
+				} 
+				$token.=$c;
+			}
+		}
+		$_SESSION['AUTHTOKEN2'] =  $token;
+	}
 
 }#END CLASS
 ?>

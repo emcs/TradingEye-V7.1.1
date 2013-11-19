@@ -199,5 +199,9 @@ Version: 7.0.5
 	}
 	  $obMainTemplate->set_var("TPL_VAR_GOOGLEANALYTICS",$googleanalytics);
 	  $obMainTemplate->set_var("TPL_VAR_FOOTER",stripslashes(FOOTER_HTML));
+	  if(isset($_SESSION['AUTHTOKEN2']))
+	  {
+	$obMainTemplate->set_var("TPL_VAR_AUTH_TOKEN",$_SESSION['AUTHTOKEN2']);
+	}
 	$obMainTemplate->pparse('output', 'hMainTemplate');
 ?>

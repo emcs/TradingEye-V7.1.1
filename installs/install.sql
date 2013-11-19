@@ -83,6 +83,15 @@ CREATE TABLE IF NOT EXISTS `{{prefix}}tbAdmin_Security` (
 INSERT INTO `{{prefix}}tbAdmin_Security` (`iAdminSecid_PK`, `iUserid_FK`, `vSecurity`) VALUES
 (1, 1, '1,2,3,4,5,7,8,9,11,12,13,14,15,16,17,18,19,20');
 
+CREATE TABLE IF NOT EXISTS `new_tbLogin_Security` (
+  `iAttempt_PK` int(11) NOT NULL AUTO_INCREMENT,
+  `vIP` text COLLATE utf8_unicode_ci NOT NULL,
+  `vUser` text COLLATE utf8_unicode_ci NOT NULL,
+  `tmLoginAttempt` text COLLATE utf8_unicode_ci NOT NULL,
+  `nTriggeredBan` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`iAttempt_PK`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=29 ;
+
 CREATE TABLE IF NOT EXISTS `{{prefix}}tbAdmin_users` (
   `iAdminid_PK` int(11) NOT NULL AUTO_INCREMENT,
   `vUsername` varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',

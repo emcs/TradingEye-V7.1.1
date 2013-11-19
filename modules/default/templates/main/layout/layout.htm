@@ -26,6 +26,11 @@
 		var switchTo5x=true;
 		var dateObject=new Date();
 	</script>
+	<script type="text/javascript">
+		jQuery(document).ready(function(){
+			jQuery('form').append('<input type="hidden" name="auth" value="{TPL_VAR_AUTH_TOKEN}"/>');
+		});
+	</script>
 </head>
 <body>
 	<!-- BEGIN TPL_VAR_INLINE_EDITOR_BLK -->

@@ -1225,7 +1225,7 @@ class c_commonFunctions
                     $grandsubTotal = $grandsubTotal-$_SESSION['promotionVatCal']-$_SESSION['promotionVatNotCal'];
                     $vatAmountApplied = $grandsubTotal-$_SESSION['promotionVatNotCal'];
                     //Calculate VAT Here...
-                    $this->obDb->query = "SELECT fTax FROM ".COUNTRY." WHERE iCountryId_PK=".$countryid;
+                    $this->obDb->query = "SELECT fTax FROM ".COUNTRY." WHERE iCountryId_PK='".$countryid."'";
                     $vat_cal = $this->obDb->fetchQuery();
                     
     
@@ -1238,7 +1238,7 @@ class c_commonFunctions
                             {
                                 if($dbcountryid[$k]==$countryid )
                                 {
-                                $this->obDb->query = "SELECT * FROM ".POSTAGEZONEDETAILS. " WHERE iZoneId=".$zonelist[$i]->iZoneId;
+                                $this->obDb->query = "SELECT * FROM ".POSTAGEZONEDETAILS. " WHERE iZoneId='".$zonelist[$i]->iZoneId."'";
                                 $rangerow = $this->obDb->fetchQuery();
                                 $rangecount = $this->obDb->record_count;
     
@@ -1300,7 +1300,7 @@ class c_commonFunctions
                     $grandsubTotal = $grandsubTotal-$_SESSION['promotionVatCal']-$_SESSION['promotionVatNotCal'];
                     $vatAmountApplied = $grandsubTotal-$_SESSION['promotionVatNotCal'];
                     //Fetches Tax and shipp charge
-                    $this->obDb->query = "SELECT fTax,fShipCharge FROM ".STATES." WHERE iStateId_PK=".$stateid;
+                    $this->obDb->query = "SELECT fTax,fShipCharge FROM ".STATES." WHERE iStateId_PK='".$stateid."'";
                     $state_cal = $this->obDb->fetchQuery();
                     $vatPer = $state_cal[0]->fTax;
                     //$ShipCharge: Just defined not used in code yet.Now only $_SESSION['postagePrice'] is used.
@@ -1341,10 +1341,10 @@ class c_commonFunctions
                 $grandsubTotal = $grandsubTotal-$_SESSION['promotionVatCal']-$_SESSION['promotionVatNotCal'];
                 $vatAmountApplied = $grandsubTotal-$_SESSION['promotionVatNotCal'];
                 //Calculate VAT Here...
-                $this->obDb->query = "SELECT fTax FROM ".COUNTRY." WHERE iCountryId_PK=".$countryid;
+                $this->obDb->query = "SELECT fTax FROM ".COUNTRY." WHERE iCountryId_PK='".$countryid."'";
                 $vat_cal = $this->obDb->fetchQuery();
         
-                $this->obDb->query = "SELECT * FROM ".POSTAGECITYDETAILS. " WHERE fCityId=".$citylist[0]->iCityId;
+                $this->obDb->query = "SELECT * FROM ".POSTAGECITYDETAILS. " WHERE fCityId='".$citylist[0]->iCityId."'";
                 $rangerow = $this->obDb->fetchQuery();
                 $rangecount = $this->obDb->record_count;
                 
@@ -1391,10 +1391,10 @@ class c_commonFunctions
                     $grandsubTotal = $grandsubTotal-$_SESSION['promotionVatCal']-$_SESSION['promotionVatNotCal'];
                     $vatAmountApplied = $grandsubTotal-$_SESSION['promotionVatNotCal'];
                     //Calculate VAT Here...
-                    $this->obDb->query = "SELECT fTax FROM ".COUNTRY." WHERE iCountryId_PK=".$countryid;
+                    $this->obDb->query = "SELECT fTax FROM ".COUNTRY." WHERE iCountryId_PK='".$countryid."'";
                     $vat_cal = $this->obDb->fetchQuery();
             
-                    $this->obDb->query = "SELECT * FROM ".POSTAGECITYDETAILS. " WHERE fCityId=".$citylist[0]->iCityId;
+                    $this->obDb->query = "SELECT * FROM ".POSTAGECITYDETAILS. " WHERE fCityId='".$citylist[0]->iCityId."'";
                     $rangerow = $this->obDb->fetchQuery();
                     $rangecount = $this->obDb->record_count;
                     
@@ -1440,10 +1440,10 @@ class c_commonFunctions
                         $grandsubTotal = $grandsubTotal-$_SESSION['promotionVatCal']-$_SESSION['promotionVatNotCal'];
                         $vatAmountApplied = $grandsubTotal-$_SESSION['promotionVatNotCal'];
                         //Calculate VAT Here...
-                        $this->obDb->query = "SELECT fTax FROM ".COUNTRY." WHERE iCountryId_PK=".$countryid;
+                        $this->obDb->query = "SELECT fTax FROM ".COUNTRY." WHERE iCountryId_PK='".$countryid."'";
                         $vat_cal = $this->obDb->fetchQuery();
                 
-                        $this->obDb->query = "SELECT * FROM ".POSTAGECITYDETAILS. " WHERE fCityId=".$citylist[0]->iCityId;
+                        $this->obDb->query = "SELECT * FROM ".POSTAGECITYDETAILS. " WHERE fCityId='".$citylist[0]->iCityId."'";
                         $rangerow = $this->obDb->fetchQuery();
                         $rangecount = $this->obDb->record_count;
                         
@@ -1546,11 +1546,11 @@ class c_commonFunctions
                 $grandsubTotal = $grandsubTotal-$_SESSION['promotionVatCal']-$_SESSION['promotionVatNotCal'];
                 $vatAmountApplied = $grandsubTotal-$_SESSION['promotionVatNotCal'];
                 //Calculate VAT Here...
-                $this->obDb->query = "SELECT fTax FROM ".COUNTRY." WHERE iCountryId_PK=".$countryid;
+                $this->obDb->query = "SELECT fTax FROM ".COUNTRY." WHERE iCountryId_PK='".$countryid."'";
                 $vat_cal = $this->obDb->fetchQuery();
 				$vat_cal[0] = $global_vat;
         
-                $this->obDb->query = "SELECT * FROM ".POSTAGECITYDETAILS. " WHERE fCityId=".$citylist[0]->iCityId;
+                $this->obDb->query = "SELECT * FROM ".POSTAGECITYDETAILS. " WHERE fCityId='".$citylist[0]->iCityId."'";
                 $rangerow = $this->obDb->fetchQuery();
                 $rangecount = $this->obDb->record_count;
                 
@@ -1597,11 +1597,11 @@ class c_commonFunctions
                     $grandsubTotal = $grandsubTotal-$_SESSION['promotionVatCal']-$_SESSION['promotionVatNotCal'];
                     $vatAmountApplied = $grandsubTotal-$_SESSION['promotionVatNotCal'];
                     //Calculate VAT Here...
-                    $this->obDb->query = "SELECT fTax FROM ".COUNTRY." WHERE iCountryId_PK=".$countryid;
+                    $this->obDb->query = "SELECT fTax FROM ".COUNTRY." WHERE iCountryId_PK='".$countryid."'";
                     $vat_cal = $this->obDb->fetchQuery();
 				$vat_cal[0] = $global_vat;
             
-                    $this->obDb->query = "SELECT * FROM ".POSTAGECITYDETAILS. " WHERE fCityId=".$citylist[0]->iCityId;
+                    $this->obDb->query = "SELECT * FROM ".POSTAGECITYDETAILS. " WHERE fCityId='".$citylist[0]->iCityId."'";
                     $rangerow = $this->obDb->fetchQuery();
                     $rangecount = $this->obDb->record_count;
                     
@@ -1647,11 +1647,11 @@ class c_commonFunctions
                         $grandsubTotal = $grandsubTotal-$_SESSION['promotionVatCal']-$_SESSION['promotionVatNotCal'];
                         $vatAmountApplied = $grandsubTotal-$_SESSION['promotionVatNotCal'];
                         //Calculate VAT Here...
-                        $this->obDb->query = "SELECT fTax FROM ".COUNTRY." WHERE iCountryId_PK=".$countryid;
+                        $this->obDb->query = "SELECT fTax FROM ".COUNTRY." WHERE iCountryId_PK='".$countryid."'";
                         $vat_cal = $this->obDb->fetchQuery();
 				$vat_cal[0] = $global_vat;
                 
-                        $this->obDb->query = "SELECT * FROM ".POSTAGECITYDETAILS. " WHERE fCityId=".$citylist[0]->iCityId;
+                        $this->obDb->query = "SELECT * FROM ".POSTAGECITYDETAILS. " WHERE fCityId='".$citylist[0]->iCityId."'";
                         $rangerow = $this->obDb->fetchQuery();
                         $rangecount = $this->obDb->record_count;
                         
@@ -1739,7 +1739,7 @@ class c_commonFunctions
 									{
 										if($dbcountryid[$k]==$countryid )
 										{
-										$this->obDb->query = "SELECT * FROM ".POSTAGEZONEDETAILS. " WHERE iZoneId=".$zonelist[$i]->iZoneId;
+										$this->obDb->query = "SELECT * FROM ".POSTAGEZONEDETAILS. " WHERE iZoneId='".$zonelist[$i]->iZoneId."'";
 										$rangerow = $this->obDb->fetchQuery();
 										$rangecount = $this->obDb->record_count;
 			

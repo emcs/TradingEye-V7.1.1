@@ -2124,7 +2124,7 @@ class c_receipt
 			if($payment_status == "Completed" && $receiver_email == PAYPAL_ID && $row[0]->fTotalPrice == $payment_amount)
 			{
 				//UPDATE ORDER IN DATABASE
-				$this->obDb->query = "UPDATE ".ORDERS." SET iPayStatus=1,vSessionId='".$sessionid."',iOrderStatus=1 WHERE iOrderid_PK=".$orderid;
+				$this->obDb->query = "UPDATE ".ORDERS." SET iPayStatus=1,vSessionId='".$sessionid."',iOrderStatus=1 WHERE iOrderid_PK='".$orderid."'";
 				$row=$this->obDb->updateQuery();
 				//SEND TO NOTIFICATION FUNCTION
 				//domain/ecom/checkout.process&mode=orderid
@@ -2823,7 +2823,7 @@ function cleanInput($strRawText,$strType)
 			
 				if ($transauthorised == true) {
 					// put code here to update/store the order with the a successful transaction result
-					$this->obDb->query = "UPDATE ".ORDERS." SET iPayStatus=1 WHERE iOrderid_PK=".$_POST["OrderID"];
+					$this->obDb->query = "UPDATE ".ORDERS." SET iPayStatus=1 WHERE iOrderid_PK='".$_POST["OrderID"]."'";
 					$row=$this->obDb->updateQuery();
 				} else {
 					// put code here to update/store the order with the a failed transaction result
