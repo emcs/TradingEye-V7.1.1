@@ -67,6 +67,10 @@ class c_authentication
 		{
 			$this->obTpl->set_var("TPL_VAR_MSG",MSG_INVALID_DETAILS);
 		}
+		elseif(isset($this->request['msg']) && $this->request['msg']==9)
+		{
+			$this->obTpl->set_var("TPL_VAR_MSG","You have been temporarily banned. Please try again later.");
+		}
 		else
 		{
 			$this->obTpl->set_var("TPL_VAR_MSG","");
@@ -90,22 +94,31 @@ class c_authentication
 
 	function m_loginCheck()
 	{
-		$this->obDb->query= "select iAdminid_PK,vUsername FROM ".ADMINUSERS." WHERE vUsername  = '".trim($this->request['username'])."' AND vPassword=PASSWORD('".trim($this->request['password'])."')";
-		$qryResult = $this->obDb->fetchQuery();
-		$rCount=$this->obDb->record_count;
-		if($rCount>0) 
+		$myreturn = $this->libFunc->m_checkAttempts(trim($this->request['username']));
+		if($myreturn[0] == 0)
 		{
-			$_SESSION['uid']		= trim($qryResult[0]->iAdminid_PK);
-			$_SESSION['KCFINDER']['disabled'] = false;
-			$_SESSION['adminFlag'] = "1";
-			$_SESSION['uname'] = trim($qryResult[0]->vUsername);
-			$_SESSION['dashSelec'] = "class='selected'";
-			$this->m_generateToken();
-			$this->libFunc->m_mosRedirect(SITE_URL."adminindex.php");
+			$this->obDb->query= "select iAdminid_PK,vUsername FROM ".ADMINUSERS." WHERE vUsername  = '".trim($this->request['username'])."' AND vPassword=PASSWORD('".trim($this->request['password'])."')";
+			$qryResult = $this->obDb->fetchQuery();
+			$rCount=$this->obDb->record_count;
+			if($rCount>0) 
+			{
+				$_SESSION['uid']		= trim($qryResult[0]->iAdminid_PK);
+				$_SESSION['KCFINDER']['disabled'] = false;
+				$_SESSION['adminFlag'] = "1";
+				$_SESSION['uname'] = trim($qryResult[0]->vUsername);
+				$_SESSION['dashSelec'] = "class='selected'";
+				$this->m_generateToken();
+				$this->libFunc->m_mosRedirect(SITE_URL."adminindex.php");
+			}
+			else
+			{
+				$this->libFunc->m_addLoginAttempt($myreturn[0],$myreturn[1],$myreturn[2],trim($this->request['username']));
+				$this->libFunc->m_mosRedirect(SITE_URL."adminindex.php?msg=2");
+			}
 		}
 		else
 		{
-			$this->libFunc->m_mosRedirect(SITE_URL."adminindex.php?msg=2");
+			$this->libFunc->m_mosRedirect(SITE_URL."adminindex.php?msg=9");
 		}
 	}#END LOGIN CHECK
 

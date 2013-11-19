@@ -17,7 +17,10 @@ class c_shopDb {
 	function m_reviewAdd() {
 		$this->request['display'] = $this->libFunc->ifSet($this->request, "display");
 		$timestamp = time();
-
+		$this->obDb->query = "SELECT iProdid_PK FROM " . PRODUCTS . " WHERE iProdid_PK='" . $this->request['productid'] . "'";
+		$rs = $this->obDb->fetchQuery();
+		if($this->obDb->record_count > 0)
+		{
 		#inserting to departments
 		$this->obDb->query = "SELECT iCustRevid_PK FROM " . REVIEWS . " WHERE iCustomerid_FK='" . $_SESSION['userid'] . "' AND iItemid_FK='" . $this->request['productid'] . "'";
 		$rs = $this->obDb->fetchQuery();
@@ -70,6 +73,7 @@ class c_shopDb {
 			$result = $obMail->send(array (
 				ADMIN_EMAIL
 			));
+		}
 		}
 		
 		# redirect on posting and e-mailing of comment ...

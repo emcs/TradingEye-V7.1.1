@@ -171,6 +171,7 @@ class c_leftMenu
 			$x = 1;		
 			 foreach ($_COOKIE['jimbeam'] as $name => $value)
 	    		{
+					$value = htmlentities($value);
 					//echo "RVP:".RVP_LIMIT." x:".$x."\n";
 					if(RVP_LIMIT == 0 || $x <= RVP_LIMIT)
 					{
