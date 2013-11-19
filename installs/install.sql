@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `{{prefix}}tbAdmin_Security` (
 INSERT INTO `{{prefix}}tbAdmin_Security` (`iAdminSecid_PK`, `iUserid_FK`, `vSecurity`) VALUES
 (1, 1, '1,2,3,4,5,7,8,9,11,12,13,14,15,16,17,18,19,20');
 
-CREATE TABLE IF NOT EXISTS `new_tbLogin_Security` (
+CREATE TABLE IF NOT EXISTS `{{prefix}}tbLogin_Security` (
   `iAttempt_PK` int(11) NOT NULL AUTO_INCREMENT,
   `vIP` text COLLATE utf8_unicode_ci NOT NULL,
   `vUser` text COLLATE utf8_unicode_ci NOT NULL,
