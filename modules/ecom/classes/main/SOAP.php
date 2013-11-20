@@ -1,4 +1,4 @@
-<?php
+<?phpdefined('_TEEXEC') or die;
 	//accessing external files
 	require_once(SITE_PATH."modules/ecom/classes/main/TPG_Common.php");
 

@@ -6,6 +6,7 @@ Product: TradingEye
 Version: 7.0.5
 =======================================================================================
 */
+defined('_TEEXEC') or die;
 session_start();
 define('LIB_IMAGES_PATH','graphics/libimages/');
 include('image_auth.php');

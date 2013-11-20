@@ -1,4 +1,4 @@
-<?php
+<?phpdefined('_TEEXEC') or die;
 	class TransactionResult
 	{
 		private $m_nStatusCode;

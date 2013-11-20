@@ -3,9 +3,10 @@
 =======================================================================================
 Copyright: Electronic and Mobile Commerce Software Ltd
 Product: TradingEye
-Version: 7.0.5
+Version: 7.1.0
 =======================================================================================
 */
+defined('_TEEXEC') or die;
 #CRON RELATED TO THIS -/scheduler/froogle.php
 #Please modify all the changes related to csv generation in scheduler file also
 # Class to generate the feed file for froogle

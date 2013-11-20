@@ -4,13 +4,14 @@ include_once SITE_PATH."LanguagePacks/".LANGUAGE_PACK;
 =======================================================================================
 Copyright: Electronic and Mobile Commerce Software Ltd
 Product: TradingEye
-Version: 7.0.5
+Version: 7.1.0
 =======================================================================================
 CLASS HANDLES LEFT MENU FOR SITE-
 HANDLES META TAGS
 HANDLES INLINE EDITOR
 */
 
+defined('_TEEXEC') or die;
 class c_leftMenu
 {
 	#CONSTRUCTOR

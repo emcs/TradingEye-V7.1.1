@@ -3,9 +3,10 @@
 =======================================================================================
 Copyright: Electronic and Mobile Commerce Software Ltd
 Product: TradingEye
-Version: 7.0.5
+Version: 7.1.0
 =======================================================================================
 */
+defined('_TEEXEC') or die;
 
 	//minimum characters allowed in the message box
 	$msg_min_chars = "10";

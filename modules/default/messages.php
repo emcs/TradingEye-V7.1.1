@@ -3,9 +3,10 @@
 =======================================================================================
 Copyright: Electronic and Mobile Commerce Software Ltd
 Product: TradingEye
-Version: 7.0.5
+Version: 7.1.0
 =======================================================================================
 */
+defined('_TEEXEC') or die;
 define("MSG_NO_CONTENT","No content is available.");
 define("MSG_NODEPARTMENT","This department does not exist. It may have been recently renamed or deleted.");
 define("MSG_NOPRODUCT","Sorry, no details are avaliable for this product.");

@@ -3,9 +3,10 @@
 =======================================================================================
 Copyright: Electronic and Mobile Commerce Software Ltd
 Product: TradingEye
-Version: 7.0.5
+Version: 7.1.0
 =======================================================================================
 */
+defined('_TEEXEC') or die;
 include_once SITE_PATH."LanguagePacks/".LANGUAGE_PACK;
 class c_review
 {

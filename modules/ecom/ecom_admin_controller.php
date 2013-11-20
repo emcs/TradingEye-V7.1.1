@@ -3,10 +3,12 @@
 =======================================================================================
 Copyright: Electronic and Mobile Commerce Software Ltd
 Product: TradingEye
-Version: 7.0.5
+Version: 7.1.0
 =======================================================================================
 Function:This is controller file for admin section(Builder Module,handles all the actions and apply appropriate function
 =================================================================*/
+
+defined('_TEEXEC') or die;
 include_once($pluginInterface->plugincheck(MODULES_PATH."ecom/classes/admin/shop_interface.php")); 
 include_once($pluginInterface->plugincheck(MODULES_PATH."ecom/classes/admin/shop_db.php")); 
 include_once($pluginInterface->plugincheck(MODULES_PATH."ecom/classes/admin/menu_interface.php")); 

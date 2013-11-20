@@ -1,4 +1,6 @@
 <?php
+
+defined('_TEEXEC') or die;
 class c_cardSave
 {
 	function c_cardSave()

@@ -3,9 +3,10 @@
 =======================================================================================
 Copyright: Electronic and Mobile Commerce Software Ltd
 Product: TradingEye
-Version: 7.0.5
+Version: 7.1.0
 =======================================================================================
 */
+defined('_TEEXEC') or die;
 	session_start();
 	//logout unauthorized user start
 	if (isset($_SESSION['uname'])&&$_SESSION['uname']!=''&&!isset($_SESSION['adminFlag']) && !$_SESSION['adminFlag']){ 

@@ -32,7 +32,8 @@ $request_uri=str_replace('installs/','',$request_uri);
 $siteUrl="http://" . $_SERVER['SERVER_NAME'] . $request_uri;
 $partsurls=parse_url($siteUrl);
 define('REAL_PATH',$partsurls['path']);
-
+//USED TO PREVENT DIRECT ACCESS OF PHP FILES
+define('_TEEXEC',1);
 #DEFINE DEFAULT CSS
 define("DEFAULT_CSS","petrol.css");	
 

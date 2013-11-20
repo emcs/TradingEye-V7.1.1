@@ -3,9 +3,10 @@
 =======================================================================================
 Copyright: Electronic and Mobile Commerce Software Ltd
 Product: TradingEye
-Version: 7.0.5
+Version: 7.1.0
 =======================================================================================
 */
+defined('_TEEXEC') or die;
 # Class provides the order interface functionlaity
 include_once($pluginInterface->plugincheck(MODULES_PATH."order/classes/admin/order_interface.php")); 
 include_once($pluginInterface->plugincheck(MODULES_PATH."order/classes/admin/order_db.php")); 

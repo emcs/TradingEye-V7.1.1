@@ -1,4 +1,4 @@
-<?php
+<?phpdefined('_TEEXEC') or die;
 	//XMLEntities
 	$g_XMLEntities = array();
 	$g_XMLEntities[] = new XMLEntity(0x26, "&amp;");

@@ -3,9 +3,10 @@
 =======================================================================================
 Copyright: Electronic and Mobile Commerce Software Ltd
 Product: TradingEye
-Version: 7.0.5
+Version: 7.1.0
 =======================================================================================
 */
+defined('_TEEXEC') or die;
 	class c_userDb
 	{
 		#CONSTRUCTOR
@@ -216,7 +217,7 @@ Version: 7.0.5
 		# FUNCTION TO UPDATE PASSWORD
 		function m_updatePass()
 		{
-			$this->obDb->query="UPDATE ".CUSTOMERS." SET vPassword='".$this->libFunc->m_addToDB($this->request['password'])."'
+			$this->obDb->query="UPDATE ".CUSTOMERS." SET vPassword=PASSWORD('".$this->libFunc->m_addToDB($this->request['password'])."')
 			WHERE (iCustmerid_PK ='".$_SESSION['userid']."')";
 			$this->obDb->updateQuery();
 			$retUrl=$this->libFunc->m_safeUrl(SITE_URL."user/index.php?action=user.home&mode=password&msg=1");

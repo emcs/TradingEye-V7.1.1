@@ -1,5 +1,5 @@
 <?php
-
+defined('_TEEXEC') or die;
 class c_ThemeInterface
 {
 	function c_ThemeInterface()

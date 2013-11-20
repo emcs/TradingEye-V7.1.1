@@ -3,9 +3,10 @@
 =======================================================================================
 Copyright: Electronic and Mobile Commerce Software Ltd
 Product: TradingEye
-Version: 7.0.5
+Version: 7.1.0
 =======================================================================================
 */
+defined('_TEEXEC') or die;
 include(SITE_PATH.'libs/csvimporter/FileReader.php' );
 include(SITE_PATH.'libs/csvimporter/CSVReader.php' );
 class c_csvImporter

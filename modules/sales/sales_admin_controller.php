@@ -3,9 +3,10 @@
 =======================================================================================
 Copyright: Electronic and Mobile Commerce Software Ltd
 Product: TradingEye
-Version: 7.0.5
+Version: 7.1.0
 =======================================================================================
 */
+defined('_TEEXEC') or die;
 # Class provides the MArketing interface functionlaity
 include_once($pluginInterface->plugincheck(MODULES_PATH."sales/classes/admin/email_interface.php")); 
 include_once($pluginInterface->plugincheck(MODULES_PATH."sales/classes/admin/email_db.php")); 

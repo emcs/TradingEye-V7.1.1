@@ -1,3 +1,3 @@
 <?php
-define("TE_UPGRADE_VERSION",7.11);
+define("TE_UPGRADE_VERSION",7.12);
 ?>

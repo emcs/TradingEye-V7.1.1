@@ -3,9 +3,10 @@
 =======================================================================================
 Copyright: Electronic and Mobile Commerce Software Ltd
 Product: TradingEye
-Version: 7.0.5
+Version: 7.1.0
 =======================================================================================
 */
+defined('_TEEXEC') or die;
 include_once($pluginInterface->plugincheck(MODULES_PATH."default/classes/admin/home.php")); 
 include_once($pluginInterface->plugincheck(MODULES_PATH."default/classes/admin/reports.php")); 
 include_once($pluginInterface->plugincheck(MODULES_PATH."default/messages_admin.php")); 

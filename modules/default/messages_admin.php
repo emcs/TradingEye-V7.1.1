@@ -3,9 +3,10 @@
 =======================================================================================
 Copyright: Electronic and Mobile Commerce Software Ltd
 Product: TradingEye
-Version: 7.0.5
+Version: 7.1.0
 =======================================================================================
 */
+defined('_TEEXEC') or die;
 define("MSG_NO_PRODUCT","No products available.");
 define("MSG_NO_CONTENT","No content available.");
 define("MSG_INVALID_LOGIN","<div class='popNegative'><h3>Incorrect Username/Password</h3></div>");

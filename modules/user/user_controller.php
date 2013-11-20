@@ -3,9 +3,10 @@
 =======================================================================================
 Copyright: Electronic and Mobile Commerce Software Ltd
 Product: TradingEye
-Version: 7.0.5
+Version: 7.1.0
 =======================================================================================
 */
+defined('_TEEXEC') or die;
 # Class provides the order interface functionlaity
 include_once($pluginInterface->plugincheck(MODULES_PATH."user/classes/main/user_interface.php")); 
 include_once($pluginInterface->plugincheck(MODULES_PATH."user/classes/main/user_db.php")); 
@@ -93,7 +94,7 @@ class c_userController
 				if($obUserInterface->m_verifyEditUser()==1)
 				{
 					$this->libFunc->authenticate();
-					$this->libfunc->check_token();
+					$this->libFunc->check_token();
 					$obUserInterface->request['mode']="editDetails";
 					$this->obTpl->set_var("TPL_VAR_BREDCRUMBS","&nbsp;&raquo;&nbsp;My Account");
 					$obUserInterface->userTemplate=$this->templatePath."userAccount.tpl.htm";
@@ -115,14 +116,21 @@ class c_userController
 				}
 				else
 				{
-					$this->libfunc->check_token();
+					$this->libFunc->check_token();
 					$obUserDb->m_updatePass();
 				}
 				break;
 			
 				case "logout":
 				session_destroy();
-				$retUrl=$this->libFunc->m_safeUrl(SITE_URL."user/action/user.home/");
+				if(isset($_SESSION['referer']) && !empty($_SESSION['referer']))
+				{
+					$retUrl=$_SESSION['referer'];
+				}
+				else
+				{
+					$retUrl=$this->libFunc->m_safeUrl(SITE_URL."user/index.php?action=user.loginForm");
+				}
 				header("Location:".$retUrl);
 				break;
 				case "signupForm":
@@ -148,7 +156,7 @@ class c_userController
 				break;	
 						
 				case "emailPass":
-					$this->libfunc->check_token();
+					$this->libFunc->check_token();
 					$obUserInterface->m_sendPassword();
 				break;
 				case "recover":
@@ -157,7 +165,7 @@ class c_userController
 					$this->obTpl->set_var("TPL_VAR_BODY",$obUserInterface->m_reset_Password());
 				break;
 				case "recoversave":
-					$this->libfunc->check_token();
+					$this->libFunc->check_token();
 					$obUserInterface->m_save_new_Password();
 				break;
 				default:
