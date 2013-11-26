@@ -8,6 +8,7 @@ Version: 7.0.5
 =======================================================================================
 */
 
+define('_TEEXEC',1);
 include_once('config.php');
 
 include_once("../libs/template.php");

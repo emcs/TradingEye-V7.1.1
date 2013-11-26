@@ -49,10 +49,12 @@
 		}
 	//  End -->
 </script>
-<h2>Builder <span>&raquo;</span> Shop Builder <span>&raquo;</span> Order List</h2>
+<div class="historyWidgetContainer"><a href="adminindex.php?flag=dashboard">Home</a> <strong>&raquo;</strong> <a href="adminindex.php?action=ec_show.home&flag=builder">Builder</a> <strong>&raquo;</strong><a href="#">Order List</a>
+<div id="builderCrumbs">{TPL_VAR_BREDCRUMBTEXT} <strong>&raquo;</strong><span> {TPL_VAR_BREDCRUMBS}</span></div></div>
+<div class="fullWidgetContainer">
+		<div class="WidgetTitle">Item Sorter</div>
+		<div class="WidgetContent">
 	<form action="{TPL_SHOPURL}adminindex.php?action=ec_db.updateSort&type={TPL_VAR_TYPE}&owner={TPL_VAR_OWNER}" method="post" name="ThisForm">
-<div class="builderBlock">
-	<h3>Item Sorter</h3>
 
 	<table>
 		<thead>
@@ -70,8 +72,8 @@
 					</td>
 					<td class="manualReorder">
 						<p class="formButtonWrapper">
-							<button type="button" onClick="order(document.getElementById('objectItems').selectedIndex,-1)" /><img src="../graphics/i_up.gif" alt="Up" /> Up</button>
-							<button type="button" onClick="order(document.getElementById('objectItems').selectedIndex,+1)" /><img src="../graphics/i_down.gif" alt="Down" /> Down</button>
+							<button type="button" class="formButton" onClick="order(document.getElementById('objectItems').selectedIndex,-1)" /><img src="../graphics/i_up.gif" alt="Up" /> Up</button>
+							<button type="button" class="formButton" onClick="order(document.getElementById('objectItems').selectedIndex,+1)" /><img src="../graphics/i_down.gif" alt="Down" /> Down</button>
 						</p>
 						<input type="hidden" name="sorted_list" value="" />
 					</td>
@@ -89,7 +91,7 @@
 			</tbody>
 		</table>
 		<p class="formButtonWrapper">
-			<button type="button" onclick="javascript: backToOriginal();" /><img src="../graphics/i_cross.gif" alt="Back to Original" /> Back to original list</button>
+			<button type="button" class="formButton" onclick="javascript: backToOriginal();" /><img src="../graphics/i_cross.gif" alt="Back to Original" /> Back to original list</button>
 			<button type="submit" class="formButton" onclick="submitForm(document.getElementById('objectItems'),window.document.ThisForm)"><img src="../graphics/i_tick.gif" alt="Apply All Changes" /> Apply all changes</button></p>
 		<div id="startlist" style="display:none">
 			<select name="objectItems" id="objectItems" size="10" class="formSelect sort">
@@ -126,6 +128,7 @@
 				<!-- END TPL_DATE_DESC_BLK -->	
 			</select>
 		</div>
-	</div>
 	</form>
+	</div>
+	</div>
 	<script language="Javascript">backToOriginal();</script>
