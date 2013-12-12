@@ -781,12 +781,12 @@ class c_receipt
 		$comFunc->obDb=$this->obDb;
 		$this->ObTpl=new template();
 		
-		if(!isset($this->request['invoice']) || empty($this->request['invoice']))
+		if(!isset($this->request['invoice']) || !is_numeric($this->request['invoice']))
 		{
 			$errrorUrl=SITE_URL."index.php?action=error&mode=order";
 			$this->libFunc->m_mosRedirect($this->libFunc->m_safeUrl($errrorUrl));
 		}
-		if(!isset($this->request['supplier']) || empty($this->request['supplier']))
+		if(!isset($this->request['supplier']) || !is_numeric($this->request['supplier']))
 		{
 			$errrorUrl=SITE_URL."index.php?action=error&mode=order";
 			$this->libFunc->m_mosRedirect($this->libFunc->m_safeUrl($errrorUrl));
@@ -800,7 +800,7 @@ class c_receipt
 		$this->ObTpl->set_var("TPL_VAR_INVOICE",$this->request['invoice']);
 		
 
-		$this->obDb->query = " SELECT * FROM ".CONFIRMATIONORDERS." WHERE iInvoice = ".$this->request['invoice']." 
+		$this->obDb->query = " SELECT * FROM ".CONFIRMATIONORDERS." WHERE iInvoice = '".$this->request['invoice']."' 
 							   AND iVendorid_FK ='".$this->request['supplier']."'";
 		$rows = $this->obDb->fetchQuery();
 		
@@ -820,7 +820,7 @@ class c_receipt
 		$timestamp = time();
 		$this->obDb->query = " UPDATE ".CONFIRMATIONORDERS." SET 
 							   status = 'Confirmed', tmLastSendDate = '".$timestamp."' WHERE iInvoice = '".$this->request['invoice']."' 
-							   AND iVendorid_FK = ".$this->request['supplier'];
+							   AND iVendorid_FK = '".$this->request['supplier']."'";
 		$this->obDb->updateQuery();
 		
 		return $this->ObTpl->parse("return","TPL_SUPL_CONF_FILE");		
