@@ -21,7 +21,7 @@
 <script type="text/javascript" src="{TPL_VAR_REAL_PATH}jscript/common.js"></script>
 
 <div id="content">
-	<div id="product">
+	<div id="product" itemscope itemtype="http://schema.org/Product">
 		<div id="imagezoom" class="image">
 				<img src="{TPL_VAR_IMGPATH}" itemprop="image" id='productlargeimage' align="left" style="width: 250px;"/>
 			<!-- BEGIN TPL_IMAGE_GALLERY_BLK -->
@@ -41,10 +41,10 @@
 			</ul>
 			<!-- END TPL_IMAGE_GALLERY_BLK -->
 		</div>
-		<div class="info">
+		<div class="info" itemscope itemtype="http://schema.org/Offer">
 			<form id="productDisplay" action="{TPL_VAR_CARTLINK}" method="post" name="productDisplay">
-				<h2 id="pageTitle">{TPL_VAR_PRODUCTTITLE}</h2>
-				<p class="price">{TPL_VAR_CURRENCY}{TPL_VAR_PRICEMAIN}</p>
+				<h2 id="pageTitle" itemprop="name">{TPL_VAR_PRODUCTTITLE}</h2>
+				<p class="price" itemprop="price" content="{TPL_VAR_PRICEMAIN}">{TPL_VAR_CURRENCY}{TPL_VAR_PRICEMAIN}</p>
 				<!-- BEGIN TPL_RRPLBL_BLK -->
 				<span class="rrp">{TPL_VAR_RRP}</span>
 				<!-- END TPL_RRPLBL_BLK -->
@@ -82,7 +82,7 @@
 				<!-- END TPL_SUPPLIERIMG_BLK -->
 				
 				<!-- BEGIN TPL_QTY_BLK -->
-				<p>Quantity available: {TPL_VAR_QTY}</p>
+				<p>Quantity available: <span itemprop="">{TPL_VAR_QTY}</p>
 				<!-- END TPL_QTY_BLK -->
 				{TPL_VAR_VOLDISCOUNTS}
 			</form>
