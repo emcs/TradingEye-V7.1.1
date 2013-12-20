@@ -10,6 +10,7 @@
 	<link rel="shortcut icon" href="{TPL_VAR_REAL_PATH}favicon.ico" type="image/x-icon" />
 	<link rel="stylesheet" type="text/css" href="{TPL_VAR_REAL_PATH}css/dashboard.css" media="all" />
 	<script language="javascript"  type="text/javascript">var SITEURL="{TPL_VAR_SITEURL}";</script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.tradingeye.net/css/FeedEk.css" media="all" />
 	<script language="JavaScript" type="text/javascript" src="{TPL_VAR_REAL_PATH}jscript/checkdate.js"></script>
 	<script language="javascript" type="text/javascript" src="{TPL_VAR_REAL_PATH}jscript/admin.js"></script>
 	<script language="JavaScript" type="text/javascript" src="{TPL_VAR_REAL_PATH}jscript/calendar.js"></script>
@@ -30,6 +31,19 @@
 		});
 	</script>
 	<meta name="robots" content="noindex" />
+    <script type="text/javascript" src="https://cdn.tradingeye.net/jscript/FeedEk.js"></script>
+ 	<script type="text/javascript" >
+    $(document).ready(function () {  	
+        $('#divRss').FeedEk({
+            FeedUrl: 'http://tradingeye.com/blog/category/updates/feed/',
+           MaxCount:5,
+  	   ShowDesc:false,
+  	   ShowPubDate:true,
+  	   DescCharacterLimit:100,
+  	   TitleLinkTarget:'_blank'
+        });
+    });    
+</script>
 	
 	<!--[IF IE]>
 	<style text="text/css">
@@ -52,6 +66,17 @@
 		{TPL_VAR_BODY}
 		<!-- FINISHED BODY INCLUDE -->
 	</div>
+</div>
+<link href="https://cdn.tradingeye.net/css/updates.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="https://cdn.tradingeye.net/jscript/updates.js"></script>
+<div id="news">
+    <div class="head">
+        TradingEye Updates
+    </div>
+    <div class="body">
+        <div id="divRss">
+ </div>
+    </div>
 </div>
 <div id="footer">
 	<span class="copyright">TradingEye is a product of <a href="#">Electronic And Mobile Commerce Software Ltd</a>.</span><span class="copyright" style="float:right;margin-right:20px;">TradingEye V7.1.1.31072013.01</span>
