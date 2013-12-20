@@ -22,10 +22,10 @@ class c_optionDb
 			
 			$this->obDb->query="SELECT A.*, AV.tValues FROM ".ATTRIBUTES." A, ".ATTRIBUTEVALUES." AV WHERE AV.iValueId_PK=".$this->request['attributeid']." AND iAttributesid_FK = iAttributesid_PK";
 			$attribute = $this->obDb->fetchQuery();
-			$name = explode("¬",$attribute[0]->vFieldname);
-			$prefix = explode("¬",$attribute[0]->vPrefix);
-			$suffix = explode("¬",$attribute[0]->vSuffix);
-			$value = explode("¬",$attribute[0]->tValues);
+			$name = explode("�",$attribute[0]->vFieldname);
+			$prefix = explode("�",$attribute[0]->vPrefix);
+			$suffix = explode("�",$attribute[0]->vSuffix);
+			$value = explode("�",$attribute[0]->tValues);
 			for ($i=0;$i<$attribute[0]->iFieldnumber;$i++)
 			{	
 			$string.="<tr>";

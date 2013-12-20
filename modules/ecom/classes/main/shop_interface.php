@@ -741,16 +741,9 @@ class c_shopInterface {
 			$this->obDb->query = "SELECT vImage,vCompany FROM " . SUPPLIERS . " WHERE iVendorid_PK='" . $rowHead[0]->iVendorid_FK . "'";
 			$rowImage = $this->obDb->fetchQuery();
 			#DISPLAY IMAGE/NAME
-			if (!$this->libFunc->m_isNull($rowImage[0]->vImage)) {
-				$img = $this->libFunc->m_checkFile($rowImage[0]->vImage, "suppliers", "Supplier " . $this->libFunc->m_displayContent($rowImage[0]->vCompany));
-				if ($img) {
-					$this->ObTpl->set_var("TPL_VAR_SUPPLIERIMAGE", $img);
-				} else {
-					$this->ObTpl->set_var("TPL_VAR_SUPPLIERIMAGE", $this->libFunc->m_displayContent($rowImage[0]->vCompany));
-				}
-			} else {
-				$this->ObTpl->set_var("TPL_VAR_SUPPLIERIMAGE", $this->libFunc->m_displayContent($rowImage[0]->vCompany));
-			}
+			$img = $this->libFunc->m_checkFile($rowImage[0]->vImage, "suppliers", "Supplier " . $this->libFunc->m_displayContent($rowImage[0]->vCompany));
+			$this->ObTpl->set_var("TPL_VAR_SUPPLIERIMAGE", $img);
+			$this->ObTpl->set_var("TPL_VAR_SUPPLIERNAME", $this->libFunc->m_displayContent($rowImage[0]->vCompany));
 			$this->ObTpl->parse("supplierimg_blk", "TPL_SUPPLIERIMG_BLK");
 		}
 
