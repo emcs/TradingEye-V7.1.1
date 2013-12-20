@@ -591,6 +591,9 @@ function m_exportCSV(){
         case "en":
         $this->m_exportEnquiry();
         break;
+		 case "pr":
+        $this->m_exportProducts();
+        break;
     }//end switch
  }//end if
 }//end m_exportCSV    
@@ -812,6 +815,78 @@ function m_exportenquiry()
 				}		
 				else {
 					header('Location: '.SITE_URL.'admin/adminindex.php?action=csv.home&errMsg=3;');
+				}		
+		}
+        
+}
+function m_exportproducts()
+{
+        $this->err=0;				
+        #QUERY RETRIEVE INFORMATION FOR ORDER TABLE
+		$this->obDb->query  = " SELECT * FROM ".PRODUCTS;
+		$rowEnquiry    = $this->obDb->fetchQuery();	
+		$recordCount = $this->obDb->record_count; 
+        
+        if($this->err==0)
+		{			
+			if($recordCount>0)
+				{	
+					$csv_output ="";					
+								
+					for($i=0;$i<$recordCount;$i++)
+					{										
+					
+                        $csv_output .= 	'"'.$rowEnquiry[$i]->iProdid_PK.'",';		 
+						$csv_output .= 	'"'.$rowEnquiry[$i]->vTitle.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->vSeoTitle.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->tShortDescription.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->tShortDescription.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->vMetaTitle.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->tMetaDescription.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->tKeywords.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->tContent.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->vImage1.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->vImage2.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->vImage3.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->tImages.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->vDownloadablefile.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->vSku.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->vSupplierSku.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->fListPrice.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->fPrice.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->fRetailPrice.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->fItemWeight.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->iInventory.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->iInventoryMinimum.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->iBackorder.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->iUseinventory.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->iOnorder.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->tmDuedate.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->vShipCode.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->vShipNotes.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->iFreeShip.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->iTaxable.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->iIncVat.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->iVendorid_FK.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->iAttrValueId_FK.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->iDiscount.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->iSale.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->fPointIncrease.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->iCartButton.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->iEnquiryButton.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->iKit.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->iViewCount.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->iAddCount.'",';
+						$csv_output .= 	'"'.$rowEnquiry[$i]->iAdminUser.'",';
+						$csv_output .=  " \n";
+					}	
+					header( "Content-Type: application/save-as" );
+					header( 'Content-Disposition: attachment; filename=products.csv');
+				    print $csv_output;
+				    exit;  				
+				}		
+				else {
+					header('Location: '.SITE_URL.'admin/adminindex.php?action=csv.home&errMsg=4;');
 				}		
 		}
         
