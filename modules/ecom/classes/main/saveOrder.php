@@ -774,40 +774,6 @@ class c_saveOrder
 		}
 	}
 
-	#FUNCTION TO SET WORLDPAY TEMPLATE TO SUBMIT TO PYMENT GATEWAY
-	function worldpaySubmit(){
-		$this->ObTpl=new template();
-		$this->ObTpl->set_file("TPL_WORLDPAY_FILE",$this->worldpayTemplate);
-		$MC_callback=SITE_SAFEURL.'ecom/index.php';
-		$this->ObTpl->set_var("TPL_CALLBACK_URL",$MC_callback);
-		$this->ObTpl->set_var("TPL_VAR_SESSIONID",session_id());
-		$this->ObTpl->set_var("TPL_VAR_PAYACTION",WORLDPAY_URL);
-		$this->ObTpl->set_var("TPL_VAR_INSTID",WORLDPAY_INSTID);
-		$this->ObTpl->set_var("TPL_VAR_DESCRIPTION",SITE_NAME);
-		$this->ObTpl->set_var("TPL_VAR_PAYCURRENCY",PAYMENT_CURRENCY);
-		$this->ObTpl->set_var("TPL_VAR_GRANDTOTAL",$this->payTotal);
-		$this->ObTpl->set_var("TPL_VAR_INVOICE",$this->invoice);
-		$this->ObTpl->set_var("TPL_VAR_ORDERID",$this->orderId);
-		$this->ObTpl->set_var("WORLDPAY_TEST_MODE",WORLDPAY_TEST_MODE);
-		$this->ObTpl->set_var("TPL_VAR_FIRSTNAME",$this->libFunc->m_displayContent($_SESSION['first_name']));
-		$this->ObTpl->set_var("TPL_VAR_LASTNAME",$this->libFunc->m_displayContent($_SESSION['last_name']));
-		$this->ObTpl->set_var("TPL_VAR_EMAIL",$this->libFunc->m_displayContent($_SESSION['email']));
-		$this->ObTpl->set_var("TPL_VAR_ADDRESS1",$this->libFunc->m_displayContent($_SESSION['address1']));
-		$this->ObTpl->set_var("TPL_VAR_ADDRESS2",$this->libFunc->m_displayContent($_SESSION['address2']));
-		$this->ObTpl->set_var("TPL_VAR_CITY",$this->libFunc->m_displayContent($_SESSION['city']));
-		$this->ObTpl->set_var("TPL_VAR_ZIP",$this->libFunc->m_displayContent($_SESSION['zip']));
-		$this->ObTpl->set_var("TPL_VAR_PHONE",$this->libFunc->m_displayContent($_SESSION['phone']));
-		#SETTING SHIP STATENAME
-		$stateId		=$this->libFunc->ifSet($_SESSION,'ship_state_id','0');
-		$stateName=$_SESSION['ship_state'];
-		$this->ObTpl->set_var("TPL_VAR_BILLSTATE",$this->m_stateName($stateId,$stateName));
-		#SETTING BILL COUNTRY NAME- CODE
-		$this->ObTpl->set_var("TPL_VAR_BILLCOUNTRY",
-		$this->libFunc->m_displayContent($this->m_countryName($_SESSION['bill_country_id'],2,'.','')));
-
-		$this->ObTpl->pparse("return","TPL_WORLDPAY_FILE");
-	}#EF
-
 	#FUNCTION TO SET SECPAY TEMPLATE TO SUBMIT TO PYMENT GATEWAY
 	function secpaySubmit(){
 		$this->ObTpl=new template();
@@ -1241,38 +1207,10 @@ class c_saveOrder
 				$strMD=$arrResponse["MD"];
 				$strACSURL=$arrResponse["ACSURL"];
 				$strPAReq=$arrResponse["PAReq"];
-				/*echo '<html><body><table class="formTable">
-            	<tr>
-					<td><div class="subheader">3D-Secure Authentication with your Bank</div></td>
-              	</tr>
-              	<tr>
-                	<td>
-						<table class="formTable">
-							<tr>
-								<td width="80%">
-									<p>To increase the security of Internet transactions Visa and Mastercard have introduced 3D-Secure (like an online version of Chip and PIN). <br>
-							  			<br>
-						    			You have chosen to use a card that is part of the 3D-Secure scheme, so you will need to authenticate yourself with your bank in the section below.
-						    		</p>
-						    	</td>
-								<td width="20%" align="center"><img src="images/vbv_logo_small.gif" alt="Verified by Visa"><BR><BR><img src="images/mcsc_logo.gif" alt="MasterCard SecureCode"></td>
-							</tr>
-						</table>
-						<div class="greyHzShadeBar">&nbsp;</div>
-					</td>
-              	</tr>
-			  	<tr>
-                	<td valign="top">';*/
 				$_SESSION["MD"]=$strMD;
 				$_SESSION["PAReq"]=$strPAReq;
 				$_SESSION["ACSURL"]=$strACSURL;
 				$_SESSION["VendorTxCode"]=$this->VendorTxCode;
-				/*echo '<IFRAME SRC="'. SITE_SAFEURL.'ecom/index.php?action=checkout.sage3d&VendorTxCode=' . $this->VendorTxCode .'" NAME="3DIFrame" WIDTH="100%" HEIGHT="500" FRAMEBORDER="0">
-					  </IFRAME>
-					</td>
-			  	</tr>
-			</table>
-            <div class="greyHzShadeBar"></body></html>';*/
 					$retUrl=$this->libFunc->m_safeUrl(SITE_SAFEURL.'ecom/index.php?action=checkout.sage3d&VendorTxCode=' . $this->VendorTxCode);
 					$this->libFunc->m_mosRedirect($retUrl);
 			} 

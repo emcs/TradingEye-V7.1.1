@@ -828,14 +828,14 @@ class c_receipt
 	
 	#FUNCTION TO SEND ORDER DETAILS TO ADMIN AND CUSTOMER
 	function m_sendOrderDetails($themode=0)
-	{   //die('yahoo');
+	{   
 		$comFunc=new c_commonFunctions();
 		$comFunc->obDb=$this->obDb;
 		$this->ObTpl=new template();
 		if(!empty($themode))
 		{
 			$mode = $themode;
-		}elseif(isset($this->request['mode']) || !empty($this->request['mode']))
+		}elseif(isset($this->request['mode']) && !empty($this->request['mode']))
 		{
 			$mode = $this->request['mode'];
 		}
@@ -847,7 +847,7 @@ class c_receipt
 		}
 
 		$_SESSION['payMethod']=$this->libFunc->ifSet($_SESSION,"payMethod");
-		$this->ObTpl->set_file("TPL_ORDERMAIL_FILE",MODULES_PATH."ecom/templates/main/orderMail.tpl.htm");
+		$this->ObTpl->set_file("TPL_ORDERMAIL_FILE",THEME_PATH."ecom/templates/main/orderMail.tpl.htm");
 	
 
 		#SETTING BLOCKS
@@ -930,49 +930,28 @@ class c_receipt
 			if(!$this->m_validateSecpay()){
 				return "SECPay Message: ".$this->request['message'];
 			}
-		}elseif($qryResult[0]->vPayMethod=='worldpay'){
-			$this->sessionId=$this->request['M_sessionid'];
-			if(!$this->m_validateWorldpay()){
-				return "Worldpay Message: ".$this->request['message'];
-			}
 		}elseif(isset($qryResult[0]->vSessionid) && !empty($qryResult[0]->vSessionid)){
 			$this->sessionId=$qryResult[0]->vSessionid;
 		}
-		//error_log($this->sessionId."\n",3,SITE_PATH."paypal.log");
 	   
 		$Name=$this->libFunc->m_displayContent($qryResult[0]->vFirstName)." ".$this->libFunc->m_displayContent($qryResult[0]->vLastName);
-		
-		//echo "<pre>";print_r($qryResult);
-		//echo 'Factor='.($rCount>0 && ($qryResult[0]->iPayStatus==0 || (($qryResult[0]->vPayMethod=='barclay' || $qryResult[0]->vPayMethod=='cs_redirect') && $qryResult[0]->iPayStatus==1)));
-		//echo $qryResult[0]->vEmail;
-		//exit;
 		if($rCount>0)
 		{
 			$payStatus=(string) $qryResult[0]->iPayStatus;
-			$notPaid=array('mail','cod','cc_phone');	 #NOT PAID PAYMENT STATUS
+			$notPaid=array('mail','cod','cc_phone');
 			if(in_array($qryResult[0]->vPayMethod,$notPaid)){
 				$payStatus='0';
 			}
 			if($qryResult[0]->vPayMethod == "paypal_exp" && $qryResult[0]->iPayStatus == 1){
 				$this->sessionId = SESSIONID;
 			}
-			//Temp fix to disable the ability of someone simply visiting this url and setting order as paid (paypal only, as each pay method is updated, add it here)
-			//elseif($qryResult[0]->vPayMethod != 'paypal' && $qryResult[0]->vPayMethod != 'sagepayform' && $qryResult[0]->vPayMethod != 'paypaldirect' && $qryResult[0]->vPayMethod != 'Cardsave' && $qryResult[0]->vPayMethod != 'barclay')
-			//{
-			//	$payStatus='1';
-			//}
 			$memberPointsEarned=$qryResult[0]->iEarnedPoints;
 			$usedMemberPoints=$qryResult[0]->fMemberPoints/MPOINTVALUE;
-			//if($qryResult[0]->iEarnedPoints > 0 &//& $memberPointsEarned == 0 && $qryResult[0]->iPayStatus == 1)
-			//{
-			//	$memberPointsEarned = $qryResult[0]->iEarnedPoints;
-			//}
 			$this->obDb->query ="SELECT fMemberPoints FROM ".CUSTOMERS." WHERE iCustmerid_PK='".$qryResult[0]->iCustomerid_FK."'";
 			$result = $this->obDb->fetchQuery();
 			$currentpoints = $result[0]->fMemberPoints;
-			#UPDATING MEMBER POINTS-ADDING EARNED AND SUBTRACTING USED
+			
 			$mPoints=$currentpoints + $memberPointsEarned-ceil($usedMemberPoints);
-			//error_log("End result:".$mPoints."=".$currentpoints." + ".$memberPointsEarned." - ".$usedMemberPoints,3,SITE_PATH."mpoint.log");
 			$this->obDb->query ="UPDATE ".CUSTOMERS." SET fMemberPoints='".$mPoints."' WHERE iCustmerid_PK='".$qryResult[0]->iCustomerid_FK."'";
 			
 			
@@ -981,19 +960,13 @@ class c_receipt
 			#DELETEING TEMPERARY DATA************************************
 			$this->m_deleteTemp();
 			#**********************************************************
-
 			
-
-			#MODIFIED BY NSI - 17-04-2007(ADDED NEW FIELD in query vSessionId)
 			$this->obDb->query ="UPDATE ".ORDERS." SET vSessionId='".$this->sessionId."',";
 			$this->obDb->query.="iPayStatus='".$payStatus."',iOrderStatus='1' ";
 			
 			if($qryResult[0]->vPayMethod=='paypal')
 			{
 				$this->obDb->query.=",iTransactionId='".$this->request['txn_id']."' ";
-			}elseif($qryResult[0]->vPayMethod=='worldpay'){
-				#07-05-07
-				$this->obDb->query.=",iTransactionId='".$this->request['transId']."' ";
 			}
 			$this->obDb->query.=" WHERE iOrderid_PK = '".$mode."'";
 			$rs = $this->obDb->updateQuery();
@@ -1001,8 +974,6 @@ class c_receipt
 			$receiptUrl=$this->libFunc->m_safeUrl(SITE_URL."ecom/index.php?action=checkout.receipt&mode=".$mode);
 			$adminUrl=SITE_URL."admin/";
 			$this->ObTpl->set_var("TPL_VAR_NAME",$Name);
-		//echo $rCount;
-		//die('in function m_sendOrderDetails');
 		if($rCount>0)
 		{	
 			$this->ObTpl->set_var("TPL_VAR_INVOICE",$qryResult[0]->iInvoice);
@@ -1034,7 +1005,7 @@ class c_receipt
 				$this->obDb->query = "SELECT vStateName FROM ".STATES." where iStateId_PK  = '".$qryResult[0]->vState."'";
 				$row_state = $this->obDb->fetchQuery();
 				$_SESSION['google']['state'] = $this->libFunc->m_displayContent($row_state[0]->vStateName);
-				$this->ObTpl->set_var("TPL_VAR_BILLSTATE",					$this->libFunc->m_displayContent($row_state[0]->vStateName));
+				$this->ObTpl->set_var("TPL_VAR_BILLSTATE",$this->libFunc->m_displayContent($row_state[0]->vStateName));
 			}
 			else
 			{
@@ -1491,19 +1462,6 @@ class c_receipt
 		}
 		return false;
 	}# END OF m_validateSecpay
-
-	#FUNCTION TO VALIDATE WORLD PAY
-	function m_validateWorldpay(){
-		if($this->request['transStatus']=='C'){
-			$this->request['message']="Transaction has been cancelled";
-			return false;
-		}
-		if($this->request['transStatus']=='N'){
-			$this->request['message']="Transaction has been rejected";
-			return false;
-		}
-		return true;
-	}
 
 	#FUNCTION TO DELETE TEMPERARY DATA
 	function m_deleteTemp()
@@ -2211,7 +2169,6 @@ class c_receipt
 		$strMD=$_SESSION["MD"];
 		$strVendorTxCode=$_SESSION["VendorTxCode"];
 		$_SESSION["PAReq"]="";
-		//error_log("[".time() . "] ".SESSIONID." has reached sagepay3d1. Transaction: ".$_SESSION["VendorTxCode"]."actionurl:".$strACSURL."\n",3,SITE_PATH."sagepay.log");
 		$this->obTpl->set_var("TPL_VAR_BREDCRUMBS","&nbsp;&raquo;&nbsp;3d Secure");
 		$this->obTpl->set_var("TPL_VAR_BODY",'
 		<p>To increase the security of Internet transactions Visa and Mastercard have introduced 3D-Secure (like an online version of Chip and PIN). <br>

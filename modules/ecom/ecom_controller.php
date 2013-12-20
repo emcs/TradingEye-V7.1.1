@@ -508,9 +508,7 @@ class c_ecomController
 				break;
 				case "IPN":
 					//PAYPAL INSTANT PAYMENT NOTIFICATION
-			//error_log("\nPaypal IPN received.".time()."\n",3,SITE_PATH."paypal_ipn.log");
 					$result = $obreceipt->m_Paypal_IPN_Notification();
-			//error_log("\nPaypal IPN result:".$result[0]."|".time()."\n",3,SITE_PATH."paypal_ipn.log");
 					if($result[0] == "1")
 					{
 						$obreceipt->m_sendOrderDetails($result[1]);
@@ -542,21 +540,8 @@ class c_ecomController
 				break;
                 
 				case "process":
-				$authCode=$_SESSION['vAuthCode'];
-				$orderId=$_SESSION['order_id'];
-				if($authCode&&$orderId){
-					$this->obDb->query="UPDATE ".ORDERS." SET vAuthCode='$authCode' WHERE iOrderid_PK='$orderId'";
-					$this->obDb->updateQuery();
-				}
-					$obreceipt->worldpay=0;
 					$obreceipt->processTemplate=$this->templatePath."orderProcessed.tpl.htm";
 					$obPayment->errMsg=$obreceipt->m_sendOrderDetails();
-					#IF not worldpay
-					if($obreceipt->worldpay !=1){
-						$obPayment->paymentTemplate=$this->templatePath."payment.tpl.htm";
-						$cartUrl=$this->libFunc->m_safeUrl(SITE_URL."ecom/index.php?action=ecom.viewcart");
-						$this->obTpl->set_var("TPL_VAR_BREDCRUMBS","&nbsp;&raquo;&nbsp;<a href=\"".$cartUrl."\">Shopping basket</a>&nbsp;&raquo;&nbsp;<a href='#'>Choose a payment method</a>");
-						$this->obTpl->set_var("TPL_VAR_BODY",$obPayment->m_paymentMethods());
 					}
 				break;
 				case "status":
