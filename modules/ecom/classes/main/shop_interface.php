@@ -833,15 +833,15 @@ class c_shopInterface {
 				
 				//$attdesc = explode("<!>",$attribute[0]->tValues);
 				$attfieldname= explode("<!>",$attribute[0]->vFieldname);
-				$prefix = explode("<!>",$attribute[0]->vPrefix);
+				$prefix = explode("<!>",$this->libFunc->m_displayContent2($attribute[0]->vPrefix));
 				$suffix = explode("<!>",$attribute[0]->vSuffix);
 								
 				for ($i=0;$i<$attribute[0]->iFieldnumber;$i++)
 				{
 				$this->ObTpl->set_var("TPL_VAR_FILEDNAME",$attfieldname[$i]);
 				$this->ObTpl->set_var("TPL_VAR_FIELDVALUE",$attribute[$i]->tValues);		
-				$this->ObTpl->set_var("TPL_VAR_PREFIX",$prefix[$i]);
-				$this->ObTpl->set_var("TPL_VAR_SUFFIX",$suffix[$i]);
+				$this->ObTpl->set_var("TPL_VAR_PREFIX",$this->libFunc->m_displayContent2($prefix[$i]));
+				$this->ObTpl->set_var("TPL_VAR_SUFFIX",$this->libFunc->m_displayContent2($suffix[$i]));
 				
 				$this->ObTpl->parse("attributefield_blk","TPL_ATTRIBUTEFIELD_BLK",true);
 				}

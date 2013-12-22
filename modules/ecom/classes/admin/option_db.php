@@ -30,9 +30,11 @@ class c_optionDb
 			{	
 			$string.="<tr>";
 			$string.="<td class=\"first\"><label>".$name[$i]."</label></td>";
-			$string.="<td><span>".$prefix[$i]." </label></span>";
+			//$string.="<td><span>".$prefix[$i]." </label></span>";
+			$string.="<td>";
 			$string.="<input type=\"text\" name=\"attributevalue[]\" class=\"formField\" value =\"".$value[$i]."\"/>";
-			$string.="<span> ".$suffix[$i]."</span></td>";
+			//$string.="<span> ".$suffix[$i]."</span></td>";
+			$string.="</td>";
 			$string.="</tr>";
 			}
 		}else{
@@ -47,9 +49,11 @@ class c_optionDb
 			{	
 			$string.="<tr>";
 			$string.="<td class=\"first\"><label>".$name[$i]."</label></td>";
-			$string.="<td><span>".$prefix[$i]." </label></span>";
+			//$string.="<td><span>".$prefix[$i]." </label></span>";
+			$string.="<td>";
 			$string.="<input type=\"text\" name=\"attributevalue[]\" class=\"formField\" />";
-			$string.="<span> ".$suffix[$i]."</span></td>";
+			//$string.="<span> ".$suffix[$i]."</span></td>";
+			$string.="</td>";
 			$string.="</tr>";
 			}
 		}	

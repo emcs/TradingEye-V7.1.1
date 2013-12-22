@@ -1353,7 +1353,7 @@ class c_shopInterface
 				for($j=0;$j<$attributevalue[0]->iFieldnumber;$j++)
 					{
 					$this->ObTpl->set_var("TPL_VAR_ATTRIBUTENAME",$fieldname[$j]);
-					$this->ObTpl->set_var("TPL_VAR_PREFIX",$prefix[$j]);
+					$this->ObTpl->set_var("TPL_VAR_PREFIX",$this->libFunc->m_displayContent2($prefix[$j]));
 					$this->ObTpl->set_var("TPL_VAR_VALUE",$attributevalue[$j]->tValues);
 					$this->ObTpl->set_var("TPL_VAR_SUFFIX",$suffix[$j]);	
 					$this->ObTpl->parse("attributesforedit_blk","TPL_ATTRIBUTESFOREDIT_BLK",true);

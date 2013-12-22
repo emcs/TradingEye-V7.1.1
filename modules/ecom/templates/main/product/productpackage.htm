@@ -126,21 +126,13 @@
 </div>
 <!-- END TPL_MAINCONTENT_BLK -->
 <!-- BEGIN TPL_ATTRIBUTETABLE_BLK -->
-<table id="productAttributes">
-	<thead>
-		<tr>
-			<th colspan="2">{TPL_VAR_ATTRIBUTETITLE}</th>
-		</tr>
-	</thead>
-	<tbody>
+<div class="attributes_container">
+<h3 class="title">{TPL_VAR_ATTRIBUTETITLE}</h3>
 		<!-- BEGIN TPL_ATTRIBUTEFIELD_BLK -->
-		<tr>
-			<th class="first">{TPL_VAR_FILEDNAME}</th>
-			<td>{TPL_VAR_PREFIX}{TPL_VAR_FIELDVALUE}{TPL_VAR_SUFFIX}</td>
-		</tr>
+<div class="field_title">{TPL_VAR_FILEDNAME}</div>
+<div class="field_body">{TPL_VAR_PREFIX}{TPL_VAR_FIELDVALUE}{TPL_VAR_SUFFIX}</div>
 		<!-- END TPL_ATTRIBUTEFIELD_BLK -->
-	</tbody>
-</table>
+</div>
 <!-- END TPL_ATTRIBUTETABLE_BLK -->
 <!-- BEGIN TPL_MAINPRODUCT_BLK -->
 <div class="products">

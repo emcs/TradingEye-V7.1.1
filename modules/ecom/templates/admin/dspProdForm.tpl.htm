@@ -199,7 +199,7 @@ padding-bottom:15px;
 			<table class='whiteTable2 left'>
 				<tbody>
 					<tr>
-						<td style='width:185px;'>Select a Product Attribute</td>
+						<td>Select a Product Attribute Template</td>
 						<td>
 							<div class="selectContainer"><select name="attributeid" id="attributeid" class="formSelect" onchange="attribute(this.value)">
 															<optgroup>
@@ -219,24 +219,16 @@ padding-bottom:15px;
 			<table id="attribute" class="whiteTable2 left"><!-- DO NOT CHANGE OR REMOVE TABLE ID -->
 				<!-- BEGIN TPL_ATTRIBUTESFOREDIT_BLK -->
 				<tr>
-					<thead>
-						<tr>
-							<th>{TPL_VAR_ATTRIBUTENAME}</th>
-						</tr>
-					<tbody>
-						<tr>
-							<td><span>{TPL_VAR_PREFIX}</span>
-							<input type="text" class="formField" name="attributevalue[]" value="{TPL_VAR_VALUE}" />
-							<span>{TPL_VAR_SUFFIX}</span></td>
-					
-						</tr>
+					<td class=\"first\"><label>{TPL_VAR_ATTRIBUTENAME}</label></td>
+					<td><input type="text" class="formField" name="attributevalue[]" value="{TPL_VAR_VALUE}" /></td>
+				</tr>
 			<!-- END TPL_ATTRIBUTESFOREDIT_BLK -->
 			</table>
 			<!-- END TPL_AJAX_BLK -->
 			<table class="whiteTable2 left">
 				<tbody>
 					<tr>
-						<td style='width:185px;'>{LANG_VAR_SELECTLAYOUT}</td>
+						<td style='width:241px;'>{LANG_VAR_SELECTLAYOUT}</td>
 						<td>								
 							<div class="selectContainer"><select class="formSelect" id="layout" name="layout">
 															<!-- BEGIN TPL_LAYOUT_BLK -->
@@ -246,7 +238,7 @@ padding-bottom:15px;
 						</td>
 					</tr>
 					<tr>
-						<td style='width:185px;'>{LANG_VAR_SELECTTEMPLATE}</td>
+						<td style='width:241px;'>{LANG_VAR_SELECTTEMPLATE}</td>
 						<td>
 							<div class="selectContainer"><select class="formSelect" id="template" name="template">
 															<!-- BEGIN TPL_TEMPLATE_BLK -->
