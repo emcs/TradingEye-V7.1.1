@@ -422,12 +422,12 @@ class c_shopInterface {
 		}
 		if(isset($this->request['id']) && !empty($this->request['id']))
 		{
-		$this->obDb->query = 'SELECT iProdid_PK,iAttrValueId_FK,vTitle,vTemplate,iTaxable,fPrice,fRetailPrice,fListPrice,vSeoTitle,iSale,vImage2,iEnquiryButton,tImages,tContent,iInventory,iUseinventory,iCartButton,vImage3,iKit,iVendorid_FK,vShipNotes,iFreeShip,iViewCount FROM ' . PRODUCTS . ' WHERE iProdid_PK="'.$this->request['id'].'"';
+		$this->obDb->query = 'SELECT * FROM ' . PRODUCTS . ' WHERE iProdid_PK="'.$this->request['id'].'"';
 		}
 		else
 		{		
 		#TO DISPLAY THE HEAD NAME
-		$this->obDb->query = "SELECT iProdid_PK,iAttrValueId_FK ,vTitle,vTemplate,iTaxable,fPrice,fRetailPrice,fListPrice,vSeoTitle,iSale,vImage2,iEnquiryButton,tImages,tContent,iInventory,iUseinventory,iCartButton,vImage3,iKit,iVendorid_FK,vShipNotes,iFreeShip,iViewCount FROM " . PRODUCTS . ", " . FUSIONS . " F WHERE iProdid_PK =iSubId_FK AND vtype='product' AND iState=1 AND vSeoTitle='" . $this->request['mode'] . "'";
+		$this->obDb->query = "SELECT * FROM " . PRODUCTS . ", " . FUSIONS . " F WHERE iProdid_PK =iSubId_FK AND vtype='product' AND iState=1 AND vSeoTitle='" . $this->request['mode'] . "'";
 		}
 		$rowHead = $this->obDb->fetchQuery();
 
@@ -521,6 +521,18 @@ class c_shopInterface {
 		$this->ObTpl->set_block("TPL_DETAILS_FILE", "TPL_MAINCONTENT_BLK", "dspmaincontent_blk");
 		$this->ObTpl->set_block("TPL_MAINCONTENT_BLK", "TPL_CONTENT_BLK", "dspcontent_blk");
 		$this->ObTpl->set_block("TPL_DETAILS_FILE", "TPL_ATTRIBUTETABLE_BLK", "attributetable_blk");
+		
+		$this->ObTpl->set_block("TPL_ATTRIBUTETABLE_BLK", "TPL_ITEM_WIDTH_BLK", "itemwidth_blk");
+		$this->ObTpl->set_block("TPL_ATTRIBUTETABLE_BLK", "TPL_ITEM_HEIGHT_BLK", "itemheight_blk");
+		$this->ObTpl->set_block("TPL_ATTRIBUTETABLE_BLK", "TPL_ITEM_DEPTH_BLK", "itemdepth_blk");
+		$this->ObTpl->set_block("TPL_ATTRIBUTETABLE_BLK", "TPL_ITEM_WEIGHT_BLK", "itemweight_blk");
+		
+		$this->ObTpl->set_block("TPL_ATTRIBUTETABLE_BLK", "TPL_ITEM_ASIN_BLK", "itemasin_blk");
+		$this->ObTpl->set_block("TPL_ATTRIBUTETABLE_BLK", "TPL_ITEM_ISBN_BLK", "itemisbn_blk");
+		$this->ObTpl->set_block("TPL_ATTRIBUTETABLE_BLK", "TPL_ITEM_MPN_BLK", "itemmpn_blk");
+		$this->ObTpl->set_block("TPL_ATTRIBUTETABLE_BLK", "TPL_ITEM_UPC_BLK", "imtemupc_blk");
+		$this->ObTpl->set_block("TPL_ATTRIBUTETABLE_BLK", "TPL_ITEM_SKU_BLK", "imtemsku_blk");
+		
 		$this->ObTpl->set_block("TPL_ATTRIBUTETABLE_BLK", "TPL_ATTRIBUTEFIELD_BLK", "attributefield_blk");
 		
 		$this->ObTpl->halt_on_error = "no";
@@ -555,6 +567,19 @@ class c_shopInterface {
 	
 		$this->ObTpl->set_var("enquiry_blk", "");
 		$this->ObTpl->set_var("attributetable_blk", "");
+		
+		$this->ObTpl->set_var("itemwidth_blk", "");
+		$this->ObTpl->set_var("itemheight_blk", "");
+		$this->ObTpl->set_var("itemdepth_blk", "");
+		$this->ObTpl->set_var("itemweight_blk", "");
+		
+		$this->ObTpl->set_var("itemasin_blk", "");
+		$this->ObTpl->set_var("itemisbn_blk", "");
+		$this->ObTpl->set_var("itemmpn_blk", "");
+		$this->ObTpl->set_var("imtemupc_blk", "");
+		$this->ObTpl->set_var("imtemsku_blk", "");
+		
+		
 		$this->ObTpl->set_var("attributefield_blk", "");
 
 		$this->ObTpl->set_var("supplierimg_blk", "");
@@ -845,9 +870,57 @@ class c_shopInterface {
 				
 				$this->ObTpl->parse("attributefield_blk","TPL_ATTRIBUTEFIELD_BLK",true);
 				}
-			$this->ObTpl->parse("attributetable_blk","TPL_ATTRIBUTETABLE_BLK");
+		
+				#DISPLAY PRODUCT IDS AND WIDTH/HEIGHT/DEPTH
+				if(!empty($rowHead[0]->fItemWidth))
+				{
+					$this->ObTpl->set_var("TPL_VAR_ITEM_WIDTH",$rowHead[0]->fItemWidth);
+					$this->ObTpl->parse("itemwidth_blk","TPL_ITEM_WIDTH_BLK");
+				}
+				if(!empty($rowHead[0]->fItemHeight))
+				{
+					$this->ObTpl->set_var("TPL_VAR_ITEM_HEIGHT",$rowHead[0]->fItemHeight);
+					$this->ObTpl->parse("itemheight_blk","TPL_ITEM_HEIGHT_BLK");
+				}
+				if(!empty($rowHead[0]->fItemDepth))
+				{
+					$this->ObTpl->set_var("TPL_VAR_ITEM_DEPTH",$rowHead[0]->fItemDepth);
+					$this->ObTpl->parse("itemdepth_blk","TPL_ITEM_DEPTH_BLK");
+				}
+				if(!empty($rowHead[0]->vASIN))
+				{
+					$this->ObTpl->set_var("TPL_VAR_ASIN",$rowHead[0]->vASIN);
+					$this->ObTpl->parse("itemasin_blk","TPL_ITEM_ASIN_BLK");
+				}
+				if(!empty($rowHead[0]->vISBN))
+				{
+					$this->ObTpl->set_var("TPL_VAR_ISBN",$rowHead[0]->vISBN);
+					$this->ObTpl->parse("itemisbn_blk","TPL_ITEM_ISBN_BLK");
+				}
+				if(!empty($rowHead[0]->vMPN))
+				{
+					$this->ObTpl->set_var("TPL_VAR_MPN",$rowHead[0]->vMPN);
+					$this->ObTpl->parse("itemmpn_blk","TPL_ITEM_MPN_BLK");
+				}
+				if(!empty($rowHead[0]->vUPC))
+				{
+					$this->ObTpl->set_var("TPL_VAR_UPC",$rowHead[0]->vUPC);
+					$this->ObTpl->parse("imtemupc_blk","TPL_ITEM_UPC_BLK");
+				}
+				if(!empty($rowHead[0]->vSku))
+				{
+					$this->ObTpl->set_var("TPL_VAR_SKU",$rowHead[0]->vSku);
+					$this->ObTpl->parse("imtemsku_blk","TPL_ITEM_SKU_BLK");
+				}
+				if(!empty($rowHead[0]->fItemWeight))
+				{
+					$this->ObTpl->set_var("TPL_VAR_ITEM_WEIGHT",$rowHead[0]->fItemWeight);
+					$this->ObTpl->parse("imtemweight_blk","TPL_ITEM_WEIGHT_BLK");
+				}
+				$this->ObTpl->parse("attributetable_blk","TPL_ATTRIBUTETABLE_BLK");
 			}
 		}
+		
 		#DISPALY PRICE FOR SELECTED PRODUCT
 	
 		if ($rowHead[0]->iTaxable == 1) 

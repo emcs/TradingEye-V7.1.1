@@ -864,7 +864,13 @@ class c_shopInterface
 			$row_product[0]->vImage2="";
 			$row_product[0]->vImage3="";
 			$row_product[0]->vDownloadablefile ="";
-			$row_product[0]->iVendorid_FK ="";
+			$row_product[0]->fItemHeight ="";
+			$row_product[0]->fItemWidth ="";
+			$row_product[0]->fItemDepth ="";
+			$row_product[0]->vASIN ="";
+			$row_product[0]->vISBN ="";
+			$row_product[0]->vMPN ="";
+			$row_product[0]->vUPC ="";
 			$dueDate="";
 
 	#CHECKING POST VARIABLES TO INTIALIZE VALUES
@@ -1136,7 +1142,16 @@ class c_shopInterface
 					closedir($dh);
 				}
 			}
-
+			
+			# Added Item Dimensions and multiple identifier codes for shipping, seo, and product feed purposes
+			$this->ObTpl->set_var("TPL_VAR_WIDTH",$row_product[0]->fItemWidth);
+			$this->ObTpl->set_var("TPL_VAR_HEIGHT",$row_product[0]->fItemHeight);
+			$this->ObTpl->set_var("TPL_VAR_DEPTH",$row_product[0]->fItemDepth);
+			$this->ObTpl->set_var("TPL_VAR_ASIN",$row_product[0]->vASIN);
+			$this->ObTpl->set_var("TPL_VAR_ISBN",$row_product[0]->vISBN);
+			$this->ObTpl->set_var("TPL_VAR_MPN",$row_product[0]->vMPN);
+			$this->ObTpl->set_var("TPL_VAR_UPC",$row_product[0]->vUPC);
+			
 			if (is_dir($this->layoutTemplatePath)) 
 			{
 				if ($dh = opendir($this->layoutTemplatePath))

@@ -62,8 +62,11 @@ class c_installs
 			$mode=$_REQUEST['mode'];
 
 		}
-
-
+		$this->strPath = realpath("../") . "/";
+		if(!file_exists($this->strPath . "installs/install.sql") || !file_exists($this->strPath . "installs/upgrade.sql"))
+		{
+			die();
+		}
 
 		$this->request=$_REQUEST;
 		$this->upgrade = 0;
@@ -104,8 +107,10 @@ class c_installs
 				$this->obTpl->set_var("TPL_VAR_BODY",$this->m_instalForm());
 
 			}else	{
-
-				$this->m_install();
+				if(defined("TE_VERSION") && file_exists($this->strPath . "installs/install.sql"))
+				{
+					$this->m_install();
+				}
 
 			}
 
@@ -114,7 +119,10 @@ class c_installs
 			case "accept":
 				if($this->upgrade === 1)
 				{
+					if(defined("TE_VERSION") && file_exists($this->strPath . "installs/upgrade.sql"))
+					{
 					$this->m_install();
+					}
 				}
 				else
 				{
@@ -1314,27 +1322,38 @@ class c_installs
 	function m_createDatabase()
 	{
 		$this->strPath = realpath("../") . "/";
-		if(isset($this->request['plugins']) && $this->request['plugins'] == 1)
+		if(defined("TE_VERSION") && file_exists($this->strPath . "installs/install.sql"))
 		{
-			$this->m_getPlugins();
-		}
-		if(isset($this->request['themes']) && $this->request['themes'] == 1)
-		{
-			$this->m_getThemes();
-		}
-		$this->obDb->strPath = $this->strPath;
-		if($this->upgrade === 1 && file_exists($this->strPath . "installs/upgrade.sql"))
-		{
-			$this->obDb->request = $this->request;
-			$this->obDb->ImportSQL($this->strPath . "installs/upgrade.sql",";",1);
-		}
-		elseif(file_exists($this->strPath . "installs/install.sql") && $this->obDb->ImportSQL($this->strPath . "installs/install.sql") && $this->upgrade === 0)
-		{
-			return 1;
-		}
-		else
-		{
-			Die("Error importing sql install file");
+			if(isset($this->request['plugins']) && $this->request['plugins'] == 1)
+			{
+				$this->m_getPlugins();
+			}
+			if(isset($this->request['themes']) && $this->request['themes'] == 1)
+			{
+				$this->m_getThemes();
+			}
+			$this->obDb->strPath = $this->strPath;
+			
+			$version = TE_VERSION;
+			$newversion = TE_UPGRADE_VERSION;
+			if($this->upgrade === 1 && file_exists($this->strPath . "installs/upgrade.sql") && $newversion > $version)
+			{
+				$this->obDb->request = $this->request;
+				$_POST['dbPrefix'] = $this->prefix;
+				if(this->obDb->ImportSQL($this->strPath . "installs/upgrade.sql",";",1))
+				{
+					unset($this->strPath . "installs/upgrade.sql");
+				}
+			}
+			elseif(file_exists($this->strPath . "installs/install.sql") && $this->upgrade === 0 && $this->obDb->ImportSQL($this->strPath . "installs/install.sql"))
+			{
+				unset($this->strPath . "installs/install.sql");
+				return 1;
+			}
+			else
+			{
+				Die("Error importing sql install file");
+			}
 		}
 	}
 	

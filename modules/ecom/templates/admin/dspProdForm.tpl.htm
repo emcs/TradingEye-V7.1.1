@@ -86,10 +86,11 @@ padding-bottom:15px;
 				<thead>
 					<tr>
 						<th>{LANG_VAR_PRODUCTTITLE}</th>
-						<th>{LANG_VAR_PRODUCTCODE}</th>
-						<th>{LANG_VAR_PRODUCTPRICE}</th>
-						<th>{LANG_VAR_PRODUCTRETAILPRICE}</th>
-						<th>{LANG_VAR_RRP}</th>
+						<th>SKU</th>
+						<th>ASIN</th>
+						<th>ISBN</th>
+						<th>MPN</th>
+						<th>UPC</th>
 						<th>{LANG_VAR_ONOFF}</th>
 					</tr>
 				</thead>
@@ -97,11 +98,10 @@ padding-bottom:15px;
 					<tr>
 						<td><input type="text" id="title" name="title" value="{TPL_VAR_TITLE}" onBlur="changevalue();"  maxlength="255" /></td>
 						<td><input type="text" id="sku" name="sku" value="{TPL_VAR_SKU}" size="5" maxlength="50" /></td>
-						<td><input type="text" class="formField short" id="price" name="price" value="{TPL_VAR_PRICE}" onBlur="this.form.price.value=filterNum(this.form.price.value);" size="5" maxlength="12"/></td>
-						<td><!-- BEGIN TPL_VAR_RETAILPRICE_BLK -->	
-						<input type="text" class="formField short" id="retailprice" name="retailprice" value="{TPL_VAR_RETAILPRICE}" onBlur="this.form.price.value=filterNum(this.form.price.value);" size="5" maxlength="12"  />
-						<!-- END TPL_VAR_RETAILPRICE_BLK --> </td>
-						<td><input type="text" class="formField short" id="list_price" name="list_price" value="{TPL_VAR_LISTPRICE}" onBlur="this.form.list_price.value=filterNum(this.form.list_price.value);" size="5" maxlength="12" /></td>
+						<td><input type="text" id="asin" name="asin" value="{TPL_VAR_ASIN}"/></td>
+						<td><input type="text" id="isbn" name="isbn" value="{TPL_VAR_ISBN}"/></td>
+						<td><input type="text" id="mpn" name="mpn" value="{TPL_VAR_MPN}"/></td>
+						<td><input type="text" id="upc" name="upc" value="{TPL_VAR_UPC}"/></td>
 						<td>
 							<input type="checkbox" class="checkbox" id="active" name="state" value="1" {TPL_VAR_STATE} />
 							<script language="JavaScript" type="text/javascript">
@@ -133,6 +133,32 @@ padding-bottom:15px;
 								});
 							</script>
 						</td>
+					</tr>
+				</tbody>
+			</table>
+			<table class="whiteTable2">
+				<thead>
+					<tr>
+						<th>{LANG_VAR_PRODUCTPRICE}</th>
+						<!-- BEGIN TPL_VAR_RETAILPRICE_BLK --><th>{LANG_VAR_PRODUCTRETAILPRICE}</th><!-- END TPL_VAR_RETAILPRICE_BLK -->
+						<th>{LANG_VAR_RRP}</th>
+						<th>Width (Inches)</th>
+						<th>Height (Inches)</th>
+						<th>Depth (Inches)</th>
+						<th>Weight (Lbs)</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><input type="text" class="formField short" id="price" name="price" value="{TPL_VAR_PRICE}" onBlur="this.form.price.value=filterNum(this.form.price.value);" size="5" maxlength="12"/></td>
+						<!-- BEGIN TPL_VAR_RETAILPRICE_BLK --><td>	
+						<input type="text" class="formField short" id="retailprice" name="retailprice" value="{TPL_VAR_RETAILPRICE}" onBlur="this.form.price.value=filterNum(this.form.price.value);" size="5" maxlength="12"  />
+						 </td><!-- END TPL_VAR_RETAILPRICE_BLK -->
+						<td><input type="text" class="formField short" id="list_price" name="list_price" value="{TPL_VAR_LISTPRICE}" onBlur="this.form.list_price.value=filterNum(this.form.list_price.value);" size="5" maxlength="12" /></td>
+						<td><input type="text" id="width" name="width" value="{TPL_VAR_WIDTH}"/></td>
+						<td><input type="text" id="height" name="height" value="{TPL_VAR_HEIGHT}"/></td>
+						<td><input type="text" id="depth" name="depth" value="{TPL_VAR_DEPTH}"/></td>
+						<td><input type="text" class="formField short" id="product_weight" name="item_weight" value="{TPL_VAR_ITEMWEIGHT}" onBlur="this.form.item_weight.value=filterNum(this.form.item_weight.value);" size="5" maxlength="12" /></td>
 					</tr>
 				</tbody>
 			</table>
@@ -457,7 +483,6 @@ padding-bottom:15px;
 			<table class='whiteTable2'>
 				<thead>
 					<tr>
-						<th>{LANG_VAR_ITEMWEIGHT}</th>
 						<th>{LANG_VAR_PRODUCTNOTES}</th>
 						<th>{LANG_VAR_FREEPOSTAGE}</th>
 						<th>{LANG_VAR_POSTAGECODE}</th>
@@ -465,7 +490,6 @@ padding-bottom:15px;
 				</thead>
 				<tbody>
 					<tr>
-						<td><input type="text" class="formField short" id="product_weight" name="item_weight" value="{TPL_VAR_ITEMWEIGHT}" onBlur="this.form.item_weight.value=filterNum(this.form.item_weight.value);" size="5" maxlength="12" /></td>
 						<td><input type="text" class="formField long" id="product_notes" name="ship_notes" value="{TPL_VAR_PRODUCTNOTES}" maxlength="200"  /></td>
 						<td><input type="checkbox" class="checkbox" id="free_postage" name="free_postage" value="1" {TPL_VAR_FREEPOSTAGE} /></td>
 						<td>

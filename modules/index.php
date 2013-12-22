@@ -133,6 +133,7 @@ defined('_TEEXEC') or die;
 	$obMainTemplate->set_var("TPL_VAR_THEME_PATH",THEMEURLPATH);
 	$obMainTemplate->set_var("TPL_VAR_IMAGE_WIDTH", UPLOAD_SMIMAGEWIDTH);
 	$obMainTemplate->set_var("TPL_VAR_IMAGE_HEIGHT", UPLOAD_SMIMAGEHEIGHT);
+	$obMainTemplate->set_var("TPL_VAR_ISO_CURRENCY", PAYMENT_CURRENCY);
 	
 	$obDb = new database();
     $obDb->db_host = DATABASE_HOST;

@@ -121,6 +121,13 @@
 	ALTER IGNORE TABLE {{prefix}}tbShop_Orders ADD vAuthCode text;
 	ALTER IGNORE TABLE {{prefix}}tbShop_Orders ADD vAltCompany text;
 	ALTER IGNORE TABLE {{prefix}}tbCountry ADD iso3 text;
+	ALTER IGNORE TABLE {{prefix}}tbShop_Products ADD `vASIN` varchar(50);
+	ALTER IGNORE TABLE {{prefix}}tbShop_Products ADD `vISBN` varchar(50);
+	ALTER IGNORE TABLE {{prefix}}tbShop_Products ADD `vMPN` varchar(50);
+	ALTER IGNORE TABLE {{prefix}}tbShop_Products ADD `vUPC` varchar(50);
+	ALTER IGNORE TABLE {{prefix}}tbShop_Products ADD `fItemHeight` float;
+	ALTER IGNORE TABLE {{prefix}}tbShop_Products ADD `fItemWidth` float;
+	ALTER IGNORE TABLE {{prefix}}tbShop_Products ADD `fItemDepth` float;
 	CREATE TABLE `te_temptablezzzzcountry` (`iCountryId_PK` bigint(20) NOT NULL,`iso3` text NOT NULL);
 	
 	INSERT INTO te_temptablezzzzcountry VALUES('1','AFG');

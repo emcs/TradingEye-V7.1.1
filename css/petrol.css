@@ -2117,3 +2117,26 @@ background:url("../graphics/clean/navStaticBg.gif") no-repeat scroll 0pt 50% tra
 .userAcc .message {
 background-color:#FFF;
 }
+div.attributes_container{
+
+}
+#product .info div.attributes_container h3.title{
+border-bottom: 1px solid #000;
+padding-bottom: 3px;
+line-height: 100%;
+margin-bottom: 5px;
+}
+div.attributes_container div.field_title{
+width:150px;
+font-weight:bold;
+display:inline-block;
+margin-top:5px;
+margin-bottom:5px;
+}
+div.attributes_container div.field_body{
+width:66px;
+font-weight:normal;
+display:inline-block;
+margin-top:5px;
+margin-bottom:5px;
+}

@@ -21,7 +21,7 @@
 <script type="text/javascript" src="{TPL_VAR_REAL_PATH}jscript/common.js"></script>
 
 <div id="content">
-	<div id="product">
+	<div id="product" itemscope itemtype="http://schema.org/Product">
 		<div id="imagezoom" class="image">
 				<img src="{TPL_VAR_IMGPATH}" itemprop="image" id='productlargeimage' align="left" style="width: 250px;"/>
 			<!-- BEGIN TPL_IMAGE_GALLERY_BLK -->
@@ -43,12 +43,13 @@
 		</div>
 		<div class="info">
 			<form id="productDisplay" action="{TPL_VAR_CARTLINK}" method="post" name="productDisplay">
-				<h2 id="pageTitle">{TPL_VAR_PRODUCTTITLE}</h2>
+				<h2 id="pageTitle" itemprop="name">{TPL_VAR_PRODUCTTITLE}</h2>
 				<!-- BEGIN TPL_PDETAILS_BLK -->
 				
 				<!-- BEGIN TPL_ONSALELBL_BLK -->
 				{TPL_VAR_ONSALE}
-				<!-- END TPL_ONSALELBL_BLK --><p class="price">{TPL_VAR_CURRENCY}{TPL_VAR_PRICEMAIN}</p>
+				<!-- END TPL_ONSALELBL_BLK -->
+				<p class="price" itemprop="offers" itemscope itemtype="http://schema.org/Offer" content="{TPL_VAR_PRICEMAIN}">{TPL_VAR_CURRENCY}<span itemprop="price">{TPL_VAR_PRICEMAIN}</span></p>
 				<div class="item-description" itemprop="description">{TPL_VAR_LONGDESCMAIN}</div>
 				<!-- END TPL_PDETAILS_BLK -->
 				<!-- BEGIN TPL_KIT_BLK -->
@@ -71,6 +72,58 @@
 				<input type="hidden" name="mode" value="add" />
 				<input type="hidden" name="productid" value="{TPL_VAR_MAINID}" />
 				<br style='clear:both;'/>
+				<!-- BEGIN TPL_KIT_BLK -->
+				<h3>Items in Package:</h3>
+				<!-- BEGIN TPL_KITELEMENT_BLK -->
+				<p><a href="{TPL_VAR_KITELEMENT_URL}">{TPL_VAR_KITELEMENT}</a> x {TPL_VAR_QTY}</p>
+				{TPL_VAR_OPTIONS}
+				<!-- END TPL_KITELEMENT_BLK -->
+				<!-- END TPL_KIT_BLK -->
+				<!-- BEGIN TPL_ATTRIBUTETABLE_BLK -->
+					<div class="attributes_container">
+						<h3 class="title">Specifications</h3>
+							<!-- BEGIN TPL_ITEM_SKU_BLK -->
+							<div class="field_title">Sku:</div>
+							<div class="field_body"><span itemprop='sku'>{TPL_VAR_SKU}</span></div>
+							<!-- END TPL_ITEM_SKU_BLK -->
+							<!-- BEGIN TPL_ITEM_ASIN_BLK -->
+							<div class="field_title">ASIN:</div>
+							<div class="field_body">{TPL_VAR_ASIN}</div>
+							<!-- END TPL_ITEM_ASIN_BLK -->
+							<!-- BEGIN TPL_ITEM_ISBN_BLK -->
+							<div class="field_title">ISBN:</div>
+							<div class="field_body"><span itemprop='isbn'>{TPL_VAR_ISBN}</span></div>
+							<!-- END TPL_ITEM_ISBN_BLK -->
+							<!-- BEGIN TPL_ITEM_MPN_BLK -->
+							<div class="field_title">MPN:</div>
+							<div class="field_body"><span itemprop='mpn'>{TPL_VAR_MPN}</span></div>
+							<!-- END TPL_ITEM_MPN_BLK -->
+							<!-- BEGIN TPL_ITEM_UPC_BLK -->
+							<div class="field_title">UPC:</div>
+							<div class="field_body"><span itemprop='gtin13'>{TPL_VAR_UPC}</span></div>
+							<!-- END TPL_ITEM_UPC_BLK -->
+							<!-- BEGIN TPL_ITEM_WIDTH_BLK -->
+							<div class="field_title">Width:</div>
+							<div class="field_body"><span itemprop='width'>{TPL_VAR_ITEM_WIDTH} inches</span></div>
+							<!-- END TPL_ITEM_WIDTH_BLK -->
+							<!-- BEGIN TPL_ITEM_HEIGHT_BLK -->
+							<div class="field_title">Height:</div>
+							<div class="field_body"><span itemprop='height'>{TPL_VAR_ITEM_HEIGHT} inches</span></div>
+							<!-- END TPL_ITEM_HEIGHT_BLK -->
+							<!-- BEGIN TPL_ITEM_DEPTH_BLK -->
+							<div class="field_title">Depth:</div>
+							<div class="field_body"><span itemprop='depth'>{TPL_VAR_ITEM_DEPTH} inches</span></div>
+							<!-- END TPL_ITEM_DEPTH_BLK -->
+							<!-- BEGIN TPL_ITEM_WEIGHT_BLK -->
+							<div class="field_title">Weight:</div>
+							<div class="field_body"><span itemprop='weight'>{TPL_VAR_ITEM_WEIGHT} lbs</span></div>
+							<!-- END TPL_ITEM_WEIGHT_BLK -->
+						<!-- BEGIN TPL_ATTRIBUTEFIELD_BLK -->
+							<div class="field_title">{TPL_VAR_FILEDNAME}:</div>
+							<div class="field_body">{TPL_VAR_PREFIX}{TPL_VAR_FIELDVALUE}{TPL_VAR_SUFFIX}</div>
+						<!-- END TPL_ATTRIBUTEFIELD_BLK -->
+					</div>
+				<!-- END TPL_ATTRIBUTETABLE_BLK -->
 				<div class='addwishcompare'>
 			<!-- BEGIN TPL_WISHLIST_BLK -->
 			<p id="addWishlist"><a href="{TPL_VAR_WISHLISTLINK}">{LANG_VAR_ADDWISHLIST}</a></p>
@@ -85,6 +138,7 @@
 				<!-- END TPL_REVIEWRANK_BLK -->
 				<!-- BEGIN TPL_SUPPLIERIMG_BLK -->
 				<p>{TPL_VAR_SUPPLIERIMAGE}</p>
+				<p><span itemprop="brand">{TPL_VAR_SUPPLIERNAME}</span></p>
 				<!-- END TPL_SUPPLIERIMG_BLK -->
 				<!-- BEGIN TPL_RRPLBL_BLK -->
 				<p class="rrp">{TPL_VAR_RRP}</p>
@@ -125,15 +179,6 @@
 	</ul>
 </div>
 <!-- END TPL_MAINCONTENT_BLK -->
-<!-- BEGIN TPL_ATTRIBUTETABLE_BLK -->
-<div class="attributes_container">
-<h3 class="title">{TPL_VAR_ATTRIBUTETITLE}</h3>
-		<!-- BEGIN TPL_ATTRIBUTEFIELD_BLK -->
-<div class="field_title">{TPL_VAR_FILEDNAME}</div>
-<div class="field_body">{TPL_VAR_PREFIX}{TPL_VAR_FIELDVALUE}{TPL_VAR_SUFFIX}</div>
-		<!-- END TPL_ATTRIBUTEFIELD_BLK -->
-</div>
-<!-- END TPL_ATTRIBUTETABLE_BLK -->
 <!-- BEGIN TPL_MAINPRODUCT_BLK -->
 <div class="products">
 	<h2>{LANG_VAR_MAYWESUGGEST}</h2>
