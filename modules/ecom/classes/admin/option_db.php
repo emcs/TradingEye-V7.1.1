@@ -22,10 +22,10 @@ class c_optionDb
 			
 			$this->obDb->query="SELECT A.*, AV.tValues FROM ".ATTRIBUTES." A, ".ATTRIBUTEVALUES." AV WHERE AV.iValueId_PK=".$this->request['attributeid']." AND iAttributesid_FK = iAttributesid_PK";
 			$attribute = $this->obDb->fetchQuery();
-			$name = explode("�",$attribute[0]->vFieldname);
-			$prefix = explode("�",$attribute[0]->vPrefix);
-			$suffix = explode("�",$attribute[0]->vSuffix);
-			$value = explode("�",$attribute[0]->tValues);
+			$name = explode("<!>",$attribute[0]->vFieldname);
+			$prefix = explode("<!>",$attribute[0]->vPrefix);
+			$suffix = explode("<!>",$attribute[0]->vSuffix);
+			$value = explode("<!>",$attribute[0]->tValues);
 			for ($i=0;$i<$attribute[0]->iFieldnumber;$i++)
 			{	
 			$string.="<tr>";
@@ -40,9 +40,9 @@ class c_optionDb
 			$this->obDb->query = "SELECT * FROM ".ATTRIBUTES." WHERE  iAttributesid_PK = ".$this->request['attributeid'];	
 			$attribute = $this->obDb->fetchQuery();
 			
-			$name 	= explode("�",$attribute[0]->vFieldname);
-			$prefix = explode("�",$attribute[0]->vPrefix);
-			$suffix = explode("�",$attribute[0]->vSuffix);
+			$name 	= explode("<!>",$attribute[0]->vFieldname);
+			$prefix = explode("<!>",$attribute[0]->vPrefix);
+			$suffix = explode("<!>",$attribute[0]->vSuffix);
 			for ($i=0;$i<$attribute[0]->iFieldnumber;$i++)
 			{	
 			$string.="<tr>";
@@ -71,9 +71,9 @@ class c_optionDb
 		$value="";
 		for ($i=1;$i<$fieldcount+1;$i++)
 		{
-		$fieldname.= $this->request['fieldname'.$i]."�";	
-		$prefix.= $this->request['prefix'.$i]."�";
-		$suffix.= $this->request['suffix'.$i]."�";
+		$fieldname.= $this->request['fieldname'.$i]."<!>";	
+		$prefix.= $this->request['prefix'.$i]."<!>";
+		$suffix.= $this->request['suffix'.$i]."<!>";
 		}
 		$timeStamp=time();
 		$this->obDb->query ="INSERT INTO ".ATTRIBUTES;
@@ -98,9 +98,9 @@ class c_optionDb
 		$suffix="";
 		$value="";
 		for($i=1;$i<$count[0]->iFieldnumber+1;$i++){
-			$name.=$this->request['fieldname'.$i]."�";
-			$prefix.=$this->request['prefix'.$i]."�";
-			$suffix.=$this->request['suffix'.$i]."�";
+			$name.=$this->request['fieldname'.$i]."<!>";
+			$prefix.=$this->request['prefix'.$i]."<!>";
+			$suffix.=$this->request['suffix'.$i]."<!>";
 		}
 		$this->obDb->query ="UPDATE ".ATTRIBUTES. " SET
 				vAttributeTitle		=	'".$this->request['title']."',

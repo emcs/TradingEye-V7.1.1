@@ -286,7 +286,7 @@ class c_shopDb
 		$string = "";		
 		while(isset($this->request['attributevalue'][$i]))	 
 		{
-		  	$string.=$this->request['attributevalue'][$i]."�";
+		  	$string.=$this->request['attributevalue'][$i]."<!>";
 			$i++;
 		}
 	
@@ -658,10 +658,11 @@ class c_shopDb
 		
 		$this->obDb->query = "SELECT * FROM ".PRODUCTATTRIBUTES. " WHERE iProductid_FK = '".$this->request['prodId']."'";
 		$existingAttribute = $this->obDb->fetchQuery();
-		
-		$this->obDb->query = "DELETE FROM ".ATTRIBUTEVALUES." WHERE iValueId_PK = '".$existingAttribute[0]->iValueid_FK."'";
-		$this->obDb->updateQuery();
-		
+		foreach($existingAttribute as $k => $v)
+		{
+			$this->obDb->query = "DELETE FROM ".ATTRIBUTEVALUES." WHERE iValueId_PK = '".$existingAttribute[$k]->iValueid_FK."'";
+			$this->obDb->updateQuery();
+		}
 		$this->obDb->query = "DELETE FROM ".PRODUCTATTRIBUTES." WHERE iProductid_FK = '".$this->request['prodId']."'";
 		$this->obDb->updateQuery();
 		
@@ -669,23 +670,24 @@ class c_shopDb
 		#INSERT ATTRIBUTE FOR PRODUCT
 		$i=0;
 		$string = "";		
-		while(isset($this->request['attributevalue'][$i]))	 
+		
+		foreach($this->request['attributevalue'] as $k => $v)	 
 		{
-		  	$string.=$this->request['attributevalue'][$i]."�";
-			$i++;
-		}
+		  	//$string.=$this->request['attributevalue'][$i]."<!>";
+			//$i++;
 	
-		$this->obDb->query = "INSERT INTO ".ATTRIBUTEVALUES." (`iAttributesid_FK`,`tValues`) VALUES (
-		'".$this->libFunc->m_addToDB($this->request['attributeid'])."',
-		'".$this->libFunc->m_addToDB($string)."')";
-		$this->obDb->updateQuery();
-		$valueid=$this->obDb->last_insert_id;
-		 
-		$this->obDb->query = "INSERT INTO ".PRODUCTATTRIBUTES." (`iAttributeid_FK`,`iProductid_FK`,`iValueid_FK`) VALUES (
-		'".$this->libFunc->m_addToDB($this->request['attributeid'])."',
-		'".$this->libFunc->m_addToDB($this->request['prodId'])."',
-		'".$this->libFunc->m_addToDB($valueid)."')";
-		$this->obDb->updateQuery();
+			$this->obDb->query = "INSERT INTO ".ATTRIBUTEVALUES." (`iAttributesid_FK`,`tValues`) VALUES (
+			'".$this->libFunc->m_addToDB($this->request['attributeid'])."',
+			'".$this->libFunc->m_addToDB($this->request['attributevalue'][$k])."')";
+			$this->obDb->updateQuery();
+			$valueid=$this->obDb->last_insert_id;
+			 
+			$this->obDb->query = "INSERT INTO ".PRODUCTATTRIBUTES." (`iAttributeid_FK`,`iProductid_FK`,`iValueid_FK`) VALUES (
+			'".$this->libFunc->m_addToDB($this->request['attributeid'])."',
+			'".$this->libFunc->m_addToDB($this->request['prodId'])."',
+			'".$this->libFunc->m_addToDB($valueid)."')";
+			$this->obDb->updateQuery();
+		}
 		
 		$this->obDb->query = "SELECT iProdid_PK,vTitle,vImage1,vImage2,vImage3,tImages FROM ".PRODUCTS." WHERE iProdid_PK = '".$this->request['prodId']."'";
 		$row_code = $this->obDb->fetchQuery();

@@ -1341,20 +1341,20 @@ class c_shopInterface
     	  		
     		if ($count > 0)  # IF THERE IS AN ATTRIBUTE ASSOCIATED WITH PRODUCT
     		{
-    			$this->obDb->query = "SELECT A.*,AV.* FROM ".ATTRIBUTES." A, ".ATTRIBUTEVALUES." AV WHERE A.iAttributesid_PK =".$attribute[0]->iAttributeid_FK." AND A.iAttributesid_PK = AV.iAttributesid_FK AND AV.iValueId_PK ='".$attribute[0]->iValueid_FK."'"; 
+    			$this->obDb->query = "SELECT A.*,AV.* FROM ".ATTRIBUTES." A, ".ATTRIBUTEVALUES." AV WHERE A.iAttributesid_PK =".$attribute[0]->iAttributeid_FK." AND A.iAttributesid_PK = AV.iAttributesid_FK"; 
 				$attributevalue = $this->obDb->fetchQuery();
 						
-				$fieldname= explode("�",$attributevalue[0]->vFieldname);
-				$prefix = explode("�",$attributevalue[0]->vPrefix);	
-				$description = explode("�",$attributevalue[0]->tValues);
-				$suffix = explode ("�",$attributevalue[0]->vSuffix);
+				$fieldname= explode("<!>",$attributevalue[0]->vFieldname);
+				$prefix = explode("<!>",$attributevalue[0]->vPrefix);	
+				$description = explode("<!>",$attributevalue[0]->tValues);
+				$suffix = explode ("<!>",$attributevalue[0]->vSuffix);
 			
 			
 				for($j=0;$j<$attributevalue[0]->iFieldnumber;$j++)
 					{
 					$this->ObTpl->set_var("TPL_VAR_ATTRIBUTENAME",$fieldname[$j]);
 					$this->ObTpl->set_var("TPL_VAR_PREFIX",$prefix[$j]);
-					$this->ObTpl->set_var("TPL_VAR_VALUE",$description[$j]);
+					$this->ObTpl->set_var("TPL_VAR_VALUE",$attributevalue[$j]->tValues);
 					$this->ObTpl->set_var("TPL_VAR_SUFFIX",$suffix[$j]);	
 					$this->ObTpl->parse("attributesforedit_blk","TPL_ATTRIBUTESFOREDIT_BLK",true);
 					}

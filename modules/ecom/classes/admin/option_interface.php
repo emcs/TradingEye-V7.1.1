@@ -142,9 +142,9 @@ class c_optionInterface
 			$this->ObTpl->set_var("TPL_VAR_ACTION1",SITE_URL."ecom/adminindex.php?action=ec_option.addattribute");
 			$this->ObTpl->parse("adddetails_blk","TPL_ADDDETAILS_BLK");
 			
-			$name = explode("�",$attributerow[0]->vFieldname);
-			$prefix = explode("�",$attributerow[0]->vPrefix);
-			$suffix = explode("�",$attributerow[0]->vSuffix);
+			$name = explode("<!>",$attributerow[0]->vFieldname);
+			$prefix = explode("<!>",$attributerow[0]->vPrefix);
+			$suffix = explode("<!>",$attributerow[0]->vSuffix);
 			for ($i=0;$i<$attributerow[0]->iFieldnumber;$i++){
 					$this->ObTpl->set_var("TPL_VAR_BOXNUMBER",$i+1);
 					$this->ObTpl->set_var("TPL_VAR_NAME",$name[$i]);

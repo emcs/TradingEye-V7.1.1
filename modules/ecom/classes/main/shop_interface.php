@@ -239,7 +239,7 @@ class c_shopInterface {
 			for($i=0;$i<$attcount;$i++)
 			{  
 				$this->ObTpl->set_var("TPL_VAR_ATTRIBUTETITLE",$attRow[$i]->vAttributeTitle);  
-				$fieldname = explode("�",$attRow[$i]->vFieldname);
+				$fieldname = explode("<!>",$attRow[$i]->vFieldname);
 				$this->ObTpl->set_var("attributeline_blk","");
 				for($j=0;$j<$attRow[$i]->iFieldnumber;$j++)
 				{
@@ -251,17 +251,16 @@ class c_shopInterface {
 					 	
 					$valueRow = $this->obDb->fetchQuery();
 					$valueCount = $this->obDb->record_count;
-					
 					$valueArray[$j] = array();
 					$prefixArray[$j]=array();
 					$suffixArray[$j]=array();
 					for($k=0;$k<$valueCount;$k++)
 					{
-					$value = explode("�",$valueRow[$k]->tValues);
+					$value = explode("<!>",$valueRow[$k]->tValues);
 					array_push($valueArray[$j],$value[$j]);
-					$prefix = explode("�",$attRow[$i]->vPrefix);
+					$prefix = explode("<!>",$attRow[$i]->vPrefix);
 					array_push($prefixArray[$j],$prefix[$j]);
-					$suffix = explode("�",$attRow[$i]->vSuffix);
+					$suffix = explode("<!>",$attRow[$i]->vSuffix);
 					array_push($suffixArray[$j],$suffix[$j]);
 					}
 	 				
@@ -826,21 +825,21 @@ class c_shopInterface {
 		$attributerow =$this->obDb->fetchQuery();
 		$attcount = $this->obDb->record_count;
 		if ($attcount > 0){
-			$this->obDb->query="SELECT A.*, AV.tValues FROM ".ATTRIBUTES." A, ".ATTRIBUTEVALUES." AV WHERE AV.iValueId_PK=".$attributerow[0]->iValueid_FK." AND A.iAttributesid_PK = ".$attributerow[0]->iAttributeid_FK;
+			$this->obDb->query="SELECT A.*,AV.* FROM ".ATTRIBUTES." A INNER JOIN ".ATTRIBUTEVALUES." as AV ON AV.iAttributesid_FK = A.iAttributesid_PK WHERE A.iAttributesid_PK = ".$attributerow[0]->iAttributeid_FK;
 			$attribute = $this->obDb->fetchQuery();
 			if ($attribute[0]->vAttributeTitle!="")
 			{
 				$this->ObTpl->set_var("TPL_VAR_ATTRIBUTETITLE",$attribute[0]->vAttributeTitle);
 				
-				$attdesc = explode("�",$attribute[0]->tValues);
-				$attfieldname= explode("�",$attribute[0]->vFieldname);
-				$prefix = explode("�",$attribute[0]->vPrefix);
-				$suffix = explode("�",$attribute[0]->vSuffix);
+				//$attdesc = explode("<!>",$attribute[0]->tValues);
+				$attfieldname= explode("<!>",$attribute[0]->vFieldname);
+				$prefix = explode("<!>",$attribute[0]->vPrefix);
+				$suffix = explode("<!>",$attribute[0]->vSuffix);
 								
 				for ($i=0;$i<$attribute[0]->iFieldnumber;$i++)
 				{
 				$this->ObTpl->set_var("TPL_VAR_FILEDNAME",$attfieldname[$i]);
-				$this->ObTpl->set_var("TPL_VAR_FIELDVALUE",$attdesc[$i]);		
+				$this->ObTpl->set_var("TPL_VAR_FIELDVALUE",$attribute[$i]->tValues);		
 				$this->ObTpl->set_var("TPL_VAR_PREFIX",$prefix[$i]);
 				$this->ObTpl->set_var("TPL_VAR_SUFFIX",$suffix[$i]);
 				
