@@ -1856,12 +1856,10 @@ class c_shopInterface {
 				elseif (ENABLE_GIFTWRAP == 1) {
 					$this->ObTpl->parse("gift_blk", "TPL_GIFTWRAP_BLK");
 				}
-
 				if ($rowCart[$i]->iKit == 1) {
 					$this->obDb->query = "SELECT vTitle,iProdId_FK,vSku FROM " . PRODUCTKITS . "," . PRODUCTS . " WHERE iProdId_FK=iProdId_PK AND iKitId='" . $rowCart[$i]->iProdId_FK . "'";
 					$rsKit = $this->obDb->fetchQuery();
 					$rsKitCount = $this->obDb->record_count;
-
 					for ($j = 0; $j < $rsKitCount; $j++) {
 						$comFunc->kitProductId = $rsKit[$j]->iProdId_FK;
 						#GET CART OPTIONS

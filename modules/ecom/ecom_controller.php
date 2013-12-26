@@ -542,7 +542,6 @@ class c_ecomController
 				case "process":
 					$obreceipt->processTemplate=$this->templatePath."orderProcessed.tpl.htm";
 					$obPayment->errMsg=$obreceipt->m_sendOrderDetails();
-					}
 				break;
 				case "status":
 					$retUrl=$this->libFunc->m_safeUrl(SITE_URL."ecom/index.php?action=checkout.status&mode=".$this->request['mode']);

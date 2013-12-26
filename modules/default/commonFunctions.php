@@ -230,7 +230,7 @@ class c_commonFunctions
 											$optName.=" - ".($rsOptionvalue[$k]->vOptSku);
 										}
 										
-										if($rsOptionvalue[$k]->fPrice>0)
+										if(is_numeric($rsOptionvalue[$k]->fPrice))
 										{
 											$optName.=" - ". LANG_ADD . CONST_CURRENCY.number_format($rsOptionvalue[$k]->fPrice,2);
 										}
@@ -331,7 +331,7 @@ class c_commonFunctions
 				}
 				$this->ObTpl->set_var("TPL_VAR_FIELDNAME","choice_".$this->productId."_".$rsOptions[$i]->iChoiceid_PK);
 				$title="";
-				if($rsOptions[$i]->fPrice>0)
+				if(is_numeric($rsOptions[$i]->fPrice))
 				{
 					$title=" (".LANG_ADD.CONST_CURRENCY.number_format($rsOptions[$i]->fPrice,2).")";
 				}
@@ -453,7 +453,7 @@ class c_commonFunctions
 					#MODIFIED on 29-03-07 -Changed $rsOptionValue[$i]->vItem to $rsOptionValue[0]->vItem
 					$strOptions.=$this->libFunc->m_displayContent($rsOptions[$i]->vDescription).": ".$this->libFunc->m_displayContent($rsOptionValue[0]->vItem)." Sku code: ".$this->libFunc->m_displayContent($rsOptionValue[0]->vOptSku);
 
-					if(!empty($rsOptionValue[0]->fPrice))
+					if(is_numeric($rsOptionValue[0]->fPrice))
 					{
 						$this->price+=$rsOptionValue[0]->fPrice;
 						$strOptions.="&nbsp;(".LANG_ADD.CONST_CURRENCY.number_format($rsOptionValue[0]->fPrice,2).")";
@@ -483,7 +483,7 @@ class c_commonFunctions
 				//}
 				$strChoices.="<input type='hidden' name='choice_".$this->productId."_".$rsChoices[$i]->iChoiceid_PK."' value='".$rsChoices[$i]->vChoiceVal."' />";
 				$strChoices.=$this->libFunc->m_displayContent($rsChoices[$i]->vDescription).": ".nl2br($this->libFunc->m_displayContent($rsChoices[$i]->vChoiceVal));
-				if(!empty($rsChoices[$i]->fPrice))
+				if(is_numeric($rsChoices[$i]->fPrice))
 				{
 					$strChoices.=" (".LANG_ADD.CONST_CURRENCY.number_format($rsChoices[$i]->fPrice,2);
 					//if($rsChoices[$i]->iQty==1)
@@ -596,7 +596,7 @@ class c_commonFunctions
 				 $this->obDb->query ="SELECT vItem,fPrice FROM ".OPTIONVALUES.", ".TEMPOPTIONS." WHERE  iOptionValueid_PK=vOptVal AND vOptVal ='".$rsOptions[$i]->vOptVal."'";
 				$rsOptionValue=$this->obDb->fetchQuery();
 				$strOptions.=$rsOptions[$i]->vDescription.": ".$rsOptionValue[$i]->vItem;
-				if(!empty($rsOptionValue[0]->fPrice))
+				if(is_numeric($rsOptionValue[0]->fPrice))
 				{
 					$this->price+=$rsOptionValue[$i]->fPrice;
 					$strOptions.=" (".LANG_ADD.CONST_CURRENCY.number_format($rsOptionValue[$i]->fPrice,2).")";
