@@ -119,9 +119,9 @@ class c_installs
 			case "accept":
 				if($this->upgrade === 1)
 				{
-					if(defined("TE_VERSION") && file_exists($this->strPath . "installs/upgrade.sql"))
+					if(file_exists($this->strPath . "installs/upgrade.sql"))
 					{
-					$this->m_install();
+						$this->m_install();
 					}
 				}
 				else
@@ -1340,14 +1340,14 @@ class c_installs
 			{
 				$this->obDb->request = $this->request;
 				$_POST['dbPrefix'] = $this->prefix;
-				if(this->obDb->ImportSQL($this->strPath . "installs/upgrade.sql",";",1))
+				if($this->obDb->ImportSQL($this->strPath . "installs/upgrade.sql",";",1))
 				{
-					unset($this->strPath . "installs/upgrade.sql");
+					unlink($this->strPath . "installs/upgrade.sql");
 				}
 			}
 			elseif(file_exists($this->strPath . "installs/install.sql") && $this->upgrade === 0 && $this->obDb->ImportSQL($this->strPath . "installs/install.sql"))
 			{
-				unset($this->strPath . "installs/install.sql");
+				unlink($this->strPath . "installs/install.sql");
 				return 1;
 			}
 			else
