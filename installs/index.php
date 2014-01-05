@@ -80,6 +80,7 @@ class c_installs
 			else
 			{
 				$version = 6;
+				define("TE_VERSION",$version);
 			}
 				include("upgrade_config.php");
 				if(defined("TE_UPGRADE_VERSION"))
@@ -96,23 +97,28 @@ class c_installs
 				$this->obTpl->set_var("TPL_VAR_BODY",$this->m_thanksView());
 			}
 		}
+		else
+		{
+			$version = 6;
+			define("TE_VERSION",$version);
+		}
 		switch($mode)
 
 		{
 
-			case "install":
+			case "install2":
 
-			if($this->upgrade === 0 && $this->valiadateSystemInfo())	{
-
-				$this->obTpl->set_var("TPL_VAR_BODY",$this->m_instalForm());
-
-			}else	{
+			
 				if(defined("TE_VERSION") && file_exists($this->strPath . "installs/install.sql"))
 				{
 					$this->m_install();
 				}
-
-			}
+			break;
+			case "install":	
+				
+				if($this->valiadateSystemInfo(){
+					$this->obTpl->set_var("TPL_VAR_BODY",$this->m_instalForm());
+				}
 
 			break;
 
@@ -1336,7 +1342,7 @@ class c_installs
 			
 			$version = TE_VERSION;
 			$newversion = TE_UPGRADE_VERSION;
-			if($this->upgrade === 1 && file_exists($this->strPath . "installs/upgrade.sql") && $newversion > $version)
+			if($this->upgrade === 1 && file_exists($this->strPath . "installs/upgrade.sql"))
 			{
 				$this->obDb->request = $this->request;
 				$_POST['dbPrefix'] = $this->prefix;
