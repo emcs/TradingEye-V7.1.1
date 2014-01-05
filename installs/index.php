@@ -63,10 +63,7 @@ class c_installs
 
 		}
 		$this->strPath = realpath("../") . "/";
-		if(!file_exists($this->strPath . "installs/install.sql") || !file_exists($this->strPath . "installs/upgrade.sql"))
-		{
-			die();
-		}
+		
 
 		$this->request=$_REQUEST;
 		$this->upgrade = 0;
@@ -102,6 +99,19 @@ class c_installs
 			$version = 6;
 			define("TE_VERSION",$version);
 		}
+		if(!file_exists($this->strPath . "installs/install.sql") || !file_exists($this->strPath . "installs/upgrade.sql"))
+		{
+			if($this->upgrade === 0)
+			{
+				$this->libFunc->m_mosRedirect("index.php?mode=thanks");
+			}
+			else
+			{
+				$this->libFunc->m_mosRedirect("index.php?mode=thanks&upgrade=1");
+			}
+			die();
+		}
+		
 		switch($mode)
 
 		{
@@ -118,6 +128,10 @@ class c_installs
 				
 				if($this->valiadateSystemInfo()){
 					$this->obTpl->set_var("TPL_VAR_BODY",$this->m_instalForm());
+				}
+				else
+				{
+					die('Failed to pass System Requirements');
 				}
 
 			break;
