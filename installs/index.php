@@ -116,7 +116,7 @@ class c_installs
 			break;
 			case "install":	
 				
-				if($this->valiadateSystemInfo(){
+				if($this->valiadateSystemInfo()){
 					$this->obTpl->set_var("TPL_VAR_BODY",$this->m_instalForm());
 				}
 
