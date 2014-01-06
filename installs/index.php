@@ -97,7 +97,6 @@ class c_installs
 		else
 		{
 			$version = 6;
-			define("TE_VERSION",$version);
 		}
 		
 		switch($mode)
@@ -105,7 +104,7 @@ class c_installs
 		{
 
 			case "install2":
-				if(defined("TE_VERSION") && file_exists($this->strPath . "installs/install.sql"))
+				if(file_exists($this->strPath . "installs/install.sql"))
 				{
 					$this->m_install();
 				}
