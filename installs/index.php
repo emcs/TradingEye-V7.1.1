@@ -99,29 +99,19 @@ class c_installs
 			$version = 6;
 			define("TE_VERSION",$version);
 		}
-		if(!file_exists($this->strPath . "installs/install.sql") || !file_exists($this->strPath . "installs/upgrade.sql"))
-		{
-			if($this->upgrade === 0)
-			{
-				$this->libFunc->m_mosRedirect("index.php?mode=thanks");
-			}
-			else
-			{
-				$this->libFunc->m_mosRedirect("index.php?mode=thanks&upgrade=1");
-			}
-			die();
-		}
 		
 		switch($mode)
 
 		{
 
 			case "install2":
-
-			
 				if(defined("TE_VERSION") && file_exists($this->strPath . "installs/install.sql"))
 				{
 					$this->m_install();
+				}
+				else
+				{
+					$this->libFunc->m_mosRedirect("index.php?mode=thanks");
 				}
 			break;
 			case "install":	
@@ -143,6 +133,11 @@ class c_installs
 					{
 						$this->m_install();
 					}
+					else
+					{
+						$this->libFunc->m_mosRedirect("index.php?mode=thanks&upgrade=1");
+					}
+					die();
 				}
 				else
 				{
