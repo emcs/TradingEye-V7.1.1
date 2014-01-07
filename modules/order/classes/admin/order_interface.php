@@ -464,7 +464,7 @@ else
 				{
 					$comFunc->productId=$rsOrderProduct[$i]->iProductid_FK;
 					$comFunc->qty=$rsOrderProduct[$i]->iQty;
-					$comFunc->price=$rsOrderProduct[0]->fPrice;
+					$comFunc->price=$rsOrderProduct[%i]->fPrice;
 					$comFunc->orderProductId=$rsOrderProduct[$i]->iOrderProductid_PK;
 					$tempItem = "<h3>".$this->libFunc->m_displayContent($rsOrderProduct[$i]->vTitle)."</h3>";
 					if($rsOrderProduct[$i]->iKit==1)
