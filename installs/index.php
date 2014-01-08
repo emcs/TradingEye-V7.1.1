@@ -7,7 +7,7 @@ Product: TradingEye
 Version: 7.0.5
 =======================================================================================
 */
-
+set_time_limit(0);
 define('_TEEXEC',1);
 include_once('config.php');
 
@@ -1336,7 +1336,7 @@ class c_installs
 	function m_createDatabase()
 	{
 		$this->strPath = realpath("../") . "/";
-		if(defined("TE_VERSION") && file_exists($this->strPath . "installs/install.sql"))
+		if(defined("TE_VERSION") && (file_exists($this->strPath . "installs/install.sql") || file_exists($this->strPath . "installs/upgrade.sql")))
 		{
 			if(isset($this->request['plugins']) && $this->request['plugins'] == 1)
 			{
