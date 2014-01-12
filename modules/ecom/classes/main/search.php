@@ -35,6 +35,30 @@ class c_search
 		{
 			$this->request['mode']="";
 		}else{
+			$tempmode = explode(" ",$this->request['mode']);
+			$productSearch = "";
+			foreach($tempmode as $k => $v)
+			{
+				if($k == 0)
+				{
+					$productSearch = $productSearch . "(SELECT iProdid_PK as id,vTitle,vSeoTitle,tShortDescription,vImage1, 'product' FROM ".PRODUCTS." INNER JOIN ".FUSIONS." ON iProdid_PK=iSubId_FK WHERE (vTitle LIKE '%".$v."%' OR ";
+					$productSearch .="tShortDescription  LIKE '%".$v."%' OR ";
+					$productSearch .="vSku  LIKE '%".$v."%' OR ";
+					$productSearch .="tContent LIKE '%".$v."%')";
+				}
+				else
+				{
+					$productSearch = $productSearch . " AND (vTitle LIKE '%".$v."%' OR ";
+					$productSearch .="tShortDescription  LIKE '%".$v."%' OR ";
+					$productSearch .="vSku  LIKE '%".$v."%' OR ";
+					$productSearch .="tContent LIKE '%".$v."%')";
+				}
+			}
+			$productSearch .=" AND vType='product' AND iState='1')";
+			if($_SESSION['adv']=="SearchAll")
+			{	
+				$productSearch .=" UNION";
+			}
 			$this->request['mode']=addslashes($this->request['mode']);
 		}
 	
@@ -60,19 +84,15 @@ class c_search
 	{		
 			#TO QUERY DEPARTMENT TABLE
 			$extraStr = "ecom/index.php?action=ecom.search&mode=".$this->request['mode'] ;
-			$query = "(SELECT iDeptid_PK as id,vTitle,vSeoTitle,tShortDescription, 'department' as flag FROM ".DEPARTMENTS." INNER JOIN ".FUSIONS." ON iDeptid_PK=iSubId_FK WHERE ";
+			$query = "(SELECT iDeptid_PK as id,vTitle,vSeoTitle,tShortDescription,'' as vImage1, 'department' as flag FROM ".DEPARTMENTS." INNER JOIN ".FUSIONS." ON iDeptid_PK=iSubId_FK WHERE ";
 			$query .="(vTitle LIKE '%".$this->request['mode']."%' OR ";
 	 		$query .="tShortDescription  LIKE '%".$this->request['mode']."%' OR ";
 	 		$query .="tContent LIKE '%".$this->request['mode']."%') AND vType='department' AND iState='1') UNION";
 
-			$query .= "(SELECT iProdid_PK as id,vTitle,vSeoTitle,tShortDescription, 'product' FROM ".PRODUCTS." INNER JOIN ".FUSIONS." ON iProdid_PK=iSubId_FK WHERE ";
-			$query .="(vTitle LIKE '%".$this->request['mode']."%' OR ";
-	 		$query .="tShortDescription  LIKE '%".$this->request['mode']."%' OR ";
-	 		$query .="vSku  LIKE '%".$this->request['mode']."%' OR ";
-	 		$query .="tContent LIKE '%".$this->request['mode']."%') AND vType='product' AND iState='1') UNION";
+			$query .= $productSearch;
 
 
-			$query .= "(SELECT iContentid_PK as id,vTitle,vSeoTitle,tShortDescription, 'content' FROM ".CONTENTS." INNER JOIN ".FUSIONS." ON iContentid_PK=iSubId_FK WHERE ";
+			$query .= "(SELECT iContentid_PK as id,vTitle,vSeoTitle,tShortDescription,'' as vImage1, 'content' FROM ".CONTENTS." INNER JOIN ".FUSIONS." ON iContentid_PK=iSubId_FK WHERE ";
 			$query .="(vTitle LIKE '%".$this->request['mode']."%' OR ";
 	 		$query .="tShortDescription  LIKE '%".$this->request['mode']."%' OR ";
 	 		$query .="tContent LIKE '%".$this->request['mode']."%') AND vType='content' AND iState='1')";
@@ -140,12 +160,13 @@ class c_search
 
 		#TO QUERY PRODUCT TABLE 
 		 $extraStr = "ecom/index.php?action=ecom.search&mode=".$this->request['mode'] ;
-         $query = "SELECT iProdid_PK,vTitle,vSeoTitle,tShortDescription,vImage1 FROM ".PRODUCTS." INNER JOIN ".FUSIONS." ON iProdid_PK=iSubId_FK WHERE "; 
-         $query .="(vTitle LIKE '%".$this->request['mode']."%' OR "; 
-         $query .="tShortDescription  LIKE '%".$this->request['mode']."%' OR "; 
-         $query .="vSku  LIKE '%".$this->request['mode']."%' OR "; 
-         $query .="tContent LIKE '%".$this->request['mode']."%') AND vType='product' AND iState='1'";
+         $query = $productSearch;
 
+				//$query .= "(SELECT iProdid_PK as id,vTitle,vSeoTitle,tShortDescription, 'product' FROM ".PRODUCTS." INNER JOIN ".FUSIONS." ON iProdid_PK=iSubId_FK WHERE ";
+				//$query .="(vTitle LIKE '%".$this->request['mode']."%' OR ";
+				//$query .="tShortDescription  LIKE '%".$this->request['mode']."%' OR ";
+				//$query .="vSku  LIKE '%".$this->request['mode']."%' OR ";
+				//$query .="tContent LIKE '%".$this->request['mode']."%') AND vType='product' AND iState='1') UNION";
 
 		 $pn = new PrevNext($this->pageTplPath, $this->pageTplFile, $this->obDb);
 		 $pn->formno = 1;
@@ -160,7 +181,7 @@ class c_search
         { 
             for($i=0;$i<$productCount;$i++) 
             { 
-                $this->obDb->query = "SELECT count(*) as cnt FROM ".FUSIONS." WHERE iSubId_FK='".$rowProduct[$i]->iProdid_PK."' AND iState='1' AND vType='product'"; 
+                $this->obDb->query = "SELECT count(*) as cnt FROM ".FUSIONS." WHERE iSubId_FK='".$rowProduct[$i]->id."' AND iState='1' AND vType='product'"; 
                 $rowCnt = $this->obDb->fetchQuery(); 
                 if($rowCnt[0]->cnt>0) 
                 { 
