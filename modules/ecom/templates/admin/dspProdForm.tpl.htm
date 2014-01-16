@@ -447,6 +447,7 @@ padding-bottom:15px;
 						<td><input type="checkbox" class="checkbox" id="allow_backorders" name="backorder" value="1" {TPL_VAR_BACKORDERS} /></td>
 						<td><input type="text" class="formField short" id="stock_levels" name="inventory" value="{TPL_VAR_STOCKLEVELS}" size="5" maxlength="5" /></td>
 						<td><input type="text" class="formField short" id="min_inventory" name="min_inventory" value="{TPL_VAR_STOCKMINIMUM}" size="5" maxlength="5" />
+						<!-- END TPL_STOCKCONTROL_BLK -->
 					</tr>
 				</tbody>
 			</table>
@@ -454,19 +455,23 @@ padding-bottom:15px;
 			<table class="whiteTable2">
 				<thead>
 					<tr>
+						<!-- BEGIN TPL_STOCKCONTROL_BLK -->
 						<th>{LANG_VAR_ONORDER}</th>
 						<th>{LANG_VAR_DUEDATE} <span><a href="javascript:cal2.popup()" class="linkCalendar"><small>Choose a Date</small></a>
 							</span></th>
+						<!-- END TPL_STOCKCONTROL_BLK -->
 						<th>{LANG_VAR_SUPPLIERLOGO}</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr></td>
+					<tr>
+						<!-- BEGIN TPL_STOCKCONTROL_BLK -->
 						<td><input type="text" class="formField short" id="on_order" name="on_order" value="{TPL_VAR_ONORDER}" size="5" maxlength="8" /></td>
 						<td>
 							<input type="text" class="formField date" maxlength="12" id="due_date" name="due_date"/>
 						
 						</td>
+						<!-- END TPL_STOCKCONTROL_BLK -->
 						<td>
 							<div class="selectContainer"><select class="formSelect" id="supplier" name="vendorid">
 															<option value="0">{LANG_VAR_SELECTSUPP}</option>

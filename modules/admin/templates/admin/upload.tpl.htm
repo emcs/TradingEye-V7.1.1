@@ -7,6 +7,7 @@
 	{TPL_VAR_MSG}
 	<form action="{TPL_VAR_SITEURL}admin/adminindex.php?action=file.upload&which=product" method="post" enctype="multipart/form-data" name="ThisForm" id="ThisForm" onsubmit="return fileUploadExt(this.thisfile, '.jpg, .jpeg, .gif, .png');">
 		<input type="hidden" name="dir" value="{TPL_VAR_DIR}">
+		<input type="hidden" name="auth" value="{TPL_VAR_AUTH_TOKEN}" />
 		<table class='whiteTable'>
 			<thead>
 				<tr>
