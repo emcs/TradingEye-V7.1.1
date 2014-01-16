@@ -140,7 +140,7 @@ padding-bottom:15px;
 				<thead>
 					<tr>
 						<th>{LANG_VAR_PRODUCTPRICE}</th>
-						<!-- BEGIN TPL_VAR_RETAILPRICE_BLK --><th>{LANG_VAR_PRODUCTRETAILPRICE}</th><!-- END TPL_VAR_RETAILPRICE_BLK -->
+					<th>{LANG_VAR_PRODUCTRETAILPRICE}</th>
 						<th>{LANG_VAR_RRP}</th>
 						<th>Width (Inches)</th>
 						<th>Height (Inches)</th>
@@ -151,9 +151,9 @@ padding-bottom:15px;
 				<tbody>
 					<tr>
 						<td><input type="text" class="formField short" id="price" name="price" value="{TPL_VAR_PRICE}" onBlur="this.form.price.value=filterNum(this.form.price.value);" size="5" maxlength="12"/></td>
-						<!-- BEGIN TPL_VAR_RETAILPRICE_BLK --><td>	
-						<input type="text" class="formField short" id="retailprice" name="retailprice" value="{TPL_VAR_RETAILPRICE}" onBlur="this.form.price.value=filterNum(this.form.price.value);" size="5" maxlength="12"  />
-						 </td><!-- END TPL_VAR_RETAILPRICE_BLK -->
+						<td>	
+						<!-- BEGIN TPL_VAR_RETAILPRICE_BLK --><input type="text" class="formField short" id="retailprice" name="retailprice" value="{TPL_VAR_RETAILPRICE}" onBlur="this.form.price.value=filterNum(this.form.price.value);" size="5" maxlength="12"  /><!-- END TPL_VAR_RETAILPRICE_BLK -->
+						 </td>
 						<td><input type="text" class="formField short" id="list_price" name="list_price" value="{TPL_VAR_LISTPRICE}" onBlur="this.form.list_price.value=filterNum(this.form.list_price.value);" size="5" maxlength="12" /></td>
 						<td><input type="text" id="width" name="width" value="{TPL_VAR_WIDTH}"/></td>
 						<td><input type="text" id="height" name="height" value="{TPL_VAR_HEIGHT}"/></td>
@@ -447,7 +447,6 @@ padding-bottom:15px;
 						<td><input type="checkbox" class="checkbox" id="allow_backorders" name="backorder" value="1" {TPL_VAR_BACKORDERS} /></td>
 						<td><input type="text" class="formField short" id="stock_levels" name="inventory" value="{TPL_VAR_STOCKLEVELS}" size="5" maxlength="5" /></td>
 						<td><input type="text" class="formField short" id="min_inventory" name="min_inventory" value="{TPL_VAR_STOCKMINIMUM}" size="5" maxlength="5" />
-						<!-- END TPL_STOCKCONTROL_BLK -->
 					</tr>
 				</tbody>
 			</table>
@@ -455,17 +454,14 @@ padding-bottom:15px;
 			<table class="whiteTable2">
 				<thead>
 					<tr>
-						<!-- BEGIN TPL_STOCKCONTROL_BLK -->
 						<th>{LANG_VAR_ONORDER}</th>
 						<th>{LANG_VAR_DUEDATE} <span><a href="javascript:cal2.popup()" class="linkCalendar"><small>Choose a Date</small></a>
 							</span></th>
-						<!-- END TPL_STOCKCONTROL_BLK -->
 						<th>{LANG_VAR_SUPPLIERLOGO}</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<!-- BEGIN TPL_STOCKCONTROL_BLK -->
+					<tr></td>
 						<td><input type="text" class="formField short" id="on_order" name="on_order" value="{TPL_VAR_ONORDER}" size="5" maxlength="8" /></td>
 						<td>
 							<input type="text" class="formField date" maxlength="12" id="due_date" name="due_date"/>
@@ -480,7 +476,6 @@ padding-bottom:15px;
 															<!-- END TPL_VAR_SUPPLIER -->
 														</select></div>
 						</td>
-						<!-- END TPL_STOCKCONTROL_BLK -->
 					</tr>
 				</tbody>
 			</table>

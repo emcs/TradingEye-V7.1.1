@@ -13,7 +13,7 @@
 		<!-- BEGIN TPL_IMAGE_BLK -->
 		<form action="{FORMURL}" name="ThisForm" id="ThisForm" method="post" enctype="multipart/form-data" onsubmit="return fileUploadExt(this.image, '.jpg, .jpeg, .pjpeg, .gif, .png');">
 			<input type="hidden" name="img" value="{TPL_VAR_IMG}">
-			<input type="hidden" name="id" value="{TPL_VAR_ID}">
+			<input type="hidden" name="id" value="{TPL_VAR_ID}">		<input type="hidden" name="auth" value="{TPL_VAR_AUTH_TOKEN}" />
 			<input type="hidden" name="current_image" value="{imgName}">
 			<p>Choose a new Image:</p>
 			<p><input type="file" name="image" class="fileBrowse"></p>
