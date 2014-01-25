@@ -126,6 +126,24 @@
 				</thead>
 				<tbody>
 					<tr> 
+						<td class="first"><label for="priceformat">Price Display Format</label></td>
+						<td>
+							<select id="priceformat" name="priceformat">
+								<option value="0">$10.00</option>
+								<option value="1">$12.00</option>
+								<option value="2">$12.00 inc. VAT</option>
+								<option value="3">$12.00 with VAT</option>
+								<option value="4">$10.00 plus VAT</option>
+								<option value="5">$10.00 ($12.00)</option>
+								<option value="6">$10.00 ($12.00 with VAT)</option>
+								<option value="7">$10.00 ($12.00 inc. VAT)</option>
+							</select>
+							<script type="text/javascript">
+								jQuery('#priceformat').val('{TPL_VAR_PRICE_FORMAT}');
+							</script>
+						</td>
+					</tr>
+					<tr> 
 						<td class="first"><label for="vat_number">VAT/Tax Name</label></td>
 						<td><input type="text" id="vTaxName" name="vTaxName" value="{TPL_VAR_TAXNAME}" class="formField" /></td>
 					</tr>
@@ -134,20 +152,12 @@
 						<td><input type="text" class="formField short" id="vatbaserate" name="vatbaserate" value="{TPL_VAR_VATBASERATE}" /> %</td>
 					</tr>
 					<tr>
-						<td><label for="incvat">Prices to include VAT/Tax</label></td>
-						<td><input type="checkbox" class="checkbox" id="incvat" name="incvat" value="1" {TPL_VAR_INCVAT} /></td>
-					</tr>
-					<tr>
-						<td><label for="incvat">Display Inc. Vat/Tax In Price</label></td>
-						<td><input type="checkbox" class="checkbox" id="incvattextcheck" name="incvattextcheck" value="1" {TPL_VAR_INCVATTEXTCHECK} /></td>
+						<td><label for="locvat">Calculate Vat/Tax based on shipping address?</label></td>
+						<td><input type="checkbox" class="checkbox" id="locvat" name="locvat" value="1" {TPL_VAR_LOCATIONVAT} /></td>
 					</tr>
 					<tr>
 						<td><label for="hidenovat">Hide No VAT Text</label></td>
 						<td><input type="checkbox" class="checkbox" id="hidenovat" name="hidenovat" value="1" {TPL_VAR_HIDENOVAT} /></td>
-					</tr>
-					<tr>
-						<td><label for="netgross">Enter price NET/GROSS</label></td>
-						<td><input type="checkbox" class="checkbox" id="netgross" name="netgross" value="1" {TPL_VAR_NETGROSS} /></td>
 					</tr>
 					<tr>
 						<td><label for="postageVAT">Add VAT/Tax on Postage</label></td>

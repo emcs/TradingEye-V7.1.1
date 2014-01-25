@@ -341,6 +341,19 @@ class c_settingsInterface
 				case "netgross":
 					$this->ObTpl->set_var("TPL_VAR_NETGROSS",$this->displayIt($row_setting[$i]->nNumberdata));
 				break;
+				case "priceformat":
+					$this->ObTpl->set_var("TPL_VAR_PRICE_FORMAT",$row_setting[$i]->nNumberdata);
+				break;
+				case "locvat":
+					if(VAT_BY_LOCATION_FLAG == 1)
+					{
+						$this->ObTpl->set_var("TPL_VAR_LOCATIONVAT",' checked="true"');
+					}
+					else
+					{
+						$this->ObTpl->set_var("TPL_VAR_LOCATIONVAT",'');
+					}
+				break;
 				case "cartOrderEmail":
 					$this->ObTpl->set_var("TPL_VAR_ORDERMAIL",$row_setting[$i]->vSmalltext);
 				break;

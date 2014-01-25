@@ -115,7 +115,7 @@ class c_review
 		$this->ObTpl->set_var("TPL_VAR_SITEURL",SITE_SAFEURL);	
 		$this->ObTpl->set_var("TPL_VAR_GRAPHICSURL",GRAPHICS_PATH);	
 		$this->ObTpl->set_var("TPL_VAR_CURRENCY",CONST_CURRENCY);
-		$this->ObTpl->set_var("TPL_VAR_VAT",$_SESSION['VAT']);
+		$this->ObTpl->set_var("TPL_VAR_VAT",'');
 		$this->ObTpl->set_var("TPL_VAR_TAXNAME", VAT_TAX_TEXT);
 
 
@@ -581,13 +581,13 @@ class c_review
 				{
 					if (NETGROSS == 1)
 						{
-							$this->taxTotal +=round($vatAmount,2);
+							$this->taxTotal +=$vatAmount;
 						}else{
-							$this->taxTotal += round(($this->price*$rowCart[$i]->iQty * $_SESSION['VAT'] )/100,2);	
+							$this->taxTotal += ($this->price*$rowCart[$i]->iQty);	
 						}
 				if ($comFunc->m_checkCustomerType()==1 && ENABLE_WHOLESALE==1  && $rowCart[$i]->fRetailPrice>0){
 				
-					$this->taxTotal = $this->taxTotal - (($rowCart[$i]->fPrice - $rowCart[$i]->fRetailPrice)*$rowCart[$i]->iQty* $_SESSION['VAT'] / 100);
+					$this->taxTotal = $this->taxTotal - (($rowCart[$i]->fPrice - $rowCart[$i]->fRetailPrice)*$rowCart[$i]->iQty);
 				}
 				} else 
 				{
@@ -691,29 +691,6 @@ class c_review
 				$_SESSION['cartWeight']="";
 				$_SESSION['cartWeightPrice']="";
 			}
-			#POSTAGE CALCULATION**************************
-			if(!isset($_SESSION['freeShip']) || $_SESSION['freeShip']!=1)
-			{
-				#ADDED *** 16-05-07
-				$this->ObTpl->set_var("TPL_VAR_POSTAGEMETHOD",ucfirst($_SESSION['postageMethod']));
-				//$this->postagePrice=$_SESSION['postagePrice'];
-				if($_SESSION['postageMethod'] == "Special Delivery"){
-					$this->postagePrice=$_SESSION['zoneSpecialDelivery'];
-				}else{
-					$this->postagePrice=$_SESSION['postagePrice'];
-				}
-				$this->ObTpl->set_var("TPL_VAR_POSTAGEPRICE",number_format($this->postagePrice,2,'.',''));
-			if (VAT_POSTAGE_FLAG)
-				$this->taxTotal += ($this->postagePrice * $_SESSION['VAT'])/100; 
-				//echo $this->taxTotal."<br/>";
-				$this->grandTotal += $this->postagePrice;
-				$this->ObTpl->parse("postage_blk", "TPL_POSTAGE_BLK");		
-				#REMOVED *** 16-05-07
-			}
-			else
-			{
-				$this->ObTpl->set_var("TPL_VAR_POSTAGEMETHOD","None");
-			}
 
 			#COD PRICE(PAYMENT GATEWAY ADDITIONAL PRICE)
 			if($_SESSION['codPrice']>0)
@@ -743,7 +720,7 @@ class c_review
 					$this->ObTpl->set_var("TPL_VAR_DISCOUNTPRICE",number_format($discountedPrice,2,'.',''));
 									   
 					if ($this->taxTotal > 0) {
-						$this->taxTotal-=(($_SESSION['VAT']/100)*$discountedPrice);
+						$this->taxTotal-=($discountedPrice);
 						$this->grandTotal-=$discountedPrice;
 					} else {
 						$this->grandTotal-=$discountedPrice;
@@ -777,7 +754,7 @@ class c_review
 				$this->giftCertPrice = 0;
 				$this->grandTotal = 0;
 				}
-				$this->taxTotal-=	$this->giftCertPrice * ($_SESSION['VAT']/100);	
+				$this->taxTotal-=	$this->giftCertPrice;	
 				//echo $this->taxTotal."<br/>";
 				$this->grandTotal-=$this->giftCertPrice;
 				$_SESSION['giftCertPrice']=$this->giftCertPrice;	
@@ -833,7 +810,30 @@ class c_review
 			{
 				$this->taxTotal=0;
 			}
-		 	$this->vatTotal = $this->taxTotal;
+			
+			#POSTAGE CALCULATION**************************
+			if(!isset($_SESSION['freeShip']) || $_SESSION['freeShip']!=1)
+			{
+				$this->ObTpl->set_var("TPL_VAR_POSTAGEMETHOD",ucfirst($_SESSION['postageMethod']));
+				if($_SESSION['postageMethod'] == "Special Delivery"){
+					$this->postagePrice=$_SESSION['zoneSpecialDelivery'];
+				}else{
+					$this->postagePrice=$_SESSION['postagePrice'];
+				}
+				$this->ObTpl->set_var("TPL_VAR_POSTAGEPRICE",number_format($this->postagePrice,2,'.',''));
+				$this->grandTotal += $this->postagePrice;
+				$this->ObTpl->parse("postage_blk", "TPL_POSTAGE_BLK");
+			}
+			else
+			{
+				$this->ObTpl->set_var("TPL_VAR_POSTAGEMETHOD","None");
+			}
+			
+		 	$temp = $comFunc->m_Calculate_Tax($this->taxTotal,$this->postagePrice,$_SESSION['ship_country_id'],$_SESSION['ship_state_id']);
+			$this->vatTotal = $temp[0];	
+			
+			
+			$this->ObTpl->set_var("TPL_VAR_VAT",$temp[1]);
 			if($this->vatTotal>0)
 			{
 				$this->ObTpl->set_var("TPL_VAR_VATPRICE",number_format($this->vatTotal,2,'.',''));
@@ -841,6 +841,7 @@ class c_review
 				$this->ObTpl->parse("vat_blk","TPL_VAT_BLK");
 			}
 			$_SESSION['vatTotal']=$this->vatTotal;
+			$_SESSION['VAT']=$temp[1];
 			$_SESSION['totalQty']=$this->totalQty;
 			$this->grandTotal = ceil($this->grandTotal * 1000)/1000;
 			$_SESSION['grandTotal']=$this->grandTotal;

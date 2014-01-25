@@ -1931,6 +1931,95 @@ class c_commonFunctions
 		$returnarray['pdiscount'] = $this->m_calculatePromotionDiscount($subTotal);
 	}
 	
+	function m_Vat_Round($amount)
+	{
+	
+	}
+	
+	function m_Format_Price($amount)
+	{
+		switch(PRICE_DISPLAY_FORMAT)
+		{
+			case 0:
+				return number_format($amount,2,'.','');
+			break;
+			case 1:
+				$rate = DEFAULTVATTAX;
+				return number_format(($rate/100+1) * $amount,2,'.','');
+			break;
+			case 2:
+				$rate = DEFAULTVATTAX;
+				return number_format(($rate/100+1) * $amount,2,'.','') . " inc. " . VAT_TAX_TEXT;
+			break;
+			case 3:
+				$rate = DEFAULTVATTAX;
+				return number_format(($rate/100+1) * $amount,2,'.','') . " with " . VAT_TAX_TEXT;
+			break;
+			case 4:
+				return number_format( $amount,2,'.','') . " plus " . VAT_TAX_TEXT;
+			break;
+			case 5:
+				$rate = DEFAULTVATTAX;
+				return number_format($amount,2,'.','') . " (" . CONST_CURRENCY . number_format(($rate/100+1) * $amount,2,'.','') . ")";
+			break;
+			case 6:
+				$rate = DEFAULTVATTAX;
+				return number_format($amount,2,'.','') . " (" . CONST_CURRENCY . number_format(($rate/100+1) * $amount,2,'.','') . " with " . VAT_TAX_TEXT . ")";
+			break;
+			case 7:
+				$rate = DEFAULTVATTAX;
+				return number_format($amount,2,'.','') . " (" . CONST_CURRENCY . number_format(($rate/100+1) * $amount,2,'.','') . " inc. " . VAT_TAX_TEXT . ")";
+			break;
+		}
+		//INC_VAT_FLAG - Display Inc. Vat/Tax In Price
+		//NETGROSS - Product price includes VAT already
+		//INC_VAT - if yes, price includes price + tax amount at end
+		/*
+		$10.00
+		$12.00
+		$12.00 inc. VAT
+		$12.00 with VAT
+		$10.00 plus VAT
+		$10.00 ($12.00)
+		$10.00 ($12.00 with VAT)
+		$10.00 ($12.00 inc. VAT)*/
+	}
+	
+	//calculates tax amount based on a subtotal, and a postage subtotal. Uses location based tax rates if enabled.
+	function m_Calculate_Tax($taxabletotal,$postagetotal,$country_id=0,$state_id=0)
+	{
+		$taxamount = 0;
+		$taxrate = 0;
+		//calculate tax rate based on location if its turned on, otherwise use default vat amount
+		if(VAT_BY_LOCATION_FLAG == 1 && $country_id > 0)
+		{
+			if($state_id > 0)
+			{
+				$this->obDb->query ="Select fTax from ".STATES." WHERE iStateId_PK = '".$state_id."'";
+				$vatPerState = $this->obDb->fetchQuery();
+				if($vatPerState[0]->fTax > 0){
+					$taxrate = $vatPerState[0]->fTax;
+				}
+			}
+			if($country_id > 0 && $taxrate == 0)
+			{
+				$this->obDb->query ="Select fTax from ".COUNTRY." WHERE iCountryId_PK = '".$country_id."'";
+				$vatPer=$this->obDb->fetchQuery();
+				$taxrate = $vatPer[0]->fTax;
+			}
+		}
+		else{
+			$taxrate = DEFAULTVATTAX;
+		}
+		$taxrate = $taxrate / 100;
+		$taxamount = $taxabletotal * $taxrate;
+		//calculate vat on postage if its turned on
+		if(VAT_POSTAGE_FLAG == 1)
+		{
+			$taxamount = $taxamount + ($postagetotal * $taxrate);
+		}
+		return Array($taxamount,$taxrate * 100);
+	}
 	
 }#END COMMON CLASS 
 

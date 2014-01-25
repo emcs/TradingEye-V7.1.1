@@ -923,72 +923,7 @@ class c_shopInterface {
 		
 		#DISPALY PRICE FOR SELECTED PRODUCT
 	
-		if ($rowHead[0]->iTaxable == 1) 
-		{
-			if(INC_VAT_FLAG == 1)
-			{
-				if(NETGROSS ==1 && INC_VAT ==1 )
-				{
-				$vatPercent = $this->libFunc->m_vatCalculate();
-				$vatPrice = number_format((( $rowHead[0]->fPrice * $vatPercent) / 100 + $rowHead[0]->fPrice), 2, '.', '');	
-				$this->ObTpl->set_var("TPL_VAR_PRICEMAIN", number_format($rowHead[0]->fPrice,2,'.','') . " inc. " . VAT_TAX_TEXT);
-				
-				}elseif(NETGROSS ==1 && INC_VAT ==0)
-				{
-					$vatPercent = $this->libFunc->m_vatCalculate();
-					$vatPrice = number_format((( $rowHead[0]->fPrice* $vatPercent) / 100 + $rowHead[0]->fPrice), 2, '.', '');	
-					$this->ObTpl->set_var("TPL_VAR_PRICEMAIN", number_format($rowHead[0]->fPrice, 2, '.', '') . " (" . CONST_CURRENCY . $vatPrice . " inc. " . VAT_TAX_TEXT . ")");	
-				
-				}elseif(NETGROSS ==0 && INC_VAT ==1)
-				{
-					$vatPercent = $this->libFunc->m_vatCalculate();
-					$vatPrice = number_format((( $rowHead[0]->fPrice * $vatPercent) / 100 + $rowHead[0]->fPrice), 2, '.', '');	
-					$this->ObTpl->set_var("TPL_VAR_PRICEMAIN", number_format($rowHead[0]->fPrice, 2, '.', '') . " (" . CONST_CURRENCY . $vatPrice . " inc. " . VAT_TAX_TEXT . ")");
-				
-				}else
-				{	
-					//$this->ObTpl->set_var("TPL_VAR_PRICEMAIN", number_format($rowHead[0]->fPrice, 2, '.', '') . " ( exc." . VAT_TAX_TEXT . ")");			
-					//---locloc
-					$vatPercent = $this->libFunc->m_vatCalculate();
-					$vatPrice = number_format((($rowHead[0]->fPrice * $vatPercent) / 100 + $rowHead[0]->fPrice), 2, '.', '');	
-					$this->ObTpl->set_var("TPL_VAR_PRICEMAIN", $vatPrice." inc. ".VAT_TAX_TEXT);
-					//-----
-				}
-			}
-			else
-			{
-				if(NETGROSS ==1 && INC_VAT ==1 )
-				{
-				$vatPercent = $this->libFunc->m_vatCalculate();
-				$vatPrice = number_format((( $rowHead[0]->fPrice * $vatPercent) / 100 + $rowHead[0]->fPrice), 2, '.', '');	
-				$this->ObTpl->set_var("TPL_VAR_PRICEMAIN", number_format($rowHead[0]->fPrice,2,'.',''));
-				
-				}elseif(NETGROSS ==1 && INC_VAT ==0)
-				{
-					$vatPercent = $this->libFunc->m_vatCalculate();
-					$vatPrice = number_format((( $rowHead[0]->fPrice* $vatPercent) / 100 + $rowHead[0]->fPrice), 2, '.', '');	
-					$this->ObTpl->set_var("TPL_VAR_PRICEMAIN", number_format($rowHead[0]->fPrice, 2, '.', '') . " (" . CONST_CURRENCY . $vatPrice . ")");	
-				
-				}elseif(NETGROSS ==0 && INC_VAT ==1)
-				{
-					$vatPercent = $this->libFunc->m_vatCalculate();
-					$vatPrice = number_format((( $rowHead[0]->fPrice * $vatPercent) / 100 + $rowHead[0]->fPrice), 2, '.', '');	
-					$this->ObTpl->set_var("TPL_VAR_PRICEMAIN", number_format($rowHead[0]->fPrice, 2, '.', '') . " (" . CONST_CURRENCY . $vatPrice . ")");
-				
-				}else
-				{	
-					//$this->ObTpl->set_var("TPL_VAR_PRICEMAIN", number_format($rowHead[0]->fPrice, 2, '.', '') . " ( exc." . VAT_TAX_TEXT . ")");			
-					//---locloc
-					$vatPercent = $this->libFunc->m_vatCalculate();
-					$vatPrice = number_format((($rowHead[0]->fPrice * $vatPercent) / 100 + $rowHead[0]->fPrice), 2, '.', '');	
-					$this->ObTpl->set_var("TPL_VAR_PRICEMAIN", $vatPrice);
-					//-----
-				}
-			}
-			
-		} else {
-			$this->ObTpl->set_var("TPL_VAR_PRICEMAIN", number_format($rowHead[0]->fPrice, 2, '.', ''));
-		}
+		$this->ObTpl->set_var("TPL_VAR_PRICEMAIN", $comFunc->m_Format_Price($rowHead[0]->fPrice));
 
 	
 		#CHECK CUSTOMER REVIEWS ENABLE /DISABLE MANAGED BY ADMIN
@@ -1319,66 +1254,8 @@ class c_shopInterface {
 					}
 				} 
 			
-				# MANIPULATE NETGROSS & INC_VAT DISPLAY			
-				if ($rowProduct[$i]->iTaxable == 1) 
-					{
-					if(INC_VAT_FLAG == 1)
-					{
-						if(NETGROSS ==1 && INC_VAT ==1 )
-						{
-							$vatPercent = $this->libFunc->m_vatCalculate();
-							$vatPrice = number_format((( $rowProduct[$i]->fPrice * $vatPercent) / 100 + $rowProduct[$i]->fPrice), 2, '.', '');	
-							$this->ObTpl->set_var("TPL_VAR_PRICE", number_format($rowProduct[$i]->fPrice,2,'.','') . " inc. " . VAT_TAX_TEXT);
-						
-						}elseif(NETGROSS ==1 && INC_VAT ==0)
-						{
-							$vatPercent = $this->libFunc->m_vatCalculate();
-							$vatPrice = number_format((( $rowProduct[$i]->fPrice* $vatPercent) / 100 + $rowProduct[$i]->fPrice), 2, '.', '');	
-							$this->ObTpl->set_var("TPL_VAR_PRICE", number_format($rowProduct[$i]->fPrice, 2, '.', '') . " (" . CONST_CURRENCY . $vatPrice . " inc. " . VAT_TAX_TEXT . ")");		
-					
-						}elseif(NETGROSS ==0 && INC_VAT ==1)
-						{
-							$vatPercent = $this->libFunc->m_vatCalculate();
-							$vatPrice = number_format((($rowProduct[$i]->fPrice * $vatPercent) / 100 + $rowProduct[$i]->fPrice), 2, '.', '');	
-							$this->ObTpl->set_var("TPL_VAR_PRICE", number_format($rowProduct[$i]->fPrice, 2, '.', '') . " (" . CONST_CURRENCY . $vatPrice . " inc. " . VAT_TAX_TEXT . ")");
-						
-						}else
-						{	
-							$vatPercent = $this->libFunc->m_vatCalculate();
-							$vatPrice = number_format((($rowProduct[$i]->fPrice * $vatPercent) / 100 + $rowProduct[$i]->fPrice), 2, '.', '');	
-							$this->ObTpl->set_var("TPL_VAR_PRICE", $vatPrice." inc. ".VAT_TAX_TEXT);	
-						}
-					}
-					else
-					{
-						if(NETGROSS ==1 && INC_VAT ==1 )
-						{
-							$vatPercent = $this->libFunc->m_vatCalculate();
-							$vatPrice = number_format((( $rowProduct[$i]->fPrice * $vatPercent) / 100 + $rowProduct[$i]->fPrice), 2, '.', '');	
-							$this->ObTpl->set_var("TPL_VAR_PRICE", number_format($rowProduct[$i]->fPrice,2,'.',''));
-						
-						}elseif(NETGROSS ==1 && INC_VAT ==0)
-						{
-							$vatPercent = $this->libFunc->m_vatCalculate();
-							$vatPrice = number_format((( $rowProduct[$i]->fPrice* $vatPercent) / 100 + $rowProduct[$i]->fPrice), 2, '.', '');	
-							$this->ObTpl->set_var("TPL_VAR_PRICE", number_format($rowProduct[$i]->fPrice, 2, '.', '') . " (" . CONST_CURRENCY . $vatPrice . ")");		
-					
-						}elseif(NETGROSS ==0 && INC_VAT ==1)
-						{
-							$vatPercent = $this->libFunc->m_vatCalculate();
-							$vatPrice = number_format((($rowProduct[$i]->fPrice * $vatPercent) / 100 + $rowProduct[$i]->fPrice), 2, '.', '');	
-							$this->ObTpl->set_var("TPL_VAR_PRICE", number_format($rowProduct[$i]->fPrice, 2, '.', '') . " (" . CONST_CURRENCY . $vatPrice . ")");
-						
-						}else
-						{	
-							$vatPercent = $this->libFunc->m_vatCalculate();
-							$vatPrice = number_format((($rowProduct[$i]->fPrice * $vatPercent) / 100 + $rowProduct[$i]->fPrice), 2, '.', '');	
-							$this->ObTpl->set_var("TPL_VAR_PRICE", $vatPrice);	
-						}
-					}
-					}else{
-							$this->ObTpl->set_var("TPL_VAR_PRICE", $this->libFunc->m_displayContent(number_format($rowProduct[$i]->fPrice, 2, '.', '')));
-					}#		
+				# MANIPULATE NETGROSS & INC_VAT DISPLAY		
+				$this->ObTpl->set_var("TPL_VAR_PRICE", $comFunc->m_Format_Price($rowProduct[$i]->fPrice));
 							
 				##CHECK FOR RRP PRICE
 				if (!$this->libFunc->m_isNull($rowProduct[$i]->fListPrice) && $rowProduct[$i]->fListPrice > 0) {
@@ -1622,7 +1499,7 @@ class c_shopInterface {
 		$this->ObTpl->set_var("TPL_VAR_SAFESITEURL", SITE_SAFEURL);
 		$this->ObTpl->set_var("TPL_VAR_GRAPHICSURL", GRAPHICS_PATH);
 		$this->ObTpl->set_var("TPL_VAR_CURRENCY", CONST_CURRENCY);
-		$this->ObTpl->set_var("TPL_VAR_VAT", DEFAULTVATTAX);
+		$this->ObTpl->set_var("TPL_VAR_VAT", "");
 		$this->ObTpl->set_var("TPL_VAR_TAXNAME", VAT_TAX_TEXT);
 		$this->ObTpl->set_var("TPL_VAR_MSG", "");
 
@@ -1952,52 +1829,34 @@ class c_shopInterface {
 				$this->ObTpl->set_var("TPL_VAR_TITLE1", $strTitle);
 				$this->ObTpl->set_var("TPL_VAR_SKU", $this->libFunc->m_displayContent($rowCart[$i]->vSku));
 
-				//echo number_format($rowCart[$i]->fPrice,2,'.','');
 				$this->price = $this->price + $rowCart[$i]->fPrice;
-					//echo "<br/><br/><br/>".$this->price . "|".number_format($this->price, 2, '.', '');
 				$fullprice = $this->price;
 				#locloc
 				if ($rowCart[$i]->iTaxable == 1)
 				{
-					if (NETGROSS == 1)
-					{
-						$vatPercent = $this->libFunc->m_vatCalculate();
-						$actualprice = $this->price / ($vatPercent/100 + 1);
-						$vatAmount = ($this->price - $actualprice)*$rowCart[$i]->iQty ;
-						$this->price = $actualprice;
-					//echo "<br/>".$this->price . "|".number_format($this->price, 2, '.', '');
-						
-					}
+					$this->taxTotal += $rowCart[$i]->iQty * $this->price;
 				}
 				else
 				{
 					$novattotal = $novattotal + ($rowCart[$i]->fPrice * $rowCart[$i]->iQty);
 				}
 				#locloc
-					//echo "<br/>".$this->price . "|".number_format($this->price, 2, '.', '');
 				$this->ObTpl->set_var("TPL_VAR_PRICE", number_format($this->price, 2, '.', ''));
 			
 				$this->ObTpl->set_var("TPL_VAR_QTY", $rowCart[$i]->iQty);
 				$this->totalQty += $rowCart[$i]->iQty;
 
 				$this->total += $rowCart[$i]->iQty * $this->price;
-					//echo "<br/>".$this->total . "|".number_format($this->total, 2, '.', '');
 				$this->ObTpl->set_var("TPL_VAR_TOTAL", number_format($this->total, 2, '.', ''));
 
 				
-				if ($rowCart[$i]->iTaxable == 1) {
-					if (NETGROSS == 1){
-						$this->taxTotal +=round($vatAmount,2);
-					}else{
-						$this->taxTotal += round(($this->price*$rowCart[$i]->iQty * DEFAULTVATTAX )/100,2);
-					}
-						 
-				} else {
-					if (HIDENOVAT != 1) {
-						$this->ObTpl->set_var("TPL_VAR_VATTAXMSG", "<em>" . LBL_NOTAX . "</em><br />");
-					} else {
-						$this->ObTpl->set_var("TPL_VAR_VATTAXMSG", "");
-					}
+				if ($rowCart[$i]->iTaxable == 0 && HIDENOVAT != 1)
+				{
+					$this->ObTpl->set_var("TPL_VAR_VATTAXMSG", "<em>" . LBL_NOTAX . "</em><br />");
+				}
+				else
+				{
+					$this->ObTpl->set_var("TPL_VAR_VATTAXMSG", "");
 				}
 
 				if ($rowCart[$i]->iFreeShip != 1) {
@@ -2089,7 +1948,7 @@ class c_shopInterface {
 			if ($this->promotionDiscount >= 0) {
 				// Fix tev6.2: Vat charged must be subtotal subtracted from calculated discount.
 				 if($this->promotionDiscount > 0){
-					$this->taxTotal = (($this->subTotal - $this->promotionDiscount) * DEFAULTVATTAX )/100;
+					$this->taxTotal = $this->taxTotal - $this->promotionDiscount;
 				 }
 				if ($this->promotionDiscount == 0) {
 					$displayDiscount = 'No Charge';
@@ -2105,8 +1964,6 @@ class c_shopInterface {
 				$this->ObTpl->set_var("TPL_VAR_PDISCOUNTS", $displayDiscount);
 				$_SESSION['promotionDiscountPrice'] = $this->promotionDiscount;
 				$this->grandTotal -= $this->promotionDiscount;
-				//$this->taxTotal -= $this->promotionDiscount;
-//				$this->taxTotal -= ($this->grandTotal * DEFAULTVATTAX)/100;   //Recalculate VAT total based on grant total after discount.
 				$this->ObTpl->parse("discounts_blk", "TPL_DISCOUNTS_BLK");
 			} else {
 				$_SESSION['promotionDiscountPrice'] = 0;
@@ -2117,8 +1974,7 @@ class c_shopInterface {
 				$this->ObTpl->set_var("TPL_VAR_VOLDISCOUNT", number_format($this->volDiscount, 2, '.', ''));
 				$this->grandTotal -= $this->volDiscount;
 				$this->postageTotal -= $this->volDiscount;
-				//$this->taxTotal -= $this->volDiscount;
-				$this->taxTotal = ($this->grandTotal * DEFAULTVATTAX)/100;//Recalculate VAT total based on grant total after discount.
+				$this->taxTotal = $this->taxTotal - $this->volDiscount;//Recalculate VAT total based on grant total after discount.
 				$this->ObTpl->parse("volDiscounts_blk", "TPL_VOLDISCOUNTS_BLK");
 			}
 			$this->ObTpl->set_var("LANG_VAR_DISCCODETXT",LANG_DISCOUNTCODETEXT);
@@ -2149,7 +2005,7 @@ class c_shopInterface {
 					$this->ObTpl->set_var("TPL_VAR_DISCOUNTPRICE",number_format($discountedPrice,2,'.',''));
 									   
 					if ($this->taxTotal > 0) {
-						$this->taxTotal-=((DEFAULTVATTAX/100)*$discountedPrice);
+						$this->taxTotal-=$discountedPrice;
 						$this->grandTotal-=$discountedPrice;
 					} else {
 						$this->grandTotal-=$discountedPrice;
@@ -2186,7 +2042,7 @@ class c_shopInterface {
 				$this->giftCertPrice = 0;
 				$this->grandTotal = 0;
 				}
-				$this->taxTotal-=	$this->giftCertPrice * (DEFAULTVATTAX/100);	
+				$this->taxTotal-=	$this->giftCertPrice;	
 				$this->grandTotal-=$this->giftCertPrice;
 				$_SESSION['giftCertPrice']=$this->giftCertPrice;
 				$this->ObTpl->set_var("TPL_VAR_GIFTCODE","(".$_SESSION['giftCertCode'].")");				
@@ -2208,8 +2064,7 @@ class c_shopInterface {
 				$this->ObTpl->set_var("TPL_VAR_WEIGHTPRICE", number_format($this->cartWeightPrice, 2, '.', ''));
 
 				if (VAT_POSTAGE_FLAG)
-				//$this->taxTotal += $this->cartWeightPrice;
-				$this->taxTotal += ($this->cartWeightPrice * DEFAULTVATTAX)/100; // locloc
+				$this->taxTotal += $this->cartWeightPrice; // locloc
 				$this->grandTotal += $this->cartWeightPrice;
 
 				$this->ObTpl->parse("cartWeight_blk", "TPL_CARTWEIGHT_BLK");
@@ -2233,18 +2088,13 @@ class c_shopInterface {
 				$this->ObTpl->set_var("TPL_VAR_POSTAGENAME", DEFAULT_POSTAGE_NAME);
 				$this->ObTpl->set_var("TPL_VAR_POSTAGE",number_format($this->postagePrice,2,'.',''));
 
-				if (VAT_POSTAGE_FLAG)
-				//$this->taxTotal += $this->postagePrice;
-				$this->taxTotal += ($this->postagePrice * DEFAULTVATTAX)/100; //locloc
+			
 				$this->grandTotal += $this->postagePrice;
 				$this->ObTpl->parse("postage_blk", "TPL_POSTAGE_BLK");
 			}
-
-				//	$this->vatTotal = (DEFAULTVATTAX * $this->taxTotal) / 100;
-				//	if (NETGROSS==1){
-				//$this->vatTotal = $fullprice - $this->price;
-				$this->vatTotal = $this->taxTotal;
-				//	}
+				$temp = $comFunc->m_Calculate_Tax($this->taxTotal,$this->postagePrice,0,0);
+				$this->vatTotal = $temp[0];
+				$this->ObTpl->set_var("TPL_VAR_VAT", $temp[1]);
 			
 			if ($this->vatTotal > 0) {
 				$this->ObTpl->set_var("TPL_VAR_VATPRICE", number_format($this->vatTotal, 2, '.', ''));

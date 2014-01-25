@@ -818,7 +818,9 @@ INSERT INTO `{{prefix}}tbsettings` (`iSettingid`, `vDatatype`, `vSmalltext`, `tL
 (290, 'PaymentRSenseDomain', 'paymentsensegateway.com', NULL, NULL, '', '', 'PSr_DOMAIN', '', 1),
 (291, 'PaymentRSenseResults', '0', NULL, NULL, '', '', 'PSr_RESULTS_DISPLAY', '', 1),
 (292, 'PaymentRSenseCV2', '1', NULL, NULL, '', '', 'PSr_CV2_MANDATORY', '', 1),
-(293, 'PaymentRSenseCurrency', '826', NULL, NULL, '', '', 'PSr_CURRENCY', '', 1);
+(293, 'PaymentRSenseCurrency', '826', NULL, NULL, '', '', 'PSr_CURRENCY', '', 1),
+(294, 'locvat', NULL, NULL, 0, '', '', 'VAT_BY_LOCATION_FLAG', '', 1),
+(295, 'priceformat', NULL, NULL, 0, '', '', 'PRICE_DISPLAY_FORMAT', '', 1);
 
 CREATE TABLE IF NOT EXISTS `{{prefix}}tbShop_choices` (
   `iChoiceid_PK` int(11) NOT NULL AUTO_INCREMENT,

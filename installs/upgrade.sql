@@ -367,3 +367,13 @@
 	DROP TABLE te_temptablezzzzcountry;
 	ALTER IGNORE TABLE {{prefix}}tbPlugin_apps ADD iMod int;
 	CREATE TABLE IF NOT EXISTS `{{prefix}}tbLogin_Security` (  `iAttempt_PK` int(11) NOT NULL AUTO_INCREMENT,  `vIP` text COLLATE utf8_unicode_ci NOT NULL,  `vUser` text COLLATE utf8_unicode_ci NOT NULL,  `tmLoginAttempt` text COLLATE utf8_unicode_ci NOT NULL,  `nTriggeredBan` int(11) NOT NULL DEFAULT '0',  PRIMARY KEY (`iAttempt_PK`)) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=29 ;
+	INSERT INTO {{prefix}}tbsettings (vDatatype,nNumberdata,sConstantName,iAdminUser)
+    SELECT * FROM (SELECT 'locvat' as a1,'0' as a2,'VAT_BY_LOCATION_FLAG' as a3,1 as a4) AS tmp
+    WHERE NOT EXISTS (
+        SELECT (vDatatype) FROM {{prefix}}tbsettings WHERE vDatatype='locvat'
+    ) LIMIT 1;
+    INSERT INTO {{prefix}}tbsettings (vDatatype,nNumberdata,sConstantName,iAdminUser)
+    SELECT * FROM (SELECT 'priceformat' as a1,'0' as a2,'PRICE_DISPLAY_FORMAT' as a3,1 as a4) AS tmp
+    WHERE NOT EXISTS (
+        SELECT (vDatatype) FROM {{prefix}}tbsettings WHERE vDatatype='locvat'
+    ) LIMIT 1;

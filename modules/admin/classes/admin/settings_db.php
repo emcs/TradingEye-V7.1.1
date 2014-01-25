@@ -75,6 +75,7 @@ class c_settingsDb
 		#MODIFIED ON 12-04-07 BY NSI
 		#INTIALIZING VALUES
 		$this->request['cartAlternateShipping']  =$this->libFunc->ifSet($this->request,'cartAlternateShipping');
+		$this->request['locvat']  =$this->libFunc->ifSet($this->request,'locvat');
 		$this->request['termsopt']  =$this->libFunc->ifSet($this->request,'termsopt');
 		$this->request['cartPayCC']=$this->libFunc->ifSet($this->request,'cartPayCC');
 		$this->request['cartPayCCp']=$this->libFunc->ifSet($this->request,'cartPayCCp');
