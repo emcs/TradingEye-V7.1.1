@@ -286,7 +286,7 @@ class c_home
 		{
 			
 			#QUERY TO GET TOP TEN PRODUCTS
-			$this->obDb->query = "SELECT iProductid_FK, COUNT(*) as top_10 FROM ".ORDERPRODUCTS." WHERE iProductid_FK ='".$Abandonment[$i]->iProdid_PK."' GROUP BY iProductid_FK";
+			$this->obDb->query = "SELECT a.iProductid_FK, COUNT(*) as top_10 FROM ".ORDERPRODUCTS." AS a INNER JOIN ".ORDERS." AS b on b.iOrderid_PK=a.iOrderid_FK WHERE a.iProductid_FK ='".$Abandonment[$i]->iProdid_PK."' AND b.iPayStatus=1 GROUP BY a.iProductid_FK";
 			$TotalPurchased = $this->obDb->fetchQuery();
 			
 			
