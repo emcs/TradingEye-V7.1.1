@@ -6,8 +6,8 @@ Product: TradingEye
 Version: 7.1.0
 =======================================================================================
 */
-defined('_TEEXEC') or die;
 
+defined('_TEEXEC') or die;
 ini_set('display_errors', "0");
 error_reporting();
 class c_receipt
@@ -2148,16 +2148,18 @@ class c_receipt
 		{
 			$_SESSION['google']['shipping'] = $qryResult[0]->fShipTotal;
 		}
-		elseif($qryResult[0]->vShipDescription=="Free P&P")
+		else
 		{
 			$_SESSION['google']['shipping'] = 0;
 		}
+		$temptotal = $qryResult[0]->fTotalPrice - $_SESSION['google']['shipping'] -  $qryResult[0]->fTaxPrice;
 		$_SESSION['google']['shipping'] = $_SESSION['google']['shipping'] + $qryResult[0]->fCodCharge;
 		$_SESSION['google']['subtotal'] = $temptotal;
 		$_SESSION['google']['tax'] = $qryResult[0]->fTaxPrice;
 		$_SESSION['google']['total'] = $qryResult[0]->fTotalPrice;
 		$_SESSION['google']['paid'] = 1;
-		unset($_SESSION['google']['paid']);
+		//error_log(print_r($_SESSION['google'],1)."\n\n",3,'google.log');
+		//unset($_SESSION['google']['paid']);
 		return $this->ObTpl->parse("return","TPL_RETURN_FILE");
 	}
 	
