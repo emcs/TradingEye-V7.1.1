@@ -112,7 +112,7 @@
 									{
 										if(jQuery("#orderpaid").is(':checked'))
 										{
-											jQuery("#orderpaid").after("<span style='float:right;' id='extraops'><input type='checkbox' class='checkbox' name='mp' value='1'/><label>Update Customers Member Points?</label><br/><input type='checkbox' class='checkbox' name='gc' value='1'/><label>Update Gift Certificate's Used Amount?</label><br/><input type='checkbox' class='checkbox' name='ec' value='1'/><label>Email the Customer?</label><br/><input type='hidden' name='cid' value='{TPL_VAR_CUSTOMERID}'/><input type='hidden' name='mpa' value='{TPL_VAR_MEMBERPOINTS_USED}'/><input type='hidden' name='mpe' value='{TPL_VAR_MEMBERPOINTS_EARNED}'/><input type='hidden' name='gcid' value='{TPL_VAR_GIFTCERTID}'/><input type='hidden' name='gca' value='{TPL_VAR_GIFTCERTAMOUNT}'/></span>");
+											jQuery("#orderpaid").after("<span style='float:right;' id='extraops'><input type='checkbox' class='checkbox' name='mp' value='1'/><label>Update Customers Member Points?</label><br/><input type='checkbox' class='checkbox' name='gc' value='1'/><label>Update Gift Certificate's Used Amount?</label><br/><input type='checkbox' class='checkbox' name='ec' value='1'/><label>Email the Customer?</label><br/><input type='checkbox' class='checkbox' name='updatestock' value='1'/><label>Update Inventory?</label><br/><input type='hidden' name='cid' value='{TPL_VAR_CUSTOMERID}'/><input type='hidden' name='mpa' value='{TPL_VAR_MEMBERPOINTS_USED}'/><input type='hidden' name='mpe' value='{TPL_VAR_MEMBERPOINTS_EARNED}'/><input type='hidden' name='gcid' value='{TPL_VAR_GIFTCERTID}'/><input type='hidden' name='gca' value='{TPL_VAR_GIFTCERTAMOUNT}'/></span>");
 										}
 										else
 										{

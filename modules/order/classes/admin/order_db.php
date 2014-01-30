@@ -321,7 +321,20 @@ class c_orderDb
 			{
 			$this->obDb->query="DELETE FROM ".ORDERPRODUCTS." WHERE iOrderid_FK='".$this->request['orderid']."'";
 			$this->obDb->updateQuery();
-			}	
+			}
+			
+			if($this->request['updatestock']==1)
+			{
+				$this->obDb->query="SELECT iProductid_FK,iQty FROM ".ORDERPRODUCTS." WHERE iOrderid_FK='".$this->request['orderid']."'";
+				$result = $this->obDb->fetchQuery();
+				foreach($result as $k => $v)
+				{
+					$this->obDb->query="SELECT iInventory FROM ".PRODUCTS." WHERE iProdid_PK='".$result[$k]->iProductid_FK."'";
+					$result2 = $this->obDb->fetchQuery();
+					$this->obDb->query="UPDATE ".PRODUCTS." SET iInventory='".$result2[0]->iInventory - $result[$k]->iQty."' WHERE iProdid_PK='".$result[$k]->iProductid_FK."'";
+					$this->obDb->updateQuery();
+				}	
+			}
 		}
 		$this->m_updateQty();
 		

@@ -1254,9 +1254,15 @@ class c_shopInterface {
 					}
 				} 
 			
-				# MANIPULATE NETGROSS & INC_VAT DISPLAY		
-				$this->ObTpl->set_var("TPL_VAR_PRICE", $comFunc->m_Format_Price($rowProduct[$i]->fPrice));
-							
+				# MANIPULATE NETGROSS & INC_VAT DISPLAY	
+				if($rowProduct[$i]->iTaxable==1)
+				{
+					$this->ObTpl->set_var("TPL_VAR_PRICE", $comFunc->m_Format_Price($rowProduct[$i]->fPrice));
+				}
+				else
+				{
+					$this->ObTpl->set_var("TPL_VAR_PRICE", number_format($rowProduct[$i]->fPrice,2));
+				}
 				##CHECK FOR RRP PRICE
 				if (!$this->libFunc->m_isNull($rowProduct[$i]->fListPrice) && $rowProduct[$i]->fListPrice > 0) {
 					$this->ObTpl->set_var("TPL_VAR_RRP_AMOUNT", RRP_TEXT . ": <strike>" . CONST_CURRENCY . number_format($rowProduct[$i]->fListPrice, 2, '.', '') . "</strike>");
