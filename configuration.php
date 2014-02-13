@@ -413,7 +413,7 @@ if(PROTX_VENDOR!="" && PROTX_CURRENCY!=""){
 define("DBCONFIG_PATH",SITE_PATH."config/dbConf.php");	
 
 #SETTING POSTAGE METHOD
-$obDatabase->query = "SELECT vKey,iDefaultHighest FROM ".POSTAGE." WHERE iStatus='1' AND vKey NOT IN ('special','pweight')";
+$obDatabase->query = "SELECT vKey,iDefaultHighest FROM ".POSTAGE." WHERE iStatus='1' AND vKey IN ('regions','all','zones')";
 $activePost=$obDatabase->fetchQuery();
 define("DEFAULT_POSTAGE_METHOD",$activePost[0]->vKey);	
 if($activePost[0]->vKey === 'codes')

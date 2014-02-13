@@ -372,7 +372,7 @@ class c_leftMenu
 		{
 			for($i=0;$i<$rsMenuHeadCount;$i++)
 			{
-				$this->obDb->query= "SELECT iMenuItemsId,vItemtitle,vLink,vHrefAttributes,iMethod,vImage   FROM ".MENUITEMS." WHERE iState='1' AND iHeaderid_FK='".$rsMenuHead[$i]->iHeaderid_PK."' ORDER BY iSort";
+				$this->obDb->query= "SELECT iMenuItemsId,vItemtitle,vLink,vHrefAttributes,iMethod,vImage,iSubmenuid_FK FROM ".MENUITEMS." WHERE iState='1' AND iHeaderid_FK='".$rsMenuHead[$i]->iHeaderid_PK."' ORDER BY iSort";
 				$rsMenu = $this->obDb->fetchQuery();
 				$rsMenuCount=$this->obDb->record_count;
 				if($rsMenuCount>0)
@@ -406,6 +406,14 @@ class c_leftMenu
 						
 						$this->obTpl->set_var("TPL_VAR_LINK",$this->libFunc->m_displayContent($rsMenu[$j]->vLink));
 						$this->obTpl->set_var("TPL_VAR_HREFATTRIBUTES",$this->libFunc->m_displayContent($rsMenu[$j]->vHrefAttributes));
+						if($rsMenu[$j]->iSubmenuid_FK > 0)
+						{
+							$this->obTpl->set_var("TPL_VAR_SUBMENU",$this->m_displaySubMenus());
+						}
+						else
+						{
+							$this->obTpl->set_var("TPL_VAR_SUBMENU","");
+						}
 						$this->obTpl->parse("menu_blk","TPL_MENU_BLK",true);
 					}#end Menuitems for loop
 				}#end Menuitems if loop
@@ -438,7 +446,87 @@ class c_leftMenu
 		$this->obTpl->set_var('TPL_VAR_LEFT', $this->obTpl->parse("return","TPL_LEFT_FILE"));
 	}#END 
 
-	
+	function m_displaySubMenus()
+	{
+		/*$this->Template = $this->templatePath."subMenu.tpl.htm";
+		$this->obTpl->set_file("TPL_SUB_MENU_FILE",$this->Template);
+		$this->obTpl->set_block("TPL_SUB_MENU_FILE","TPL_MENU_BLK","menu_blk");
+		
+		$this->obDb->query= "SELECT iHeaderid_PK,vHeader,vImage  FROM ".MENUHEADERS." WHERE iState='1' ORDER BY iSort";
+		$rsMenuHead = $this->obDb->fetchQuery();
+		$rsMenuHeadCount=$this->obDb->record_count;
+		
+		if($rsMenuHeadCount>0)
+		{
+			for($i=0;$i<$rsMenuHeadCount;$i++)
+			{
+				$this->obDb->query= "SELECT iMenuItemsId,vItemtitle,vLink,vHrefAttributes,iMethod,vImage,iSubmenuid_FK FROM ".MENUITEMS." WHERE iState='1' AND iHeaderid_FK='".$rsMenuHead[$i]->iHeaderid_PK."' ORDER BY iSort";
+				$rsMenu = $this->obDb->fetchQuery();
+				$rsMenuCount=$this->obDb->record_count;
+				if($rsMenuCount>0)
+				{
+					$this->obTpl->set_var("menu_blk","");
+					for($j=0;$j<$rsMenuCount;$j++)
+					{
+						$this->obTpl->set_var("TPL_VAR_ID",$rsMenu[$j]->iMenuItemsId);
+						if(!empty($rsMenu[$j]->vImage))
+						{
+							 $img=$this->libFunc->m_checkFile($rsMenu[$j]->vImage,"menu",$this->libFunc->m_displayContent($rsMenu[$j]->vItemtitle));
+							if($img)
+							{
+								$this->obTpl->set_var("TPL_VAR_MENUTITLE",$img);
+							}
+							else
+							{
+								$this->obTpl->set_var("TPL_VAR_MENUTITLE",$this->libFunc->m_displayContent($rsMenu[$j]->vItemtitle));
+							}
+						}
+						else
+						{
+							$this->obTpl->set_var("TPL_VAR_MENUTITLE",$this->libFunc->m_displayContent($rsMenu[$j]->vItemtitle));
+						}	
+
+						if ($rsMenu[$j]->iMethod==0){
+	                        $this->obTpl->set_var("TPL_VAR_METHOD","_parent");
+	                        }else{
+	                        $this->obTpl->set_var("TPL_VAR_METHOD","_blank");
+	                        }
+						
+						$this->obTpl->set_var("TPL_VAR_LINK",$this->libFunc->m_displayContent($rsMenu[$j]->vLink));
+						$this->obTpl->set_var("TPL_VAR_HREFATTRIBUTES",$this->libFunc->m_displayContent($rsMenu[$j]->vHrefAttributes));
+						if($rsMenu[$j]->iSubmenuid_FK > 0)
+						{
+							$this->obTpl->set_var("TPL_VAR_SUBMENU",$this->m_displaySubMenus());
+						}
+						$this->obTpl->parse("menu_blk","TPL_MENU_BLK",true);
+					}#end Menuitems for loop
+				}#end Menuitems if loop
+				else
+				{
+					$this->obTpl->set_var("menu_blk","");
+				}
+
+				if(!empty($rsMenuHead[$i]->vImage))
+				{
+					 $img=$this->libFunc->m_checkFile($rsMenuHead[$i]->vImage,"menu",$this->libFunc->m_displayContent($rsMenuHead[$i]->vHeader));
+					if($img)
+					{
+						$this->obTpl->set_var("TPL_VAR_MENUHEAD",$img);
+					}
+					else
+					{
+						$this->obTpl->set_var("TPL_VAR_MENUHEAD",$this->libFunc->m_displayContent($rsMenuHead[$i]->vHeader));
+					}
+				}
+				else
+				{
+					$this->obTpl->set_var("TPL_VAR_MENUHEAD",$this->libFunc->m_displayContent($rsMenuHead[$i]->vHeader));
+				}
+				$this->obTpl->parse("menuhead_blk","TPL_MENUHEAD_BLK",true);
+			}#end MenuHead for loop
+		}*/
+		return "";
+	}
 	
 	#FUNCTION TO GET SEOTIITE UNDER HOEMPAGE TO SHOW IT SELECTED
 	function m_getMainDept($seoTitle)

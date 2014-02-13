@@ -378,7 +378,7 @@ class c_shopDb {
 		}
 
 		#INSERTING TO TEMPEREARY CART
-		$this->obDb->query = "SELECT aa.iProdId_FK,aa.iTmpCartId_PK,aa.iQty,bb.iTmpChoiceId_FK,bb.vChoiceVal,cc.iOptId_FK,cc.iTempOptId_PK,cc.vOptVal FROM ".TEMPCART." as aa LEFT JOIN (".TEMPCHOICES." as bb) on aa.iTmpCartId_PK = bb.iTmpCartId_FK AND aa.iProdId_FK=bb.iProdId_FK LEFT JOIN (".TEMPOPTIONS." as cc) on aa.iTmpCartId_PK = cc.iTmpCartId_FK AND aa.iProdId_FK=cc.iProdId_FK WHERE aa.vSessionId='" . SESSIONID . "' AND aa.iProdId_Fk='".$this->request['productid']."'";
+		$this->obDb->query = "SELECT aa.iProdId_FK,aa.iTmpCartId_PK,aa.iQty,bb.iTmpChoiceId_FK,bb.vChoiceVal,cc.iOptId_FK,cc.iTempOptId_PK,cc.vOptVal FROM ".TEMPCART." as aa INNER JOIN (".TEMPCHOICES." as bb) on aa.iTmpCartId_PK = bb.iTmpCartId_FK AND aa.iProdId_FK=bb.iProdId_FK INNER JOIN (".TEMPOPTIONS." as cc) on aa.iTmpCartId_PK = cc.iTmpCartId_FK AND aa.iProdId_FK=cc.iProdId_FK WHERE aa.vSessionId='" . SESSIONID . "' AND aa.iProdId_Fk='".$this->request['productid']."'";
 		//if added product has choice
 		if(count($prodchoicearray[$this->request['productid']]) > 0)
 		{

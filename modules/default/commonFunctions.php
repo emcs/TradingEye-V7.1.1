@@ -1496,324 +1496,32 @@ class c_commonFunctions
 	
 	function m_UpdateViewCart()
 	{
-		//$country = isset($_REQUEST['country']);
-		//$state = isset($_REQUEST['state']);
-		//$discount = isset($_REQUEST['discount']);
-		
-		
-		//$this->comFunc=new c_commonFunctions();
-		//$this->comFunc->obDb=$obDatabase;
-		
-		/////////////////////UPDATE POSTAGE COST/////////////////////////
-		// if(isset($_REQUEST['bill_country_id']) & !empty($_REQUEST['bill_country_id']) & isset($_REQUEST['getpostagecost']) & $_REQUEST['getpostagecost'] == 1 & isset($_REQUEST['bill_state_id']))
-		// {
-			// $thisarray = array("","");
-			// $thisarray = $this->m_recalculate_postage($_REQUEST['bill_country_id'],$_REQUEST['bill_state_id']);
-			// $resultstring = $resultstring . "&POSTAGECOST->" . $thisarray[0];
-		// }
+		$vat = DEFAULTVATTAX;
+		if(isset($_SESSION['vatrate']))
+		{
+			$vat = $_SESSION['vatrate'];
+		}
+		/////////////////////////POSTAGE & VAT/////////////////////////
 		$resultstring ="";
+		$bill_country_id = 0;
+		$bill_state_id = 0;
 		if(isset($_REQUEST['bill_country_id']) & !empty($_REQUEST['bill_country_id']))
 		{
-			$_SESSION['bill_country_id'] = $_REQUEST['bill_country_id'];
+			$bill_country_id = $_REQUEST['bill_country_id'];
+			$_SESSION['bill_country_id'] = $bill_country_id;
 		}
 		if(isset($_REQUEST['bill_state_id']) & !empty($_REQUEST['bill_state_id']))
 		{
-			$_SESSION['bill_state_id'] = $_REQUEST['bill_state_id'];
+			$bill_state_id = $_REQUEST['bill_state_id'];
+			$_SESSION['bill_state_id'] = $bill_state_id;
 		}
-		if(isset($_REQUEST['bill_country_id']) & !empty($_REQUEST['bill_country_id']) & isset($_REQUEST['getpostagecost']) & $_REQUEST['getpostagecost'] == 1)
+		if($_REQUEST['getpostagecost'] == 1)
 		{
-		 
-			 if(DEFAULT_POSTAGE_METHOD=='cities')
-			 {
-				$cartweight = $_SESSION['cartweight'];
-				$countryid = $_REQUEST['bill_country_id'];
-				$granttotal = $_SESSION['grandTotal'];
-				$shipestimate = 1;
-				$ordertotal = $_SESSION['subtotal'];
-				$grandsubTotal = $_SESSION['grandsubTotal'];
-				$stateid = $_REQUEST['bill_state_id'];
-				$global_vat = $this->m_reviewVat($countryid,$stateid);
-				$_SESSION['RATESDEFINED'] = "";
-        $rates_defined = "";
-        if(CITYCOSTTYPE=='granttotal'){
-               $cartweight = $ordertotal;
-        }
-        if(DEFAULT_POSTAGE_METHOD=='cities'){
-            $this->obDb->query = "SELECT * FROM  ".POSTAGECITY." WHERE `vCountryId` = '$countryid' AND `vStateId` = '$stateid'";
-            $citylist = $this->obDb->fetchQuery();  // list of cities
-            $citylistcount =$this->obDb->record_count;  //number of cities
-
-            if ( $citylistcount != "0") {
-                $grandsubTotal = $grandsubTotal-$_SESSION['promotionVatCal']-$_SESSION['promotionVatNotCal'];
-                $vatAmountApplied = $grandsubTotal-$_SESSION['promotionVatNotCal'];
-                //Calculate VAT Here...
-                $this->obDb->query = "SELECT fTax FROM ".COUNTRY." WHERE iCountryId_PK='".$countryid."'";
-                $vat_cal = $this->obDb->fetchQuery();
-				$vat_cal[0] = $global_vat;
-        
-                $this->obDb->query = "SELECT * FROM ".POSTAGECITYDETAILS. " WHERE fCityId='".$citylist[0]->iCityId."'";
-                $rangerow = $this->obDb->fetchQuery();
-                $rangecount = $this->obDb->record_count;
-                
-                for($j=0;$j<$rangecount;$j++) {
-                    if(($cartweight >=$rangerow[$j]->fMinweight) && ($cartweight <= $rangerow[$j]->fMaxWeight)){
-                        
-                        if (isset($shipestimate) && $shipestimate ==1){
-                            $granttotal = $rangerow[$j]->fCost+$granttotal;
-                            $_SESSION['ship_country_id']= $countryid;
-                            $_SESSION['ship_state_id']= $stateid;
-                            $_SESSION['postagePrice']= $rangerow[$j]->fCost;
-                            if ($rangerow[$j]->fSpecialDelivery >= 0){
-                                $_SESSION['citySpecialDelivery']=$rangerow[$j]->fSpecialDelivery;   
-                            }
-                            if( VAT_POSTAGE_FLAG == "1"){
-                                $vatAmountApplied = $vatAmountApplied + $_SESSION['postagePrice'];
-                                $calculated_vat = (($vat_cal[0]/100)*($vatAmountApplied-$_REQUEST['novattotal']));
-                                $granttotal =$grandsubTotal + $calculated_vat + $_SESSION['postagePrice'];
-                            }else{
-                                $calculated_vat = (($vat_cal[0]/100)*($vatAmountApplied-$_REQUEST['novattotal']));
-                                $grandsubTotalVat = $grandsubTotal + $_SESSION['postagePrice'];
-                                $granttotal =$grandsubTotalVat + $calculated_vat;
-                            }
-                            
-                            //$granttotal = $granttotal - $global_vat_added + $calculated_vat;
-                            
-                            $rates_defined = "yes";
-                            $resultstring = $resultstring . "&POSTAGECOST->" .   $rangerow[$j]->fCost."*postageprice*".number_format($granttotal,2)."*grantotal*".number_format($calculated_vat,2)."*vatprice*".$vat_cal[0]."*vatpercent*".$rangerow[$j]->fSpecialDelivery."*specialdelivery";
-                            //echo "State*postageprice*".$countryid."*grantotal*";
-                            break;
-                        } else {
-                            $resultstring = $resultstring . "&POSTAGECOST->" .   $rangerow[$j]->fCost.",".$rangerow[$j]->fSpecialDelivery;
-                            break;
-                        }
-                            
-                    }
-                }
-            } else {
-                $this->obDb->query = "SELECT * FROM  ".POSTAGECITY." WHERE `vCountryId` = '$countryid' AND `vStateId` = '0'";
-                $citylist = $this->obDb->fetchQuery();  // list of cities
-                $citylistcount =$this->obDb->record_count;  //number of cities
-                $rates_defined = "";
-                if ( $citylistcount != "0") {
-                    $grandsubTotal = $grandsubTotal-$_SESSION['promotionVatCal']-$_SESSION['promotionVatNotCal'];
-                    $vatAmountApplied = $grandsubTotal-$_SESSION['promotionVatNotCal'];
-                    //Calculate VAT Here...
-                    $this->obDb->query = "SELECT fTax FROM ".COUNTRY." WHERE iCountryId_PK='".$countryid."'";
-                    $vat_cal = $this->obDb->fetchQuery();
-				$vat_cal[0] = $global_vat;
-            
-                    $this->obDb->query = "SELECT * FROM ".POSTAGECITYDETAILS. " WHERE fCityId='".$citylist[0]->iCityId."'";
-                    $rangerow = $this->obDb->fetchQuery();
-                    $rangecount = $this->obDb->record_count;
-                    
-                    for($j=0;$j<$rangecount;$j++) {
-                        if(($cartweight >=$rangerow[$j]->fMinweight) && ($cartweight <= $rangerow[$j]->fMaxWeight)){
-                            
-                            if (isset($shipestimate) && $shipestimate ==1){
-                                $granttotal = $rangerow[$j]->fCost+$granttotal;
-                                $_SESSION['ship_country_id']= $countryid;
-                                $_SESSION['ship_state_id']= $stateid;
-                                $_SESSION['postagePrice']= $rangerow[$j]->fCost;
-                                if ($rangerow[$j]->fSpecialDelivery >= 0){
-                                    $_SESSION['citySpecialDelivery']=$rangerow[$j]->fSpecialDelivery;   
-                                }
-                                if( VAT_POSTAGE_FLAG == "1"){
-                                    $vatAmountApplied = $vatAmountApplied + $_SESSION['postagePrice'];
-                                    $calculated_vat = (($vat_cal[0]/100)*($vatAmountApplied-$_REQUEST['novattotal']));
-                                    $granttotal =$grandsubTotal + $calculated_vat + $_SESSION['postagePrice'];
-                                }else{
-                                    $calculated_vat = (($vat_cal[0]/100)*($vatAmountApplied-$_REQUEST['novattotal']));
-                                    $grandsubTotalVat = $grandsubTotal + $_SESSION['postagePrice'];
-                                    $granttotal =$grandsubTotalVat + $calculated_vat;
-                                }
-                                
-                                //$granttotal = $granttotal - $global_vat_added + $calculated_vat;
-                                
-                                $rates_defined = "yes";
-                                $resultstring = $resultstring . "&POSTAGECOST->" .   $rangerow[$j]->fCost."*postageprice*".number_format($granttotal,2)."*grantotal*".number_format($calculated_vat,2)."*vatprice*".$vat_cal[0]."*vatpercent*".$rangerow[$j]->fSpecialDelivery."*specialdelivery";
-                                //echo $stateid."*postageprice*".$countryid."*grantotal*";
-                                break;
-                            } else {
-                                $resultstring = $resultstring . "&POSTAGECOST->" .   $rangerow[$j]->fCost.",".$rangerow[$j]->fSpecialDelivery;
-                                break;
-                            }
-                                
-                        }
-                    }
-                } else {
-                    $this->obDb->query = "SELECT * FROM  ".POSTAGECITY." WHERE `vCountryId` = '0' AND `vStateId` = '0'";
-                    $citylist = $this->obDb->fetchQuery();  // list of cities
-                    $citylistcount =$this->obDb->record_count;  //number of cities
-                    if ( $citylistcount != "0") {
-                        $grandsubTotal = $grandsubTotal-$_SESSION['promotionVatCal']-$_SESSION['promotionVatNotCal'];
-                        $vatAmountApplied = $grandsubTotal-$_SESSION['promotionVatNotCal'];
-                        //Calculate VAT Here...
-                        $this->obDb->query = "SELECT fTax FROM ".COUNTRY." WHERE iCountryId_PK='".$countryid."'";
-                        $vat_cal = $this->obDb->fetchQuery();
-				$vat_cal[0] = $global_vat;
-                
-                        $this->obDb->query = "SELECT * FROM ".POSTAGECITYDETAILS. " WHERE fCityId='".$citylist[0]->iCityId."'";
-                        $rangerow = $this->obDb->fetchQuery();
-                        $rangecount = $this->obDb->record_count;
-                        
-                        for($j=0;$j<$rangecount;$j++) {
-                            if(($cartweight >=$rangerow[$j]->fMinweight) && ($cartweight <= $rangerow[$j]->fMaxWeight)){
-                                
-                                if (isset($shipestimate) && $shipestimate ==1){
-                                    $granttotal = $rangerow[$j]->fCost+$granttotal;
-                                    $_SESSION['ship_country_id']= $countryid;
-                                    $_SESSION['ship_state_id']= $stateid;
-                                    $_SESSION['postagePrice']= $rangerow[$j]->fCost;
-                                    if ($rangerow[$j]->fSpecialDelivery >= 0){
-                                        $_SESSION['citySpecialDelivery']=$rangerow[$j]->fSpecialDelivery;   
-                                    }
-                                    if( VAT_POSTAGE_FLAG == "1"){
-                                        $vatAmountApplied = $vatAmountApplied + $_SESSION['postagePrice'];
-                                        $calculated_vat = (($vat_cal[0]/100)*($vatAmountApplied-$_REQUEST['novattotal']));
-                                        $granttotal =$grandsubTotal + $calculated_vat + $_SESSION['postagePrice'];
-                                    }else{
-                                        $calculated_vat = (($vat_cal[0]/100)*($vatAmountApplied-$_REQUEST['novattotal']));
-                                        $grandsubTotalVat = $grandsubTotal + $_SESSION['postagePrice'];
-                                        $granttotal =$grandsubTotalVat + $calculated_vat;
-                                    }
-                                    
-                                    //$granttotal = $granttotal - $global_vat_added + $calculated_vat;
-                                    
-                                    $rates_defined = "yes";
-                                    $resultstring = $resultstring . "&POSTAGECOST->" .   $rangerow[$j]->fCost."*postageprice*".number_format($granttotal,2)."*grantotal*".number_format($calculated_vat,2)."*vatprice*".$vat_cal[0]."*vatpercent*".$rangerow[$j]->fSpecialDelivery."*specialdelivery";
-                                    //echo $stateid."*postageprice*".$countryid."*grantotal*";
-                                    break;
-                                } else {
-                                    $resultstring = $resultstring . "&POSTAGECOST->" .   $rangerow[$j]->fCost.",".$rangerow[$j]->fSpecialDelivery;
-                                    break;
-                                }
-                                    
-                            }
-                        }
-                    }
-                }
-            }
-            if($rates_defined == ""){
-                      $resultstring = $resultstring . "&POSTAGECOST->" .   "<span style='color:red;'>No rates defined</span>*postageprice*";
-                        $_SESSION['RATESDEFINED'] = "NO";
-            }
-        }
-        
-    
-			 }
-			 elseif(DEFAULT_POSTAGE_METHOD=='zones')
-			 {
-				$cartweight = $_SESSION['cartweight'];
-				$countryid = $_REQUEST['bill_country_id'];
-				$granttotal = $_SESSION['grandTotal'];
-				$shipestimate = 1;
-				$ordertotal = $_SESSION['subtotal'];
-				$grandsubTotal = $_SESSION['grandsubTotal'];
-				$global_vat = $this->m_reviewVat($countryid,"");
-				$stateid == $_REQUEST['bill_state_id'];
-
-				
-				$_SESSION['RATESDEFINED'] = "";
-				$rates_defined = "";
-				if(ZONECOSTTYPE=='granttotal'){
-					   $cartweight = $ordertotal;
-				}        
-				if(DEFAULT_POSTAGE_METHOD=='zones'){ 
-					if($countryid != "" && $stateid == ""){
-					if(DEFAULT_POSTAGE_METHOD=='zones'){  
-							$this->obDb->query = "SELECT * FROM  ".POSTAGEZONE;
-							$zonelist = $this->obDb->fetchQuery();
-							$zonelistcount =$this->obDb->record_count;
-							$grandsubTotal = $grandsubTotal-$_SESSION['promotionVatCal']-$_SESSION['promotionVatNotCal'];
-							$vatAmountApplied = $grandsubTotal-$_SESSION['promotionVatNotCal'];
-							$this->obDb->query = "SELECT fTax FROM ".COUNTRY." WHERE iCountryId_PK=".$countryid;
-							$vat_cal = $this->obDb->fetchQuery();
-				$vat_cal[0] = $global_vat;
-							
-			
-						if($countryid!=0 && $zonelistcount>0){ 
-							for ($i=0;$i<$zonelistcount;$i++)
-								{
-								$dbcountryid = split(",",$zonelist[$i]->vCountryId);
-								$dbcountrycount = count($dbcountryid);
-									for ($k=0;$k<$dbcountrycount;$k++)
-									{
-										if($dbcountryid[$k]==$countryid )
-										{
-										$this->obDb->query = "SELECT * FROM ".POSTAGEZONEDETAILS. " WHERE iZoneId='".$zonelist[$i]->iZoneId."'";
-										$rangerow = $this->obDb->fetchQuery();
-										$rangecount = $this->obDb->record_count;
-			
-										for($j=0;$j<$rangecount;$j++)
-										{
-											if(($cartweight >=$rangerow[$j]->fMinweight) && ($cartweight <= $rangerow[$j]->fMaxWeight)){
-													
-													if (isset($shipestimate) && $shipestimate ==1){
-													$granttotal = $rangerow[$j]->fCost+$granttotal;
-													$_SESSION['ship_country_id']= $countryid;
-													$_SESSION['postagePrice']= $rangerow[$j]->fCost;
-													if ($rangerow[$j]->fSpecialDelivery >= 0){
-														$_SESSION['zoneSpecialDelivery']=$rangerow[$j]->fSpecialDelivery;   
-													}
-													if( VAT_POSTAGE_FLAG == "1"){
-														$vatAmountApplied = $vatAmountApplied + $_SESSION['postagePrice'];
-														$calculated_vat = (($vat_cal[0]/100)*($vatAmountApplied-$_REQUEST['novattotal']));
-														$granttotal =$grandsubTotal + $calculated_vat + $_SESSION['postagePrice'];
-													}else{
-														$calculated_vat = (($vat_cal[0]/100)*($vatAmountApplied-$_REQUEST['novattotal']));
-														$grandsubTotalVat = $grandsubTotal + $_SESSION['postagePrice'];
-														$granttotal =$grandsubTotalVat + $calculated_vat;
-													}
-													
-													
-													$rates_defined = "yes";
-													$resultstring = $resultstring . "&POSTAGECOST->" .  $rangerow[$j]->fCost."*postageprice*".number_format($granttotal,2)."*grantotal*".number_format($calculated_vat,2)."*vatprice*".$vat_cal[0]."*vatpercent*".$rangerow[$j]->fSpecialDelivery."*specialdelivery";
-													}else{
-													$resultstring = $resultstring . "&POSTAGECOST->" .  $rangerow[$j]->fCost.",".$rangerow[$j]->fSpecialDelivery;
-													}
-												
-											}
-										}
-										}
-									}
-								}
-								if($rates_defined == ""){
-									$resultstring = $resultstring . "&POSTAGECOST->" .  "<span style='color:red;'>No rates defined</span>*postageprice";
-									$_SESSION['RATESDEFINED'] = "NO";
-								}
-						}else{   
-						  $resultstring = $resultstring . "&POSTAGECOST->" .  "0.00*postageprice*".number_format($granttotal,2)."*grantotal";
-						}
-						}else
-						{
-						}
-					}else if($stateid != "" && $countryid == ""){
-						if(DEFAULT_POSTAGE_METHOD=='zones' && POSTAGEVATCS=='1'){   
-							
-							$grandsubTotal = $grandsubTotal-$_SESSION['promotionVatCal']-$_SESSION['promotionVatNotCal'];
-							$vatAmountApplied = $grandsubTotal-$_SESSION['promotionVatNotCal'];
-							$this->obDb->query = "SELECT fTax,fShipCharge FROM ".STATES." WHERE iStateId_PK=".$stateid;
-							$state_cal = $this->obDb->fetchQuery();
-							$vatPer = $state_cal[0]->fTax;
-				$vatPer = $global_vat;
-							$ShipCharge = $state_cal[0]->fShipCharge;
-			
-			
-							if( VAT_POSTAGE_FLAG == "1"){
-								$vatAmountApplied = $vatAmountApplied + $_SESSION['postagePrice'];
-								$calculated_vat = (($vatPer/100)*($vatAmountApplied-$_REQUEST['novattotal']));
-								$granttotal =$grandsubTotal + $calculated_vat + $_SESSION['postagePrice'];
-							}else{
-								$calculated_vat = (($vatPer/100)*($vatAmountApplied-$_REQUEST['novattotal']));
-								$grandsubTotalVat = $grandsubTotal + $_SESSION['postagePrice'];
-								$granttotal =$grandsubTotalVat + $calculated_vat;
-							}
-			
-							$resultstring = $resultstring . "&POSTAGECOST->" .  $_SESSION['postagePrice']."*postageprice*".number_format($granttotal,2)."*grantotal*".number_format($calculated_vat,2)."*vatprice*".$vatPer."*vatpercent*";
-						}
-					}
-				}
-			 }
+			$postageprice = $this->caclulatePostage($bill_country_id, $bill_state_id, 0, $_SESSION['subtotal'], $_SESSION['totalQty'], $_SESSION['cartweight'], 0, $_SESSION['product_codes']);
+			$vatprice = $this->m_Calculate_Tax($_SESSION['taxable_total'],$postageprice,$bill_country_id,$bill_state_id);
+			$granttotal = $postageprice + $vatprice[0];
+			$_SESSION['vatrate'] = $vatprice[1];
+			$resultstring = $resultstring . "&POSTAGECOST->" .  $postageprice."*postageprice*".number_format($granttotal,2)."*grantotal*".number_format($vatprice[0],2)."*vatprice*".$vatprice[1]."*vatpercent*";
 		}
 		/////////////////////UPDATE STATE LIST/////////////////////////
 		elseif(isset($_REQUEST['bill_country_id']) & !empty($_REQUEST['bill_country_id']) & $_REQUEST['getpostagecost'] == 0)
@@ -1891,11 +1599,6 @@ class c_commonFunctions
 				$_SESSION['discountType'] = $offertype;
 				$_SESSION['discountMini'] = $rsDiscount[0]->fMinimum;
 			}
-			//elseif(isset($_SESSION['discountCode']) && isset($_SESSION['discountPrice']) && isset($_SESSION['discountType']) && isset($_SESSION['discountMini']))
-			//{
-			//	$returnstring = $_SESSION['discountPrice'].",".$_SESSION['discountType'].",".$_SESSION['discountMini'];
-			//	$resultstring = $resultstring . "&DISCOUNTPRICE->" . $returnstring;
-			//}
 			else
 			{	
 				$resultstring = $resultstring . "&DISCOUNTPRICE->0,none,0&DISCOUNTCODE->" . htmlentities($_REQUEST['discount']);
@@ -1905,10 +1608,6 @@ class c_commonFunctions
 		{
 			$resultstring = $resultstring . "&DISCOUNTPRICE->".$_SESSION['discountPrice'].",".$_SESSION['discountType'].",".$_SESSION['discountMini']."&DISCOUNTCODE->" . $_SESSION['discountCode'];
 		}
-		//elseif(isset($_SESSION['discountCode']))
-		//{
-		//$resultstring = $resultstring . "&DISCOUNTCODE->" . $_SESSION['discountCode'];
-		//}
 	$resultstring = substr( $resultstring, 1 );
 	$mpoints = "0";
 	if(isset($_SESSION['userid']) && $_SESSION['userid'] !=0)
@@ -1919,21 +1618,7 @@ class c_commonFunctions
 		{
 			$mpoints = $row_customer[0]->fMemberPoints;
 		}
-	echo $resultstring . "&VATPOSTAGEFLAG->" . VAT_POSTAGE_FLAG . "&DEFAULTVAT->" . DEFAULTVATTAX . "&MEMBERPOINTS->" . OFFERMPOINT ."|".MPOINTVALUE."|".$mpoints. "&CURRENCY->".CONST_CURRENCY."&WEBSITEHTML->"; 
-	}
-	//UNFINISHED
-	//Calculates totals (total discount, total transaction cost, total shipping cost, etc. Returns array.
-	function CalcTotals($subtotal,$postageid = 0,$taxableitemtotal)
-	{
-		//Array(subtotal,pdiscount,volume discount,postage weight cost,postage base cost,discount code,giftcert,vattotal,grand total);
-		$returnarray = Array();
-		$returnarray['subtotal'] = $subtotal;
-		$returnarray['pdiscount'] = $this->m_calculatePromotionDiscount($subTotal);
-	}
-	
-	function m_Vat_Round($amount)
-	{
-	
+	echo $resultstring . "&VATPOSTAGEFLAG->" . VAT_POSTAGE_FLAG . "&DEFAULTVAT->" . $vat . "&MEMBERPOINTS->" . OFFERMPOINT ."|".MPOINTVALUE."|".$mpoints. "&CURRENCY->".CONST_CURRENCY."&WEBSITEHTML->"; 
 	}
 	
 	function m_Format_Price($amount)
@@ -2020,6 +1705,174 @@ class c_commonFunctions
 		}
 		return Array($taxamount,$taxrate * 100);
 	}
+	
+	
+	function caclulatePostage($country = 0, $state = 0, $zip, $currenttotal, $itemqty, $totalweight, $selectedoption = 0, $productcodes = Array())
+	{
+		$basepostage = 0;
+		$freepostage = 0;
+		switch(DEFAULT_POSTAGE_METHOD)
+		{
+			case "custom":
+				//calculate using custom zones
+				
+			break;
+			
+			case "regions":
+				if(!empty($state) && is_numeric($state))
+				{
+					//calculate by using state cost. If left 0 then country value is used
+					$this->obDb->query = "SELECT fShipCharge FROM ".STATES." WHERE iStateId_PK='".$state."'";
+					$result = $this->obDb->fetchQuery();
+					$basepostage = $result[0]->fShipCharge;
+				}
+				if(!empty($country) && is_numeric($country) && $basepostage == 0)
+				{
+					//calculate by using country cost
+					$this->obDb->query = "SELECT fShipCharge FROM ".COUNTRY." WHERE iCountryId_PK='".$country."'";
+					$result = $this->obDb->fetchQuery();
+					$basepostage = $result[0]->fShipCharge;
+				}
+			break;
+		}
+		$this->obDb->query = "SELECT * FROM ".POSTAGE." AS a LEFT JOIN ".POSTAGEDETAILS." AS b ON a.iPostId_PK = b.iPostId_FK WHERE a.iStatus =1";
+		$result = $this->obDb->fetchQuery();
+		
+		$flag1 = 0;
+		$flag2 = 0;
+		
+		foreach($result as $key => $value)
+		{
+			switch($result[$key]->vKey)
+			{
+				case "flat":
+					//adds a specified amount to the order
+					$basepostage = $basepostage + $result[$key]->vField1;
+				break;
+				
+				case "range":
+					//each range adds on specified amount to base postage
+					if($currenttotal > $result[$key]->vField1 && ($currenttoal < $result[$key]->vField2 || $result[$key]->vField2 == 'unlimited' || $result[$key]->vField2 == '0'))
+					{
+						$basepostage = $basepostage + $result[$key]->vField3;
+					}
+				break;
+				
+				case "peritem":
+					//each additional item adds specified amount to base postage
+					if($itemqty > 1)
+					{
+						$basepostage = $basepostage + (($itemqty - 1) * $result[$key]->vField2);
+					}
+					$basepostage = $basepostage + $result[$key]->vField1;
+				break;
+				
+				case "pweight":
+					//specified amount is multiplied by the total weight of items in cart and added to base postage
+					$basepostage = $basepostage + ($totalweight * $result[$key]->vField1);
+				break;
+				
+				case "zip":
+					//if ship to zip matches a zip code, specified price for that zip code is added on to base postage
+					//vField1 - zip
+					//vField2 - percent or flat
+					//vField3 - amount
+					if($flag2 == 0 && !empty($zip))
+					{
+						$temp1 = str_replace(" ","",$result[$key]->vField1);
+						$temp2 = str_replace(" ","",$zip);
+						if(strcasecmp($temp1,$temp2))
+						{
+							if($result[$key]->vField2 == 'percent')
+							{
+								$basepostage = $basepostage * (1 + (100/$result[$key]->vField3));
+							}
+							else
+							{
+								$basepostage = $basepostage + $result[$key]->vField3;
+							}
+							
+						}
+						$flag2 = 1;
+					}
+				break;
+				
+				case "codes":
+					//products with special codes are given specific charges
+					if($flag1 == 0)
+					{
+						foreach($productcodes as $k => $v)
+						{
+							$this->obDb->query = "SELECT vField2 FROM ".POSTAGEDETAILS." WHERE vField1='".$productcodes[$k]."'";
+							$result2 = $this->obDb->fetchQuery();
+							if($this->obDb->record_count > 0)
+							{
+								$basepostage = $baseposage + $result2[$k]->vField2;
+							}
+						}
+						$flag1 = 1;
+					}
+				break;
+				
+				case "free":
+					//if certain subtotal is met, free shipping is offered. (option for only specific countries, or all countries)
+					//country id of primary country, primary country's required subtotal, all other countries's required subtotal (0 = only primary country)
+					if($country == $result[$key]->vField1 && $currentotal > $result[$key]->vField2)
+					{
+						$freepostage = 1;
+					}
+					elseif($result[$key]->vField3 != '0' && $result[$key]->vField3 < $currentotal)
+					{
+						$freepostage = 1;
+					}
+				break;
+				
+				case "options":
+					//countries are given special options / special postage by country
+					if($selectedoption == $result[$key]->iPostDescId_PK)
+					{
+						$this->obDb->query = "SELECT vShipOptions FROM ".COUNTRY." WHERE iCountryId_PK='".$country."'";
+						$result2 = $this->obDb->fetchQuery();
+						$tempstring = $result2[0]->vShipOptions;
+						$temparray = explode(",",$tempstring);
+						$found = 0;
+						foreach($temparray as $k => $v)
+						{
+							if($temparray[$k] == $selectedoption)
+							{
+								$found = 1;
+								$_SESSION['postagemethodname'] = $result[$key]->vDescription;
+							}
+						}
+						if($found == 1)
+						{
+							//confirmed this option is available for this country
+							$basepostage = $basepostage + $result[$key]->vField1;
+						}
+						else
+						{
+							//country does not have this option assigned to it. Need to tell system to choose the cheapest option.
+							//set the cheapest postage option for that country
+							//set a message to be displayed on review that their choice was changed
+						}
+					}
+				break;
+			}
+		}
+		if(!isset($_SESSION['postagemethodname']))
+		{
+			$_SESSION['postagemethodname'] = DEFAULT_POSTAGE_NAME;
+		}
+		if($freepostage === 1)
+		{
+			return 0;
+		}
+		else
+		{
+			return $basepostage;
+		}
+	}
+	
 	
 }#END COMMON CLASS 
 

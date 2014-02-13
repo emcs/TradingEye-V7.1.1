@@ -528,21 +528,20 @@
 	}
 </script>
     <div class="fullWidgetContainer">
-      <div class="WidgetTitle">Special Rates</div>
+      <div class="WidgetTitle">Postage Options</div>
       <div class="WidgetContent">
-	<p>Setting special postage rates enable you to offer different postage charges to your customers which they can select from a list when checking out. For example you could set a base charge of {TPL_VAR_CURRENCY}5 for all orders, but then give your customer the possibility of choosing 1st class or an express postage option. Alternatively your list could be 1) UK orders 2) EU orders 3) International orders. Each rate also has a charge for the first item, and then each additional item.</p>
+	<p>Setting special postage options enable you to offer different postage methods to your customers which they can select from a list when checking out. Each option can be limited to only specific countries that are chosen by you. On this page you can create and edit the postage options. If you wish to modify which country shows which postage option, then go <a href="#">here</a>.</p>
 	<table class="whiteTable2" cellspacing="0">
 		<thead>
 			<tr>
 				<th>Delete</th>
 				<th>Description</th>
-				<th>First item</th>
-				<th>Each additional</th>
+				<th>Cost</th>
 			</tr>
 		</thead>
 		<tbody>
 			<form name="special" id="special" action="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.updatePostage" method="post" onsubmit="return validateSpecialForm();">
-				<input type="hidden" name="shipping_method" value="special"/>
+				<input type="hidden" name="shipping_method" value="options"/>
 				<!-- BEGIN TPL_SPECIAL_BLK -->
 				<input type="hidden" name="codeid[]" value="{TPL_VAR_ID}" />
 				<tr> 
@@ -555,17 +554,12 @@
 					<td>
 						{TPL_VAR_CURRENCY} <input type="text" name="field1[]" value="{TPL_VAR_FIELD1}" class="formField short" />
 					</td>
-					<td>
-						{TPL_VAR_CURRENCY} <input type="text" name="field2[]" value="{TPL_VAR_FIELD2}" class="formField short" />
-					</td>
-					<input type="hidden" name="field3[]" value="0"  />
 				</tr>
 				<!-- END TPL_SPECIAL_BLK -->
 				<tr> 
 					<td><strong>Add New:</strong></td>
 				<td><input type="text" name="newdescription" size="25" class="formField long" /></td>
 					<td>{TPL_VAR_CURRENCY} <input type="text" name="newfield1" size="5" class="formField short" /></td>
-					<td>{TPL_VAR_CURRENCY} <input type="text" name="newfield2" size="5" class="formField short" /></td>
 				</tr>
 			</tbody>
 		</table>
@@ -604,3 +598,105 @@
 </div> 
 </div>
 <!-- END TPL_POSTAGEBYWEIGHT_BLK -->
+
+<!-- BEGIN TPL_POSTAGEBYZIP_BLK -->
+<div class="fullWidgetContainer">
+      <div class="WidgetTitle">Postage By Zip Code</div>
+      <div class="WidgetContent">
+	<p>Postage By Zip Code allows you to charge a extra flat rate or percentage based on the ship to zip code selected by the customer.</p>
+	<form name="zip" id="zip" action="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.updatePostage" method="post">
+		<input type="hidden" name="shipping_method" value="zip"/>
+		<table class="whiteTable2" cellspacing="0">
+			<thead>
+				<tr>
+					<th>Delete</th>
+					<th>ID</th>
+					<th>Zip Code</th>
+					<th>Flat Rate or Percent</th>
+					<th>Amount</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- BEGIN TPL_ZIP_BLK -->
+                <tr>
+					<td>
+						<input type="hidden" name="codeid[]" value="{TPL_VAR_ID}" />
+						<input type="checkbox" class="checkbox" name="del[{TPL_VAR_ID}]" value="1" />
+					</td>
+					<td>{TPL_VAR_COUNT}</td>
+					<td><input type="text" name="field1[]" value="{TPL_VAR_FIELD1}" class="formField short" /></td>
+					<td>
+						<select name="field2[]">
+							<option value="flat" {TPL_VAR_ZIP_CHECKED1}>Flat Rate</option>
+							<option value="percent" {TPL_VAR_ZIP_CHECKED2}>Percent</option>
+						</select>
+					</td>
+					<td><input type="text" name="field3[]" value="{TPL_VAR_FIELD3}" class="formField short" /></td>
+				</tr>
+				<!-- END TPL_ZIP_BLK -->
+				<tr> 
+					<td colspan="2">New Zip Code</td>
+					<td><input type="text" name="newfield1" size="5" class="formField short" /></td>
+					<td>
+						<select name="newfield2">
+							<option value="flat">Flat Rate</option>
+							<option value="percent">Percent</option>
+						</select>
+					</td>
+					<td><input type="text" name="newfield3" size="5" class="formField short" /></td>
+				</tr>
+			</tbody>
+		</table>
+		<p class="formButtonWrapper">
+			<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="Save / Write" /> Save / Write</button>
+		</p>
+	</form>
+</div>
+</div>
+<!-- END TPL_POSTAGEBYZIP_BLK -->
+
+<!-- BEGIN TPL_POSTAGEFREE_BLK -->
+<div class="fullWidgetContainer">
+      <div class="WidgetTitle">Free Postage</div>
+      <div class="WidgetContent">
+	<p>Free postage enables you to offer free postage to a specific country once a required subtotal is met. All other countries can be offered a second subtotal allowing them to qualify for free postage or that total can be set to 0 and disable free postage for all other countries.</p>
+	<form name="free" id="free" action="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.updatePostage" method="post">
+		<input type="hidden" name="shipping_method" value="free"/>
+		<table class="whiteTable2" cellspacing="0">
+		<thead>
+			<tr>
+				<th colspan="2">Free Postage Settings</th>
+			</tr>
+		</thead>
+		<tbody>
+				<tr>
+					<td class="first"><label>Free Postage Primary Country</label></td>
+					<td>
+						<select name="shipping_field1" id="pricountry">
+						<!-- BEGIN TPL_COUNTRY_BLK -->
+
+							<option value="{TPL_VAR_CID}">{TPL_VAR_CNAME}</option>
+						<!-- END TPL_COUNTRY_BLK -->
+						</select>
+						<script type="text/javascript">
+							jQuery('#pricountry').val('{TPL_VAR_POSTAGE_FREE_PRIMARYCOUNTRY}');
+						</script>
+					</td>
+				</tr>
+				<tr>
+					<td class="first"><label>Required Subtotal For Free Postage In Primary Country</label></td>
+					<td>{TPL_VAR_CURRENCY} <input type="text" name="shipping_field2" class="formField short" value="{TPL_VAR_POSTAGE_FREE_SUBTOTAL1}" /></td>
+				</tr>
+				<tr>
+					<td class="first"><label>Required Subtotal For Free Postage In All Other Countries (Set to 0 to disable)</label></td>
+					<td>{TPL_VAR_CURRENCY} <input type="text" name="shipping_field3" class="formField short" value="{TPL_VAR_POSTAGE_FREE_SUBTOTAL2}" /></td>
+				</tr>
+			</tbody>
+		</table>
+		<p class="formButtonWrapper">
+			<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="" /> Save</button>
+		</p>
+	</form>
+</div>
+</div>
+<!-- END TPL_POSTAGEFREE_BLK -->

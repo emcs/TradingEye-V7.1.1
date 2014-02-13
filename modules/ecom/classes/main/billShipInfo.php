@@ -558,27 +558,30 @@ method");
 		$row_state = $this->obDb->fetchQuery();
 		$row_state_count = $this->obDb->record_count;
 		
-		$this->obDb->query = "SELECT iCountryId_PK, vCountryName, vShortName FROM  ".COUNTRY." WHERE iStatus = 1 ORDER BY iSortFlag,vCountryName";
+		$this->obDb->query = "SELECT iCountryId_PK, vCountryName, vShortName, vShipOptions FROM  ".COUNTRY." WHERE iStatus = 1 ORDER BY iSortFlag,vCountryName";
 		$row_country = $this->obDb->fetchQuery();
 		$row_country_count = $this->obDb->record_count;
 		
 		$billStateId=$this->libFunc->m_displayContent($row_customer[0]->vState);
 		if(isset($row_customer[0]->vCountry) && $row_customer[0]->vCountry>0){
 			$billCountry=$row_customer[0]->vCountry;
-		}else{
-			$billCountry=SELECTED_COUNTRY;
+		}elseif(isset($_SESSION['bill_country_id'])){
+			$billCountry=$_SESSION['bill_country_id'];
+		}
+		else{
+			$billCountry=0;
 		}
 		
 		$shipCountry=$this->libFunc->ifSet($_SESSION,'ship_country_id',$billCountry);
 		$shipState=$this->libFunc->ifSet($_SESSION,'ship_state_id',$billStateId);
-
+		$countryoptions = 'var countryoptions = Array();';
 		#Loading billing country list		
 		for($i=0;$i<$row_country_count;$i++)
 		{
 			$this->ObTpl->set_var("k", $row_country[$i]->iCountryId_PK);
 			$this->ObTpl->parse('countryblks','countryblk',true);
 			$this->ObTpl->set_var("TPL_COUNTRY_VALUE", $row_country[$i]->iCountryId_PK);
-			
+			$countryoptions = $countryoptions . "countryoptions[".$row_country[$i]->iCountryId_PK."]='".$row_country[$i]->vShipOptions . "';";
 			if($billCountry == $row_country[$i]->iCountryId_PK)
 				$this->ObTpl->set_var("BILL_COUNTRY_SELECT", "selected");
 			else
@@ -590,6 +593,27 @@ method");
 			$this->ObTpl->set_var("TPL_COUNTRY_NAME",$this->libFunc->m_displayContent($row_country[$i]->vCountryName));
 			$this->ObTpl->parse("nBillCountry","BillCountry",true);
 			$this->ObTpl->parse("nShipCountry","ShipCountry",true);
+		}
+		
+		$this->ObTpl->set_var("TPL_VAR_COUNTRY_OPTIONS",$countryoptions);
+		
+		$this->obDb->query = "SELECT * FROM ".POSTAGEDETAILS." WHERE iPostId_FK='6'";
+		$result = $this->obDb->fetchQuery();
+		if($this->obDb->record_count > 0)
+		{
+		$comFunc=new c_commonFunctions();
+		$comFunc->obDb = $this->obDb;
+		$baseprice = $comFunc->caclulatePostage(100, 0, 0, $_SESSION['subtotal'], $_SESSION['totalQty'], $_SESSION['cartweight'], 0, $_SESSION['product_codes']);
+		$tempstring = "var postageOptions = Array();";
+		foreach($result as $k => $v)
+		{
+			$tempstring = $tempstring . "postageOptions[".$result[$k]->iPostDescId_PK."] = Array();postageOptions[".$result[$k]->iPostDescId_PK."][0]='".$result[$k]->vDescription."';postageOptions[".$result[$k]->iPostDescId_PK."][1]=".($result[$k]->vField1 + $baseprice).";";
+		}
+		$this->ObTpl->set_var("TPL_VAR_COUNTRY_OPTIONS2",'var nooptions = 0;' . $tempstring);
+		}
+		else
+		{
+			$this->ObTpl->set_var("TPL_VAR_COUNTRY_OPTIONS2",'var nooptions = 1;');
 		}
 		
 		if($row_customer[0]->vCountry != ''){	
@@ -712,165 +736,6 @@ method");
 		{
 			$this->ObTpl->parse("altship_blk","TPL_ALTSHIP_BLK");
 		}
-		
-// Select postage start
-	if(!isset($_SESSION['freeShip']) || $_SESSION['freeShip']!=1)
-		{
-		
-			if(!isset($_SESSION['defPostageMethod']) || !isset($_SESSION['defPostagePrice']))
-			{
-				$retUrl=$this->libFunc->m_safeUrl(SITE_URL."ecom/index.php?action=ecom.viewcart");
-				//$this->libFunc->m_mosRedirect($retUrl);	
-				die("Postage Price not set or is zero and there is no Free Postage. Postage Price: " . $_SESSION['defPostagePrice'] . "Method: " . $_SESSION['defPostageMethod']);
-			}
-		
-			$this->ObTpl->set_var("TPL_VAR_DEFAULT_POSTAGEMETHOD",$_SESSION['defPostageMethod']);
-			$this->ObTpl->set_var("TPL_VAR_DEFAULT_POSTAGEPRICE",number_format($_SESSION['defPostagePrice'],2));
-			$_SESSION['postageoptions'][0] = $_SESSION['defPostagePrice'];
-			//--
-			if($_SESSION['zoneSpecialDelivery'] >0 && DEFAULT_POSTAGE_METHOD=='zones')
-            {
-                $postagePrice=$_SESSION['zoneSpecialDelivery'];
-                $this->ObTpl->set_var("TPL_VAR_DISPLAYPRICE",number_format($postagePrice,2));
-                $this->ObTpl->set_var("TPL_VAR_POSTAGEMETHOD","Special Delivery");
-                
-                $this->ObTpl->set_var("TPL_VAR_DEFAULT_POSTAGEMETHOD",$_SESSION['defPostageMethod']);
-                $this->ObTpl->set_var("TPL_VAR_DEFAULT_POSTAGEPRICE",$_SESSION['postagePrice']);
-                
-                
-                $this->ObTpl->set_var("TPL_VAR_METHODID","1");
-                $this->ObTpl->set_var("TPL_VAR_POSTAGEPRICE",$_SESSION['postagePrice']);
-				$_SESSION['postageoptions'][1] = $_SESSION['postagePrice'];
-                $this->ObTpl->parse("postage_blk","TPL_POSTAGE_BLK");
-                
-                $this->ObTpl->set_var("TPL_VAR_METHODID","2");
-                $this->ObTpl->set_var("TPL_VAR_POSTAGEPRICE",number_format($postagePrice,2));
-				$_SESSION['postageoptions'][2] = $_SESSION['postagePrice'];
-                $this->ObTpl->parse("postage_blk","TPL_POSTAGE_BLK");
-                                    
-                $this->ObTpl->parse("default_postage_blk","TPL_DEFAULTPOSTAGE_BLK");            
-                //$this->ObTpl->parse("special_postage_blk","TPL_SPECIALPOSTAGE_BLK");
-                $this->ObTpl->parse("specialrate_blk","TPL_SPECIALRATE_BLK",true);
-            }elseif($_SESSION['citySpecialDelivery'] >0 && DEFAULT_POSTAGE_METHOD=='cities')
-            {
-                $postagePrice=$_SESSION['citySpecialDelivery'];
-                $this->ObTpl->set_var("TPL_VAR_DISPLAYPRICE",number_format($postagePrice,2));
-                $this->ObTpl->set_var("TPL_VAR_POSTAGEMETHOD","Special Delivery");
-                
-                $this->ObTpl->set_var("TPL_VAR_DEFAULT_POSTAGEMETHOD",$_SESSION['defPostageMethod']);
-                $this->ObTpl->set_var("TPL_VAR_DEFAULT_POSTAGEPRICE",$_SESSION['postagePrice']);
-                
-                
-                $this->ObTpl->set_var("TPL_VAR_METHODID","1");
-                $this->ObTpl->set_var("TPL_VAR_POSTAGEPRICE",$_SESSION['postagePrice']);
-				$_SESSION['postageoptions'][1] = $_SESSION['postagePrice'];
-                $this->ObTpl->parse("postage_blk","TPL_POSTAGE_BLK");
-                
-                $this->ObTpl->set_var("TPL_VAR_METHODID","2");
-                $this->ObTpl->set_var("TPL_VAR_POSTAGEPRICE",number_format($postagePrice,2));
-				$_SESSION['postageoptions'][2] = $_SESSION['postagePrice'];
-                $this->ObTpl->parse("postage_blk","TPL_POSTAGE_BLK");
-                                    
-                $this->ObTpl->parse("default_postage_blk","TPL_DEFAULTPOSTAGE_BLK");            
-                //$this->ObTpl->parse("special_postage_blk","TPL_SPECIALPOSTAGE_BLK");
-                $this->ObTpl->parse("specialrate_blk","TPL_SPECIALRATE_BLK",true);
-            }elseif(DEFAULT_POSTAGE_METHOD=='zones' && $_SESSION['zoneSpecialDelivery']==0)
-            {
-            $this->ObTpl->set_var("TPL_VAR_DEFAULT_POSTAGEPRICE",number_format($_SESSION['postagePrice'],2));
-            $this->ObTpl->parse("default_postage_blk","TPL_DEFAULTPOSTAGE_BLK");            
-            }elseif(DEFAULT_POSTAGE_METHOD=='cities' && $_SESSION['cotySpecialDelivery']==0)
-            {
-            $this->ObTpl->set_var("TPL_VAR_DEFAULT_POSTAGEPRICE",number_format($_SESSION['postagePrice'],2));
-            $this->ObTpl->parse("default_postage_blk","TPL_DEFAULTPOSTAGE_BLK");            
-            }    
-			//--
-			#IF SPECIAL POSTAGE IS NOT ENABLED THE DEFAULT POSTAGE OPTION WILL BE DISPLAYED 
-			#OTHERWISE DEFAULT RATES WILL BE ADDED TO SPECIAL
-			if(!SPECIAL_POSTAGE){
-				$this->ObTpl->parse("default_postage_blk","TPL_DEFAULTPOSTAGE_BLK");
-			}else{
-				$this->ObTpl->parse("default_postage_blk","TPL_DEFAULTPOSTAGE_BLK");
-                $this->ObTpl->parse("special_postage_blk","TPL_SPECIALPOSTAGE_BLK");
-			}
-
-			$this->obDb->query ="SELECT vField1,vField2,iPostDescId_PK,PD.vDescription FROM  ".POSTAGE." P,".POSTAGEDETAILS." PD WHERE iPostId_PK=iPostId_FK AND vKey='special' AND iStatus='1'";
-			$rsPostage=$this->obDb->fetchQuery();
-			$rsCount=$this->obDb->record_count;
-			if($rsCount>0 && SPECIAL_POSTAGE)
-			{
-				for($j=0;$j<$rsCount;$j++)
-				{
-					$this->ObTpl->set_var("TPL_VAR_METHODID",$rsPostage[$j]->iPostDescId_PK);
-					$this->ObTpl->set_var("TPL_VAR_POSTAGEMETHOD",$rsPostage[$j]->vDescription);
-					#REASON FOR SUBTRACT 1 is additional after first 
-					$addtional=$_SESSION['totalQty']-1;
-					if($addtional>0)
-					{
-						$postagePrice=$rsPostage[$j]->vField1+($rsPostage[$j]->vField2*$addtional);
-					}
-					else
-					{
-						$postagePrice=$rsPostage[$j]->vField1;
-					}
-					$this->ObTpl->set_var("TPL_VAR_DISPLAYPRICE",number_format($postagePrice,2));
-					if(SPECIAL_POSTAGE){
-						$this->ObTpl->set_var("TPL_VAR_SPECIAL_POSTAGEPRICE",$rsPostage[$j]->vField2);
-						//Changed Special Postage to no longer add postage to special postage price
-						//$postagePrice=$postagePrice+$_SESSION['defPostagePrice'];
-					}
-					$this->ObTpl->set_var("TPL_VAR_POSTAGEPRICE",$postagePrice);
-				$_SESSION['postageoptions'][$rsPostage[$j]->iPostDescId_PK] = $postagePrice;
-					$this->ObTpl->parse("postage_blk","TPL_POSTAGE_BLK",true);
-				}
-			}else			
-			if($_SESSION['zoneSpecialDelivery']==0 || !SPECIAL_POSTAGE)
-			{
-			$_SESSION['postageId']='0';
-			$_SESSION['postageMethod']=$_SESSION['defPostageMethod'];
-			$_SESSION['postagePrice']=$_SESSION['defPostagePrice'];
-			$_SESSION['postageoptions'][0] = $_SESSION['defPostagePrice'];
-			$this->ObTpl->set_var("postage_blk","");	
-			}
-		$this->ObTpl->parse("specialrate_blk","TPL_SPECIALRATE_BLK");
-        }
-		elseif(SPECIAL_POSTAGE)
-		{
-		
-			$this->ObTpl->set_var("TPL_VAR_DEFAULT_POSTAGEMETHOD",DEFAULT_POSTAGE_NAME);
-			$this->ObTpl->set_var("TPL_VAR_DEFAULT_POSTAGEPRICE",number_format(0,2));
-				$this->ObTpl->parse("default_postage_blk","TPL_DEFAULTPOSTAGE_BLK");
-                $this->ObTpl->parse("special_postage_blk","TPL_SPECIALPOSTAGE_BLK");
-
-			$this->obDb->query ="SELECT vField1,vField2,iPostDescId_PK,PD.vDescription FROM  ".POSTAGE." P,".POSTAGEDETAILS." PD WHERE iPostId_PK=iPostId_FK AND vKey='special' AND iStatus='1'";
-			$rsPostage=$this->obDb->fetchQuery();
-			$rsCount=$this->obDb->record_count;
-			if($rsCount>0 && SPECIAL_POSTAGE)
-			{
-				for($j=0;$j<$rsCount;$j++)
-				{
-					$this->ObTpl->set_var("TPL_VAR_METHODID",$rsPostage[$j]->iPostDescId_PK);
-					$this->ObTpl->set_var("TPL_VAR_POSTAGEMETHOD",$rsPostage[$j]->vDescription);
-					$postagePrice=0;
-					$this->ObTpl->set_var("TPL_VAR_DISPLAYPRICE",number_format($postagePrice,2));
-					if(SPECIAL_POSTAGE){
-						$this->ObTpl->set_var("TPL_VAR_SPECIAL_POSTAGEPRICE",number_format($postagePrice,2));
-					}
-					$this->ObTpl->set_var("TPL_VAR_POSTAGEPRICE",$postagePrice);
-					$_SESSION['postageoptions'][$rsPostage[$j]->iPostDescId_PK] = $postagePrice;
-					$this->ObTpl->parse("postage_blk","TPL_POSTAGE_BLK",true);
-				}
-			}else			
-			if($_SESSION['zoneSpecialDelivery']==0 || !SPECIAL_POSTAGE)
-			{
-			$_SESSION['postageId']='0';
-			$_SESSION['postageMethod']=$_SESSION['defPostageMethod'];
-			$_SESSION['postagePrice']=0;
-			$_SESSION['postageoptions'][0] = 0;
-			$this->ObTpl->set_var("postage_blk","");	
-			}
-		$this->ObTpl->parse("specialrate_blk","TPL_SPECIALRATE_BLK");
-		}
-// End Select postage
 	
 			
 		//Payment code start
@@ -1183,7 +1048,7 @@ $this->ObTpl->set_var("TPL_VAR_NEXTFORMMODE",$_SESSION['NextFormMode']);
 			}
             #(BEGIN) SAGE PAY INTERGRATION
             
-			if($_SESSION['postagedropdown'] == "1"){
+			if(isset($_SESSION['postagedropdown']) && $_SESSION['postagedropdown'] == "1"){
 				$this->ObTpl->parse("freepost_blk","TPL_FREEPOST_BLK");
 			}elseif(DEFAULT_POSTAGE_METHOD!='zones' || DEFAULT_POSTAGE_METHOD!='cities'){
 				$this->ObTpl->parse("freepost_blk","TPL_FREEPOST_BLK");
@@ -1492,12 +1357,30 @@ $this->ObTpl->set_var("TPL_VAR_NEXTFORMMODE",$_SESSION['NextFormMode']);
 			$comFunc=new c_commonFunctions();
 			$comFunc->obDb=$this->obDb;	
 			
-			$m=$this->request['ship_id'];
-			$_SESSION['postageId']=$m;
-			$_SESSION['postageMethod']=$this->request['ship_method'][$m];
-
-			$_SESSION['postagePrice']=$_SESSION['postageoptions'][$_SESSION['postageId']];
+			if(!isset($this->request['postagemethod']))
+			{
+				$chosenid = 0;
+			}
+			else
+			{
+				$chosenid = $this->request['postagemethod'];
+			}
+			if(isset($this->request['ship_country_id']) && isset($this->request['ship_state_id']) && isset($this->request['alt_zip']))
+			{
+				$country = $this->request['ship_country_id'];
+				$state = $this->request['ship_state_id'];
+				$zip = $this->request['alt_zip'];
+			}
+			else
+			{
+				$country = $this->request['bill_country_id'];
+				$state = $this->request['bill_state_id'];
+				$zip = $this->request['zip'];
+			}
+			$_SESSION['postagePrice2']=$comFunc->caclulatePostage($country, $state, $zip, $_SESSION['subtotal'], $_SESSION['totalQty'], $_SESSION['cartweight'],$chosenid, $_SESSION['product_codes']);
+			$_SESSION['postagePrice']=$_SESSION['postagePrice2'];
 			$_SESSION['payMethod'] = $this->request['paymethod'];
+			
 			if($_SESSION['payMethod'] == "cod"){
 				$_SESSION['codPrice'] = $this->request['codprice'];
 			}else{

@@ -1,5 +1,8 @@
 
 var altship = 0;
+{TPL_VAR_COUNTRY_OPTIONS}
+{TPL_VAR_COUNTRY_OPTIONS2}
+
 	function loadvalues()
 	{
 		stateName =  Array();
@@ -2031,8 +2034,6 @@ var altship = 0;
 		stateVal[251][40] = "48"
 		stateName[251][41] = "Tennessee"
 		stateVal[251][41] = "49"
-		stateName[251][42] = "test"
-		stateVal[251][42] = "257"
 		stateName[251][43] = "Texas"
 		stateVal[251][43] = "50"
 		stateName[251][44] = "Utah"
@@ -2402,7 +2403,10 @@ var altship = 0;
 		}
 
 		}
-
+		if(altship != 1)
+		{
+			UpdateOptions(jQuery('#country').val());
+		}
 	}
 
 function setshipstate(index,fstatus)
@@ -2482,7 +2486,7 @@ function setshipstate(index,fstatus)
 		}
 
 
-
+		UpdateOptions(jQuery('#ship_country_id').val());
 	}
 
 		function disableField(field,stat) {
@@ -3735,3 +3739,30 @@ if(document.form1.bill_country_id.value=="" || document.form1.bill_country_id.va
 		});
 
 	}
+	
+	function UpdateOptions(id){
+		if(nooptions != 1)
+		{
+		var temp = countryoptions[id].split(',');
+		var temp2 = '';
+		var first = 1;
+		var checked;
+		jQuery(temp).each(function(index){
+			var tempprice = postageOptions[temp[index]][1];
+			tempprice = tempprice.toFixed(2)
+			if(first == 1)
+			{
+				checked = ' checked';
+				first = 0;
+			}
+			else
+			{
+				checked = '';
+			}
+			temp2 = temp2 + '<div class="postage_option"><input type="radio"'+checked+' class="formRadio" name="postagemethod" value="'+temp[index]+'"/>'+postageOptions[temp[index]][0]+' {TPL_VAR_CURRENCY}'+tempprice+'</div>';
+		});
+		temp2 = temp2 + '</div>';
+		jQuery('#postage').html(temp2);
+		}
+	}
+		

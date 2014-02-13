@@ -1,193 +1,345 @@
-<script language="JavaScript">
-	function validate()
+<style>
+td{
+vertical-align:top !important;
+}
+th.select{
+width:42px !important;
+}
+select.select{
+width:42px !important;
+}
+input.cname{
+width:100px !important;
+}
+th.onoff{
+width:32px !important;
+}
+th.cname{
+width:110px !important;
+}
+input.sname{
+width:22px !important;
+}
+th.sname{
+width:32px !important;
+}
+input.iso{
+width:33px !important;
+}
+th.iso{
+width:43px !important;
+}
+input.postage{
+width:50px !important;
+}
+th.postage{
+width:60px !important;
+}
+input.tax{
+width:50px !important;
+}
+th.tax{
+width:60px !important;
+}
+input.option{
+width:auto !important;
+}
+th.option{
+width:105px !important;
+}
+th.option a{
+line-height:12px;
+font-size:12px;
+}
+th.option a small{
+line-height:10px;
+font-size:10px;
+display:block;
+}
+.WidgetContent a{
+color: rgb(99, 166, 217);
+font-size: 14px;
+line-height: 20px;
+vertical-align: bottom;
+font-weight: bold;
+text-decoration: none;
+}
+.alpha a{
+margin:5px 10px;
+}
+.alpha a.selected{
+color:#000;
+text-decoration:underline;
+}
+td.select p{
+font-size:10px;
+margin:2px 0;
+display:block;
+padding:0;
+color: rgb(99, 166, 217);
+cursor:pointer;
+}
+a.apply{
+font-size:10px !important;
+margin:2px 0 !important;
+display:block !important;
+padding:0 !important;
+color: rgb(99, 166, 217) !important;
+cursor:pointer;
+}
+a.extra{
+margin-top:4px !important;
+}
+a.states{
+font-size:10px !important;
+margin-left:2px;
+color: rgb(99, 166, 217) !important;
+cursor:pointer;
+}
+.error{
+border:1px solid red;
+}
+</style>
+<script type="text/javascript">
+function SelectAll()
+{
+	jQuery('#countries td input.select').prop('checked',true);
+}
+function SelectNone()
+{
+	jQuery('#countries td input.select').prop('checked',false);
+}
+function SelectOpposite()
+{
+	var temp = jQuery('#countries td input.select:checked');
+	jQuery('#countries td input.select:not(:checked)').prop('checked',true);
+	jQuery(temp).prop('checked',false)
+}
+function ApplyToChecked(e){
+	var newval;
+	var col = jQuery(e).parent().parent().children().index(jQuery(e).parent()) + 1;
+	if((jQuery(e).prev().is('input') && jQuery(e).prev().attr('type') == 'text') || (jQuery(e).prev().is('select')))
 	{
-		if(isNull(document.frm.name.value))
+		newval = jQuery(e).prev().val();
+		jQuery('#countries tr:nth-child(n+2) td:nth-child(1) input:checked').parent().parent().find('td:nth-child('+col+') input,td:nth-child('+col+') select').val(newval);
+	}
+	else if((jQuery(e).prev().is('input') && jQuery(e).prev().attr('type') == 'checkbox'))
+	{
+		newval = jQuery(e).prev().prop('checked');
+		jQuery('#countries tr:nth-child(n+2) td:nth-child(1) input:checked').parent().parent().find('td:nth-child('+col+') input').prop('checked',newval);
+	}
+}
+function NewCountry()
+{
+	var onoff = jQuery('#new_onoff').val();
+	var country = jQuery('#new_cname').val();
+	var shortname = jQuery('#new_sname').val();
+	var iso = jQuery('#new_iso').val();
+	var postage = jQuery('#new_postage').val();
+	var vat = jQuery('#new_vat').val();
+	var options = Array();
+	var opthtml = "";
+	jQuery('.newoption').each(function(index){
+		if(jQuery(this).prop('checked'))
 		{
-			alert("Please enter the name of the country.");
-			document.frm.name.focus();
+			options[jQuery(this).val()] = 1;
+			opthtml = opthtml + '<input type="hidden" name="theoptions['+jQuery(this).val()+']" value="1"/>';
+		}
+		else
+		{
+			options[jQuery(this).val()] = 0;
+		}
+	});
+	if(country.length < 1)
+	{
+		alert('Please input a name for the new country.');
+		return false;
+	}
+	if(shortname.length != 2)
+	{
+		alert('Please input a 2 character abbreviation for your country.');
+		return false;
+	}
+	if(iso.length != 3)
+	{
+		alert('Please input the 3 character iso code for your country.');
+		return false;
+	}
+
+	if(isNaN(postage))
+	{
+		alert('Please input a numeric price for the postage of your new country.');
+		return false;
+	}
+	if(isNaN(vat))
+	{
+		alert('Please input a numeric amount for the Vat/Tax of your new country.');
+		return false;
+	}
+	jQuery('body').append('<form id="newform" method="post" action="adminindex.php?action=country.new"><input type="hidden" name="auth" value="{TPL_VAR_AUTH_TOKEN}"/>'+
+	'<input type="hidden" name="thecountry" value="'+country+'"/>'+
+	'<input type="hidden" name="theshortname" value="'+shortname+'"/>'+
+	'<input type="hidden" name="theiso" value="'+iso+'"/>'+
+	'<input type="hidden" name="thepostage" value="'+postage+'"/>'+
+	'<input type="hidden" name="thevat" value="'+vat+'"/>'+
+	'<input type="hidden" name="theonoff" value="'+onoff+'"/>'+
+	opthtml +
+	'</form>');
+	document.getElementById('newform').submit();
+}
+function ValidateForm()
+{
+	jQuery('.existing input.cname').each(function(){
+		if(jQuery(this).val().length < 1)
+		{
+			jQuery(this).focus();
+			jQuery(window).scrollTop(jQuery(this).offset().top);
+			jQuery(this).addClass('error');
+			jQuery(this).one('change',function(){
+				jQuery(this).removeClass('error');
+			});
+			alert('Please correct the country name surrounded in red.');
 			return false;
 		}
-		if(isNull(document.frm.short_name.value))
+	});
+	jQuery('.existing input.sname').each(function(){
+		if(jQuery(this).val().length != 2)
 		{
-			alert("Please enter the short name of the country.");
-			document.frm.short_name.focus();
+			jQuery(this).focus();
+			jQuery(window).scrollTop(jQuery(this).offset().top);
+			jQuery(this).addClass('error');
+			jQuery(this).one('change',function(){
+				jQuery(this).removeClass('error');
+			});
+			alert('Please correct the short name surrounded in red. It must be exactly 2 characters long.');
 			return false;
-		}	
-		return true;
+		}
+	});
+	jQuery('.existing input.iso').each(function(){
+		if(jQuery(this).val().length != 3)
+		{
+			jQuery(this).focus();
+			jQuery(window).scrollTop(jQuery(this).offset().top);
+			jQuery(this).addClass('error');
+			jQuery(this).one('change',function(){
+				jQuery(this).removeClass('error');
+			});
+			alert('Please correct the ISO abbreviation surrounded in red. It must be exactly 3 characters long.');
+			return false;
+		}
+	});
+	jQuery('.existing input.postage').each(function(){
+		if(jQuery(this).val().length < 1 || isNaN(jQuery(this).val()))
+		{
+			jQuery(this).focus();
+			jQuery(window).scrollTop(jQuery(this).offset().top);
+			jQuery(this).addClass('error');
+			jQuery(this).one('change',function(){
+				jQuery(this).removeClass('error');
+			});
+			alert('Please correct the invalid postage cost surrounded in red. Postage needs to be a valid number.');
+			return false;
+		}
+	});
+	jQuery('.existing input.tax').each(function(){
+		if(jQuery(this).val().length < 1 || isNaN(jQuery(this).val()))
+		{
+			jQuery(this).focus();
+			jQuery(window).scrollTop(jQuery(this).offset().top);
+			jQuery(this).addClass('error');
+			jQuery(this).one('change',function(){
+				jQuery(this).removeClass('error');
+			});
+			alert('Please correct the invalid tax cost surrounded in red. Vat/Tax needs to be a valid number. Ie: put in 20 for 20%.');
+			return false;
+		}
+	});
+	return true;
+}
+function deleteChecked()
+{
+	if(jQuery('#countries td input.select:checked').length > 0)
+	{
+		var formhtml = '<form id="deleteform" action="adminindex.php?action=country.delete" method="post"><input type="hidden" name="auth" value="{TPL_VAR_AUTH_TOKEN}"/>';
+		jQuery('#countries td input.select:checked').each(function(){
+			formhtml = formhtml + '<input type="hidden" name="selection[]" value="'+jQuery(this).val()+'"/>';
+		});
+		formhtml = formhtml + '</form>';
+		jQuery('body').append(formhtml);
+		document.getElementById('deleteform').submit();
 	}
+	else
+	{
+		alert('Please check the countries you wish to delete.');
+	}
+}
 </script>
-
-<style type="text/css">
-	.selectContainerSmall { width: 200px; }
-	.selectContainerSmall select { width: 235px; }
-</style>
-
-
-    <div class="historyWidgetContainer"><a href="../adminindex.php?flag=dashboard">Home</a> <strong>&raquo;</strong> <a href="adminindex.php?action=settings.companyHome&flag=settings">Settings</a> <strong>&raquo;</strong> <a href="#"> VAT &amp; Tax Settings</a></div>
-    <div class="fullWidgetContainer">
-      <div class="WidgetTitle">VAT &amp; Tax Settings</div>
-      <div class="WidgetContent">
-	<p style="clear: both;">The entries in this section will appear in the Billing / Shipping Info</p>
-	<!-- BEGIN TPL_ERROR_BLK -->{TPL_VAR_ERROR}<!-- END TPL_ERROR_BLK -->
-	<div class="LeftBox">
-		<table class="whiteTable2 Builder" cellspacing="0">
-			<thead>
-				<tr> 
-					<th colspan="2">Manage Countries</th>
-				</tr>
-			</thead>
-			<tbody>
-				<form action="{TPL_VAR_SITEURL}admin/adminindex.php?action=country.update" method="post" name="frm" onsubmit="return validate()">
-					<input type="hidden" name="mode" value="{TPL_VAR_MODE}">
-					<input type="hidden" name="cid" value="{TPL_VAR_CID}">
-					<tr>
-						<td class="first"><label>Name <span>*</span></label></td>
-						<td><input type="text" class="formField" name="name" value="{TPL_VAR_NAME}"></td>
+<div class="historyWidgetContainer"><a href="../adminindex.php?flag=dashboard">Home</a> <strong>&raquo;</strong> <a href="adminindex.php?action=settings.companyHome&flag=settings">Settings</a> <strong>&raquo;</strong> <a href="#">Country Settings</a></div>
+<div class="fullWidgetContainer">
+    <div class="WidgetTitle">Country State Settings</div>
+    <div class="WidgetContent">
+		<p style="clear: both;">Here you can control the countries that TradingEye uses. Each location can have a base postage cost, and a VAT / Tax rate assigned. If Postage Options are enabled, you can also limit which Postage Option is shown to which countries. You can also select a country and manage its states.</p>
+		<!-- BEGIN TPL_ERROR_BLK -->{TPL_VAR_ERROR}<!-- END TPL_ERROR_BLK -->
+		<form action="/admin/adminindex.php?action=country.update" method="post" name="frm" onsubmit="return ValidateForm()">
+		<div class="alpha">
+			{TPL_VAR_ALPHA_SORT}
+			{TPL_VAR_ALPHA_SORT2}
+		</div>
+		<div style="height:400px;overflow:scroll;border-top:1px solid #5B4B56;border-bottom:1px solid #5B4B56;">
+			<table id="countries" class="whiteTable2" cellspacing="0">
+				<thead>
+					<tr> 
+						<th class="select">Select</th>
+						<th class="onoff"><a href="adminindex.php?action=country.home{TPL_VAR_SORT1}">On/Off</a></th>
+						<th class="cname"><a href="adminindex.php?action=country.home{TPL_VAR_SORT2}">Country</a></th>
+						<th class="sname"><a href="adminindex.php?action=country.home{TPL_VAR_SORT3}">Short</a></th>
+						<th class="iso"><a href="adminindex.php?action=country.home{TPL_VAR_SORT4}">ISO</a></th>
+						<th class="postage"><a href="adminindex.php?action=country.home{TPL_VAR_SORT5}">Postage</a></th>
+						<th class="tax"><a href="adminindex.php?action=country.home{TPL_VAR_SORT6}">Tax Rate</a></th>
+						<!-- BEGIN TPL_POSTAGE_OPTION_BLK -->
+						<th class="option"><a href="adminindex.php?action=country.home{TPL_VAR_SORT}">{TPL_VAR_POSTAGE_OPTION}<small>Postage Option</small></a></th>
+						<!-- END TPL_POSTAGE_OPTION_BLK -->
 					</tr>
-					<tr>
-						<td><label>Short Name <span>*</span></label></td>
-						<td><input type="text" class="formField short" name="short_name" value="{TPL_VAR_SHORTNAME}"></td>
+				</thead>
+				<tbody>
+					<tr id="newcountryrow">
+						<td class="select"><p onclick="SelectAll();">All</p><p onclick="SelectNone();">None</p><p onclick="SelectOpposite();">Opposite</p></td>
+						<td><select class="onoff" class="select" id="new_onoff" name="enabled[new]"><option value="1">On</option><option value="0">Off</option></select>
+							<a class="apply extra" onclick="ApplyToChecked(this)">Apply To Checked</a></td>
+						<td><input class="cname" type="text" id="new_cname" name="cname[new]" placeholder="New Country" value=""/>
+							<a class="apply" onclick="return NewCountry();">Create This Country</a></td>
+						<td><input class="sname" maxlength="2" type="text" id="new_sname" name="sname[new]" value=""/></td>
+						<td><input class="iso" maxlength="3" type="text" id="new_iso" name="iso[new]" value=""/></td>
+						<td><input class="postage" type="text" id="new_postage" name="postage[new]" value=""/>
+							<a class="apply" onclick="ApplyToChecked(this)">Apply To Checked</a></td>
+						<td><input class="tax" type="text" id="new_vat" name="vat[new]" value=""/>
+							<a class="apply" onclick="ApplyToChecked(this)">Apply To Checked</a></td>
+						<!-- BEGIN TPL_NEW_COUNTRY_POSTAGE_OPTIONS_BLK -->
+						<td><input type="checkbox" class="newoption" name="option[new][{TPL_VAR_POSTAGE_OPTION_ID}]" value="{TPL_VAR_POSTAGE_OPTION_ID}"/>
+							<a class="apply extra" onclick="ApplyToChecked(this)">Apply To Checked</a></td>
+						<!-- END TPL_NEW_COUNTRY_POSTAGE_OPTIONS_BLK -->
 					</tr>
-					<tr>
-						<td><label>Enabled In Checkout</label></td>
-						<td><select name="status"><option value="1">Enabled</option><option value="0">Disabled</option></select></td>
+					<!-- BEGIN TPL_COUNTRY_BLK -->
+					<tr id="{TPL_VAR_CID}" class="existing">
+						<td><input class="select" type="checkbox" value="{TPL_VAR_CID}"/></td>
+						<td><select class="onoff" name="enabled[{TPL_VAR_CID}]"><option value="1"{TPL_VAR_CHECKED}>On</option><option value="0"{TPL_VAR_CHECKED3}>Off</option></select></td>
+						<td><input class="cname" type="text" name="cname[{TPL_VAR_CID}]" value="{TPL_VAR_NAME}"/><a class="states" href="#">Edit States</a></td>
+						<td><input class="sname" type="text" name="sname[{TPL_VAR_CID}]" value="{TPL_VAR_SHORTNAME}"/></td>
+						<td><input class="iso" type="text" name="iso[{TPL_VAR_CID}]" value="{TPL_VAR_ISO}"/></td>
+						<td><input class="postage" type="text" name="postage[{TPL_VAR_CID}]" value="{TPL_VAR_SHIP}"/></td>
+						<td><input class="tax" type="text" name="vat[{TPL_VAR_CID}]" value="{TPL_VAR_TAX}"/></td>
+						<!-- BEGIN TPL_COUNTRY_POSTAGE_OPTIONS_BLK -->
+						<td><input type="checkbox" name="option[{TPL_VAR_CID}][{TPL_VAR_POSTAGE_OPTION_ID}]" {TPL_VAR_CHECKED2} value="{TPL_VAR_POSTAGE_OPTION_ID}"/></td>
+						<!-- END TPL_COUNTRY_POSTAGE_OPTIONS_BLK -->
 					</tr>
-					<tr>
-						<td><label>Tax Code Area (Sage)</label></td>
-						<td><input type="text" class="formField short" name="sage_code" value="{TPL_VAR_TAX_CODE_AREA_SAGE}"></td>
-					</tr>
-					<tr>
-						<td><label>VAT</label></td>
-						<td><input type="text" class="formField short" name="tax" value="{TPL_VAR_TAX}" style="width:389px;"> %</td>
-					</tr>
-					<tr>
-						<td><label>Shipping Charge:</label></td>
-						<td><input type="text" class="formField short" name="shipCharge" value="{TPL_VAR_SHIP}"></td>
-					</tr>
+					<!-- END TPL_COUNTRY_BLK --> 
 				</tbody>
 			</table>
+			</div>
 			<p class="formButtonWrapper">
-				<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="Submit" /> Submit</button>
+				<button type="submit" class="formButton"><img src="/graphics/i_tick.gif" alt="Submit" /> Save Changes</button>
+				<button type="button" class="formButton" onclick="deleteChecked();"><img src="/graphics/i_delete.gif" alt="delete" /> Delete Selected</button>
 			</p>
 		</form>	
-	</div>
-	<script LANGUAGE="JavaScript" TYPE="text/javascript">
-		function selectAllCheckbox(frm)
-		{
-			for(i=0;i<frm.elements.length;i++)
-				if(frm.elements[i].type == "checkbox")
-					frm.elements[i].checked = frm.selectAll.checked;
-		}
-		
-		function validateForm(frm)
-		{
-			flag =false;
-			for(i=0;i<frm.elements.length;i++)
-			{
-				if(frm.elements[i].type=="checkbox" && frm.elements[i].name=="selection[]" && true == frm.elements[i].checked)
-				{
-					flag = true;
-					break;
-				}
-			}
-				if(false == flag)
-				{
-					alert("Please check at least one checkbox to proceed");
-					return false;
-				}
-				return confirm("You are about to delete records.");
-				//return ConfirmDeletion(frm);
-				return true;
-		}
-
-
-		function ConfirmDeletion(frm)
-		{   
-			if(true == frm.selectAll.checked){
-				return confirm("You are about to delete all records.");
-			}
-			flag =false;
-			for(i=0;i<frm.elements.length;i++)
-			{
-				if(frm.elements[i].type=="checkbox" && frm.elements[i].name=="selection[]" && true == frm.elements[i].checked)
-				{
-					flag = true;
-					break;
-				}
-			}
-			if(true == flag){
-				return confirm("You are about to delete selected records.");
-			}
-			return false;
-		}
-	</script>
-	<div class="RightBox">
-		<table class="whiteTable2" cellspacing="0">
-			<thead>
-				<tr>
-					<th colspan="2">Quick Select</th>
-				</tr>
-			</thead>
-			<tbody>
-				<form action="{TPL_VAR_SITEURL}admin/adminindex.php?action=country.home" method="get" name="go">
-					<input type="hidden" name="action" value="country.home">
-					<tr>
-						<td class="first"><label>Select Region</label></td>
-						<td>
-							<div class="selectContainerSmall"><select name='cid' class="formSelect">
-															<!-- BEGIN TPL_SELECTCOUNTRY_BLK --> 
-															<option value="{TPL_VAR_CID}" {TPL_VAR_SELECTED}>{TPL_VAR_CNAME}</option> 
-															<!-- END TPL_SELECTCOUNTRY_BLK -->  
-														</select></div>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-			<p class="formButtonWrapper">
-				<button type="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="Go" /> Go</button>
-			</span>
-		</form>
-		</table>
-	</div>
-	<div class="placeHolder"></div>
-</div>
-</div>
-<div class="fullWidgetContainer">
-	<div class="WidgetTitle">Manage Countries <!-- BEGIN TPL_MSG_BLK --><small>{TPL_VAR_MESSAGE}</small><!-- END TPL_MSG_BLK --></div>
-<div class="WidgetContent">
-		<!-- BEGIN TPL_MAINCOUNTRY_BLK -->	
- 		<table class="whiteTable2" cellspacing="0">
- 			<thead>
-				<tr> 
-					<th class="headerSelectAll"><input type="Checkbox" name="selectAll" value="1" onclick="selectAllCheckbox(this.form)"></th>
-					<th class="headerTaxID">ID</th>
-					<th>Name</th>
-					<th class="headerShortName">Short Name</th>
-					<th class="headerManage">Manage States &amp; VAT</th>
-				</tr>
-			</thead>
-			<tbody>
-				<form action="{TPL_VAR_SITEURL}admin/adminindex.php?action=country.delete{EXTRASTRING}" method="post" onsubmit="return validateForm(this)">
-					<!-- BEGIN TPL_COUNTRY_BLK --> 
-					<tr>
-						<td><input type="checkbox" name="selection[]" value="{TPL_VAR_CID}"></td>
-						<td>{TPL_VAR_COUNT}</td>
-						<td><a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=country.home&cid={TPL_VAR_CID}">{TPL_VAR_CNAME}</a></td>
-						<td>{TPL_VAR_CSHORTNAME}</td>
-						<td><a class="linkEdit" href="{TPL_VAR_SITEURL}admin/adminindex.php?action=state.home&cid={TPL_VAR_CID}">Manage States &amp; VAT</a></td>
-					</tr>
-					<!-- END TPL_COUNTRY_BLK -->
-				</tbody>
-			</table>
-			<p class="formButtonWrapper">
-				<button type="submit" class="formButton"><img src="../graphics/i_cross.gif" alt="Delete Selected" /> Delete Selected</button>
-			</p><br style='clear:both;'/>
-		</form>
-		<div><!-- BEGIN TPL_PAGING2_BLK -->
-				{PagerBlock2}
-		<!-- END TPL_PAGING2_BLK -->
-		</div>
-		<!-- END TPL_MAINCOUNTRY_BLK -->
-		<div class="placeHolder"></div>
 	</div>
 </div>

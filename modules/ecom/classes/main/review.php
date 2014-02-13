@@ -672,25 +672,6 @@ class c_review
 				$this->ObTpl->parse("volDiscounts_blk","TPL_VOLDISCOUNTS_BLK");
 			}	
 			
-			#CART WEIGHT *******
-			if($this->cartWeight>0 && ISACTIVE_ITEMWEIGHT==1)
-			{
-				$this->cartWeightPrice=$this->cartWeight*DEFAULT_ITEMWEIGHT;
-				$this->ObTpl->set_var("TPL_VAR_WEIGHT",$this->cartWeight);
-				$_SESSION['cartWeight']=$this->cartWeight;
-				$this->ObTpl->set_var("TPL_VAR_WEIGHTPRICE",number_format($this->cartWeightPrice,2,'.',''));
-				$_SESSION['cartWeightPrice']=number_format($this->cartWeightPrice,2,'.','');
-				$this->grandTotal+=$this->cartWeightPrice;
-				if(VAT_POSTAGE_FLAG)
-				$this->taxTotal+=$this->cartWeightPrice;
-				//echo $this->taxTotal."<br/>";
-				$this->ObTpl->parse("cartWeight_blk","TPL_CARTWEIGHT_BLK");
-			}
-			else
-			{
-				$_SESSION['cartWeight']="";
-				$_SESSION['cartWeightPrice']="";
-			}
 
 			#COD PRICE(PAYMENT GATEWAY ADDITIONAL PRICE)
 			if($_SESSION['codPrice']>0)
@@ -812,24 +793,12 @@ class c_review
 			}
 			
 			#POSTAGE CALCULATION**************************
-			if(!isset($_SESSION['freeShip']) || $_SESSION['freeShip']!=1)
-			{
-				$this->ObTpl->set_var("TPL_VAR_POSTAGEMETHOD",ucfirst($_SESSION['postageMethod']));
-				if($_SESSION['postageMethod'] == "Special Delivery"){
-					$this->postagePrice=$_SESSION['zoneSpecialDelivery'];
-				}else{
-					$this->postagePrice=$_SESSION['postagePrice'];
-				}
-				$this->ObTpl->set_var("TPL_VAR_POSTAGEPRICE",number_format($this->postagePrice,2,'.',''));
-				$this->grandTotal += $this->postagePrice;
-				$this->ObTpl->parse("postage_blk", "TPL_POSTAGE_BLK");
-			}
-			else
-			{
-				$this->ObTpl->set_var("TPL_VAR_POSTAGEMETHOD","None");
-			}
+			$this->ObTpl->set_var("TPL_VAR_POSTAGEPRICE",number_format($_SESSION['postagePrice2'],2,'.',''));
+			$this->grandTotal += $_SESSION['postagePrice2'];
+			$this->ObTpl->set_var("TPL_VAR_POSTAGEMETHOD",$_SESSION['postagemethodname']);
+			$this->ObTpl->parse("postage_blk", "TPL_POSTAGE_BLK");
 			
-		 	$temp = $comFunc->m_Calculate_Tax($this->taxTotal,$this->postagePrice,$_SESSION['ship_country_id'],$_SESSION['ship_state_id']);
+		 	$temp = $comFunc->m_Calculate_Tax($this->taxTotal,$_SESSION['postagePrice2'],$_SESSION['ship_country_id'],$_SESSION['ship_state_id']);
 			$this->vatTotal = $temp[0];	
 			
 			

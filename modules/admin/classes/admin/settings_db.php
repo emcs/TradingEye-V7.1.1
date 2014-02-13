@@ -284,28 +284,60 @@ class c_settingsDb
 	#FUNCTION TO UPDATE POSTAGE HOME
 	function m_updateHomePostage()
 	{
-		$this->request['SpecialPostage']=$this->libFunc->ifSet($this->request,'SpecialPostage');
-
-		$this->obDb->query="UPDATE ".SITESETTINGS." SET 
-		nNumberdata ='".$this->request['SpecialPostage']."' WHERE vDatatype='SpecialPostage'";
-		$this->obDb->updateQuery();
-
 		$this->obDb->query="UPDATE ".POSTAGE."  SET iStatus='0'"; 
 		$this->obDb->updateQuery();
 
+		if(isset($this->request['flatrate']))
+		{
+			$this->obDb->query="UPDATE ".POSTAGE."  SET iStatus='1' WHERE iPostId_PK='1'"; 
+			$this->obDb->updateQuery();
+		}
+
+		if(isset($this->request['range']))
+		{
+			$this->obDb->query="UPDATE ".POSTAGE."  SET iStatus='1' WHERE iPostId_PK='5'"; 
+			$this->obDb->updateQuery();
+		}
+
+		if(isset($this->request['peritem']))
+		{
+			$this->obDb->query="UPDATE ".POSTAGE."  SET iStatus='1' WHERE iPostId_PK='3'"; 
+			$this->obDb->updateQuery();
+		}
+
+		if(isset($this->request['pweight']))
+		{
+			$this->obDb->query="UPDATE ".POSTAGE."  SET iStatus='1' WHERE iPostId_PK='8'"; 
+			$this->obDb->updateQuery();
+		}
+
+		if(isset($this->request['zip']))
+		{
+			$this->obDb->query="UPDATE ".POSTAGE."  SET iStatus='1' WHERE iPostId_PK='15'"; 
+			$this->obDb->updateQuery();
+		}
+
+		if(isset($this->request['codes']))
+		{
+			$this->obDb->query="UPDATE ".POSTAGE."  SET iStatus='1' WHERE iPostId_PK='4'"; 
+			$this->obDb->updateQuery();
+		}
+
+		if(isset($this->request['free']))
+		{
+			$this->obDb->query="UPDATE ".POSTAGE."  SET iStatus='1' WHERE iPostId_PK='14'"; 
+			$this->obDb->updateQuery();
+		}
+
+		if(isset($this->request['options']))
+		{
+			$this->obDb->query="UPDATE ".POSTAGE."  SET iStatus='1' WHERE iPostId_PK='13'"; 
+			$this->obDb->updateQuery();
+		}
+
 		if(isset($this->request['postageid']))
 		{
-			 $this->obDb->query="UPDATE ".POSTAGE."  SET iStatus='1' WHERE iPostId_PK='".$this->request['postageid']."'"; 
-			$this->obDb->updateQuery();
-		}
-		if(isset($this->request['specialid']))
-		{
-			 $this->obDb->query="UPDATE ".POSTAGE."  SET iStatus='1' WHERE iPostId_PK='".$this->request['specialid']."'"; 
-			$this->obDb->updateQuery();
-		}
-		if(isset($this->request['weightid']))
-		{
-			 $this->obDb->query="UPDATE ".POSTAGE."  SET iStatus='1' WHERE iPostId_PK='".$this->request['weightid']."'"; 
+			$this->obDb->query="UPDATE ".POSTAGE."  SET iStatus='1' WHERE iPostId_PK='".$this->request['postageid']."'"; 
 			$this->obDb->updateQuery();
 		}
 		$this->libFunc->m_mosRedirect(SITE_URL."admin/adminindex.php?action=settings.postageHome&msg=1");	
@@ -313,122 +345,93 @@ class c_settingsDb
 
 	#FUNCTION TO UPDATE POSTAGE DETAILS
 	function m_updatePostage()	{
-		$this->request['chk_default_high']=$this->libFunc->ifSet($this->request,'chk_default_high');
-		$this->obDb->query="SELECT iPostId_PK FROM ".POSTAGE." WHERE  vKey='".$this->request['shipping_method']."'";
-		$resId=$this->obDb->fetchQuery();
-		if($this->request['shipping_method']!="pweight" && $this->request['shipping_method']!="special")
+		switch($this->request['shipping_method'])
 		{
-			#UPDATE STATUS
-			$this->obDb->query="UPDATE ".POSTAGE."  SET iStatus='0' WHERE vKey NOT IN ('special','pweight')"; 
-			$this->obDb->updateQuery();
-
-		
-			$this->obDb->query="UPDATE ".POSTAGE." SET ";
-			if(isset($this->request['base_rate']))
-			{
-				$this->obDb->query.="fBaseRate  ='".$this->request['base_rate']."',";			
-			}
-			if(isset($this->request['chk_default_high']))
-			{
-				$this->obDb->query.="iDefaultHighest  ='".$this->request['chk_default_high']."',";			
-			}
-
-			$this->obDb->query.="iStatus='1'  WHERE iPostId_PK ='".$resId[0]->iPostId_PK."'";
-			$this->obDb->updateQuery();
-		}
-
-		$this->request['newfield3']=$this->libFunc->ifSet($this->request,'newfield3');
-			switch($this->request['shipping_method'])
-			{
-				case "pweight":
-				$this->obDb->query="SELECT iPostId_PK FROM ".POSTAGE." WHERE  	vKey='".$this->request['shipping_method']."'";
-				$resId=$this->obDb->fetchQuery();
-				#01-05-07 NSI - changed function name from checkWrongValue to checkFloatValue
-				$this->request['shipping_field1']=$this->libFunc->checkFloatValue($this->request['shipping_field1']);
-				 $this->obDb->query="UPDATE ".POSTAGEDETAILS." SET "; 
-				 $this->obDb->query.=" vField1='".$this->request['shipping_field1']."' WHERE iPostId_FK='".$resId[0]->iPostId_PK."'";
+			case "flat":
+				$this->obDb->query="UPDATE ".POSTAGEDETAILS." SET vField1='".$this->request['shipping_field1']."' WHERE iPostId_FK=1"; 
 				$this->obDb->updateQuery();
-
-				$this->obDb->query="UPDATE ".POSTAGE." SET ";
-				$this->obDb->query.="iStatus='1'  WHERE iPostId_PK ='".$resId[0]->iPostId_PK."'";
+			break;
+			case "range":
+				$this->obDb->query="DELETE FROM ".POSTAGEDETAILS." WHERE iPostId_FK=5"; 
 				$this->obDb->updateQuery();
-				break;
-				case "flat":
-				case "percent":
-				case "peritem":
-				#01-05-07 NSI - changed function name from checkWrongValue to checkFloatValue and added check for percent method
-				if($this->request['shipping_method']=="percent"){
-					if(is_numeric($this->request['shipping_field1'])){
-						$this->request['shipping_field1']=$this->request['shipping_field1'];
-					}else{
-						$this->request['shipping_field1']=0;
-					}	
-				}else{
-				$this->request['shipping_field1']=$this->libFunc->checkFloatValue($this->request['shipping_field1']);
-				}	
-				$this->request['shipping_field2']=$this->libFunc->checkFloatValue($this->request['shipping_field2']);
-				 $this->obDb->query="UPDATE ".POSTAGEDETAILS." SET 
-				vField1 ='".$this->request['shipping_field1']."',vField2 ='".$this->request['shipping_field2']."' WHERE iPostId_FK ='".$resId[0]->iPostId_PK."'";
+				foreach($this->request['description'] as $k => $v)
+				{
+					$this->obDb->query="INSERT INTO ".POSTAGEDETAILS." SET iPostId_FK=5,vDescription='".$this->request['description'][$k]."',vField1='".$this->request['field1'][$k]."',vField2='".$this->request['field2'][$k]."',vField3='".$this->request['field3'][$k]."'"; 
+					$this->obDb->updateQuery();
+				}
+				if(!empty($this->request['newdescription']) && !empty($this->request['newfield1']) && !empty($this->request['newfield2']) && !empty($this->request['newfield3']))
+				{
+					$this->obDb->query="INSERT INTO ".POSTAGEDETAILS." SET iPostId_FK=5,vDescription='".$this->request['newdescription']."',vField1='".$this->request['newfield1']."',vField2='".$this->request['newfield2']."',vField3='".$this->request['newfield3']."'"; 
+					$this->obDb->updateQuery();
+				}
+			break;
+			case "peritem":
+				$this->obDb->query="DELETE FROM ".POSTAGEDETAILS." WHERE iPostId_FK=3"; 
 				$this->obDb->updateQuery();
-				break;
-				case "special":
-				case "range":
-				case "codes":
-					$this->request['newfield1']=$this->libFunc->checkFloatValue($this->request['newfield1']);
-					if($this->request['newfield2']!='unlimited' || DEFAULT_POSTAGE_METHOD!="range")
+				$this->obDb->query="INSERT INTO ".POSTAGEDETAILS." SET vField1='".$this->request['shipping_field1']."',vField2='".$this->request['shipping_field2']."',iPostId_FK=3"; 
+				$this->obDb->updateQuery();
+			break;
+			case "pweight":
+				$this->obDb->query="DELETE FROM ".POSTAGEDETAILS." WHERE iPostId_FK=8"; 
+				$this->obDb->updateQuery();
+				$this->obDb->query="INSERT INTO ".POSTAGEDETAILS." SET vField1='".$this->request['shipping_field1']."',iPostId_FK=8"; 
+				$this->obDb->updateQuery();
+			break;
+			case "zip":
+				$this->obDb->query="DELETE FROM ".POSTAGEDETAILS." WHERE iPostId_FK=15"; 
+				$this->obDb->updateQuery();
+				foreach($this->request['field1'] as $k => $v)
+				{
+					if(!isset($this->request['del'][$this->request['codeid'][$k]]))
 					{
-						$this->request['newfield2']=$this->libFunc->checkFloatValue($this->request['newfield2']);
+						$this->obDb->query="INSERT INTO ".POSTAGEDETAILS." SET iPostId_FK=15,vField1='".$this->request['field1'][$k]."',vField2='".$this->request['field2'][$k]."',vField3='".$this->request['field3'][$k]."'"; 
+						$this->obDb->updateQuery();
 					}
-					$this->request['newfield3']=$this->libFunc->checkFloatValue($this->request['newfield3']);
-
-					if(isset($this->request['newdescription']) && !empty($this->request['newdescription']))
-						{
-							$this->obDb->query="INSERT INTO ".POSTAGEDETAILS." SET 
-							vDescription ='".$this->libFunc->m_addToDB($this->request['newdescription'])."',
-							iPostId_FK ='".$resId[0]->iPostId_PK."',
-							vField1 ='".$this->libFunc->m_addToDB($this->request['newfield1'])."',
-							vField2 ='".$this->libFunc->m_addToDB($this->request['newfield2'])."',
-							vField3 ='".$this->libFunc->m_addToDB($this->request['newfield3'])."'"; 
-						
-							$this->obDb->updateQuery();
-						}
-				
-				
-					if(isset($this->request['description']))
-						{
-							$cnt=count($this->request['description']);
-							for($i=0;$i<$cnt;$i++)
-							{
-								$this->request['field2'][$i] = str_replace(",","",$this->request['field2'][$i]);
-								$this->request['field1'][$i]=$this->libFunc->checkFloatValue($this->request['field1'][$i]);
-								if($this->request['field2'][$i]!='unlimited' || DEFAULT_POSTAGE_METHOD!="range")
-								{
-									$this->request['field2'][$i]=$this->libFunc->checkFloatValue($this->request['field2'][$i]);
-								}
-								$this->request['field3'][$i]=$this->libFunc->checkFloatValue($this->request['field3'][$i]);
-
-								$this->obDb->query="UPDATE ".POSTAGEDETAILS." SET 
-								vDescription ='".$this->libFunc->m_addToDB($this->request['description'][$i])."',
-								vField1 ='".$this->libFunc->m_addToDB($this->request['field1'][$i])."',
-								vField2 ='".$this->libFunc->m_addToDB($this->request['field2'][$i])."',
-								vField3 ='".$this->libFunc->m_addToDB($this->request['field3'][$i])."'
-								WHERE iPostDescId_PK='".$this->request['codeid'][$i]."'"; 
-								
-								$this->obDb->updateQuery();
-							}
-						}
-						if(isset($this->request['del']))
-							{
-								$del=$this->request['del'];
-								foreach($del as $delid=>$delValue)
-								{
-									 $this->obDb->query="DELETE FROM ".POSTAGEDETAILS." 
-										WHERE iPostDescId_PK='".$delid."'"; 
-									$this->obDb->updateQuery();
-								}
-							}
-				break;
-			}#END
+				}
+				if(!empty($this->request['newfield1']) && !empty($this->request['newfield2']) && !empty($this->request['newfield3']))
+				{
+					$this->obDb->query="INSERT INTO ".POSTAGEDETAILS." SET iPostId_FK=15,vField1='".$this->request['newfield1']."',vField2='".$this->request['newfield2']."',vField3='".$this->request['newfield3']."'"; 
+					$this->obDb->updateQuery();
+				}
+			break;
+			case "codes":
+				$this->obDb->query="UPDATE ".POSTAGE." SET fBaseRate='".$this->request['base_rate']."' WHERE iPostId_PK=4"; 
+				$this->obDb->updateQuery();
+				$this->obDb->query="DELETE FROM ".POSTAGEDETAILS." WHERE iPostId_FK=4"; 
+				$this->obDb->updateQuery();
+				foreach($this->request['description'] as $k => $v)
+				{
+					$this->obDb->query="INSERT INTO ".POSTAGEDETAILS." SET iPostId_FK=4,vDescription='".$this->request['description'][$k]."',vField1='".$this->request['field1'][$k]."',vField2='".$this->request['field2'][$k]."'"; 
+					$this->obDb->updateQuery();
+				}
+				if(!empty($this->request['newdescription']) && !empty($this->request['newfield1']) && !empty($this->request['newfield2']))
+				{
+					$this->obDb->query="INSERT INTO ".POSTAGEDETAILS." SET iPostId_FK=4,vDescription='".$this->request['newdescription']."',vField1='".$this->request['newfield1']."',vField2='".$this->request['newfield2']."'"; 
+					$this->obDb->updateQuery();
+				}
+			break;
+			case "free":
+				$this->obDb->query="DELETE FROM ".POSTAGEDETAILS." WHERE iPostId_FK=14"; 
+				$this->obDb->updateQuery();
+				$this->obDb->query="INSERT INTO ".POSTAGEDETAILS." SET vField1='".$this->request['shipping_field1']."',vField2='".$this->request['shipping_field2']."',vField3='".$this->request['shipping_field3']."',iPostId_FK=14"; 
+				$this->obDb->updateQuery();
+			break;
+			case "options":
+				$this->obDb->query="DELETE FROM ".POSTAGEDETAILS." WHERE iPostId_FK=13"; 
+				$this->obDb->updateQuery();
+				foreach($this->request['description'] as $k => $v)
+				{
+					$this->obDb->query="UPDATE ".POSTAGEDETAILS." SET iPostId_FK=13,vDescription='".$this->request['description'][$k]."',vField1='".$this->request['field1'][$k]."' WHERE iPostDescId_PK='".$this->request['codeid'][$k]."'"; 
+					$this->obDb->updateQuery();
+				}
+				if(!empty($this->request['newdescription']) && !empty($this->request['newfield1']))
+				{
+					$this->obDb->query="INSERT INTO ".POSTAGEDETAILS." SET iPostId_FK=13,vDescription='".$this->request['newdescription']."',vField1='".$this->request['newfield1']."'"; 
+					$this->obDb->updateQuery();
+				}
+			break;
+		}
+		
 		$this->libFunc->m_mosRedirect(SITE_URL."admin/adminindex.php?action=settings.postageEditor&mode=".$this->request['shipping_method']);	
 	}#FUNCTION END
 

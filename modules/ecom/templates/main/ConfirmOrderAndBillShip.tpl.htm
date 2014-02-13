@@ -188,30 +188,20 @@
 				var altship = 1;
 			</script>
 			<!-- END TPL_ALTSHIP_BLK -->
-			<!-- BEGIN TPL_FREEPOST_BLK -->
 			<div id="postage">
+			</div>
+			<!-- BEGIN TPL_FREEPOST_BLK -->
 			<!-- BEGIN TPL_SPECIALRATE_BLK -->
-				<h3>Postage Options</h3>
-				<p>Default postage method: {TPL_VAR_DEFAULT_POSTAGEMETHOD} {TPL_VAR_CURRENCY}<span id="postageprice">{TPL_VAR_DEFAULT_POSTAGEPRICE}</span></p>
-				<h4>Optional Postage Rates</h4>
-
 	           	<!-- BEGIN TPL_DEFAULTPOSTAGE_BLK -->
-						<p><input type="radio" name="ship_id" value="0" checked="checked" class="formRadio" />{TPL_VAR_DEFAULT_POSTAGEMETHOD} ({TPL_VAR_CURRENCY}<span id="postagepricedefault">{TPL_VAR_DEFAULT_POSTAGEPRICE}</span>)</p>
-	                   <p><input type="hidden" name="ship_method[0]" value="{TPL_VAR_DEFAULT_POSTAGEMETHOD}" /></p>
-	                   <p><input type="hidden" name="ship_total[0]" value="{TPL_VAR_DEFAULT_POSTAGEPRICE}" /></p>
 				<!-- END TPL_DEFAULTPOSTAGE_BLK -->
 			
 		        <!-- BEGIN TPL_POSTAGE_BLK -->
-	                    <p><input id="ship_id" type="radio" name="ship_id" value="{TPL_VAR_METHODID}" class="formRadio" {TPL_VAR_SELECTED} />{TPL_VAR_POSTAGEMETHOD} {TPL_VAR_CURRENCY}<span id="specialdelivery">{TPL_VAR_DISPLAYPRICE}</span>
-							<!-- BEGIN TPL_SPECIALPOSTAGE_BLK -->
+	                <!-- BEGIN TPL_SPECIALPOSTAGE_BLK -->
 								<!-- + -->
 								<!--{TPL_VAR_CURRENCY}{TPL_VAR_SPECIAL_POSTAGEPRICE}-->
-							<!-- END TPL_SPECIALPOSTAGE_BLK --></p>
-	                   	<input type="hidden" name="ship_method[{TPL_VAR_METHODID}]" value="{TPL_VAR_POSTAGEMETHOD}" /><br />
-						<input type="hidden" name="ship_total[{TPL_VAR_METHODID}]" value="{TPL_VAR_POSTAGEPRICE}" />
+							<!-- END TPL_SPECIALPOSTAGE_BLK -->
 				<!-- END TPL_POSTAGE_BLK -->
 			<!-- END TPL_SPECIALRATE_BLK -->
-			</div>
 			<!-- END TPL_FREEPOST_BLK -->
 			<input class="formButton" type="button" onclick="nextAcc(2);" value="Continue" />
 			<input type='hidden' name='subtotalatload' value='{TPL_VAR_SUBTOTAL}'/>

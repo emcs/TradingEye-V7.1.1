@@ -1,9 +1,10 @@
 
 <div class="historyWidgetContainer"><a href="../adminindex.php?flag=dashboard">Home</a> <strong>&raquo;</strong> <a href="adminindex.php?action=settings.companyHome&flag=settings">Settings</a> <strong>&raquo;</strong> <a href="#"> Postage &amp; Packing</a></div>
     <div class="fullWidgetContainer">
-      <div class="WidgetTitle">Postage &amp; Packing</div>
+	 <div class="WidgetTitle">Postage &amp; Packing</div>
       <div class="WidgetContent">
-	<div class="LeftBox">
+	 <form name="codes" id="codes" action="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.postHomeUpdate" method="post">
+      <div class="LeftBox">
 		<h3>Default Postage &amp; Packing Method</h3>
 		<p>Choose a base Postage &amp; Packing method, to be applied as your default setting.</p>
 		<table class="whiteTable2">
@@ -15,19 +16,26 @@
 				</tr>
 			</thead>
 			<tbody>
-				<form name="codes" id="codes" action="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.postHomeUpdate" method="post">
-					<!-- BEGIN TPL_METHODS_BLK -->
 					<tr>
-						<td><input type="radio" class="formRadio" name="postageid" value="{TPL_VAR_ID}" {TPL_VAR_STATUS} /></td>
-						<td><a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.postageEditor&mode={TPL_VAR_KEY}" class="linkEdit">{TPL_VAR_NAME}</a></td>
-						<td>{TPL_VAR_DESCRIPTION}</td>
+						<td><input type="radio" class="formRadio" name="postageid" value="11" {TPL_VAR_REGIONAL_STATUS} /></td>
+						<td><a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=country.home" class="linkEdit">Regional</a></td>
+						<td>Country / State Based Postage</td>
 					</tr>
-					<!-- END TPL_METHODS_BLK -->
-				</tbody>
+					<tr>
+						<td><input type="radio" class="formRadio" name="postageid" value="9" {TPL_VAR_CUSTOM_STATUS} /></td>
+						<td><a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.postageEditor&mode=zones" class="linkEdit">Custom Regional Zones</a></td>
+						<td>Custom Regional Zones</td>
+					</tr>
+					<tr>
+						<td><input type="radio" class="formRadio" name="postageid" value="12" {TPL_VAR_ALL_STATUS} /></td>
+						<td><a>All Customers</a></td>
+						<td>Postage that is charged to all customers regardless of location.</td>
+					</tr>
+			</tbody>
 			</table>
 		</div>
 		<div class="RightBox">
-			<h3>Postage &amp; Packing Extensions</h3>
+			<h3>Postage Modifiers</h3>
 			<p>Postage options below can work in conjunction with any base Postage &amp; Packing method.</p>
 			<table class="whiteTable2">
 				<thead>
@@ -39,26 +47,53 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td><input type="checkbox" class="formRadio" name="weightid" value="{TPL_VAR_WEIGHTID}" {TPL_VAR_WEIGHTSTATUS}/></td>
-						<td><a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.postageEditor&mode={TPL_VAR_WEIGHTKEY}" class="linkEdit">{TPL_VAR_WEIGHTNAME}</a></td>
-						<td>{TPL_VAR_WEIGHTDESCRIPTION}</td>
+						<td><input type="checkbox" class="formRadio" name="flatrate" value="1" {TPL_VAR_FLAT_STATUS}/></td>
+						<td><a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.postageEditor&mode=flat" class="linkEdit">Flat Rate Charge</a></td>
+						<td>Add a flat charge to this postage method.</td>
 					</tr>
 					<tr>
-						<td><input type="checkbox" class="formRadio" name="specialid" value="{TPL_VAR_SPCID}" {TPL_VAR_SPECIALSTATUS} /></td>
-						<td><a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.postageEditor&mode={TPL_VAR_SPCKEY}" class="linkEdit">{TPL_VAR_SPCNAME}</a></td>
-						<td>{TPL_VAR_SPCDESCRIPTION}</td>
+						<td><input type="checkbox" class="formRadio" name="range" value="1" {TPL_VAR_RANGE_STATUS}/></td>
+						<td><a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.postageEditor&mode=range" class="linkEdit">Postal Range</a></td>
+						<td>Postage charge based on range of total order.</td>
 					</tr>
 					<tr>
-						<td><input type="checkbox" class="formRadio" id="SpecialPostage" name="SpecialPostage" value="1" {ENABLE_SPECIALPOSTAGE} /></td>
-						<td colspan="2"><a>Special Rates with other Postage Method</a></td>
+						<td><input type="checkbox" class="formRadio" name="peritem" value="1" {TPL_VAR_PERITEM_STATUS}/></td>
+						<td><a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.postageEditor&mode=peritem" class="linkEdit">Per Item Charge</a></td>
+						<td>Postage charge based on number of items added to cart.</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" class="formRadio" name="pweight" value="1" {TPL_VAR_WEIGHT_STATUS}/></td>
+						<td><a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.postageEditor&mode=pweight" class="linkEdit">Weight Based Charge</a></td>
+						<td>Postage charge based on the total weight of items added to cart.</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" class="formRadio" name="zip" value="1" {TPL_VAR_ZIP_STATUS}/></td>
+						<td><a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.postageEditor&mode=zip" class="linkEdit">Zip Code Charge</a></td>
+						<td>Postage charge based on the zip code of the shipping address.</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" class="formRadio" name="codes" value="1" {TPL_VAR_CODES_STATUS}/></td>
+						<td><a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.postageEditor&mode=codes" class="linkEdit">Postage Group Charge</a></td>
+						<td>Postage charge that is based on what Postage Group each product is assigned to.</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" class="formRadio" name="free" value="1" {TPL_VAR_FREE_STATUS}/></td>
+						<td><a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.postageEditor&mode=free" class="linkEdit">Free Postage</a></td>
+						<td>Makes postage free if subtotal, and country requirements are met.</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" class="formRadio" name="options" value="1" {TPL_VAR_OPTIONS_STATUS}/></td>
+						<td><a href="{TPL_VAR_SITEURL}admin/adminindex.php?action=settings.postageEditor&mode=special" class="linkEdit">Multiple Postage Options</a></td>
+						<td>Adds postage options. Each postage option has its own charge and is only displayed for specified countries.</td>
 					</tr>
 				</tbody>
 			</table>
 			<p class="formButtonWrapper">
 				<button type="submit" name="submit" class="formButton"><img src="../graphics/i_tick.gif" alt="Apply Changes" /> Apply Changes</button>
 			</p>
-			</form>
-		</div>
-<div class="placeHolder"></div>
 	</div>
+<div class="placeHolder"></div>
+	</form>
+	<div style="clear:both;height:0;width:0;"></div>
+</div>
 </div>

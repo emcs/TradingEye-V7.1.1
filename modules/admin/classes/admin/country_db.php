@@ -16,25 +16,45 @@ defined('_TEEXEC') or die;
 		
 		function m_insertCountry()
 		{
-			// Inserting new record 
-			$this->obDb->query = "INSERT INTO ".COUNTRY."(vCountryName,vShortName,fTax,vSageTaxCode,fShipCharge)
-				values('".$this->request['name']."', '".$this->request['short_name']."', '".$this->request['tax']."', '".$this->request['sage_code']."','".$this->request['shipCharge']."')";
+			//NEED TO DO ENABLED POSTAGE OPTIONS TOO
+			$shipoptions ="";
+			if(isset($this->request['theoptions']))
+			{
+			foreach($this->request['theoptions'] as $k=>$v)
+			{
+				$shipoptions = $shipoptions . ',' . $k;
+			}
+			}
+			$shipoptions = ltrim($shipoptions,",");
+			$this->obDb->query = "INSERT INTO ".COUNTRY."(vCountryName,vShortName,fTax,iso3,iStatus,fShipCharge,vShipOptions)
+				values('".$this->request['thecountry']."','".$this->request['theshortname']."','".$this->request['thevat']."','".$this->request['theiso']."','".$this->request['theonoff']."','".$this->request['thepostage']."','".$shipoptions."')";
 			$this->obDb->updateQuery();
-			$this->libFunc->m_mosRedirect(SITE_URL."admin/adminindex.php?action=country.home&msg=1");	
+			$_SESSION['msg'] = 'Your new country has been created.';
+			$this->libFunc->m_mosRedirect(SITE_URL."admin/adminindex.php?action=country.home");	
 		}
 	
 		function m_updateCountry()
 		{
-			$this->obDb->query ="UPDATE ".COUNTRY." SET
-				vCountryName		=	'".$this->request['name']."',
-				fTax				=	'".$this->request['tax']."',
-				iStatus			=	'".$this->request['status']."',
-				vShortName			=	'".$this->request['short_name']."',
-				vSageTaxCode		=	'".$this->request['sage_code']."',
-				fShipCharge		=	'".$this->request['shipCharge']."'
-				WHERE iCountryId_PK = '".$this->request['cid']."'";
-			$this->obDb->updateQuery();
-			$this->libFunc->m_mosRedirect(SITE_URL."admin/adminindex.php?action=country.home&msg=2&cid=".$this->request['cid']);	
+			if(isset($this->request['cname']))
+			{
+				foreach($this->request['cname'] as $k=>$v)
+				{
+					if($k != "new")
+					{
+						$query = "UPDATE ".COUNTRY." SET
+						vCountryName = '".$this->request['cname'][$k]."',
+						fTax = '".$this->request['vat'][$k]."',
+						iStatus = '".$this->request['enabled'][$k]."',
+						iso3 = '".$this->request['iso'][$k]."',
+						vShortName = '".$this->request['sname'][$k]."',
+						fShipCharge = '".$this->request['postage'][$k]."'
+						WHERE iCountryId_PK = '".$k."'";
+						$this->obDb->updateQuery();
+					}
+				}
+				$_SESSION['msg'] = 'All countries were updated.';
+			}
+			$this->libFunc->m_mosRedirect(SITE_URL."admin/adminindex.php?action=country.home&cid=".$this->request['cid']);	
 		}
 	
 		function m_deleteCountry()
@@ -45,7 +65,7 @@ defined('_TEEXEC') or die;
 				foreach($selection as $cid)
 				{
 					#UPDATATING CUSTOMERS
-				$this->obDb->query= "UPDATE ".CUSTOMERS." SET vCountry = '-1' WHERE vCountry =".$cid;
+					$this->obDb->query= "UPDATE ".CUSTOMERS." SET vCountry = '-1' WHERE vCountry =".$cid;
 					$this->obDb->updateQuery();
 				
 					$this->obDb->query = "DELETE FROM ".COUNTRY." WHERE iCountryId_PK='".$cid."'";
@@ -62,11 +82,13 @@ defined('_TEEXEC') or die;
 						$this->obDb->updateQuery();
 					}
 				}#END FOREACH
-				$this->libFunc->m_mosRedirect(SITE_URL."admin/adminindex.php?action=country.home&page=".$this->request['page']."&msg=3");	
+				$_SESSION['msg'] = 'Selected countries were deleted.';
+				$this->libFunc->m_mosRedirect(SITE_URL."admin/adminindex.php?action=country.home&page=".$this->request['page']);	
 			}#END IF
 			else
 			{
-				$this->libFunc->m_mosRedirect(SITE_URL."admin/adminindex.php?action=state.home&msg=4&cid=".$this->request['cid']);	
+				$_SESSION['msg'] = 'Please choose the countries to be deleted before clicking the delete button.';
+				$this->libFunc->m_mosRedirect(SITE_URL."admin/adminindex.php?action=state.home&cid=".$this->request['cid']);
 			}
 		}#END FUNCTION
 	}#END CLASS

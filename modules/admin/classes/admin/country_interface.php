@@ -24,155 +24,210 @@ class c_countryInterface
 	{
 		$this->ObTpl=new template();
 		$this->ObTpl->set_file("TPL_COUNTRY_FILE", $this->countryTemplate);
-		$this->ObTpl->set_var("GRAPHICSMAINPATH", GRAPHICS_PATH);
-		$this->ObTpl->set_var("TPL_VAR_SITEURL",SITE_URL);
-		//DEFINING BLOCKS
-		//$this->ObTpl->set_block("TPL_COUNTRY_FILE","Message","nMessage");
-		$this->ObTpl->set_block("TPL_COUNTRY_FILE","TPL_MAINCOUNTRY_BLK","maincountry_blk");
-		$this->ObTpl->set_block("TPL_MAINCOUNTRY_BLK","TPL_COUNTRY_BLK","country_blk");
-		$this->ObTpl->set_block("TPL_MAINCOUNTRY_BLK","TPL_PAGING2_BLK","paging2_blk");
-		$this->ObTpl->set_block("TPL_COUNTRY_FILE","TPL_SELECTCOUNTRY_BLK","selectcountry_blk");
-		$this->ObTpl->set_block("TPL_COUNTRY_FILE","TPL_MSG_BLK","msg_blk");
-		$this->ObTpl->set_block("TPL_COUNTRY_FILE","TPL_ERROR_BLK","err_blk");	
-
-		#INTIALIZING DEFAULT VALUES
-		$this->ObTpl->set_var("paging1_blk","");
-		$this->ObTpl->set_var("paging2_blk","");
-		$this->ObTpl->set_var("err_blk","");
-		$this->ObTpl->set_var("msg_blk","");
-		$this->ObTpl->set_var("country_blk","");
-		$this->ObTpl->set_var("maincountry_blk","");
+		$this->ObTpl->set_block("TPL_COUNTRY_FILE","TPL_COUNTRY_BLK","maincountry_blk");
+		$this->ObTpl->set_block("TPL_COUNTRY_FILE","TPL_ERROR_BLK","err_blk");
 		
-		$this->ObTpl->set_var("selectcountry_blk","");
-		$this->ObTpl->set_var("TPL_VAR_NAME","");
-		$this->ObTpl->set_var("TPL_VAR_SHORTNAME","");
-		$this->ObTpl->set_var("TPL_VAR_TAX_CODE_AREA_SAGE","");
-		$this->ObTpl->set_var("TPL_VAR_TAX","");
-		$this->ObTpl->set_var("TPL_VAR_SHIP","");
-		$this->ObTpl->set_var("TPL_VAR_SELECTED","");
+		$this->ObTpl->set_block("TPL_COUNTRY_FILE","TPL_POSTAGE_OPTION_BLK","option_blk");
+		$this->ObTpl->set_block("TPL_COUNTRY_FILE","TPL_NEW_COUNTRY_POSTAGE_OPTIONS_BLK","new_country_option_blk");
+		$this->ObTpl->set_block("TPL_COUNTRY_BLK","TPL_COUNTRY_POSTAGE_OPTIONS_BLK","country_option_blk");
+		
+		$this->ObTpl->set_var("maincountry_blk","");
+		$this->ObTpl->set_var("option_blk","");
+		$this->ObTpl->set_var("new_country_option_blk","");
+		$this->ObTpl->set_var("country_option_blk","");
+		$this->ObTpl->set_var("err_blk","");
 		$this->ObTpl->set_var("TPL_VAR_ERROR","");
-		$this->ObTpl->set_var("TPL_VAR_MESSAGE","");
-		$this->ObTpl->set_var("TPL_VAR_VIEWALL","");
-		$this->ObTpl->set_var("TPL_VAR_MODE","add");
-		$this->ObTpl->set_var("PagerBlock1","");
-		$this->ObTpl->set_var("PagerBlock2","");
-
-		$this->request['page']=$this->libFunc->ifSet($this->request,"page");
-		$this->ObTpl->set_var("EXTRASTRING","&page=".$this->request['page']);
-
-		$this->request['msg']=$this->libFunc->ifSet($this->request,"msg");
-		if($this->err==1)
+		if(isset($_SESSION['msg']))
 		{
-			$this->ObTpl->set_var("TPL_VAR_ERROR",$this->errMsg);
-			$this->ObTpl->parse("err_blk","TPL_ERROR_BLK");
-		}	
-		if($this->request['msg']==1)
-		{
-			$this->ObTpl->set_var("TPL_VAR_ERROR",MSG_COUNTRY_INSERTED);
-			$this->ObTpl->parse("err_blk","TPL_ERROR_BLK");
-		}	
-		elseif($this->request['msg']==2)
-		{
-			$this->ObTpl->set_var("TPL_VAR_ERROR",MSG_COUNTRY_UPDATED);
+			$this->ObTpl->set_var("TPL_VAR_ERROR",$_SESSION['msg']);
+			unset($_SESSION['msg']);
 			$this->ObTpl->parse("err_blk","TPL_ERROR_BLK");
 		}
-		elseif($this->request['msg']==3)
+		$sort = " ORDER BY iSortFlag";
+		$alpha = "";
+		
+		
+		$this->ObTpl->set_var("TPL_VAR_SORT1","&amp;sort=1");
+		$this->ObTpl->set_var("TPL_VAR_SORT2","&amp;sort=3");
+		$this->ObTpl->set_var("TPL_VAR_SORT3","&amp;sort=5");
+		$this->ObTpl->set_var("TPL_VAR_SORT4","&amp;sort=7");
+		$this->ObTpl->set_var("TPL_VAR_SORT5","&amp;sort=9");
+		$this->ObTpl->set_var("TPL_VAR_SORT6","&amp;sort=11");
+		
+		if(isset($this->request['sort']))
 		{
-			$this->ObTpl->set_var("TPL_VAR_ERROR",MSG_COUNTRY_DELETED);
-			$this->ObTpl->parse("err_blk","TPL_ERROR_BLK");
+			switch($this->request['sort'])
+			{
+				case "1":
+					$sort = " ORDER BY iStatus ASC";
+					$_SESSION['countrysort'] = $sort;
+					$this->ObTpl->set_var("TPL_VAR_SORT1","&amp;sort=2");
+				break;
+				case "2":
+					$sort = " ORDER BY iStatus DESC";
+					$_SESSION['countrysort'] = $sort;
+					$this->ObTpl->set_var("TPL_VAR_SORT1","&amp;sort=1");
+				break;
+				case "3":
+					$sort = " ORDER BY vCountryName ASC";
+					$_SESSION['countrysort'] = $sort;
+					$this->ObTpl->set_var("TPL_VAR_SORT2","&amp;sort=4");
+				break;
+				case "4":
+					$sort = " ORDER BY vCountryName DESC";
+					$_SESSION['countrysort'] = $sort;
+					$this->ObTpl->set_var("TPL_VAR_SORT2","&amp;sort=3");
+				break;
+				case "5":
+					$sort = " ORDER BY vShortName ASC";
+					$_SESSION['countrysort'] = $sort;
+					$this->ObTpl->set_var("TPL_VAR_SORT3","&amp;sort=6");
+				break;
+				case "6":
+					$sort = " ORDER BY vShortName DESC";
+					$_SESSION['countrysort'] = $sort;
+					$this->ObTpl->set_var("TPL_VAR_SORT3","&amp;sort=5");
+				break;
+				case "7":
+					$sort = " ORDER BY iso3 ASC";
+					$_SESSION['countrysort'] = $sort;
+					$this->ObTpl->set_var("TPL_VAR_SORT4","&amp;sort=8");
+				break;
+				case "8":
+					$sort = " ORDER BY iso3 DESC";
+					$_SESSION['countrysort'] = $sort;
+					$this->ObTpl->set_var("TPL_VAR_SORT4","&amp;sort=7");
+				break;
+				case "9":
+					$sort = " ORDER BY fShipCharge ASC";
+					$_SESSION['countrysort'] = $sort;
+					$this->ObTpl->set_var("TPL_VAR_SORT5","&amp;sort=10");
+				break;
+				case "10":
+					$sort = " ORDER BY fShipCharge DESC";
+					$_SESSION['countrysort'] = $sort;
+					$this->ObTpl->set_var("TPL_VAR_SORT5","&amp;sort=9");
+				break;
+				case "11":
+					$sort = " ORDER BY fTax ASC";
+					$_SESSION['countrysort'] = $sort;
+					$this->ObTpl->set_var("TPL_VAR_SORT6","&amp;sort=12");
+				break;
+				case "12":
+					$sort = " ORDER BY fTax DESC";
+					$_SESSION['countrysort'] = $sort;
+					$this->ObTpl->set_var("TPL_VAR_SORT6","&amp;sort=11");
+				break;
+				case "13":
+					if(isset($this->request['by']) && strlen($this->request['by']) === 1)
+					{
+						$alpha = " WHERE LEFT(vCountryName,1) = '".substr($this->request['by'],0,1)."'";
+					}
+				break;
+			}
 		}
-		elseif($this->request['msg']==4)
-		{
-			$this->ObTpl->set_var("TPL_VAR_ERROR",MSG_NOCOUNTRY_DELETED);
-			$this->ObTpl->parse("err_blk","TPL_ERROR_BLK");
-		}
-
-		//DATABASE QUERY
-		$query = "SELECT * from ".COUNTRY;
-		$query1=$query." ORDER BY iSortFlag,vCountryName";
-		$this->obDb->query=$query1;
+		
+			$this->ObTpl->set_var("TPL_VAR_ALPHA_SORT",'<a href="adminindex.php?action=country.home&amp;sort=13&amp;by=a">A</a>
+			<a href="adminindex.php?action=country.home&amp;sort=13&amp;by=b">B</a>
+			<a href="adminindex.php?action=country.home&amp;sort=13&amp;by=c">C</a>
+			<a href="adminindex.php?action=country.home&amp;sort=13&amp;by=d">D</a>
+			<a href="adminindex.php?action=country.home&amp;sort=13&amp;by=e">E</a>
+			<a href="adminindex.php?action=country.home&amp;sort=13&amp;by=f">F</a>
+			<a href="adminindex.php?action=country.home&amp;sort=13&amp;by=g">G</a>
+			<a href="adminindex.php?action=country.home&amp;sort=13&amp;by=h">H</a>
+			<a href="adminindex.php?action=country.home&amp;sort=13&amp;by=i">I</a>
+			<a href="adminindex.php?action=country.home&amp;sort=13&amp;by=j">J</a>
+			<a href="adminindex.php?action=country.home&amp;sort=13&amp;by=k">K</a>
+			<a href="adminindex.php?action=country.home&amp;sort=13&amp;by=l">L</a>
+			<a href="adminindex.php?action=country.home&amp;sort=13&amp;by=m">M</a>
+			<a href="adminindex.php?action=country.home&amp;sort=13&amp;by=n">N</a>
+			<a href="adminindex.php?action=country.home&amp;sort=13&amp;by=o">O</a>
+			<a href="adminindex.php?action=country.home&amp;sort=13&amp;by=p">P</a>
+			<a href="adminindex.php?action=country.home&amp;sort=13&amp;by=q">Q</a>
+			<a href="adminindex.php?action=country.home&amp;sort=13&amp;by=r">R</a>
+			<a href="adminindex.php?action=country.home&amp;sort=13&amp;by=s">S</a>
+			<a href="adminindex.php?action=country.home&amp;sort=13&amp;by=t">T</a>
+			<a href="adminindex.php?action=country.home&amp;sort=13&amp;by=u">U</a>
+			<a href="adminindex.php?action=country.home&amp;sort=13&amp;by=v">V</a>
+			<a href="adminindex.php?action=country.home&amp;sort=13&amp;by=w">W</a>
+			<a href="adminindex.php?action=country.home&amp;sort=13&amp;by=x">X</a>
+			<a href="adminindex.php?action=country.home&amp;sort=13&amp;by=y">Y</a>
+			<a href="adminindex.php?action=country.home&amp;sort=13&amp;by=z">Z</a>
+			<a href="adminindex.php?action=country.home">All</a>');
+			if(isset($this->request['by']))
+			{
+			$this->ObTpl->set_var("TPL_VAR_ALPHA_SORT2",'<script type="text/javascript">
+				jQuery(".alpha > a").each(function(){
+					if(jQuery(this).text().toLowerCase() == "'.$this->request['by'].'")
+					{
+						jQuery(this).addClass("selected");
+						jQuery(this).attr("href","adminindex.php?action=country.home");
+					}
+				});
+			</script>');
+			}
+			else
+			{
+			$this->ObTpl->set_var("TPL_VAR_ALPHA_SORT2","");
+			}
+		
+		$this->obDb->query="SELECT * FROM ".POSTAGEDETAILS." WHERE iPostId_FK='6'";
+		$postage=$this->obDb->fetchQuery();
+		$postagecount = $this->obDb->record_count;
+			foreach($postage as $k=>$v)
+			{
+				$this->ObTpl->set_var("TPL_VAR_SORT","");
+				$this->ObTpl->set_var("TPL_VAR_POSTAGE_OPTION",$postage[$k]->vDescription);
+				$this->ObTpl->parse("option_blk","TPL_POSTAGE_OPTION_BLK",true);	
+				$this->ObTpl->set_var("TPL_VAR_POSTAGE_OPTION_ID",$postage[$k]->iPostDescId_PK);
+				$this->ObTpl->parse("new_country_option_blk","TPL_NEW_COUNTRY_POSTAGE_OPTIONS_BLK",true);	
+			}
+		$this->obDb->query="SELECT * FROM ".COUNTRY.$alpha.$sort;
 		$res=$this->obDb->fetchQuery();
 		if($this->obDb->record_count>0)
 		{
-			$rCount=$this->obDb->record_count;
-			for($i=0;$i<$rCount;$i++)
+			foreach($res as $k=>$v)
 			{
-				if(isset($this->request['cid']) && !empty($this->request['cid']) && $this->request['cid']==$res[$i]->iCountryId_PK)
+				$this->ObTpl->set_var("TPL_VAR_CID",$res[$k]->iCountryId_PK);
+				$this->ObTpl->set_var("TPL_VAR_CHECKED","");
+				$this->ObTpl->set_var("TPL_VAR_CHECKED3","");
+				if($res[$k]->iStatus == 1)
 				{
-					$this->ObTpl->set_var("TPL_VAR_SELECTED","selected");
+					$this->ObTpl->set_var("TPL_VAR_CHECKED"," selected='true'");
 				}
 				else
 				{
-					$this->ObTpl->set_var("TPL_VAR_SELECTED","");
+					$this->ObTpl->set_var("TPL_VAR_CHECKED3"," selected='true'");
 				}
-				$this->ObTpl->set_var("TPL_VAR_CID",$res[$i]->iCountryId_PK);
-				$this->ObTpl->set_var("TPL_VAR_CNAME",$this->libFunc->m_displayContent($res[$i]->vCountryName));
-
-				$this->ObTpl->parse("selectcountry_blk","TPL_SELECTCOUNTRY_BLK",true);	
+				$this->ObTpl->set_var("TPL_VAR_NAME",$res[$k]->vCountryName);
+				$this->ObTpl->set_var("TPL_VAR_SHORTNAME",$res[$k]->vShortName);
+				$this->ObTpl->set_var("TPL_VAR_ISO",$res[$k]->iso3);
+				$this->ObTpl->set_var("TPL_VAR_SHIP",$res[$k]->fShipCharge);
+				$this->ObTpl->set_var("TPL_VAR_TAX",$res[$k]->fTax);
+				$this->ObTpl->set_var("country_option_blk","");
+				if($postagecount > 0)
+				{
+					$temparray = explode(",",$res[$k]->vShipOptions);
+					foreach($postage as $k2=>$v2)
+					{
+						$this->ObTpl->set_var("TPL_VAR_POSTAGE_OPTION_ID",$postage[$k2]->iPostDescId_PK);
+						if(in_array($postage[$k2]->iPostDescId_PK,$temparray))
+						{
+							$this->ObTpl->set_var("TPL_VAR_CHECKED2"," checked='true'");
+						}
+						else
+						{
+							$this->ObTpl->set_var("TPL_VAR_CHECKED2","");
+						}
+						$this->ObTpl->parse("country_option_blk","TPL_COUNTRY_POSTAGE_OPTIONS_BLK",true);
+					}
+				}
+				else
+				{
+					$this->ObTpl->set_var("country_option_blk","");
+				}
+				$this->ObTpl->parse("maincountry_blk","TPL_COUNTRY_BLK",true);	
 			}
-		}
-
-		if(isset($this->request['cid']) && !empty($this->request['cid']))
-		{
-			$this->ObTpl->set_var("TPL_VAR_MODE","edit");
-			$this->ObTpl->set_var("TPL_VAR_VIEWALL","Remove filter");
-			$this->ObTpl->set_var("TPL_VAR_CID",$this->request['cid']);
-			$this->request['cid']=intval($this->request['cid']);
-			$query.=" WHERE iCountryId_PK='".$this->request['cid']."'";
-			$this->obDb->query=$query;
-			$res1=$this->obDb->fetchQuery();
-			$this->ObTpl->set_var("TPL_VAR_NAME",$this->libFunc->m_displayContent($res1[0]->vCountryName));
-			$this->ObTpl->set_var("TPL_VAR_SHORTNAME",$this->libFunc->m_displayContent($res1[0]->vShortName));
-			$this->ObTpl->set_var("TPL_VAR_TAX",$res1[0]->fTax);
-			$this->ObTpl->set_var("TPL_VAR_SHIP",$res1[0]->fShipCharge);
-			$this->ObTpl->set_var("TPL_VAR_TAX_CODE_AREA_SAGE",$res1[0]->vSageTaxCode);
-
-			//die($query);
-		}
-		if($_POST)
-		{
-			$this->ObTpl->set_var("TPL_VAR_NAME",$this->libFunc->m_displayContent($this->request['name']));
-			$this->ObTpl->set_var("TPL_VAR_SHORTNAME",$this->libFunc->m_displayContent(	$this->request['short_name']));
-			$this->ObTpl->set_var("TPL_VAR_TAX",$this->request['tax']);
-			$this->ObTpl->set_var("TPL_VAR_SHIP",$this->request['shipCharge']);
-			$this->ObTpl->set_var("TPL_VAR_TAX_CODE_AREA_SAGE",$this->libFunc->m_displayContent($this->request['sage_code']));
-		}
-		$query=$query." ORDER BY iSortFlag,vCountryName";
-		$pn= new PrevNext($this->pageTplPath, $this->pageTplFile,$this->obDb);
-		$extraStr	="action=country.home";
-		$pn->formno=1;
-		$navArr	= $pn->create($query, $this->pageSize, $extraStr,"top");
-
-		$pn2			= new PrevNext($this->pageTplPath, $this->pageTplFile,$this->obDb);
-
-		$pn2->formno=2;
-		$navArr2	= $pn2->create($query, $this->pageSize, $extraStr,"top");
-		$res=$navArr['qryRes'];
-		$totalCount=$navArr['totalRecs'];
-		$rCount=$navArr['selRecs'];
-
-		if($rCount>0)
-		{
-			for($i=0;$i<$rCount;$i++)
-			{
-				$this->ObTpl->set_var("TPL_VAR_COUNT",$i+1);
-				$this->ObTpl->set_var("TPL_VAR_CID",$res[$i]->iCountryId_PK);
-				$this->ObTpl->set_var("TPL_VAR_CNAME",$this->libFunc->m_displayContent($res[$i]->vCountryName));
-				$this->ObTpl->set_var("TPL_VAR_CSHORTNAME",$this->libFunc->m_displayContent($res[$i]->vShortName));
-				$this->ObTpl->set_var("TPL_VAR_CTAX",$res[$i]->fTax );
-				$this->ObTpl->parse("country_blk","TPL_COUNTRY_BLK",true);	
-			}
-			if($this->pageSize<$totalCount)
-			{
-				$this->ObTpl->set_var("PagerBlock2", $navArr2['pnContents']);
-				$this->ObTpl->parse("paging2_blk","TPL_PAGING2_BLK");
-			}
-			$this->ObTpl->parse("maincountry_blk","TPL_MAINCOUNTRY_BLK");	
-		}
-		else
-		{
-			$this->ObTpl->set_var("TPL_VAR_MESSAGE","No country exists");
-			$this->ObTpl->parse("msg_blk","TPL_MSG_BLK");
 		}
 		return($this->ObTpl->parse("return","TPL_COUNTRY_FILE"));
 	}

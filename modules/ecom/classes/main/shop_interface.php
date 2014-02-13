@@ -1558,7 +1558,9 @@ class c_shopInterface {
 		$this->obDb->query = "SELECT iCountryId_PK, vCountryName, vShortName FROM  ".COUNTRY." ORDER BY iSortFlag,vCountryName";
 		$row_country = $this->obDb->fetchQuery();
 		$row_country_count = $this->obDb->record_count;
-
+		
+		$productShipCodes = Array();
+		
 		# Loading billing country list		
 		for($i=0;$i<$row_country_count;$i++)
 		{
@@ -1771,41 +1773,13 @@ class c_shopInterface {
 					$this->ObTpl->set_var("TPL_VAR_SHIPNOTES", "Notes: " . $this->libFunc->m_displayContent($rowCart[$i]->vShipNotes) . "<br />");
 				}
 
-				#POSTAGE 
 				if ($rowCart[$i]->iFreeShip == 1) {
 					$this->ObTpl->set_var("TPL_VAR_FREESHIPMSG", "<em>" . LBL_FREEPP . "</em><br />");
-				} else {
-					if (DEFAULT_POSTAGE_METHOD == 'codes' && !$this->libFunc->m_isNull($rowCart[$i]->vShipCode)) {
-						$comFunc->postageId = $rowCart[$i]->vShipCode;
-						if (DEFAULT_HIGHEST) {
-							if ($this->postagePrice < $comFunc->m_postageCodePrice())
-								$this->postagePrice = $comFunc->m_postageCodePrice();
-						} else {
-							$this->postagePrice += $comFunc->m_postageCodePriceMultiplyQty();
-						}
-					}
 				}
-
-				if (isset ($_SESSION['calcShip'])) {
-
-					$this->obDb->query = "SELECT fShipCharge FROM " . COUNTRY . " WHERE iCountryId_PK =" . $this->request['bill_country_id'];
-					$cShip = $this->obDb->fetchQuery();
-					$cShip_count = $this->obDb->record_count;
-
-					$this->obDb->query = "SELECT fShipCharge FROM " . STATES . " WHERE iStateId_PK =" . $this->request['bill_state_id'];
-					$sShip = $this->obDb->fetchQuery();
-					$sShip_count = $this->obDb->record_count;
-
-					if ($cShip[0]->fShipCharge == $sShip[0]->fShipCharge) {
-						$this->ObTpl->set_var("TPL_VAR_POSTAGE", $cShip[0]->fShipCharge);
-					}
-					elseif ($cShip[0]->fShipCharge != $sShip[0]->fShipCharge && $sShip[0]->fShipCharge > 0) {
-
-						$this->ObTpl->set_var("TPL_VAR_POSTAGE", $sShip[0]->fShipCharge);
-
-					}
+				if(!empty($rowCart[$i]->vShipCode))
+				{
+					$productShipCodes[] = $rowCart[$i]->vShipCode;
 				}
-				
 				
 				
 				
@@ -1891,19 +1865,7 @@ class c_shopInterface {
 			#**********************END PRODUCT DISPLAY**********************
 			$this->ObTpl->set_var("TPL_VAR_NOVATTOTAL", $novattotal);
 			#*********Start: Check if shipping estimates dropdown required.*****************
-			$_SESSION['postagedropdown'] = "";
-			for ($i = 0; $i < $rowCartCount; $i++) {
-				if ($rowCart[$i]->iFreeShip == "0" && DEFAULT_POSTAGE_METHOD=='zones') {
-                    $_SESSION['postagedropdown'] = "1";
-                } elseif ($rowCart[$i]->iFreeShip == "0" && DEFAULT_POSTAGE_METHOD=='cities') {
-                    $_SESSION['postagedropdown'] = "1";
-                }
-			}
-			if($_SESSION['postagedropdown'] != "1"){
-				$_SESSION['postagePrice'] = "";
-				$_SESSION['zoneSpecialDelivery'] = "";
-			}
-			if($_SESSION['postagedropdown'] == "1"){
+			if(DEFAULT_POSTAGE_METHOD=='regions'){
 				$this->ObTpl->parse("postagedropdown_blk", "TPL_VAR_POSTAGEDROPDOWN");
 			}
 			#*********End: Check if shipping estimates dropdown required.*****************
@@ -1946,6 +1908,7 @@ class c_shopInterface {
 
 			#**************************SUB TOTAL HERE**********					
 			$this->ObTpl->set_var("TPL_VAR_SUBTOTAL", number_format($this->subTotal, 2, '.', ''));
+			$_SESSION['subtotal'] = $this->subTotal;
 			$this->grandTotal = $this->subTotal;
 			$_SESSION['grandsubTotal'] = number_format($this->grandTotal, 2, '.', '');
 			#************************* PROMOTION DISCOUNTS*********
@@ -2061,33 +2024,14 @@ class c_shopInterface {
 				$this->ObTpl->set_var("TPL_VAR_GIFTCERTPRICE","0.00");
 				$this->ObTpl->parse("giftcert_blk","TPL_GIFTCERT_BLK");	
 			}
-			
-			
-			#CART WEIGHT
-			if ($this->cartWeight > 0 && ISACTIVE_ITEMWEIGHT == 1) {
-				$this->cartWeightPrice = $this->cartWeight * DEFAULT_ITEMWEIGHT;
-				$this->ObTpl->set_var("TPL_VAR_WEIGHT", $this->cartWeight);
-				$this->ObTpl->set_var("TPL_VAR_WEIGHTPRICE", number_format($this->cartWeightPrice, 2, '.', ''));
-
-				if (VAT_POSTAGE_FLAG)
-				$this->taxTotal += $this->cartWeightPrice; // locloc
-				$this->grandTotal += $this->cartWeightPrice;
-
-				$this->ObTpl->parse("cartWeight_blk", "TPL_CARTWEIGHT_BLK");
-			}
 
 			#ASSIGNING PRICE ,QTY FOR METHODS TO CALULATE ON TOTAL PRICE
 			$comFunc->grandTotal = $this->postageTotal;
 			$comFunc->totalQty = $this->totalQty;
-			$comFunc->postageQty = $this->postageQty;
-
-			if (!isset ($_SESSION['freeShip']) || $_SESSION['freeShip'] != 1) {
-				#CHECK FOR PRODUCT CODES METHOD
-				if ((!isset($this->postagePrice) || $this->postagePrice == 0) && $this->postageTotal > 0) {
-					$this->postagePrice = $comFunc->m_postagePrice();
-				}
 
 				#POSTAGE VALUE IN SESSION
+				$this->postagePrice = $comFunc->caclulatePostage(DEFAULT_POSTAGE_COUNTRY, DEFAULT_POSTAGE_STATE, 0, $this->grandTotal, $this->totalQty, $this->cartWeight,0, $productShipCodes);
+				$_SESSION['product_codes'] = $productShipCodes;
 				$_SESSION['defPostageMethod'] = DEFAULT_POSTAGE_NAME;
 				$_SESSION['defPostagePrice'] = $this->postagePrice;
 
@@ -2097,9 +2041,10 @@ class c_shopInterface {
 			
 				$this->grandTotal += $this->postagePrice;
 				$this->ObTpl->parse("postage_blk", "TPL_POSTAGE_BLK");
-			}
+				$_SESSION['taxable_total'] = $this->taxTotal;
 				$temp = $comFunc->m_Calculate_Tax($this->taxTotal,$this->postagePrice,0,0);
 				$this->vatTotal = $temp[0];
+				$_SESSION['vatrate'] = $temp[1];
 				$this->ObTpl->set_var("TPL_VAR_VAT", $temp[1]);
 			
 			if ($this->vatTotal > 0) {

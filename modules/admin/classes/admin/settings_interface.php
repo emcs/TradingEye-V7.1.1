@@ -964,62 +964,55 @@ class c_settingsInterface
 				  		
 		$this->ObTpl=new template();
 		$this->ObTpl->set_file("TPL_SETTING_FILE", $this->settingsTemplate);
-		$this->ObTpl->set_block("TPL_SETTING_FILE","TPL_METHODS_BLK","dspmethods_blk");
 		#INTIALIZING TEMPLATE BLOCKS
 		$this->ObTpl->set_var("GRAPHICSMAINPATH", GRAPHICS_PATH);
 		$this->ObTpl->set_var("TPL_VAR_SITEURL",SITE_URL);
 		#INTIALIZING BLOCKS
-		$this->ObTpl->set_var("dspmethods_blk","");
-		$this->obDb->query="SELECT * FROM ".POSTAGE." WHERE vKey IN ('special','pweight')";
-		$resSpecial=$this->obDb->fetchQuery();
-	
-		$this->ObTpl->set_var("TPL_VAR_SPCID",$resSpecial[0]->iPostId_PK);
-		$this->ObTpl->set_var("TPL_VAR_SPCDESCRIPTION",$resSpecial[0]->vDescription);
-		$this->ObTpl->set_var("TPL_VAR_SPCNAME",$resSpecial[0]->vMethodName);
-		$this->ObTpl->set_var("TPL_VAR_SPCKEY",$resSpecial[0]->vKey);
-
-		if($resSpecial[0]->iStatus==1)
-		{
-			$this->ObTpl->set_var("TPL_VAR_SPECIALSTATUS","checked");
-		}
-		else
-		{
-			$this->ObTpl->set_var("TPL_VAR_SPECIALSTATUS","");
-		}
-		$this->ObTpl->set_var("ENABLE_SPECIALPOSTAGE",$this->displayIt(SPECIAL_POSTAGE));
-		$this->ObTpl->set_var("TPL_VAR_WEIGHTID",$resSpecial[1]->iPostId_PK);
-		$this->ObTpl->set_var("TPL_VAR_WEIGHTDESCRIPTION",$resSpecial[1]->vDescription);
-		$this->ObTpl->set_var("TPL_VAR_WEIGHTNAME",$resSpecial[1]->vMethodName);
-		$this->ObTpl->set_var("TPL_VAR_WEIGHTKEY",$resSpecial[1]->vKey);
-
-		if($resSpecial[1]->iStatus==1)
-		{
-			$this->ObTpl->set_var("TPL_VAR_WEIGHTSTATUS","checked");
-		}
-		else
-		{
-			$this->ObTpl->set_var("TPL_VAR_WEIGHTSTATUS","");
-		}
-
-		$this->obDb->query="SELECT * FROM ".POSTAGE." WHERE vKey NOT IN ('special','pweight')";
+		$this->obDb->query="SELECT * FROM ".POSTAGE;
 		$resPostage=$this->obDb->fetchQuery();
-		$rsCount=$this->obDb->record_count;
-		for($i=0;$i<$rsCount;$i++)
+		foreach($resPostage as $k=>$v)
 		{
-			$this->ObTpl->set_var("TPL_VAR_COUNT",$i+1);
-			$this->ObTpl->set_var("TPL_VAR_ID",$resPostage[$i]->iPostId_PK);
-			$this->ObTpl->set_var("TPL_VAR_DESCRIPTION",$resPostage[$i]->vDescription);
-			$this->ObTpl->set_var("TPL_VAR_NAME",$resPostage[$i]->vMethodName);
-			$this->ObTpl->set_var("TPL_VAR_KEY",$resPostage[$i]->vKey);
-			if($resPostage[$i]->iStatus==1)
+			$status = "";
+			if($resPostage[$k]->iStatus == 1)
 			{
-				$this->ObTpl->set_var("TPL_VAR_STATUS","checked");
+				$status = 'checked';
 			}
-			else
+			switch($resPostage[$k]->vKey)
 			{
-				$this->ObTpl->set_var("TPL_VAR_STATUS","");
+				case "regions":
+					$this->ObTpl->set_var("TPL_VAR_REGIONAL_STATUS",$status);
+				break;
+				case "zones":
+					$this->ObTpl->set_var("TPL_VAR_CUSTOM_STATUS",$status);
+				break;
+				case "all":
+					$this->ObTpl->set_var("TPL_VAR_ALL_STATUS",$status);
+				break;
+				case "flat":
+					$this->ObTpl->set_var("TPL_VAR_FLAT_STATUS",$status);
+				break;
+				case "range":
+					$this->ObTpl->set_var("TPL_VAR_RANGE_STATUS",$status);
+				break;
+				case "peritem":
+					$this->ObTpl->set_var("TPL_VAR_PERITEM_STATUS",$status);
+				break;
+				case "pweight":
+					$this->ObTpl->set_var("TPL_VAR_WEIGHT_STATUS",$status);
+				break;
+				case "zip":
+					$this->ObTpl->set_var("TPL_VAR_ZIP_STATUS",$status);
+				break;
+				case "codes":
+					$this->ObTpl->set_var("TPL_VAR_CODES_STATUS",$status);
+				break;
+				case "free":
+					$this->ObTpl->set_var("TPL_VAR_FREE_STATUS",$status);
+				break;
+				case "options":
+					$this->ObTpl->set_var("TPL_VAR_OPTIONS_STATUS",$status);
+				break;
 			}
-			$this->ObTpl->parse("dspmethods_blk","TPL_METHODS_BLK",true);
 		}
 
 
@@ -1265,6 +1258,15 @@ class c_settingsInterface
 		$this->ObTpl->set_block("TPL_SPECIALRATE_BLK","TPL_SPECIAL_BLK","dspspecial_blk");
 		$this->ObTpl->set_block("TPL_SETTING_FILE","TPL_POSTAGEBYWEIGHT_BLK","pweight_blk");
 		
+		$this->ObTpl->set_block("TPL_SETTING_FILE","TPL_POSTAGEBYZIP_BLK","zip_blk");
+		$this->ObTpl->set_block("TPL_POSTAGEBYZIP_BLK","TPL_ZIP_BLK","zip2_blk");
+		$this->ObTpl->set_var("zip_blk","");
+		$this->ObTpl->set_var("zip2_blk","");
+		$this->ObTpl->set_block("TPL_SETTING_FILE","TPL_POSTAGEFREE_BLK","free_blk");
+		$this->ObTpl->set_block("TPL_POSTAGEFREE_BLK","TPL_COUNTRY_BLK","free_country_blk");
+		$this->ObTpl->set_var("free_blk","");
+		$this->ObTpl->set_var("free_country_blk","");
+		
 		#INTIALIZING
 		$this->ObTpl->set_var("flatrate_blk","");
 		$this->ObTpl->set_var("percentage_blk","");
@@ -1344,8 +1346,7 @@ class c_settingsInterface
 					}
 					$this->ObTpl->parse("range_blk","TPL_POSTAGERANGES_BLK");
 				break;
-				case "special":
-					$this->ObTpl->set_var("TPL_VAR_BASERATE",$resPostage[0]->fBaseRate);
+				case "options":
 					for($i=0;$i<$rsCount;$i++)
 					{
 						$this->ObTpl->set_var("TPL_VAR_COUNT",$i+1);
@@ -1370,6 +1371,21 @@ class c_settingsInterface
                 case "cities":
                 $this->dsp_citySetupHome();
                 break;
+				
+				case "zip":
+					$this->obDb->query = "SELECT iCountryId_PK,vCountryName FROM ".COUNTRY;
+					$result = $this->obDb->fetchQuery();
+					$this->ObTpl->set_var("TPL_VAR_POSTAGE_FREE_PRIMARYCOUNTRY",$resPostage[0]->vField1);
+					$this->ObTpl->set_var("TPL_VAR_POSTAGE_FREE_SUBTOTAL1",$resPostage[0]->vField2);
+					$this->ObTpl->set_var("TPL_VAR_POSTAGE_FREE_SUBTOTAL2",$resPostage[0]->vField3);
+					foreach($result as $k=>$v)
+					{
+						$this->ObTpl->set_var("TPL_VAR_CNAME",$result[$k]->vCountryName);
+						$this->ObTpl->set_var("TPL_VAR_CID",$result[$k]->iCountryId_PK);
+						$this->ObTpl->parse("free_country_blk","TPL_COUNTRY_BLK",true);
+					}
+					$this->ObTpl->parse("free_blk","TPL_POSTAGEFREE_BLK");
+				break;
 				
 				default:
 					$this->libFunc->m_mosRedirect(SITE_URL."admin/adminindex.php?action=settings.postageHome");

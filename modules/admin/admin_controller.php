@@ -314,36 +314,12 @@ class c_adminController
 					$this->obTpl->set_var("TPL_VAR_BODY",$obCountryDb->m_deleteCountry());
 					break;
 					case "update":
-					$this->libfunc->check_token();
-					if(isset($this->request['mode']) && $this->request['mode']=="edit")
-					{
-						$checkValue=$obCountry->m_verifyEditCountry();
-						if($checkValue==1)
-						{
-							$obCountryDb->m_updateCountry();
-						}
-						else
-						{
-							$obCountry->request['cid']=$this->request['cid'];
-							$obCountry->countryTemplate=$this->templatePath."country.tpl.htm";
-							$this->obTpl->set_var("TPL_VAR_BODY",$obCountry->m_createCountryList());
-						}
-					}
-					else
-					{
-						$checkValue=$obCountry->m_verifyInsertCountry();
-						if($checkValue==1)
-						{
-							$obCountryDb->m_insertCountry();
-						}
-						else
-						{
-							$obCountry->request['cid']="";
-							$obCountry->countryTemplate=$this->templatePath."country.tpl.htm";
-							$this->obTpl->set_var("TPL_VAR_BODY",$obCountry->m_createCountryList());
-						
-						}
-					}
+						$this->libfunc->check_token();
+						$obCountryDb->m_updateCountry();
+					break;
+					case "new":
+						$this->libfunc->check_token();
+						$obCountryDb->m_insertCountry();
 					break;
 					default:
 					$obCountry->countryTemplate=$this->templatePath."country.tpl.htm";
