@@ -1791,9 +1791,8 @@ class c_commonFunctions
 							{
 								$basepostage = $basepostage + $result[$key]->vField3;
 							}
-							
+							$flag2 = 1;
 						}
-						$flag2 = 1;
 					}
 				break;
 				

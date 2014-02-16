@@ -659,11 +659,18 @@ else
 				{
 					$this->obDb->query = "SELECT vStateName FROM ".STATES." where iStateId_PK  = '".$rsOrder[0]->vState."'";
 					$row_state = $this->obDb->fetchQuery();
-					$this->ObTpl->set_var("TPL_VAR_BILLSTATE",					$this->libFunc->m_displayContent($row_state[0]->vStateName));
+					if($this->libFunc->m_displayContent($row_state[0]->vStateName)==='Other')
+					{
+						$this->ObTpl->set_var("TPL_VAR_BILLSTATE", $this->libFunc->m_displayContent($rsOrder[0]->vStateName));
+					}
+					else
+					{
+						$this->ObTpl->set_var("TPL_VAR_BILLSTATE",$this->libFunc->m_displayContent($row_state[0]->vStateName));
+					}
 				}
 				else
 				{
-					$this->ObTpl->set_var("TPL_VAR_BILLSTATE",$rsOrder[0]->vStateName);
+					$this->ObTpl->set_var("TPL_VAR_BILLSTATE", $this->libFunc->m_displayContent($rsOrder[0]->vStateName));
 				}
 				$this->obDb->query = "SELECT vCountryName FROM ".COUNTRY." where iCountryId_PK  = '".$rsOrder[0]->vCountry."'";
 				$row_country = $this->obDb->fetchQuery();
@@ -674,7 +681,14 @@ else
 				{
 					$this->obDb->query = "SELECT vStateName FROM ".STATES." where iStateId_PK  = '".$rsOrder[0]->vAltState."'";
 					$row_state = $this->obDb->fetchQuery();
-					$this->ObTpl->set_var("TPL_VAR_SHIPSTATE",					$this->libFunc->m_displayContent($row_state[0]->vStateName));
+					if($this->libFunc->m_displayContent($row_state[0]->vStateName)==='Other')
+					{
+						$this->ObTpl->set_var("TPL_VAR_SHIPSTATE", $this->libFunc->m_displayContent($rsOrder[0]->vAltStateName));
+					}
+					else
+					{
+						$this->ObTpl->set_var("TPL_VAR_SHIPSTATE",$this->libFunc->m_displayContent($row_state[0]->vStateName));
+					}
 				}
 				else
 				{

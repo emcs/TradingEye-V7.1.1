@@ -1590,6 +1590,7 @@ $this->ObTpl->set_var("TPL_VAR_NEXTFORMMODE",$_SESSION['NextFormMode']);
 			$_SESSION['alt_address2']		=$this->request['alt_address2'];
 			$_SESSION['alt_city']			=$this->request['alt_city'];
 			$_SESSION['ship_country_id']	=$this->request['ship_country_id'];	
+			$_SESSION['alt_company']	=$this->request['alt_company'];	
 
 			if(isset($this->request['ship_state_id']) && $this->request['ship_state_id']>0)
 			{
