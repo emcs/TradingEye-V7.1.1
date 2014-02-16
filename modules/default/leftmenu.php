@@ -663,9 +663,9 @@ class c_leftMenu
 			$rscount=$this->obDb->record_count;
 			if($rscount<1)
 			{
-				$errrorUrl=SITE_URL."index.php?action=error&mode=department";
-				header("Location:".$this->libFunc->m_safeUrl($errrorUrl));
-				exit;
+				//$errrorUrl=SITE_URL."index.php?action=error&mode=department";
+				//header("Location:".$this->libFunc->m_safeUrl($errrorUrl));
+				//exit;
 			}
 
 			if(empty($rs[0]->vMetaTitle))
@@ -687,9 +687,9 @@ class c_leftMenu
 			$rscount=$this->obDb->record_count;
 			if($rscount<1)
 			{
-				$errrorUrl=SITE_URL."index.php?action=error&mode=product";
-				header("Location:".$this->libFunc->m_safeUrl($errrorUrl));
-				exit;
+				//$errrorUrl=SITE_URL."index.php?action=error&mode=product";
+				//header("Location:".$this->libFunc->m_safeUrl($errrorUrl));
+				//exit;
 			}
 			if(empty($rs[0]->vMetaTitle))
 			{
@@ -710,9 +710,9 @@ class c_leftMenu
 			$rscount=$this->obDb->record_count;
 			if($rscount<1)
 			{
-				$errrorUrl=SITE_URL."index.php?action=error&mode=content";
-				header("Location:".$this->libFunc->m_safeUrl($errrorUrl));
-				exit;
+				//$errrorUrl=SITE_URL."index.php?action=error&mode=content";
+				//header("Location:".$this->libFunc->m_safeUrl($errrorUrl));
+				//exit;
 			}
 			if(empty($rs[0]->vMetaTitle))
 			{

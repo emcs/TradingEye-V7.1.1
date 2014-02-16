@@ -53,6 +53,58 @@ defined('_TEEXEC') or die;
 	{
 		$obUserAdmin->m_inlineEditor();
 	}
+	$notFoundErrorFlag = 0;
+	if(isset($_REQUEST['action']) && $_REQUEST['action']=='ecom.details')
+		{
+			$obDatabase->query= "SELECT vTitle,vMetaTitle,tMetaDescription,tKeywords,vLayout  FROM ".DEPARTMENTS.",".FUSIONS." WHERE iSubId_FK=iDeptid_PK AND iState=1 AND vSeoTitle='".$_REQUEST['mode']."'";
+			$rs= $obDatabase->fetchQuery();
+			$rscount=$obDatabase->record_count;
+			if($rscount<1)
+			{
+				$comFunc = new c_commonFunctions();
+				$comFunc->obDb = $obDatabase;
+				$comFunc->request['mode'] = 'department';
+				$obMainTemplate->set_var("TPL_VAR_BODY",$comFunc->m_dspError());
+				$obMainTemplate->set_var("TPL_VAR_BREDCRUMBS","&nbsp;&raquo;&nbsp;Error");
+				$notFoundErrorFlag = 1;
+				header("HTTP/1.0 404 Not Found");
+			}
+		}
+		elseif(isset($_REQUEST['action']) && $_REQUEST['action']=='ecom.pdetails')
+		{
+			$obDatabase->query= "SELECT vTitle,vMetaTitle,tMetaDescription,tKeywords,vLayout FROM ".PRODUCTS.",".FUSIONS." WHERE iSubId_FK=iProdid_PK AND iState=1 AND vSeoTitle='".$_REQUEST['mode']."'";
+			$rs= $obDatabase->fetchQuery();
+			$rscount=$obDatabase->record_count;
+			if($rscount<1)
+			{
+				$comFunc = new c_commonFunctions();
+				$comFunc->obDb = $obDatabase;
+				$comFunc->request['mode'] = 'product';
+				$obMainTemplate->set_var("TPL_VAR_BODY",$comFunc->m_dspError());
+				$obMainTemplate->set_var("TPL_VAR_BREDCRUMBS","&nbsp;&raquo;&nbsp;Error");
+				$notFoundErrorFlag = 1;
+				header("HTTP/1.0 404 Not Found");
+			}
+		}
+		elseif(isset($_REQUEST['action']) && $_REQUEST['action']=='ecom.cdetails')
+		{
+			$obDatabase->query= "SELECT vTitle,vMetaTitle,tMetaDescription,tKeywords,vLayout FROM ".CONTENTS.",".FUSIONS." WHERE iSubId_FK=iContentid_PK AND iState=1 AND  vSeoTitle='".$_REQUEST['mode']."'";
+			$rs= $obDatabase->fetchQuery();
+			$rscount=$obDatabase->record_count;
+			if($rscount<1)
+			{
+				$comFunc = new c_commonFunctions();
+				$comFunc->obDb = $obDatabase;
+				$comFunc->request['mode'] = 'content';
+				$obMainTemplate->set_var("TPL_VAR_BODY",$comFunc->m_dspError());
+				$obMainTemplate->set_var("TPL_VAR_BREDCRUMBS","&nbsp;&raquo;&nbsp;Error");
+				$notFoundErrorFlag = 1;
+				header("HTTP/1.0 404 Not Found");
+			}
+		}
+	
+	if($notFoundErrorFlag !==1)
+	{
 	global $sModule;
 	switch($sModule)
 	{
@@ -66,6 +118,7 @@ defined('_TEEXEC') or die;
 			$obHomeDisplay=new c_homeDisplay($obDatabase,$obMainTemplate,$attributes);
 		break;
 	}	
+	}
 	$obMainTemplate->set_var("TPL_VAR_CURRENCY",CONST_CURRENCY);
 	$libFunc			=new c_libFunctions();
 	$myShopUrl		=$libFunc->m_safeUrl(SITE_URL."ecom/index.php?action=ecom.viewcart");
@@ -200,7 +253,8 @@ defined('_TEEXEC') or die;
 		";
 	}
 	  $obMainTemplate->set_var("TPL_VAR_GOOGLEANALYTICS",$googleanalytics);
-	  $obMainTemplate->set_var("TPL_VAR_FOOTER",stripslashes(FOOTER_HTML));
+	  //future ability to edit footer?
+	  //$obMainTemplate->set_var("TPL_VAR_FOOTER",stripslashes(FOOTER_HTML));
 	  if(isset($_SESSION['AUTHTOKEN2']))
 	  {
 	$obMainTemplate->set_var("TPL_VAR_AUTH_TOKEN",$_SESSION['AUTHTOKEN2']);
