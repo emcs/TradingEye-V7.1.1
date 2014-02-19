@@ -246,6 +246,7 @@ class c_review
 		$this->ObTpl->set_var("TPL_VAR_ALTADDR1",$this->libFunc->m_displayContent($_SESSION['alt_address1']));
 		$this->ObTpl->set_var("TPL_VAR_ALTADDR2",$this->libFunc->m_displayContent($_SESSION['alt_address2']));
 		$this->ObTpl->set_var("TPL_VAR_ALTCITY",$this->libFunc->m_displayContent($_SESSION['alt_city']));
+		$this->ObTpl->set_var("TPL_VAR_ALTCOMPANY",$this->libFunc->m_displayContent($_SESSION['alt_company']));
 		
 		$this->ObTpl->set_var("SHIP_STATE","");
 		$this->ObTpl->set_var("TPL_VAR_ALTZIP",$this->libFunc->m_displayContent($_SESSION['alt_zip']));
@@ -669,6 +670,7 @@ class c_review
 			{
 				$this->ObTpl->set_var("TPL_VAR_VOLDISCOUNT",number_format($this->volDiscount,2,'.',''));
 				$this->grandTotal-=$this->volDiscount;
+				$this->taxTotal-=$this->volDiscount;
 				$this->ObTpl->parse("volDiscounts_blk","TPL_VOLDISCOUNTS_BLK");
 			}	
 			

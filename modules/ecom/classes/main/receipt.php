@@ -847,7 +847,7 @@ class c_receipt
 		}
 
 		$_SESSION['payMethod']=$this->libFunc->ifSet($_SESSION,"payMethod");
-		$this->ObTpl->set_file("TPL_ORDERMAIL_FILE",THEME_PATH."ecom/templates/main/orderMail.tpl.htm");
+		$this->ObTpl->set_file("TPL_ORDERMAIL_FILE",THEMEPATH."ecom/templates/main/orderMail.tpl.htm");
 	
 
 		#SETTING BLOCKS

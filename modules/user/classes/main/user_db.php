@@ -129,7 +129,7 @@ defined('_TEEXEC') or die;
 					'$timestamp','1','1')";
 					$this->obDb->updateQuery();
 					$subObjId=$this->obDb->last_insert_id;
-					//$comFunc->m_sendDetails_trade($this->request['txtemail'],$this->request['txtpassword']);
+					$comFunc->m_sendDetails_trade($this->request['txtemail'],$this->request['txtpassword']);
 				}else{
 					$this->obDb->query="INSERT INTO ".CUSTOMERS."
 					(iCustmerid_PK,vFirstName,vLastName,
@@ -156,7 +156,7 @@ defined('_TEEXEC') or die;
 					'$timestamp','1')";
 					$this->obDb->updateQuery();
 					$subObjId=$this->obDb->last_insert_id;
-					//$comFunc->m_sendDetails($this->request['txtemail'],$this->request['txtpassword']);
+					$comFunc->m_sendDetails($this->request['txtemail'],$this->request['txtpassword']);
 					$_SESSION['userid']=$subObjId;
 					$_SESSION['username']=$this->request['first_name'];
 				}

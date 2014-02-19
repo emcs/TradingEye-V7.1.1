@@ -803,7 +803,8 @@ class c_commonFunctions
 			else
 			{
 				$subject	 ="Welcome to ".SITE_NAME;
-				$heading	 ="Thank you for signing up to ".SITE_NAME.". Please find your login details below.";
+				//$heading	 ="Thank you for signing up to ".SITE_NAME.". Please find your login details below.";
+				$heading	 ="Thank you for signing up to ".SITE_NAME.". Once approved by our system, you will be able to login to your account.";
 			}
 			$message.="<br /><a href='malto:".ADMIN_EMAIL."'>".ADMIN_EMAIL."</a>";
 			$message ="========================================<br />";
@@ -811,8 +812,8 @@ class c_commonFunctions
 			$message.="========================================<br />";
 			$message.="Hi ".$this->libFunc->m_displayContent($qryResult[0]->vFirstName)." ".$this->libFunc->m_displayContent($qryResult[0]->vLastName).",";
 			$message.="<br /><br />".$heading;
-			$message.="<br /><br>Username:&nbsp;".$qryResult[0]->vEmail;
-			$message.="<br />Password:&nbsp;".$pass;
+			//$message.="<br /><br>Username:&nbsp;".$qryResult[0]->vEmail;
+			//$message.="<br />Password:&nbsp;".$pass;
 			$message.="<br /><br>Kind Regards";
 			$message.="<br /><a href='".SITE_URL."'>".SITE_NAME."</a>";
 			$message.="<br />".SITE_PHONE;
@@ -853,7 +854,8 @@ class c_commonFunctions
 			else
 			{
 				$subject	 ="Welcome to ".SITE_NAME;
-				$heading	 ="Thank you for signing up to ".SITE_NAME.". Please find your login details below.You will be able to login to your account, after being activated by Admin.";
+				//$heading	 ="Thank you for signing up to ".SITE_NAME.". Please find your login details below.You will be able to login to your account, after being activated by Admin.";
+				$heading	 ="Thank you for signing up to ".SITE_NAME.". Once approved by our system, you will be able to login to your account.";
 			}
 			$message.="<br /><a href='malto:".ADMIN_EMAIL."'>".ADMIN_EMAIL."</a>";
 			$message ="========================================<br />";
@@ -861,8 +863,8 @@ class c_commonFunctions
 			$message.="========================================<br />";
 			$message.="Hi ".$this->libFunc->m_displayContent($qryResult[0]->vFirstName)." ".$this->libFunc->m_displayContent($qryResult[0]->vLastName).",";
 			$message.="<br /><br />".$heading;
-			$message.="<br /><br>Username:&nbsp;".$qryResult[0]->vEmail;
-			$message.="<br />Password:&nbsp;".$pass;
+			//$message.="<br /><br>Username:&nbsp;".$qryResult[0]->vEmail;
+			//$message.="<br />Password:&nbsp;".$pass;
 			$message.="<br /><br>Kind Regards";
 			$message.="<br /><a href='".SITE_URL."'>".SITE_NAME."</a>";
 			$message.="<br />".SITE_PHONE;
