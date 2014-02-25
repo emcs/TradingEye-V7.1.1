@@ -329,17 +329,8 @@ class c_shopInterface {
 			for ($i = 0; $i < $deptCount; $i++) {
 				$deptUrl = SITE_URL . "ecom/index.php?action=ecom.details&mode=" . $rowDept[$i]->vSeoTitle;
 				$this->ObTpl->set_var("TPL_VAR_DEPTURL", $this->libFunc->m_safeUrl($deptUrl));
-				if (!$this->libFunc->m_isNull($rowDept[$i]->vImage2)) {
-					$img = $this->libFunc->m_checkFile($rowDept[$i]->vImage2, "department", $this->libFunc->m_displayContent($rowDept[$i]->vTitle));
-					if ($img) {
-						$this->ObTpl->set_var("TPL_VAR_TITLE", $img);
-
-					} else {
-						$this->ObTpl->set_var("TPL_VAR_TITLE", $this->libFunc->m_displayContent($rowDept[$i]->vTitle));
-					}
-				} else {
-					$this->ObTpl->set_var("TPL_VAR_TITLE", $this->libFunc->m_displayContent($rowDept[$i]->vTitle));
-				}
+				$this->ObTpl->set_var("TPL_VAR_SUB_IMG","/images/department/".$rowDept[$i]->vImage2);
+				$this->ObTpl->set_var("TPL_VAR_TITLE",$this->libFunc->m_displayContent($rowDept[$i]->vTitle));
 				$this->ObTpl->parse("dspdept_blk", "TPL_DEPT_BLK", true);
 			}
 			$this->ObTpl->parse("dspmaindept_blk", "TPL_MAINDEPT_BLK");
