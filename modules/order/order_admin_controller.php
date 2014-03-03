@@ -1,9 +1,8 @@
 <?php
 /*
 =======================================================================================
-Copyright: Electronic and Mobile Commerce Software Ltd
-Product: TradingEye
-Version: 7.1.0
+Copyright: TradingEye
+Version: 7.1.1
 =======================================================================================
 */
 defined('_TEEXEC') or die;

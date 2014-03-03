@@ -1,9 +1,8 @@
 <?php
 /*
 =======================================================================================
-Copyright: Electronic and Mobile Commerce Software Ltd
-Product: TradingEye
-Version: 7.0.5
+Copyright: TradingEye
+Version: V7.1.1
 Function: Configuration file-store various settings
 1.SITE URL-...
 2.Sitepath-...

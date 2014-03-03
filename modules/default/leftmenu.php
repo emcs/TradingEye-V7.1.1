@@ -2,9 +2,8 @@
 include_once SITE_PATH."LanguagePacks/".LANGUAGE_PACK;
 /*
 =======================================================================================
-Copyright: Electronic and Mobile Commerce Software Ltd
-Product: TradingEye
-Version: 7.1.0
+Copyright: TradingEye
+Version: 7.1.1
 =======================================================================================
 CLASS HANDLES LEFT MENU FOR SITE-
 HANDLES META TAGS

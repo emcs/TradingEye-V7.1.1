@@ -1,10 +1,8 @@
 <?php
-
 /*
 =======================================================================================
-Copyright: Electronic and Mobile Commerce Software Ltd
-Product: TradingEye
-Version: 7.0.5
+Copyright: TradingEye
+Version: 7.1.1
 =======================================================================================
 */
 set_time_limit(0);

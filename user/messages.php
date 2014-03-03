@@ -1,9 +1,8 @@
 <?php
 /*
 =======================================================================================
-Copyright: Electronic and Mobile Commerce Software Ltd
-Product: TradingEye
-Version: 7.0.5
+Copyright: TradingEye
+Version: 7.1.1
 =======================================================================================
 */
 define("MSG_INVALID_USER","There was a problem with your email or password, please try again");
